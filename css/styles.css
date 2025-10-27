@@ -36,6 +36,11 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2364ffda" stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>'), auto;
+}
+
+a, button {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%237c3aed" stroke-width="2"><circle cx="12" cy="12" r="6"/><line x1="12" y1="6" x2="12" y2="18"/><line x1="6" y1="12" x2="18" y2="12"/></svg>'), pointer;
 }
 
 a {
@@ -232,10 +237,46 @@ section {
     font-size: 18px;
     color: var(--text-muted);
     max-width: 600px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     line-height: 1.8;
     opacity: 0;
     animation: fadeInUp 0.6s ease 0.3s forwards;
+}
+
+.hero-social-proof {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease 0.35s forwards;
+}
+
+.proof-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(100, 255, 218, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    transition: var(--transition);
+}
+
+.proof-item:hover {
+    background: rgba(100, 255, 218, 0.1);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.proof-icon {
+    font-size: 16px;
+}
+
+.proof-text {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .hero-cta {
@@ -971,6 +1012,37 @@ section {
     margin: 0;
 }
 
+/* Email Display */
+.email-link {
+    position: relative;
+    display: inline-block;
+}
+
+.email-full {
+    display: none;
+}
+
+.email-display {
+    display: inline;
+}
+
+.email-link:hover .email-display {
+    display: none;
+}
+
+.email-link:hover .email-full {
+    display: inline;
+}
+
+@media (min-width: 769px) {
+    .email-display {
+        display: none;
+    }
+    .email-full {
+        display: inline;
+    }
+}
+
 .social-links {
     display: flex;
     justify-content: center;
@@ -1056,6 +1128,14 @@ section {
 
     .hero {
         min-height: calc(100vh - 70px);
+    }
+
+    .hero-social-proof {
+        justify-content: center;
+    }
+
+    .proof-item {
+        font-size: 12px;
     }
 
     .about-grid {
