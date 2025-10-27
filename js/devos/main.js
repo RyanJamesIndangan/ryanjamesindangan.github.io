@@ -69,15 +69,113 @@ function initializeStartMenu() {
 // ===========================
 // Desktop Icons
 // ===========================
+let selectedIcon = null;
+
 function initializeDesktopIcons() {
     const desktopIcons = document.querySelectorAll('.desktop-icon');
     
     desktopIcons.forEach(icon => {
+        // Double-click to open
         icon.addEventListener('dblclick', () => {
             const appId = icon.dataset.app;
             openApp(appId);
         });
+        
+        // Single click to select
+        icon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selectIcon(icon);
+        });
+        
+        // Make draggable
+        makeDraggable(icon);
     });
+    
+    // Click desktop to deselect
+    document.querySelector('.desktop').addEventListener('click', () => {
+        deselectAllIcons();
+    });
+    
+    // Enter key to open selected icon
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && selectedIcon) {
+            const appId = selectedIcon.dataset.app;
+            openApp(appId);
+        }
+    });
+}
+
+function selectIcon(icon) {
+    deselectAllIcons();
+    icon.classList.add('selected');
+    selectedIcon = icon;
+}
+
+function deselectAllIcons() {
+    document.querySelectorAll('.desktop-icon').forEach(icon => {
+        icon.classList.remove('selected');
+    });
+    selectedIcon = null;
+}
+
+function makeDraggable(icon) {
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    
+    // Get current position from inline styles or computed position
+    const rect = icon.getBoundingClientRect();
+    const desktopRect = document.querySelector('.desktop-icons').getBoundingClientRect();
+    
+    icon.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+    
+    function dragStart(e) {
+        if (e.target.closest('.desktop-icon') !== icon) return;
+        
+        // Prevent dragging if it's a double-click
+        if (e.detail === 2) return;
+        
+        initialX = e.clientX - xOffset;
+        initialY = e.clientY - yOffset;
+        
+        if (e.target === icon || icon.contains(e.target)) {
+            isDragging = true;
+            icon.style.cursor = 'grabbing';
+        }
+    }
+    
+    function drag(e) {
+        if (isDragging) {
+            e.preventDefault();
+            
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            
+            xOffset = currentX;
+            yOffset = currentY;
+            
+            setTranslate(currentX, currentY, icon);
+        }
+    }
+    
+    function dragEnd(e) {
+        if (isDragging) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+            icon.style.cursor = 'pointer';
+        }
+    }
+    
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    }
 }
 
 // ===========================

@@ -235,6 +235,8 @@ body {
     cursor: pointer;
     transition: all var(--transition-fast);
     width: 90px;
+    user-select: none;
+    position: relative;
 }
 
 .desktop-icon:hover {
@@ -244,6 +246,22 @@ body {
 
 .desktop-icon:active {
     transform: scale(0.95);
+}
+
+.desktop-icon.selected {
+    background: rgba(100, 255, 218, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+}
+
+.desktop-icon.selected .icon {
+    transform: scale(1.05);
+}
+
+.desktop-icon.selected span {
+    color: var(--primary);
+    font-weight: 600;
 }
 
 .desktop-icon .icon {
