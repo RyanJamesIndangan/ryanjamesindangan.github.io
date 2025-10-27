@@ -1,5 +1,5 @@
 // ===========================
-// DevOS Main Application
+// Portfolio Main Application
 // ===========================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -101,7 +101,7 @@ function initializeAppTiles() {
 // ===========================
 // Open Application
 // ===========================
-function openApp(appId) {
+function openApp(appId, position = null) {
     const app = apps[appId];
     if (!app) return;
     
@@ -109,7 +109,8 @@ function openApp(appId) {
         appId,
         app.title,
         app.icon,
-        app.content
+        app.content,
+        position
     );
     
     // Initialize terminal if opened
@@ -170,8 +171,8 @@ function initializeContextMenu() {
                 case 'view-code':
                     window.open('https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', '_blank');
                     break;
-                case 'about-devos':
-                    alert('DevOS Portfolio v2.0.0\n\nBuilt by Ryan James Indangan\nA unique portfolio OS experience');
+                case 'about-portfolio':
+                    alert('Interactive Portfolio v2.0.0\n\nBuilt by Ryan James Indangan\nFull-Stack Developer & Certified CTO\n\nA unique OS-style portfolio experience');
                     break;
             }
         });
@@ -403,27 +404,27 @@ function autoOpenApps() {
     
     if (isMobile) {
         // On mobile, just show a welcome notification
-        showNotification('👋 Welcome! Tap DevOS to explore apps');
+        showNotification('👋 Welcome! Tap Menu to explore');
         return;
     }
     
-    // Desktop: Open apps in a nice cascading manner
+    // Desktop: Open apps in a tiled grid layout (2x2)
     const appsToOpen = [
-        { id: 'about', delay: 0 },
-        { id: 'skills', delay: 300 },
-        { id: 'projects', delay: 600 },
-        { id: 'contact', delay: 900 }
+        { id: 'about', delay: 0, position: 'top-left' },
+        { id: 'skills', delay: 300, position: 'top-right' },
+        { id: 'projects', delay: 600, position: 'bottom-left' },
+        { id: 'contact', delay: 900, position: 'bottom-right' }
     ];
     
     appsToOpen.forEach(app => {
         setTimeout(() => {
-            openApp(app.id);
+            openApp(app.id, app.position);
         }, app.delay);
     });
     
     // Show welcome notification
     setTimeout(() => {
-        showNotification('✨ Portfolio loaded! All apps are open for you');
+        showNotification('✨ Portfolio ready! Explore each section');
     }, 1200);
 }
 

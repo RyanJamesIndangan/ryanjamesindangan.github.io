@@ -18,7 +18,7 @@ class WindowManager {
         this.startTop = 0;
     }
 
-    createWindow(appId, title, icon, content) {
+    createWindow(appId, title, icon, content, position = null) {
         // Check if window already exists
         if (this.windows.has(appId)) {
             this.focusWindow(appId);
@@ -38,11 +38,42 @@ class WindowManager {
             windowEl.style.width = '100%';
             windowEl.style.height = `calc(100% - var(--taskbar-height))`;
         } else {
-            const offset = (this.windows.size * 30) % 100;
-            windowEl.style.left = `${100 + offset}px`;
-            windowEl.style.top = `${50 + offset}px`;
-            windowEl.style.width = '800px';
-            windowEl.style.height = '600px';
+            // Calculate tiled layout positions (2x2 grid)
+            if (position) {
+                const desktopWidth = window.innerWidth;
+                const desktopHeight = window.innerHeight - 60; // Subtract taskbar height
+                const windowWidth = (desktopWidth / 2) - 20; // 2 columns with 20px gap
+                const windowHeight = (desktopHeight / 2) - 20; // 2 rows with 20px gap
+                const gap = 10;
+                
+                switch(position) {
+                    case 'top-left':
+                        windowEl.style.left = `${gap}px`;
+                        windowEl.style.top = `${gap}px`;
+                        break;
+                    case 'top-right':
+                        windowEl.style.left = `${desktopWidth / 2 + gap}px`;
+                        windowEl.style.top = `${gap}px`;
+                        break;
+                    case 'bottom-left':
+                        windowEl.style.left = `${gap}px`;
+                        windowEl.style.top = `${desktopHeight / 2 + gap}px`;
+                        break;
+                    case 'bottom-right':
+                        windowEl.style.left = `${desktopWidth / 2 + gap}px`;
+                        windowEl.style.top = `${desktopHeight / 2 + gap}px`;
+                        break;
+                }
+                windowEl.style.width = `${windowWidth}px`;
+                windowEl.style.height = `${windowHeight}px`;
+            } else {
+                // Default cascading position for manually opened windows
+                const offset = (this.windows.size * 30) % 100;
+                windowEl.style.left = `${100 + offset}px`;
+                windowEl.style.top = `${50 + offset}px`;
+                windowEl.style.width = '800px';
+                windowEl.style.height = '600px';
+            }
         }
 
         // Window HTML
