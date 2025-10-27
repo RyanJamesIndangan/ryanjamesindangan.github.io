@@ -419,6 +419,90 @@ try {
 }
 
 // ===========================
+// Certificate Modal
+// ===========================
+const modal = document.getElementById('certificateModal');
+const modalTitle = document.getElementById('modalTitle');
+const certificatePreview = document.getElementById('certificatePreview');
+const downloadBtn = document.getElementById('downloadBtn');
+const modalClose = document.querySelector('.modal-close');
+const modalOverlay = document.querySelector('.modal-overlay');
+
+// Function to open modal
+function openCertificateModal(certPath, title, type) {
+    // Set title
+    modalTitle.textContent = title;
+    
+    // Clear previous content
+    certificatePreview.innerHTML = '';
+    
+    // Add content based on type
+    if (type === 'pdf') {
+        // For PDF files
+        const iframe = document.createElement('iframe');
+        iframe.src = certPath;
+        iframe.title = title;
+        certificatePreview.appendChild(iframe);
+    } else {
+        // For images
+        const img = document.createElement('img');
+        img.src = certPath;
+        img.alt = title;
+        img.loading = 'lazy';
+        certificatePreview.appendChild(img);
+    }
+    
+    // Set download button
+    const filename = certPath.split('/').pop();
+    downloadBtn.href = certPath;
+    downloadBtn.download = filename;
+    
+    // Show modal with animation
+    modal.classList.add('active');
+    setTimeout(() => {
+        modal.classList.add('show');
+    }, 10);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+}
+
+// Function to close modal
+function closeCertificateModal() {
+    modal.classList.remove('show');
+    setTimeout(() => {
+        modal.classList.remove('active');
+        certificatePreview.innerHTML = '';
+    }, 300);
+    
+    // Re-enable body scroll
+    document.body.style.overflow = '';
+}
+
+// Add click listeners to all view certificate buttons
+document.querySelectorAll('.view-cert-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const certPath = this.dataset.cert;
+        const title = this.dataset.title;
+        const type = this.dataset.type;
+        openCertificateModal(certPath, title, type);
+    });
+});
+
+// Close modal on close button click
+modalClose.addEventListener('click', closeCertificateModal);
+
+// Close modal on overlay click
+modalOverlay.addEventListener('click', closeCertificateModal);
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeCertificateModal();
+    }
+});
+
+// ===========================
 // Console Message (Easter Egg)
 // ===========================
 console.log('%c👋 Hello there!', 'font-size: 20px; font-weight: bold; color: #64ffda;');

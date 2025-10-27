@@ -431,13 +431,13 @@
                             Covers IT governance, digital transformation, team leadership, and technical decision-making at the executive level.
                         </p>
                         <div class="cert-actions">
-                            <a href="assets/certificates/cto-certificate.pdf" target="_blank" class="btn btn-cert">
+                            <button class="btn btn-cert view-cert-btn" data-cert="assets/certificates/cto-certificate.pdf" data-title="Certified Chief Technology Officer" data-type="pdf">
                                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
                                 View Certificate
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -455,13 +455,29 @@
                         <p class="cert-issuer">Hacker X</p>
                         <p class="cert-description">
                             Comprehensive cybersecurity training covering database security, penetration testing, password security, 
-                            and defensive strategies. Completed modules on bringing down websites, data protection, and vulnerability assessment.
+                            and defensive strategies. Completed 4 specialized modules demonstrating mastery of security concepts.
                         </p>
-                        <div class="cert-badges">
-                            <span class="badge">Database Security</span>
-                            <span class="badge">Penetration Testing</span>
-                            <span class="badge">Data Protection</span>
-                            <span class="badge">Password Security</span>
+                        <div class="cert-modules">
+                            <button class="cert-module-btn view-cert-btn" data-cert="assets/certificates/database-hacking.jpg" data-title="Database Hacking" data-type="image">
+                                <span class="module-icon">🗄️</span>
+                                <span class="module-name">Database Hacking</span>
+                                <span class="module-action">View →</span>
+                            </button>
+                            <button class="cert-module-btn view-cert-btn" data-cert="assets/certificates/bringing-down-a-website.jpg" data-title="Bringing Down a Website" data-type="image">
+                                <span class="module-icon">⚠️</span>
+                                <span class="module-name">Bringing Down a Website</span>
+                                <span class="module-action">View →</span>
+                            </button>
+                            <button class="cert-module-btn view-cert-btn" data-cert="assets/certificates/hacking-passwords.jpg" data-title="Hacking Passwords" data-type="image">
+                                <span class="module-icon">🔐</span>
+                                <span class="module-name">Hacking Passwords</span>
+                                <span class="module-action">View →</span>
+                            </button>
+                            <button class="cert-module-btn view-cert-btn" data-cert="assets/certificates/make-your-data-safe.jpg" data-title="Make Your Data Safe" data-type="image">
+                                <span class="module-icon">🛡️</span>
+                                <span class="module-name">Make Your Data Safe</span>
+                                <span class="module-action">View →</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -690,6 +706,30 @@
             </div>
         </div>
     </section>
+
+    <!-- Certificate Modal -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <h3 id="modalTitle">Certificate</h3>
+            </div>
+            <div class="modal-body">
+                <div id="certificatePreview" class="certificate-preview"></div>
+            </div>
+            <div class="modal-footer">
+                <a id="downloadBtn" href="#" download class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download Certificate
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
