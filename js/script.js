@@ -26,6 +26,25 @@ window.addEventListener('unhandledrejection', (e) => {
 });
 
 // ===========================
+// Dynamic Experience Years Calculator
+// ===========================
+function updateExperienceYears() {
+    const startYear = 2018; // Started career in March 2018
+    const currentYear = new Date().getFullYear();
+    const yearsOfExperience = currentYear - startYear;
+    
+    // Update both instances
+    const yearsExpEl = document.getElementById('yearsExperience');
+    const yearsExpHighlightEl = document.getElementById('yearsExperienceHighlight');
+    
+    if (yearsExpEl) yearsExpEl.textContent = yearsOfExperience;
+    if (yearsExpHighlightEl) yearsExpHighlightEl.textContent = yearsOfExperience;
+}
+
+// Update on page load
+document.addEventListener('DOMContentLoaded', updateExperienceYears);
+
+// ===========================
 // Particle Background Animation
 // ===========================
 class ParticleSystem {
