@@ -975,7 +975,7 @@ section {
     border-radius: 10px;
     padding: 30px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
     text-align: left;
     transition: var(--transition);
@@ -988,6 +988,13 @@ section {
 
 .contact-icon {
     font-size: 32px;
+    flex-shrink: 0;
+}
+
+.contact-item-content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .contact-item h4 {
@@ -1000,6 +1007,10 @@ section {
 .contact-item a {
     color: var(--accent-primary);
     font-size: 16px;
+    word-break: break-word;
+    display: block;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .contact-item a:hover {
@@ -1010,37 +1021,12 @@ section {
     color: var(--text-secondary);
     font-size: 16px;
     margin: 0;
+    word-wrap: break-word;
 }
 
-/* Email Display */
+/* Email specific styling */
 .email-link {
-    position: relative;
-    display: inline-block;
-}
-
-.email-full {
-    display: none;
-}
-
-.email-display {
-    display: inline;
-}
-
-.email-link:hover .email-display {
-    display: none;
-}
-
-.email-link:hover .email-full {
-    display: inline;
-}
-
-@media (min-width: 769px) {
-    .email-display {
-        display: none;
-    }
-    .email-full {
-        display: inline;
-    }
+    line-height: 1.5;
 }
 
 .social-links {
