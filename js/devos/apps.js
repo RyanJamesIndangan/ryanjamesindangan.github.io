@@ -11,27 +11,27 @@ const apps = {
                 <h1 style="font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, #64ffda, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                     Ryan James Indangan
                 </h1>
-                <p style="font-size: 1.2rem; color: #64ffda; margin-bottom: 2rem;">
+                <p style="font-size: 1.2rem; color: #5eb3ff; margin-bottom: 2rem;">
                     Full-Stack Web Developer & Certified CTO
                 </p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                    <div style="padding: 1rem; background: rgba(100, 255, 218, 0.1); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #64ffda;"><span id="yearsExp">7</span>+</div>
-                        <div style="font-size: 0.9rem; color: #94a3b8;">Years Experience</div>
+                    <div style="padding: 1rem; background: rgba(51, 153, 255, 0.15); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #5eb3ff;"><span id="yearsExp">7</span>+</div>
+                        <div style="font-size: 0.9rem; color: #c2d0e8;">Years Experience</div>
                     </div>
-                    <div style="padding: 1rem; background: rgba(124, 58, 237, 0.1); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #7c3aed;">50+</div>
-                        <div style="font-size: 0.9rem; color: #94a3b8;">Projects Delivered</div>
+                    <div style="padding: 1rem; background: rgba(51, 153, 255, 0.15); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #5eb3ff;">50+</div>
+                        <div style="font-size: 0.9rem; color: #c2d0e8;">Projects Delivered</div>
                     </div>
-                    <div style="padding: 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">12</div>
-                        <div style="font-size: 0.9rem; color: #94a3b8;">Team Members Led</div>
+                    <div style="padding: 1rem; background: rgba(255, 185, 0, 0.15); border-radius: 8px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #ffb900;">12</div>
+                        <div style="font-size: 0.9rem; color: #c2d0e8;">Team Members Led</div>
                     </div>
                 </div>
 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #e2e8f0;">
-                    I'm a versatile <strong style="color: #64ffda;">Full-Stack Web Developer</strong> with deep expertise in the LAMP stack, 
+                    I'm a versatile <strong style="color: #5eb3ff;">Full-Stack Web Developer</strong> with deep expertise in the LAMP stack, 
                     PHP frameworks (CodeIgniter, Laravel), and modern frontend libraries including React, Vue, and Angular.
                 </p>
                 
@@ -42,13 +42,13 @@ const apps = {
                 </p>
                 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #e2e8f0;">
-                    I specialize in <strong style="color: #7c3aed;">AI-integrated development</strong>, applying cutting-edge AI tools 
+                    I specialize in <strong style="color: #5eb3ff;">AI-integrated development</strong>, applying cutting-edge AI tools 
                     to improve efficiency, enhance quality assurance, and scale solutions while maintaining code 
                     quality and best practices.
                 </p>
 
                 <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(100, 255, 218, 0.05); border-left: 3px solid #64ffda; border-radius: 8px;">
-                    <h3 style="color: #64ffda; margin-bottom: 1rem;">🏆 Recent Achievement</h3>
+                    <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🏆 Recent Achievement</h3>
                     <p style="color: #e2e8f0; line-height: 1.6;">
                         Led the complete redesign of database architecture for GlobalX Digital Corporation, 
                         directed 12 developers across 3 teams, and revived a stalled project by delivering a fully 
@@ -64,7 +64,7 @@ const apps = {
         icon: '🛠️',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #64ffda;">Tech Stack & Expertise</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Tech Stack & Expertise</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createSkillCategory('💻 Frontend', ['React', 'Vue.js', 'Angular', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'jQuery'])}
@@ -88,7 +88,7 @@ const apps = {
         icon: '💼',
         content: `
             <div style="max-width: 800px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #64ffda;">Professional Journey</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Professional Journey</h2>
                 
                 ${createExperienceCard(
                     'Senior Full-Stack Developer',
@@ -154,7 +154,7 @@ const apps = {
         icon: '🚀',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #64ffda;">Showcase</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Showcase</h2>
                 
                 <div style="display: grid; gap: 2rem;">
                     ${createProjectCard(
@@ -166,7 +166,7 @@ const apps = {
                     )}
                     
                     ${createProjectCard(
-                        '📦 Supplier Order Management (RJFI)',
+                        '📦 Supplier Order Management',
                         'Enterprise-grade order management system with inventory tracking, automated workflows, and comprehensive reporting.',
                         ['Laravel', 'Vue.js', 'MySQL', 'Docker', 'AWS'],
                         'https://github.com/ryanjamesindangan/supplier-order-management-rjfi',
@@ -198,7 +198,7 @@ const apps = {
         icon: '🎓',
         content: `
             <div style="max-width: 700px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #64ffda;">Professional Credentials</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Professional Credentials</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createCertCard(
@@ -210,7 +210,7 @@ const apps = {
                     )}
                     
                     <div style="padding: 2rem; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px;">
-                        <h3 style="color: #7c3aed; margin-bottom: 1rem;">🔐 Ethical Hacking Course</h3>
+                        <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🔐 Ethical Hacking Course</h3>
                         <p style="color: #94a3b8; margin-bottom: 1.5rem;">Great Learning • Completed 2024</p>
                         <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">
                             Comprehensive security training covering penetration testing, vulnerability assessment, and security best practices.
@@ -232,7 +232,7 @@ const apps = {
         icon: '📧',
         content: `
             <div style="max-width: 600px;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #64ffda;">Let's Connect</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #5eb3ff;">Let's Connect</h2>
                 <p style="color: #94a3b8; margin-bottom: 3rem; font-size: 1.1rem;">
                     Looking for a skilled developer? Let's discuss your project!
                 </p>
@@ -248,14 +248,14 @@ const apps = {
                 </div>
 
                 <div style="margin-top: 3rem; padding: 2rem; background: rgba(100, 255, 218, 0.1); border-radius: 12px; text-align: center;">
-                    <h3 style="color: #64ffda; margin-bottom: 1rem;">🌟 Social Proof</h3>
+                    <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🌟 Social Proof</h3>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
                         <div>
-                            <div style="font-size: 1.5rem; color: #64ffda; font-weight: bold;">Top Rated</div>
+                            <div style="font-size: 1.5rem; color: #5eb3ff; font-weight: bold;">Top Rated</div>
                             <div style="font-size: 0.85rem; color: #94a3b8;">on Upwork</div>
                         </div>
                         <div>
-                            <div style="font-size: 1.5rem; color: #7c3aed; font-weight: bold;">758+</div>
+                            <div style="font-size: 1.5rem; color: #5eb3ff; font-weight: bold;">758+</div>
                             <div style="font-size: 0.85rem; color: #94a3b8;">LinkedIn Connections</div>
                         </div>
                         <div>
@@ -273,13 +273,13 @@ const apps = {
         icon: '⌨️',
         content: `
             <div style="font-family: 'JetBrains Mono', monospace; background: #000; padding: 1rem; border-radius: 8px; height: 100%; min-height: 400px;">
-                <div style="color: #64ffda; margin-bottom: 1rem;">
+                <div style="color: #5eb3ff; margin-bottom: 1rem;">
                     DevOS Terminal v2.0.0<br>
                     Type 'help' for available commands
                 </div>
                 <div id="terminalOutput" style="color: #e2e8f0; margin-bottom: 1rem; max-height: 300px; overflow-y: auto;"></div>
                 <div style="display: flex; align-items: center; color: #e2e8f0;">
-                    <span style="color: #64ffda;">ryan@devos:~$</span>
+                    <span style="color: #5eb3ff;">ryan@devos:~$</span>
                     <input type="text" id="terminalInput" 
                            style="flex: 1; margin-left: 0.5rem; background: transparent; border: none; color: #e2e8f0; outline: none; font-family: inherit;"
                            placeholder="Enter command..." />
@@ -293,7 +293,7 @@ const apps = {
         icon: '📄',
         content: `
             <div style="max-width: 700px; text-align: center;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #64ffda;">Resume / CV</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #5eb3ff;">Resume / CV</h2>
                 <p style="color: #94a3b8; margin-bottom: 2rem;">
                     Download my complete resume in your preferred format
                 </p>
@@ -305,18 +305,18 @@ const apps = {
                             👁️ Preview Resume
                         </button>
                         <a href="assets/resume.pdf" download="Ryan-James-Indangan-Resume.pdf"
-                           style="flex: 1; min-width: 200px; padding: 1.5rem; background: rgba(100, 255, 218, 0.1); border: 2px solid #64ffda; border-radius: 12px; color: #64ffda; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                           style="flex: 1; min-width: 200px; padding: 1.5rem; background: rgba(100, 255, 218, 0.1); border: 2px solid #64ffda; border-radius: 12px; color: #5eb3ff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                             📥 Download PDF Resume
                         </a>
                     </div>
                     <button onclick="window.open('https://www.linkedin.com/in/ryan-james-indangan-63b271164/', '_blank')"
-                            style="padding: 1.5rem; background: rgba(124, 58, 237, 0.1); border: 2px solid #7c3aed; border-radius: 12px; color: #7c3aed; cursor: pointer; font-size: 1.1rem; transition: all 0.2s;">
+                            style="padding: 1.5rem; background: rgba(124, 58, 237, 0.1); border: 2px solid #7c3aed; border-radius: 12px; color: #5eb3ff; cursor: pointer; font-size: 1.1rem; transition: all 0.2s;">
                         💼 View LinkedIn Profile
                     </button>
                 </div>
 
                 <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-align: left;">
-                    <h3 style="color: #64ffda; margin-bottom: 1rem;">Quick Stats</h3>
+                    <h3 style="color: #5eb3ff; margin-bottom: 1rem;">Quick Stats</h3>
                     <div style="color: #e2e8f0; line-height: 2;">
                         <div>📅 <strong>Experience:</strong> <span id="yearsExp3">7</span>+ years</div>
                         <div>🎓 <strong>Education:</strong> BS Computer Science</div>
@@ -339,7 +339,7 @@ const apps = {
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
                         <div style="font-size: 2rem;">🎬</div>
                         <div>
-                            <h3 style="color: #64ffda; margin: 0; font-size: 1.2rem;">Crypto Checkout Simulator</h3>
+                            <h3 style="color: #5eb3ff; margin: 0; font-size: 1.2rem;">Crypto Checkout Simulator</h3>
                             <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Full Project Demonstration</p>
                         </div>
                     </div>
@@ -354,11 +354,11 @@ const apps = {
                 </div>
                 <div style="padding: 0.75rem; background: linear-gradient(135deg, #1e2442, #2d1b69); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 1rem;">
                     <a href="https://youtu.be/yK9YYBwnw3M" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #64ffda; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         🔗 Open in YouTube
                     </a>
                     <a href="https://github.com/ryanjamesindangan/crypto-checkout-simulator" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 6px; color: #7c3aed; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
                 </div>
@@ -375,7 +375,7 @@ const apps = {
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
                         <div style="font-size: 2rem;">🎬</div>
                         <div>
-                            <h3 style="color: #64ffda; margin: 0; font-size: 1.2rem;">Supplier Order Management System</h3>
+                            <h3 style="color: #5eb3ff; margin: 0; font-size: 1.2rem;">Supplier Order Management System</h3>
                             <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Full Project Demonstration</p>
                         </div>
                     </div>
@@ -390,11 +390,11 @@ const apps = {
                 </div>
                 <div style="padding: 0.75rem; background: linear-gradient(135deg, #1e2442, #2d1b69); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 1rem;">
                     <a href="https://youtu.be/hEIBbsilfEI" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #64ffda; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         🔗 Open in YouTube
                     </a>
                     <a href="https://github.com/ryanjamesindangan/supplier-order-management-rjfi" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 6px; color: #7c3aed; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
                 </div>
@@ -407,7 +407,7 @@ const apps = {
 function createSkillCategory(title, skills) {
     return `
         <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-            <h3 style="color: #64ffda; margin-bottom: 1rem;">${title}</h3>
+            <h3 style="color: #5eb3ff; margin-bottom: 1rem;">${title}</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${skills.map(skill => `
                     <span style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 6px; color: #e2e8f0; font-size: 0.9rem;">
@@ -422,15 +422,15 @@ function createSkillCategory(title, skills) {
 function createExperienceCard(title, company, dates, location, responsibilities, tech) {
     return `
         <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-left: 3px solid #64ffda; border-radius: 12px; margin-bottom: 1.5rem;">
-            <h3 style="color: #64ffda; font-size: 1.3rem; margin-bottom: 0.5rem;">${title}</h3>
-            <div style="color: #7c3aed; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
+            <h3 style="color: #5eb3ff; font-size: 1.3rem; margin-bottom: 0.5rem;">${title}</h3>
+            <div style="color: #5eb3ff; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
             <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">${dates} • ${location}</div>
             <ul style="color: #e2e8f0; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem;">
                 ${responsibilities.map(resp => `<li style="margin-bottom: 0.5rem;">${resp}</li>`).join('')}
             </ul>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: rgba(124, 58, 237, 0.2); border-radius: 4px; color: #7c3aed; font-size: 0.85rem;">
+                    <span style="padding: 0.25rem 0.75rem; background: rgba(124, 58, 237, 0.2); border-radius: 4px; color: #5eb3ff; font-size: 0.85rem;">
                         ${t}
                     </span>
                 `).join('')}
@@ -442,11 +442,11 @@ function createExperienceCard(title, company, dates, location, responsibilities,
 function createProjectCard(title, description, tech, link, demoApp) {
     return `
         <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-            <h3 style="color: #64ffda; font-size: 1.3rem; margin-bottom: 1rem;">${title}</h3>
+            <h3 style="color: #5eb3ff; font-size: 1.3rem; margin-bottom: 1rem;">${title}</h3>
             <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 4px; color: #64ffda; font-size: 0.85rem;">
+                    <span style="padding: 0.25rem 0.75rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 4px; color: #5eb3ff; font-size: 0.85rem;">
                         ${t}
                     </span>
                 `).join('')}
@@ -460,7 +460,7 @@ function createProjectCard(title, description, tech, link, demoApp) {
                 ` : ''}
                 ${link ? `
                     <a href="${link}" target="_blank" rel="noopener noreferrer" 
-                       style="padding: 0.75rem 1.5rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 8px; color: #7c3aed; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 8px; color: #5eb3ff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                         📂 View on GitHub
                     </a>
                 ` : !demoApp ? `
@@ -475,7 +475,7 @@ function createCertCard(title, issuer, date, description, link) {
     const isPDF = link && link.endsWith('.pdf');
     return `
         <div style="padding: 2rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 12px;">
-            <h3 style="color: #64ffda; margin-bottom: 0.5rem;">${title}</h3>
+            <h3 style="color: #5eb3ff; margin-bottom: 0.5rem;">${title}</h3>
             <p style="color: #94a3b8; margin-bottom: 1rem;">${issuer} • ${date}</p>
             <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
@@ -485,7 +485,7 @@ function createCertCard(title, issuer, date, description, link) {
                         👁️ View Certificate
                     </button>
                     <a href="${link}" download 
-                       style="padding: 0.75rem 1.5rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #64ffda; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                         📥 Download
                     </a>
                 ` : ''}
@@ -515,7 +515,7 @@ function createCertModuleBadge(name, certPath) {
 
 function createContactItem(icon, label, value, link) {
     const content = link 
-        ? `<a href="${link}" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: none;">${value}</a>`
+        ? `<a href="${link}" target="_blank" rel="noopener noreferrer" style="color: #5eb3ff; text-decoration: none;">${value}</a>`
         : value;
     
     return `

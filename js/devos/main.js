@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeStartMenu();
     initializeContextMenu();
     initializeDesktopIcons();
+    initializeSelectionBox();
     initializeAppTiles();
     updateExperienceYears();
     initializeThemeToggle();
@@ -542,6 +543,89 @@ document.addEventListener('keydown', (e) => {
         openApp('terminal');
     }
 });
+
+// ===========================
+// Selection Box (Rubber Band)
+// ===========================
+function initializeSelectionBox() {
+    const desktop = document.querySelector('.desktop');
+    let isSelecting = false;
+    let startX, startY;
+    let selectionBox = null;
+    
+    desktop.addEventListener('mousedown', (e) => {
+        // Only start selection if clicking on desktop (not on icons or windows)
+        if (e.target === desktop || e.target.classList.contains('wallpaper')) {
+            isSelecting = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            // Create selection box
+            selectionBox = document.createElement('div');
+            selectionBox.className = 'selection-box';
+            selectionBox.style.left = startX + 'px';
+            selectionBox.style.top = startY + 'px';
+            desktop.appendChild(selectionBox);
+            
+            // Deselect all icons
+            deselectAllIcons();
+        }
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isSelecting || !selectionBox) return;
+        
+        const currentX = e.clientX;
+        const currentY = e.clientY;
+        
+        const width = Math.abs(currentX - startX);
+        const height = Math.abs(currentY - startY);
+        const left = Math.min(startX, currentX);
+        const top = Math.min(startY, currentY);
+        
+        selectionBox.style.left = left + 'px';
+        selectionBox.style.top = top + 'px';
+        selectionBox.style.width = width + 'px';
+        selectionBox.style.height = height + 'px';
+        
+        // Check which icons are within selection box
+        const selectionRect = selectionBox.getBoundingClientRect();
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            const iconRect = icon.getBoundingClientRect();
+            
+            // Check if icon overlaps with selection box
+            const isOverlapping = !(
+                iconRect.right < selectionRect.left ||
+                iconRect.left > selectionRect.right ||
+                iconRect.bottom < selectionRect.top ||
+                iconRect.top > selectionRect.bottom
+            );
+            
+            if (isOverlapping) {
+                icon.classList.add('selected');
+            } else {
+                icon.classList.remove('selected');
+            }
+        });
+    });
+    
+    document.addEventListener('mouseup', () => {
+        if (isSelecting && selectionBox) {
+            // Remove selection box
+            selectionBox.remove();
+            selectionBox = null;
+            isSelecting = false;
+            
+            // Update selected icon reference
+            const selectedIcons = document.querySelectorAll('.desktop-icon.selected');
+            if (selectedIcons.length === 1) {
+                selectedIcon = selectedIcons[0];
+            } else if (selectedIcons.length > 1) {
+                selectedIcon = selectedIcons[selectedIcons.length - 1];
+            }
+        }
+    });
+}
 
 // ===========================
 // Auto-Open Apps on Boot
