@@ -148,7 +148,28 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0a0e27 0%, #1e2442 50%, #2d1b69 100%);
+    background: 
+        linear-gradient(135deg, 
+            rgba(10, 14, 39, 0.95) 0%, 
+            rgba(30, 36, 66, 0.9) 25%,
+            rgba(45, 27, 105, 0.9) 50%,
+            rgba(30, 36, 66, 0.9) 75%,
+            rgba(10, 14, 39, 0.95) 100%
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(100, 255, 218, 0.03) 2px,
+            rgba(100, 255, 218, 0.03) 4px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(124, 58, 237, 0.03) 2px,
+            rgba(124, 58, 237, 0.03) 4px
+        );
     z-index: 0;
 }
 
@@ -160,9 +181,29 @@ body {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 30%, rgba(100, 255, 218, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
-    animation: gradientShift 15s ease-in-out infinite;
+        radial-gradient(circle at 20% 20%, rgba(100, 255, 218, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+    animation: gradientShift 20s ease-in-out infinite;
+}
+
+.wallpaper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(45deg, transparent 48%, rgba(100, 255, 218, 0.02) 49%, rgba(100, 255, 218, 0.02) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(124, 58, 237, 0.02) 49%, rgba(124, 58, 237, 0.02) 51%, transparent 52%);
+    background-size: 100px 100px;
+    animation: backgroundMove 30s linear infinite;
+}
+
+@keyframes backgroundMove {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 100px 100px, -100px 100px; }
 }
 
 @keyframes gradientShift {
@@ -566,6 +607,15 @@ body {
     justify-content: center;
     font-weight: 700;
     font-size: 1.2rem;
+    overflow: hidden;
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+}
+
+.user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .user-info {

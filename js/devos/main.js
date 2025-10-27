@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateExperienceYears();
     initializeThemeToggle();
     initializeGitHubStats();
+    
+    // Auto-open apps in a nice cascading manner after boot
+    setTimeout(() => {
+        autoOpenApps();
+    }, 3000); // Wait for boot screen to finish
 });
 
 // ===========================
@@ -388,4 +393,37 @@ document.addEventListener('keydown', (e) => {
         openApp('terminal');
     }
 });
+
+// ===========================
+// Auto-Open Apps on Boot
+// ===========================
+function autoOpenApps() {
+    // Check if on mobile (don't auto-open on mobile to avoid clutter)
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        // On mobile, just show a welcome notification
+        showNotification('👋 Welcome! Tap DevOS to explore apps');
+        return;
+    }
+    
+    // Desktop: Open apps in a nice cascading manner
+    const appsToOpen = [
+        { id: 'about', delay: 0 },
+        { id: 'skills', delay: 300 },
+        { id: 'projects', delay: 600 },
+        { id: 'contact', delay: 900 }
+    ];
+    
+    appsToOpen.forEach(app => {
+        setTimeout(() => {
+            openApp(app.id);
+        }, app.delay);
+    });
+    
+    // Show welcome notification
+    setTimeout(() => {
+        showNotification('✨ Portfolio loaded! All apps are open for you');
+    }, 1200);
+}
 
