@@ -161,20 +161,23 @@ const apps = {
                         '💳 Crypto Checkout Simulator',
                         'Full-stack cryptocurrency payment processing simulation with real-time exchange rates and transaction tracking.',
                         ['React', 'Node.js', 'Express', 'MongoDB', 'WebSocket'],
-                        'https://github.com/ryanjamesindangan/crypto-checkout-simulator'
+                        'https://github.com/ryanjamesindangan/crypto-checkout-simulator',
+                        'crypto-demo'
                     )}
                     
                     ${createProjectCard(
                         '📦 Supplier Order Management (RJFI)',
                         'Enterprise-grade order management system with inventory tracking, automated workflows, and comprehensive reporting.',
                         ['Laravel', 'Vue.js', 'MySQL', 'Docker', 'AWS'],
-                        'https://github.com/ryanjamesindangan/supplier-order-management-rjfi'
+                        'https://github.com/ryanjamesindangan/supplier-order-management-rjfi',
+                        'supplier-demo'
                     )}
                     
                     ${createProjectCard(
                         '🏢 GlobalX Digital Platform',
                         'Complete platform redesign with enhanced database architecture, serving 10,000+ users with real-time features.',
                         ['Laravel', 'React', 'PostgreSQL', 'Redis', 'AWS'],
+                        null,
                         null
                     )}
                     
@@ -182,6 +185,7 @@ const apps = {
                         '🤖 N8N Automation Hub',
                         'Custom N8N workflows automating CI/CD processes, testing, and deployment across multiple environments.',
                         ['N8N', 'Docker', 'GitHub Actions', 'AWS Lambda', 'Node.js'],
+                        null,
                         null
                     )}
                 </div>
@@ -318,6 +322,78 @@ const apps = {
                 </div>
             </div>
         `
+    },
+
+    'crypto-demo': {
+        title: 'Crypto Checkout Demo',
+        icon: '🎬',
+        content: `
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: #000;">
+                <div style="padding: 1rem; background: linear-gradient(135deg, #2d1b69, #1e2442); border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                        <div style="font-size: 2rem;">🎬</div>
+                        <div>
+                            <h3 style="color: #64ffda; margin: 0; font-size: 1.2rem;">Crypto Checkout Simulator</h3>
+                            <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Full Project Demonstration</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; position: relative; background: #000;">
+                    <iframe 
+                        src="https://www.youtube.com/embed/yK9YYBwnw3M?autoplay=0&rel=0" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div style="padding: 0.75rem; background: linear-gradient(135deg, #1e2442, #2d1b69); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 1rem;">
+                    <a href="https://youtu.be/yK9YYBwnw3M" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #64ffda; text-decoration: none; font-size: 0.9rem;">
+                        🔗 Open in YouTube
+                    </a>
+                    <a href="https://github.com/ryanjamesindangan/crypto-checkout-simulator" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 6px; color: #7c3aed; text-decoration: none; font-size: 0.9rem;">
+                        📂 View Source Code
+                    </a>
+                </div>
+            </div>
+        `
+    },
+
+    'supplier-demo': {
+        title: 'Supplier Management Demo',
+        icon: '🎬',
+        content: `
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: #000;">
+                <div style="padding: 1rem; background: linear-gradient(135deg, #2d1b69, #1e2442); border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                        <div style="font-size: 2rem;">🎬</div>
+                        <div>
+                            <h3 style="color: #64ffda; margin: 0; font-size: 1.2rem;">Supplier Order Management System</h3>
+                            <p style="color: #94a3b8; margin: 0; font-size: 0.9rem;">Full Project Demonstration</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; position: relative; background: #000;">
+                    <iframe 
+                        src="https://www.youtube.com/embed/hEIBbsilfEI?autoplay=0&rel=0" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div style="padding: 0.75rem; background: linear-gradient(135deg, #1e2442, #2d1b69); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 1rem;">
+                    <a href="https://youtu.be/hEIBbsilfEI" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #64ffda; text-decoration: none; font-size: 0.9rem;">
+                        🔗 Open in YouTube
+                    </a>
+                    <a href="https://github.com/ryanjamesindangan/supplier-order-management-rjfi" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 6px; color: #7c3aed; text-decoration: none; font-size: 0.9rem;">
+                        📂 View Source Code
+                    </a>
+                </div>
+            </div>
+        `
     }
 };
 
@@ -357,7 +433,7 @@ function createExperienceCard(title, company, dates, location, responsibilities,
     `;
 }
 
-function createProjectCard(title, description, tech, link) {
+function createProjectCard(title, description, tech, link, demoApp) {
     return `
         <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
             <h3 style="color: #64ffda; font-size: 1.3rem; margin-bottom: 1rem;">${title}</h3>
@@ -369,14 +445,22 @@ function createProjectCard(title, description, tech, link) {
                     </span>
                 `).join('')}
             </div>
-            ${link ? `
-                <a href="${link}" target="_blank" rel="noopener noreferrer" 
-                   style="color: #7c3aed; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
-                    View on GitHub →
-                </a>
-            ` : `
-                <span style="color: #94a3b8; font-size: 0.9rem;">🔒 Private Repository</span>
-            `}
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                ${demoApp ? `
+                    <button class="open-demo-btn" data-demo="${demoApp}"
+                       style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #7c3aed, #64ffda); border: none; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        🎬 Watch Demo Video
+                    </button>
+                ` : ''}
+                ${link ? `
+                    <a href="${link}" target="_blank" rel="noopener noreferrer" 
+                       style="padding: 0.75rem 1.5rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #7c3aed; border-radius: 8px; color: #7c3aed; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        📂 View on GitHub
+                    </a>
+                ` : !demoApp ? `
+                    <span style="color: #94a3b8; font-size: 0.9rem; padding: 0.75rem;">🔒 Private Repository</span>
+                ` : ''}
+            </div>
         </div>
     `;
 }

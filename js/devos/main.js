@@ -111,6 +111,24 @@ function openApp(appId) {
     if (appId === 'terminal') {
         setTimeout(() => initializeTerminal(), 100);
     }
+    
+    // Initialize demo buttons if projects window opened
+    if (appId === 'projects') {
+        setTimeout(() => initializeDemoButtons(), 100);
+    }
+}
+
+// ===========================
+// Demo Buttons (for video players)
+// ===========================
+function initializeDemoButtons() {
+    const demoButtons = document.querySelectorAll('.open-demo-btn');
+    demoButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const demoApp = this.dataset.demo;
+            openApp(demoApp);
+        });
+    });
 }
 
 // ===========================
