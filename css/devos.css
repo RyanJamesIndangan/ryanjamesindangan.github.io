@@ -1195,21 +1195,24 @@ body {
 .cert-modal-body {
     flex: 1;
     padding: 1.5rem;
-    overflow: auto;
+    overflow: hidden;
     display: flex;
     align-items: stretch;
     justify-content: center;
     background: #000;
 }
 
+.cert-modal-body > div {
+    width: 100%;
+    height: 100%;
+}
+
 .cert-modal-body iframe,
 .cert-modal-body embed {
     width: 100%;
     height: 100%;
-    min-height: 600px;
     border: none;
     border-radius: 8px;
-    background: #fff;
 }
 
 .cert-modal-body img {
@@ -1257,11 +1260,12 @@ body {
     
     .cert-modal-body {
         padding: 1rem;
+        overflow: auto;
     }
     
     .cert-modal-body iframe,
     .cert-modal-body embed {
-        min-height: 400px;
+        min-height: 400px !important;
     }
 }
 

@@ -683,13 +683,20 @@ function initializeCertificateModal() {
         modalBody.innerHTML = '';
         
         if (type === 'pdf') {
-            // Use multiple methods for better PDF compatibility
+            // Use iframe for better compatibility
             modalBody.innerHTML = `
-                <div style="width: 100%; height: 100%; display: flex; flex-direction: column; gap: 1rem;">
-                    <embed src="${certPath}#toolbar=1&navpanes=0&scrollbar=1" type="application/pdf" style="flex: 1; width: 100%; border: none; background: #fff;" />
-                    <div style="padding: 1rem; background: rgba(0, 120, 215, 0.1); border-radius: 8px; text-align: center;">
+                <div style="width: 100%; height: 100%; display: flex; flex-direction: column;">
+                    <div style="flex: 1; position: relative; min-height: 500px;">
+                        <iframe 
+                            src="${certPath}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" 
+                            type="application/pdf"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; background: #525659;"
+                            onload="this.style.background='#fff';"
+                        ></iframe>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(0, 120, 215, 0.1); border-radius: 8px; text-align: center; margin-top: 1rem;">
                         <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
-                            📄 PDF preview • If the document doesn't display, use the buttons below
+                            📄 PDF Document • Use the buttons below for more options
                         </p>
                         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                             <a href="${certPath}" target="_blank" rel="noopener noreferrer"
