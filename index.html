@@ -6,7 +6,8 @@
     <meta name="description" content="Ryan James Indangan - Full-Stack Developer & CTO | Interactive Portfolio OS">
     <meta name="keywords" content="Full-Stack Developer, CTO, Web Development, React, Laravel, AWS, DevOps">
     <meta name="author" content="Ryan James Indangan">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.github.com https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https://avatars.githubusercontent.com https://i.ytimg.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.github.com https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com;">
+
     
     <title>Ryan James Indangan - Developer Portfolio OS</title>
     
@@ -111,8 +112,8 @@
         <div class="start-menu" id="startMenu">
             <div class="start-menu-header">
                 <div class="user-profile">
-                    <div class="user-avatar">
-                        <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" />
+                    <div class="user-avatar" id="userAvatar">
+                        <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.style.display='none'; this.parentElement.innerHTML='RJ';" />
                     </div>
                     <div class="user-info">
                         <div class="user-name">Ryan James Indangan</div>
