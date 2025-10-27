@@ -215,11 +215,11 @@ const apps = {
                         <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">
                             Comprehensive security training covering penetration testing, vulnerability assessment, and security best practices.
                         </p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem;">
-                            ${createModuleBadge('Database Hacking')}
-                            ${createModuleBadge('Website Security')}
-                            ${createModuleBadge('Password Security')}
-                            ${createModuleBadge('Data Protection')}
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem;">
+                            ${createCertModuleBadge('Database Hacking', 'assets/certificates/database-hacking.jpg')}
+                            ${createCertModuleBadge('Website Security', 'assets/certificates/bringing-down-a-website.jpg')}
+                            ${createCertModuleBadge('Password Security', 'assets/certificates/hacking-passwords.jpg')}
+                            ${createCertModuleBadge('Data Protection', 'assets/certificates/make-your-data-safe.jpg')}
                         </div>
                     </div>
                 </div>
@@ -299,10 +299,16 @@ const apps = {
                 </p>
                 
                 <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
-                    <button onclick="alert('Resume PDF will be available soon!')" 
-                            style="padding: 1.5rem; background: rgba(100, 255, 218, 0.1); border: 2px solid #64ffda; border-radius: 12px; color: #64ffda; cursor: pointer; font-size: 1.1rem; transition: all 0.2s;">
-                        📥 Download PDF Resume
-                    </button>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="view-cert-btn" data-cert="assets/resume.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
+                                style="flex: 1; min-width: 200px; padding: 1.5rem; background: linear-gradient(135deg, #7c3aed, #64ffda); border: none; border-radius: 12px; color: #fff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s;">
+                            👁️ Preview Resume
+                        </button>
+                        <a href="assets/resume.pdf" download="Ryan-James-Indangan-Resume.pdf"
+                           style="flex: 1; min-width: 200px; padding: 1.5rem; background: rgba(100, 255, 218, 0.1); border: 2px solid #64ffda; border-radius: 12px; color: #64ffda; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                            📥 Download PDF Resume
+                        </a>
+                    </div>
                     <button onclick="window.open('https://www.linkedin.com/in/ryan-james-indangan-63b271164/', '_blank')"
                             style="padding: 1.5rem; background: rgba(124, 58, 237, 0.1); border: 2px solid #7c3aed; border-radius: 12px; color: #7c3aed; cursor: pointer; font-size: 1.1rem; transition: all 0.2s;">
                         💼 View LinkedIn Profile
@@ -466,17 +472,24 @@ function createProjectCard(title, description, tech, link, demoApp) {
 }
 
 function createCertCard(title, issuer, date, description, link) {
+    const isPDF = link && link.endsWith('.pdf');
     return `
         <div style="padding: 2rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 12px;">
             <h3 style="color: #64ffda; margin-bottom: 0.5rem;">${title}</h3>
             <p style="color: #94a3b8; margin-bottom: 1rem;">${issuer} • ${date}</p>
             <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
-            ${link ? `
-                <button onclick="window.open('${link}', '_blank')" 
-                        style="padding: 0.75rem 1.5rem; background: #64ffda; color: #0a0e27; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                    📜 View Certificate
-                </button>
-            ` : ''}
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                ${link ? `
+                    <button class="view-cert-btn" data-cert="${link}" data-title="${title}" data-type="${isPDF ? 'pdf' : 'image'}"
+                            style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #7c3aed, #64ffda); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                        👁️ View Certificate
+                    </button>
+                    <a href="${link}" download 
+                       style="padding: 0.75rem 1.5rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #64ffda; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        📥 Download
+                    </a>
+                ` : ''}
+            </div>
         </div>
     `;
 }
@@ -486,6 +499,17 @@ function createModuleBadge(name) {
         <div style="padding: 0.5rem; background: rgba(124, 58, 237, 0.2); border-radius: 6px; text-align: center; font-size: 0.85rem; color: #e2e8f0;">
             ✓ ${name}
         </div>
+    `;
+}
+
+function createCertModuleBadge(name, certPath) {
+    return `
+        <button class="view-cert-btn" data-cert="${certPath}" data-title="${name}" data-type="image"
+                style="padding: 0.75rem 1rem; background: rgba(124, 58, 237, 0.3); border: 1px solid rgba(124, 58, 237, 0.5); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; color: #e2e8f0;">
+            <span style="font-size: 1.5rem;">🔐</span>
+            <span style="font-size: 0.85rem; font-weight: 600;">${name}</span>
+            <span style="font-size: 0.75rem; color: #94a3b8;">Click to view</span>
+        </button>
     `;
 }
 

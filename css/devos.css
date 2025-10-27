@@ -3,23 +3,26 @@
    =================================== */
 
 :root {
-    /* Colors */
-    --primary: #64ffda;
-    --secondary: #7c3aed;
-    --accent: #f59e0b;
-    --bg-primary: #0a0e27;
-    --bg-secondary: #151932;
-    --bg-tertiary: #1e2442;
-    --text-primary: #e2e8f0;
-    --text-secondary: #94a3b8;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    /* Windows 7 Inspired Colors */
+    --primary: #3399ff;
+    --secondary: #0078d7;
+    --accent: #ffb900;
+    --success: #00cc6a;
+    --bg-primary: #1a1d29;
+    --bg-secondary: #252837;
+    --bg-tertiary: #2d3142;
+    --text-primary: #ffffff;
+    --text-secondary: #b8c1db;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
     --shadow: rgba(0, 0, 0, 0.5);
+    --windows-blue: #0078d7;
+    --windows-hover: #1e90ff;
     
     /* Spacing */
     --taskbar-height: 60px;
     --window-header-height: 40px;
-    --border-radius: 12px;
+    --border-radius: 8px;
     --gap: 16px;
     
     /* Animations */
@@ -101,10 +104,8 @@ body {
 .boot-logo h1 {
     font-size: 3rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary);
+    text-shadow: 0 2px 10px rgba(51, 153, 255, 0.5);
     margin-bottom: 0.5rem;
 }
 
@@ -166,27 +167,10 @@ body {
     width: 100%;
     height: 100%;
     background: 
-        linear-gradient(135deg, 
-            rgba(10, 14, 39, 0.95) 0%, 
-            rgba(30, 36, 66, 0.9) 25%,
-            rgba(45, 27, 105, 0.9) 50%,
-            rgba(30, 36, 66, 0.9) 75%,
-            rgba(10, 14, 39, 0.95) 100%
-        ),
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 2px,
-            rgba(100, 255, 218, 0.03) 2px,
-            rgba(100, 255, 218, 0.03) 4px
-        ),
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 2px,
-            rgba(124, 58, 237, 0.03) 2px,
-            rgba(124, 58, 237, 0.03) 4px
-        );
+        radial-gradient(ellipse at 20% 30%, rgba(0, 120, 215, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(0, 150, 255, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(51, 153, 255, 0.15) 0%, transparent 60%),
+        linear-gradient(135deg, #0d1117 0%, #1a1d29 25%, #252837 50%, #1a1d29 75%, #0d1117 100%);
     z-index: 0;
 }
 
@@ -198,10 +182,10 @@ body {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 20%, rgba(100, 255, 218, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.15) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
-    animation: gradientShift 20s ease-in-out infinite;
+        radial-gradient(circle at 30% 40%, rgba(0, 120, 215, 0.2) 0%, transparent 35%),
+        radial-gradient(circle at 70% 60%, rgba(51, 153, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(30, 144, 255, 0.1) 0%, transparent 45%);
+    animation: auroraShift 25s ease-in-out infinite alternate;
 }
 
 .wallpaper::after {
@@ -211,16 +195,29 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
-        linear-gradient(45deg, transparent 48%, rgba(100, 255, 218, 0.02) 49%, rgba(100, 255, 218, 0.02) 51%, transparent 52%),
-        linear-gradient(-45deg, transparent 48%, rgba(124, 58, 237, 0.02) 49%, rgba(124, 58, 237, 0.02) 51%, transparent 52%);
-    background-size: 100px 100px;
-    animation: backgroundMove 30s linear infinite;
+    background: 
+        linear-gradient(180deg, transparent 0%, rgba(0, 120, 215, 0.05) 50%, transparent 100%);
+    animation: lightSweep 30s ease-in-out infinite;
 }
 
-@keyframes backgroundMove {
-    0% { background-position: 0 0, 0 0; }
-    100% { background-position: 100px 100px, -100px 100px; }
+@keyframes auroraShift {
+    0% { 
+        opacity: 0.6;
+        transform: scale(1) rotate(0deg);
+    }
+    100% { 
+        opacity: 0.8;
+        transform: scale(1.1) rotate(5deg);
+    }
+}
+
+@keyframes lightSweep {
+    0%, 100% { 
+        opacity: 0.3;
+    }
+    50% { 
+        opacity: 0.6;
+    }
 }
 
 @keyframes gradientShift {
@@ -266,10 +263,10 @@ body {
 }
 
 .desktop-icon.selected {
-    background: rgba(100, 255, 218, 0.2);
+    background: rgba(51, 153, 255, 0.25);
     backdrop-filter: blur(10px);
     border: 1px solid var(--primary);
-    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+    box-shadow: 0 0 20px rgba(51, 153, 255, 0.4);
 }
 
 .desktop-icon.selected .icon {
@@ -277,8 +274,9 @@ body {
 }
 
 .desktop-icon.selected span {
-    color: var(--primary);
+    color: #fff;
     font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .desktop-icon .icon {
@@ -445,9 +443,12 @@ body {
     left: 0;
     width: 100%;
     height: var(--taskbar-height);
-    background: rgba(10, 14, 39, 0.8);
+    background: linear-gradient(to bottom, 
+        rgba(37, 40, 55, 0.98) 0%,
+        rgba(26, 29, 41, 0.98) 100%);
     backdrop-filter: blur(20px);
-    border-top: 1px solid var(--glass-border);
+    border-top: 1px solid rgba(51, 153, 255, 0.3);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -489,8 +490,9 @@ body {
 }
 
 .start-button.active {
-    background: rgba(100, 255, 218, 0.2);
+    background: linear-gradient(to bottom, var(--windows-hover), var(--windows-blue));
     border-color: var(--primary);
+    color: #fff;
 }
 
 .start-icon {
@@ -519,7 +521,8 @@ body {
 
 .taskbar-app.active {
     border-color: var(--primary);
-    background: rgba(100, 255, 218, 0.1);
+    background: linear-gradient(to bottom, rgba(51, 153, 255, 0.3), rgba(0, 120, 215, 0.3));
+    box-shadow: 0 0 10px rgba(51, 153, 255, 0.3);
 }
 
 .taskbar-app::after {
@@ -751,18 +754,20 @@ body {
 
 .context-menu {
     position: fixed;
-    background: rgba(30, 36, 66, 0.95);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    padding: 6px;
-    min-width: 200px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(to bottom, #f2f2f2 0%, #e8e8e8 100%);
+    border: 1px solid #999;
+    border-radius: 0;
+    padding: 3px;
+    min-width: 220px;
+    box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+        2px 2px 8px rgba(0, 0, 0, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: scale(0.95);
     transition: all var(--transition-fast);
     z-index: 9999;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .context-menu.active {
@@ -773,28 +778,37 @@ body {
 
 .context-item {
     width: 100%;
-    padding: 10px 12px;
-    background: none;
+    padding: 8px 32px 8px 28px;
+    background: transparent;
     border: none;
-    border-radius: 6px;
-    color: var(--text-primary);
-    cursor: pointer;
+    border-radius: 0;
+    color: #000;
+    cursor: default;
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.9rem;
+    font-size: 11px;
     text-align: left;
-    transition: all var(--transition-fast);
+    transition: all 0.1s ease;
+    position: relative;
+}
+
+.context-item .icon {
+    position: absolute;
+    left: 6px;
+    font-size: 16px;
 }
 
 .context-item:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to bottom, #5393d7 0%, #4985d2 100%);
+    color: #fff;
 }
 
 .context-divider {
     height: 1px;
-    background: var(--glass-border);
-    margin: 6px 0;
+    background: linear-gradient(to right, transparent, #d0d0d0 10%, #d0d0d0 90%, transparent);
+    margin: 3px 2px;
+    border-top: 1px solid #fff;
 }
 
 /* ===================================
@@ -1066,5 +1080,179 @@ body {
 
 .open-demo-btn:hover::before {
     left: 100%;
+}
+
+/* Certificate Module Badges */
+.view-cert-btn {
+    transition: all 0.2s;
+}
+
+.view-cert-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+    border-color: var(--primary);
+}
+
+/* ===================================
+   Certificate Modal
+   =================================== */
+
+.cert-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.cert-modal.active {
+    display: flex;
+}
+
+.cert-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.cert-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90vh;
+    background: rgba(30, 36, 66, 0.98);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.cert-modal-header {
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cert-modal-header h3 {
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.cert-modal-close {
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.cert-modal-close:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.cert-modal-body {
+    flex: 1;
+    padding: 2rem;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+.cert-modal-body iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    border: none;
+    border-radius: 8px;
+}
+
+.cert-modal-body img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.cert-modal-footer {
+    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: center;
+}
+
+.cert-download-btn {
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cert-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
+}
+
+@media (max-width: 768px) {
+    .cert-modal-container {
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .cert-modal-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .cert-modal-body {
+        padding: 1rem;
+    }
+    
+    .cert-modal-body iframe {
+        min-height: 400px;
+    }
 }
 

@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateExperienceYears();
     initializeThemeToggle();
     initializeGitHubStats();
+    initializeCertificateModal();
     
     // Auto-open apps in a nice cascading manner after boot
     setTimeout(() => {
@@ -573,5 +574,68 @@ function autoOpenApps() {
     setTimeout(() => {
         showNotification('✨ Portfolio ready! Explore each section');
     }, 1200);
+}
+
+// ===========================
+// Certificate Modal
+// ===========================
+function initializeCertificateModal() {
+    const modal = document.getElementById('certificateModal');
+    const modalTitle = document.getElementById('certModalTitle');
+    const modalBody = document.getElementById('certModalBody');
+    const downloadBtn = document.getElementById('certDownloadBtn');
+    const closeBtn = document.getElementById('certModalClose');
+    const overlay = modal.querySelector('.cert-modal-overlay');
+    
+    // Close modal function
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Open modal function
+    function openModal(certPath, title, type) {
+        modalTitle.textContent = title;
+        modalBody.innerHTML = '';
+        
+        if (type === 'pdf') {
+            modalBody.innerHTML = `<iframe src="${certPath}#toolbar=1&navpanes=0" type="application/pdf"></iframe>`;
+        } else {
+            modalBody.innerHTML = `<img src="${certPath}" alt="${title}" />`;
+        }
+        
+        downloadBtn.href = certPath;
+        const filename = certPath.split('/').pop();
+        downloadBtn.download = filename;
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    // Event listeners
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+    
+    // Escape key to close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+    
+    // Listen for certificate button clicks (delegated event)
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('view-cert-btn') || e.target.closest('.view-cert-btn')) {
+            const btn = e.target.classList.contains('view-cert-btn') ? e.target : e.target.closest('.view-cert-btn');
+            const certPath = btn.dataset.cert;
+            const title = btn.dataset.title;
+            const type = btn.dataset.type;
+            
+            if (certPath && title && type) {
+                e.preventDefault();
+                openModal(certPath, title, type);
+            }
+        }
+    });
 }
 
