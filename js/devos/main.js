@@ -96,11 +96,19 @@ function initializeDesktopIcons() {
         deselectAllIcons();
     });
     
-    // Enter key to open selected icon
+    // Keyboard navigation for icons
     document.addEventListener('keydown', (e) => {
+        // Enter key to open selected icon
         if (e.key === 'Enter' && selectedIcon) {
             const appId = selectedIcon.dataset.app;
             openApp(appId);
+            return;
+        }
+        
+        // Arrow keys to navigate between icons
+        if (selectedIcon && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            e.preventDefault();
+            navigateIcons(e.key);
         }
     });
 }
@@ -116,6 +124,47 @@ function deselectAllIcons() {
         icon.classList.remove('selected');
     });
     selectedIcon = null;
+}
+
+function navigateIcons(direction) {
+    const icons = Array.from(document.querySelectorAll('.desktop-icon'));
+    const currentIndex = icons.indexOf(selectedIcon);
+    
+    if (currentIndex === -1) return;
+    
+    let nextIndex;
+    
+    switch(direction) {
+        case 'ArrowUp':
+            // Move up in the column
+            nextIndex = currentIndex - 1;
+            break;
+        case 'ArrowDown':
+            // Move down in the column
+            nextIndex = currentIndex + 1;
+            break;
+        case 'ArrowLeft':
+            // For single column layout, same as up
+            nextIndex = currentIndex - 1;
+            break;
+        case 'ArrowRight':
+            // For single column layout, same as down
+            nextIndex = currentIndex + 1;
+            break;
+    }
+    
+    // Wrap around
+    if (nextIndex < 0) {
+        nextIndex = icons.length - 1;
+    } else if (nextIndex >= icons.length) {
+        nextIndex = 0;
+    }
+    
+    if (icons[nextIndex]) {
+        selectIcon(icons[nextIndex]);
+        // Scroll icon into view if needed
+        icons[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
 }
 
 function makeDraggable(icon) {
