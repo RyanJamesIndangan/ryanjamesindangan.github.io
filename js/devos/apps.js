@@ -204,7 +204,7 @@ const apps = {
                     ${createCertCard(
                         '👨‍💼 Certified Chief Technology Officer',
                         'TechSherpas',
-                        'Issued Apr 2024',
+                        'Issued Jul 2023',
                         'Comprehensive CTO certification covering technology leadership, strategic planning, team management, and enterprise architecture.',
                         'assets/certificates/cto-certificate.pdf'
                     )}
