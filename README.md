@@ -96,7 +96,7 @@ MySQL • PostgreSQL • MongoDB • Firebase • REST APIs • GraphQL • WebS
 AWS (EC2, RDS, Lambda, S3) • Docker • Kubernetes • DigitalOcean • Jenkins • GitHub Actions • CI/CD
 
 ### Tools & Automation
-Git • GitHub/GitLab • N8N • Cursor AI • Postman • Docker Compose • Selenium • Cypress
+Git • GitHub/GitLab • N8N • Cursor AI • v0 by Vercel • Postman • Docker Compose • Selenium • Cypress
 
 ### Project Management
 Jira • Confluence • Asana • Monday.com • ClickUp • Slack • MS Teams • Agile/Scrum
