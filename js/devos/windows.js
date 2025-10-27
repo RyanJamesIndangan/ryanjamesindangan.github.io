@@ -40,28 +40,29 @@ class WindowManager {
         } else {
             // Calculate tiled layout positions (2x2 grid)
             if (position) {
-                const desktopIconWidth = 250; // Reserve space for desktop icons on the right
+                const desktopIconWidth = 130; // Reserve space for desktop icons on the left
                 const desktopWidth = window.innerWidth - desktopIconWidth;
                 const desktopHeight = window.innerHeight - 60; // Subtract taskbar height
                 const windowWidth = (desktopWidth / 2) - 20; // 2 columns with 20px gap
                 const windowHeight = (desktopHeight / 2) - 20; // 2 rows with 20px gap
                 const gap = 10;
+                const leftOffset = desktopIconWidth; // Start windows after desktop icons
                 
                 switch(position) {
                     case 'top-left':
-                        windowEl.style.left = `${gap}px`;
+                        windowEl.style.left = `${leftOffset + gap}px`;
                         windowEl.style.top = `${gap}px`;
                         break;
                     case 'top-right':
-                        windowEl.style.left = `${desktopWidth / 2 + gap}px`;
+                        windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
                         windowEl.style.top = `${gap}px`;
                         break;
                     case 'bottom-left':
-                        windowEl.style.left = `${gap}px`;
+                        windowEl.style.left = `${leftOffset + gap}px`;
                         windowEl.style.top = `${desktopHeight / 2 + gap}px`;
                         break;
                     case 'bottom-right':
-                        windowEl.style.left = `${desktopWidth / 2 + gap}px`;
+                        windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
                         windowEl.style.top = `${desktopHeight / 2 + gap}px`;
                         break;
                 }
@@ -70,7 +71,8 @@ class WindowManager {
             } else {
                 // Default cascading position for manually opened windows
                 const offset = (this.windows.size * 30) % 100;
-                windowEl.style.left = `${100 + offset}px`;
+                const leftOffset = 130; // Keep space for desktop icons
+                windowEl.style.left = `${leftOffset + 100 + offset}px`;
                 windowEl.style.top = `${50 + offset}px`;
                 windowEl.style.width = '800px';
                 windowEl.style.height = '600px';
