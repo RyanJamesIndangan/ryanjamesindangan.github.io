@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ryan James Indangan - Full-Stack Developer & CTO | Interactive Portfolio OS">
+    <meta name="keywords" content="Full-Stack Developer, CTO, Web Development, React, Laravel, AWS, DevOps">
+    <meta name="author" content="Ryan James Indangan">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.github.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; img-src 'self' data: https://avatars.githubusercontent.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com;">
+    
+    <title>Ryan James Indangan - Developer Portfolio OS</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/devos.css">
+</head>
+<body>
+    <!-- Boot Screen -->
+    <div id="bootScreen" class="boot-screen active">
+        <div class="boot-logo">
+            <div class="logo-icon">⚡</div>
+            <h1>DevOS</h1>
+            <div class="version">v2.0.0</div>
+        </div>
+        <div class="boot-progress">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p class="boot-text">Initializing portfolio environment...</p>
+        </div>
+    </div>
+
+    <!-- Main Desktop Environment -->
+    <div id="desktop" class="desktop">
+        <!-- Wallpaper -->
+        <div class="wallpaper"></div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="desktop-icon" data-app="about">
+                <div class="icon">👨‍💻</div>
+                <span>About Me</span>
+            </div>
+            <div class="desktop-icon" data-app="skills">
+                <div class="icon">🛠️</div>
+                <span>Skills</span>
+            </div>
+            <div class="desktop-icon" data-app="experience">
+                <div class="icon">💼</div>
+                <span>Experience</span>
+            </div>
+            <div class="desktop-icon" data-app="projects">
+                <div class="icon">🚀</div>
+                <span>Projects</span>
+            </div>
+            <div class="desktop-icon" data-app="certifications">
+                <div class="icon">🎓</div>
+                <span>Certificates</span>
+            </div>
+            <div class="desktop-icon" data-app="contact">
+                <div class="icon">📧</div>
+                <span>Contact</span>
+            </div>
+        </div>
+
+        <!-- Windows Container -->
+        <div class="windows-container" id="windowsContainer">
+            <!-- Windows will be dynamically created here -->
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="taskbar-start">
+                <button class="start-button" id="startButton">
+                    <span class="start-icon">⚡</span>
+                    <span class="start-text">DevOS</span>
+                </button>
+            </div>
+            
+            <div class="taskbar-center" id="taskbarApps">
+                <!-- Active app buttons will appear here -->
+            </div>
+            
+            <div class="taskbar-end">
+                <div class="system-tray">
+                    <button class="tray-item" id="githubStats" title="GitHub Activity">
+                        <span class="icon">📊</span>
+                    </button>
+                    <button class="tray-item" id="themeToggle" title="Toggle Theme">
+                        <span class="icon">🌙</span>
+                    </button>
+                    <div class="tray-clock" id="clock">
+                        <div class="time">12:00</div>
+                        <div class="date">Jan 1</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div class="start-menu" id="startMenu">
+            <div class="start-menu-header">
+                <div class="user-profile">
+                    <div class="user-avatar">RJ</div>
+                    <div class="user-info">
+                        <div class="user-name">Ryan James Indangan</div>
+                        <div class="user-title">Full-Stack Developer & CTO</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="start-menu-apps">
+                <h3>Applications</h3>
+                <div class="app-grid">
+                    <button class="app-tile" data-app="about">
+                        <span class="app-icon">👨‍💻</span>
+                        <span class="app-name">About Me</span>
+                    </button>
+                    <button class="app-tile" data-app="skills">
+                        <span class="app-icon">🛠️</span>
+                        <span class="app-name">Skills</span>
+                    </button>
+                    <button class="app-tile" data-app="experience">
+                        <span class="app-icon">💼</span>
+                        <span class="app-name">Experience</span>
+                    </button>
+                    <button class="app-tile" data-app="projects">
+                        <span class="app-icon">🚀</span>
+                        <span class="app-name">Projects</span>
+                    </button>
+                    <button class="app-tile" data-app="certifications">
+                        <span class="app-icon">🎓</span>
+                        <span class="app-name">Certificates</span>
+                    </button>
+                    <button class="app-tile" data-app="contact">
+                        <span class="app-icon">📧</span>
+                        <span class="app-name">Contact</span>
+                    </button>
+                    <button class="app-tile" data-app="terminal">
+                        <span class="app-icon">⌨️</span>
+                        <span class="app-name">Terminal</span>
+                    </button>
+                    <button class="app-tile" data-app="resume">
+                        <span class="app-icon">📄</span>
+                        <span class="app-name">Resume</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="start-menu-footer">
+                <button class="footer-btn" onclick="window.open('https://github.com/ryanjamesindangan', '_blank')">
+                    <span>🔗</span> GitHub
+                </button>
+                <button class="footer-btn" onclick="window.open('https://www.linkedin.com/in/ryan-james-indangan-63b271164/', '_blank')">
+                    <span>💼</span> LinkedIn
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <button class="context-item" data-action="refresh">
+            <span class="icon">🔄</span> Refresh
+        </button>
+        <button class="context-item" data-action="view-code">
+            <span class="icon">👁️</span> View Source Code
+        </button>
+        <div class="context-divider"></div>
+        <button class="context-item" data-action="about-devos">
+            <span class="icon">ℹ️</span> About DevOS
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/devos/boot.js"></script>
+    <script src="js/devos/windows.js"></script>
+    <script src="js/devos/apps.js"></script>
+    <script src="js/devos/main.js"></script>
+</body>
+</html>
+
