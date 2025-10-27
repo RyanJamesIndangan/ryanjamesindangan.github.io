@@ -599,7 +599,27 @@ function initializeCertificateModal() {
         modalBody.innerHTML = '';
         
         if (type === 'pdf') {
-            modalBody.innerHTML = `<iframe src="${certPath}#toolbar=1&navpanes=0" type="application/pdf"></iframe>`;
+            // Use multiple methods for better PDF compatibility
+            modalBody.innerHTML = `
+                <div style="width: 100%; height: 100%; display: flex; flex-direction: column; gap: 1rem;">
+                    <embed src="${certPath}#toolbar=1&navpanes=0&scrollbar=1" type="application/pdf" style="flex: 1; width: 100%; border: none; background: #fff;" />
+                    <div style="padding: 1rem; background: rgba(0, 120, 215, 0.1); border-radius: 8px; text-align: center;">
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                            📄 PDF preview • If the document doesn't display, use the buttons below
+                        </p>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="${certPath}" target="_blank" rel="noopener noreferrer"
+                               style="padding: 0.75rem 1.5rem; background: var(--windows-blue); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                                🔗 Open in New Tab
+                            </a>
+                            <a href="${certPath}" download
+                               style="padding: 0.75rem 1.5rem; background: var(--success); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                                📥 Download PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
         } else {
             modalBody.innerHTML = `<img src="${certPath}" alt="${title}" />`;
         }
