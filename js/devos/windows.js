@@ -40,7 +40,8 @@ class WindowManager {
         } else {
             // Calculate tiled layout positions (2x2 grid)
             if (position) {
-                const desktopWidth = window.innerWidth;
+                const desktopIconWidth = 250; // Reserve space for desktop icons on the right
+                const desktopWidth = window.innerWidth - desktopIconWidth;
                 const desktopHeight = window.innerHeight - 60; // Subtract taskbar height
                 const windowWidth = (desktopWidth / 2) - 20; // 2 columns with 20px gap
                 const windowHeight = (desktopHeight / 2) - 20; // 2 rows with 20px gap
