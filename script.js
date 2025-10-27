@@ -358,6 +358,7 @@ if (window.innerWidth > 768) {
     canvas.style.height = '100%';
     canvas.style.pointerEvents = 'none';
     canvas.style.zIndex = '9999';
+    canvas.style.mixBlendMode = 'screen';
     document.body.appendChild(canvas);
     
     const ctx = canvas.getContext('2d');
@@ -365,32 +366,70 @@ if (window.innerWidth > 768) {
     canvas.height = window.innerHeight;
     
     const trail = [];
-    const maxTrailLength = 20;
+    const maxTrailLength = 15;
+    let lastX = 0;
+    let lastY = 0;
+    let isMoving = false;
+    let fadeTimer = null;
     
     document.addEventListener('mousemove', (e) => {
+        lastX = e.clientX;
+        lastY = e.clientY;
+        isMoving = true;
+        
         trail.push({
             x: e.clientX,
             y: e.clientY,
-            alpha: 1
+            life: 1
         });
         
         if (trail.length > maxTrailLength) {
             trail.shift();
         }
+        
+        // Clear fade timer
+        clearTimeout(fadeTimer);
+        fadeTimer = setTimeout(() => {
+            isMoving = false;
+        }, 100);
     });
     
     function drawTrail() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Fade out effect - clear with semi-transparent background
+        ctx.fillStyle = 'rgba(10, 14, 39, 0.3)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        trail.forEach((point, index) => {
-            const alpha = (index / trail.length) * 0.5;
-            const size = (index / trail.length) * 8;
+        // Update and draw trail
+        for (let i = trail.length - 1; i >= 0; i--) {
+            const point = trail[i];
             
+            // Fade out over time
+            point.life -= 0.05;
+            
+            if (point.life <= 0) {
+                trail.splice(i, 1);
+                continue;
+            }
+            
+            const progress = i / trail.length;
+            const alpha = progress * point.life * 0.4;
+            const size = progress * 6 + 2;
+            
+            // Draw glow
+            const gradient = ctx.createRadialGradient(point.x, point.y, 0, point.x, point.y, size);
+            gradient.addColorStop(0, `rgba(100, 255, 218, ${alpha})`);
+            gradient.addColorStop(1, `rgba(100, 255, 218, 0)`);
+            
+            ctx.fillStyle = gradient;
             ctx.beginPath();
             ctx.arc(point.x, point.y, size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(100, 255, 218, ${alpha})`;
             ctx.fill();
-        });
+        }
+        
+        // If not moving and trail is empty, clear canvas completely
+        if (!isMoving && trail.length === 0) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
         
         requestAnimationFrame(drawTrail);
     }
