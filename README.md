@@ -70,6 +70,31 @@ ryanjamesindangan.github.io/
 
 No build process or dependencies required!
 
+## 📁 Project Structure
+
+This project follows enterprise-grade organization principles with modular architecture.
+
+**See [`docs/PROJECT-STRUCTURE.md`](docs/PROJECT-STRUCTURE.md) for detailed documentation.**
+
+```
+├── assets/          # Static assets (images, certificates)
+├── css/             # Stylesheets  
+├── js/              # JavaScript modules
+│   ├── config/      # Configuration & constants
+│   ├── core/        # Core system functionality
+│   ├── components/  # UI component logic
+│   ├── utils/       # Utility & helper functions
+│   └── devos/       # Main application logic
+├── docs/            # Comprehensive documentation
+└── index.html       # Main entry point
+```
+
+**Key Documentation:**
+- 📖 [Project Structure](docs/PROJECT-STRUCTURE.md) - Detailed file organization
+- 🏗️ [Architecture](docs/ARCHITECTURE.md) - System design
+- 🔖 [Versioning](docs/VERSIONING.md) - Git Flow & releases
+- 📸 [Profile Photo Setup](docs/PROFILE-PHOTO-SETUP.md) - Photo instructions
+
 ## 📄 Sections
 
 | Section | Description |
