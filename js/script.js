@@ -1,4 +1,31 @@
 // ===========================
+// Error Handler - Suppress external extension errors
+// ===========================
+window.addEventListener('error', (e) => {
+    // Suppress errors from browser extensions and ad blockers
+    if (e.message && (
+        e.message.includes('extension') || 
+        e.message.includes('chrome-extension') ||
+        e.message.includes('moz-extension') ||
+        e.message.includes('ERR_BLOCKED_BY_CLIENT')
+    )) {
+        e.preventDefault();
+        return true;
+    }
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    // Suppress promise rejections from extensions
+    if (e.reason && e.reason.message && (
+        e.reason.message.includes('extension') ||
+        e.reason.message.includes('message channel closed')
+    )) {
+        e.preventDefault();
+        return true;
+    }
+});
+
+// ===========================
 // Particle Background Animation
 // ===========================
 class ParticleSystem {
@@ -10,10 +37,14 @@ class ParticleSystem {
     }
 
     init() {
-        for (let i = 0; i < this.particleCount; i++) {
-            this.createParticle();
+        try {
+            for (let i = 0; i < this.particleCount; i++) {
+                this.createParticle();
+            }
+            this.animate();
+        } catch (error) {
+            console.log('Particle system initialization failed:', error);
         }
-        this.animate();
     }
 
     createParticle() {
@@ -59,9 +90,13 @@ class ParticleSystem {
 }
 
 // Initialize particles
-const particlesContainer = document.getElementById('particles');
-if (particlesContainer) {
-    new ParticleSystem(particlesContainer);
+try {
+    const particlesContainer = document.getElementById('particles');
+    if (particlesContainer) {
+        new ParticleSystem(particlesContainer);
+    }
+} catch (error) {
+    console.log('Particle system failed to initialize:', error);
 }
 
 // ===========================
@@ -350,20 +385,24 @@ socialLinks.forEach((link, index) => {
 // Cursor Trail Effect (Desktop only)
 // ===========================
 if (window.innerWidth > 768) {
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.width = '100%';
-    canvas.style.height = '100%';
-    canvas.style.pointerEvents = 'none';
-    canvas.style.zIndex = '9999';
-    canvas.style.mixBlendMode = 'screen';
-    document.body.appendChild(canvas);
-    
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    try {
+        const canvas = document.createElement('canvas');
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.style.pointerEvents = 'none';
+        canvas.style.zIndex = '9999';
+        canvas.style.mixBlendMode = 'screen';
+        document.body.appendChild(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+            throw new Error('Canvas context not supported');
+        }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     
     const trail = [];
     const maxTrailLength = 15;
@@ -440,6 +479,10 @@ if (window.innerWidth > 768) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
     });
+    
+    } catch (error) {
+        console.log('Cursor trail effect failed to initialize:', error);
+    }
 }
 
 // ===========================
@@ -461,13 +504,17 @@ window.addEventListener('resize', () => {
 // ===========================
 // Loading Animation
 // ===========================
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
-});
+try {
+    window.addEventListener('load', () => {
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            document.body.style.transition = 'opacity 0.5s ease';
+            document.body.style.opacity = '1';
+        }, 100);
+    });
+} catch (error) {
+    console.log('Loading animation failed:', error);
+}
 
 // ===========================
 // Console Message (Easter Egg)
