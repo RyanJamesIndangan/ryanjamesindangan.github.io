@@ -291,7 +291,7 @@ const apps = {
                     
                     <div style="padding: 2rem; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px;">
                         <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🔐 Hacker-X Ethical Hacking Course</h3>
-                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">Hacker-X • Completed 2024</p>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">Hacker-X • Completed 2025</p>
                         <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1.5rem;">
                             Comprehensive cybersecurity training covering penetration testing, vulnerability assessment, network security, and ethical hacking practices.
                         </p>
