@@ -271,6 +271,11 @@ function openApp(appId, position = null) {
     if (appId === 'projects') {
         setTimeout(() => initializeDemoButtons(), 100);
     }
+    
+    // Initialize Snake game if opened
+    if (appId === 'snake') {
+        setTimeout(() => initializeSnakeGame(), 100);
+    }
 }
 
 // ===========================

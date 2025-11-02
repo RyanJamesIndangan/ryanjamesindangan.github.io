@@ -395,6 +395,46 @@ const apps = {
         `
     },
 
+    snake: {
+        title: 'Snake Game',
+        icon: '🐍',
+        content: `
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: #1a1a1a;">
+                <div style="padding: 1rem; background: rgba(0, 0, 0, 0.3); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h3 style="color: #64ffda; margin: 0; font-size: 1.2rem;">🐍 Snake Game</h3>
+                            <p style="color: #94a3b8; margin: 0.25rem 0 0 0; font-size: 0.85rem;">Use arrow keys or WASD to play</p>
+                        </div>
+                        <div style="display: flex; gap: 1.5rem; align-items: center;">
+                            <div style="text-align: center;">
+                                <div style="color: #94a3b8; font-size: 0.75rem;">Score</div>
+                                <div id="snakeScore" style="color: #64ffda; font-size: 1.5rem; font-weight: bold;">0</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: #94a3b8; font-size: 0.75rem;">High</div>
+                                <div id="snakeHighScore" style="color: #f59e0b; font-size: 1.5rem; font-weight: bold;">0</div>
+                            </div>
+                            <button id="snakeStartBtn" style="padding: 0.5rem 1.5rem; background: #64ffda; color: #000; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                                Start
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                    <canvas id="snakeCanvas" style="border: 2px solid #64ffda; background: #0a0a0a; box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);"></canvas>
+                    <div id="snakeGameOver" style="position: absolute; background: rgba(0, 0, 0, 0.9); padding: 2rem; border-radius: 12px; text-align: center; display: none; border: 2px solid #64ffda;">
+                        <h3 style="color: #64ffda; margin: 0 0 1rem 0; font-size: 1.5rem;">Game Over!</h3>
+                        <p style="color: #e2e8f0; margin: 0 0 1.5rem 0;">Final Score: <span id="finalScore" style="color: #64ffda; font-weight: bold;">0</span></p>
+                        <button id="snakeRestartBtn" style="padding: 0.75rem 2rem; background: #64ffda; color: #000; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            Play Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `
+    },
+
     resume: {
         title: 'Resume / CV',
         icon: '📄',
