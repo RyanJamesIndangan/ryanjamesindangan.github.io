@@ -319,15 +319,15 @@ body {
 
 .window {
     position: absolute;
-    background: #f0f0f0;
-    backdrop-filter: blur(10px);
-    border: 1px solid #b0b0b0;
+    background: #f8f8f8;
+    backdrop-filter: blur(8px);
+    border: 1px solid #d0d0d0;
     border-radius: 6px;
     box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.6) inset,
-        0 1px 0 rgba(255, 255, 255, 0.6) inset,
-        0 2px 4px rgba(0, 0, 0, 0.2),
-        0 4px 12px rgba(0, 0, 0, 0.15);
+        0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+        0 1px 0 rgba(255, 255, 255, 0.7) inset,
+        0 2px 4px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -351,16 +351,16 @@ body {
 
 .window-header {
     height: var(--window-header-height);
-    background: linear-gradient(to bottom, #e8f4f8 0%, #d9e8ed 50%, #c5d9e6 100%);
-    border-bottom: 1px solid #a8c4d0;
+    background: linear-gradient(to bottom, #e8f4f8 0%, #d0e8f0 50%, #b8d9e6 100%);
+    border-bottom: 1px solid #a0bcc8;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 8px;
     cursor: move;
     box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        0 1px 0 rgba(0, 0, 0, 0.1);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .window-title {
@@ -435,9 +435,39 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     padding: 16px;
-    background: #ffffff;
-    color: #1a1a1a;
+    background: #fafafa;
+    color: #000000;
     margin: 0;
+}
+
+.window-content * {
+    color: #000000;
+}
+
+.window-content h1,
+.window-content h2,
+.window-content h3,
+.window-content h4,
+.window-content h5,
+.window-content h6 {
+    color: #000000;
+    font-weight: 600;
+}
+
+.window-content p {
+    color: #1a1a1a;
+}
+
+.window-content span {
+    color: #1a1a1a;
+}
+
+.window-content a {
+    color: #2171d6;
+}
+
+.window-content a:hover {
+    color: #4a9eff;
 }
 
 /* Custom Scrollbar */

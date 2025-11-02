@@ -8,48 +8,48 @@ const apps = {
         icon: '👨‍💻',
         content: `
             <div style="max-width: 700px;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(135deg, #64ffda, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">
                     Ryan James Indangan
                 </h1>
-                <p style="font-size: 1.2rem; color: #5eb3ff; margin-bottom: 2rem;">
+                <p style="font-size: 1.2rem; color: #2171d6; margin-bottom: 2rem; font-weight: 500;">
                     Full-Stack Web Developer & Certified CTO
                 </p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                    <div style="padding: 1rem; background: rgba(51, 153, 255, 0.15); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #5eb3ff;"><span id="yearsExp">7</span>+</div>
-                        <div style="font-size: 0.9rem; color: #c2d0e8;">Years Experience</div>
+                    <div style="padding: 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2171d6;"><span id="yearsExp">7</span>+</div>
+                        <div style="font-size: 0.9rem; color: #1a1a1a;">Years Experience</div>
                     </div>
-                    <div style="padding: 1rem; background: rgba(51, 153, 255, 0.15); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #5eb3ff;">50+</div>
-                        <div style="font-size: 0.9rem; color: #c2d0e8;">Projects Delivered</div>
+                    <div style="padding: 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #2171d6;">50+</div>
+                        <div style="font-size: 0.9rem; color: #1a1a1a;">Projects Delivered</div>
                     </div>
-                    <div style="padding: 1rem; background: rgba(255, 185, 0, 0.15); border-radius: 8px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #ffb900;">12</div>
-                        <div style="font-size: 0.9rem; color: #c2d0e8;">Team Members Led</div>
+                    <div style="padding: 1rem; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">12</div>
+                        <div style="font-size: 0.9rem; color: #1a1a1a;">Team Members Led</div>
                     </div>
                 </div>
 
-                <p style="line-height: 1.8; margin-bottom: 1rem; color: #e2e8f0;">
-                    I'm a versatile <strong style="color: #5eb3ff;">Full-Stack Web Developer</strong> with deep expertise in the LAMP stack, 
+                <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
+                    I'm a versatile <strong style="color: #2171d6;">Full-Stack Web Developer</strong> with deep expertise in the LAMP stack, 
                     PHP frameworks (CodeIgniter, Laravel), and modern frontend libraries including React, Vue, and Angular.
                 </p>
                 
-                <p style="line-height: 1.8; margin-bottom: 1rem; color: #e2e8f0;">
-                    With over <strong><span id="yearsExp2">7</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
+                <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
+                    With over <strong style="color: #2171d6;"><span id="yearsExp2">7</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
                     and leveraged AWS for cloud infrastructure. My approach combines strong technical hands-on expertise 
                     with strategic thinking to deliver results in Agile environments.
                 </p>
                 
-                <p style="line-height: 1.8; margin-bottom: 1rem; color: #e2e8f0;">
-                    I specialize in <strong style="color: #5eb3ff;">AI-integrated development</strong>, applying cutting-edge AI tools 
+                <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
+                    I specialize in <strong style="color: #2171d6;">AI-integrated development</strong>, applying cutting-edge AI tools 
                     to improve efficiency, enhance quality assurance, and scale solutions while maintaining code 
                     quality and best practices.
                 </p>
 
-                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(100, 255, 218, 0.05); border-left: 3px solid #64ffda; border-radius: 8px;">
-                    <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🏆 Recent Achievement</h3>
-                    <p style="color: #e2e8f0; line-height: 1.6;">
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #e8f4f8; border-left: 3px solid #2171d6; border-radius: 6px;">
+                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
+                    <p style="color: #1a1a1a; line-height: 1.6;">
                         Led the complete redesign of database architecture for GlobalX Digital Corporation, 
                         directed 12 developers across 3 teams, and revived a stalled project by delivering a fully 
                         enhanced Version 2 within 2 months.
@@ -64,7 +64,7 @@ const apps = {
         icon: '🛠️',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Tech Stack & Expertise</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Tech Stack & Expertise</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createSkillCategory('💻 Frontend', ['React', 'Vue.js', 'Angular', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'jQuery'])}
@@ -90,7 +90,7 @@ const apps = {
         icon: '💼',
         content: `
             <div style="max-width: 800px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Professional Journey</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Journey</h2>
                 
                 ${createExperienceCard(
                     'Support Engineer',
@@ -553,11 +553,11 @@ const apps = {
 // Helper functions to create UI components
 function createSkillCategory(title, skills) {
     return `
-        <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-            <h3 style="color: #5eb3ff; margin-bottom: 1rem;">${title}</h3>
+        <div style="padding: 1.5rem; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px;">
+            <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">${title}</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${skills.map(skill => `
-                    <span style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 6px; color: #e2e8f0; font-size: 0.9rem;">
+                    <span style="padding: 0.5rem 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #1a1a1a; font-size: 0.9rem; font-weight: 500;">
                         ${skill}
                     </span>
                 `).join('')}
@@ -568,16 +568,16 @@ function createSkillCategory(title, skills) {
 
 function createExperienceCard(title, company, dates, location, responsibilities, tech) {
     return `
-        <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-left: 3px solid #64ffda; border-radius: 12px; margin-bottom: 1.5rem;">
-            <h3 style="color: #5eb3ff; font-size: 1.3rem; margin-bottom: 0.5rem;">${title}</h3>
-            <div style="color: #5eb3ff; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
-            <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">${dates} • ${location}</div>
-            <ul style="color: #e2e8f0; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem;">
+        <div style="padding: 1.5rem; background: #fafafa; border-left: 3px solid #2171d6; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e0e0e0;">
+            <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
+            <div style="color: #2171d6; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
+            <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${dates} • ${location}</div>
+            <ul style="color: #1a1a1a; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem;">
                 ${responsibilities.map(resp => `<li style="margin-bottom: 0.5rem;">${resp}</li>`).join('')}
             </ul>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: rgba(124, 58, 237, 0.2); border-radius: 4px; color: #5eb3ff; font-size: 0.85rem;">
+                    <span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -588,12 +588,12 @@ function createExperienceCard(title, company, dates, location, responsibilities,
 
 function createProjectCard(title, description, tech, link, demoApp) {
     return `
-        <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
-            <h3 style="color: #5eb3ff; font-size: 1.3rem; margin-bottom: 1rem;">${title}</h3>
-            <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
+        <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;">
+            <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">${title}</h3>
+            <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 4px; color: #5eb3ff; font-size: 0.85rem;">
+                    <span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -601,17 +601,17 @@ function createProjectCard(title, description, tech, link, demoApp) {
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                 ${demoApp ? `
                     <button class="open-demo-btn" data-demo="${demoApp}"
-                       style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #7c3aed, #64ffda); border: none; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
                         🎬 Watch Demo Video
                     </button>
                 ` : ''}
                 ${link ? `
                     <a href="${link}" target="_blank" rel="noopener noreferrer" 
-                       style="padding: 0.75rem 1.5rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 8px; color: #5eb3ff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #2171d6; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                         📂 View on GitHub
                     </a>
                 ` : !demoApp ? `
-                    <span style="color: #94a3b8; font-size: 0.9rem; padding: 0.75rem;">🔒 Private Repository</span>
+                    <span style="color: #666; font-size: 0.9rem; padding: 0.75rem;">🔒 Private Repository</span>
                 ` : ''}
             </div>
         </div>
@@ -621,18 +621,18 @@ function createProjectCard(title, description, tech, link, demoApp) {
 function createCertCard(title, issuer, date, description, link) {
     const isPDF = link && link.endsWith('.pdf');
     return `
-        <div style="padding: 2rem; background: rgba(100, 255, 218, 0.1); border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 12px;">
-            <h3 style="color: #5eb3ff; margin-bottom: 0.5rem;">${title}</h3>
-            <p style="color: #94a3b8; margin-bottom: 1rem;">${issuer} • ${date}</p>
-            <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
+        <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+            <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
+            <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">${issuer} • ${date}</p>
+            <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                 ${link ? `
                     <button class="view-cert-btn" data-cert="${link}" data-title="${title}" data-type="${isPDF ? 'pdf' : 'image'}"
-                            style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #7c3aed, #64ffda); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                            style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
                         👁️ View Certificate
                     </button>
                     <a href="${link}" download 
-                       style="padding: 0.75rem 1.5rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
                         📥 Download
                     </a>
                 ` : ''}
@@ -652,25 +652,25 @@ function createModuleBadge(name) {
 function createCertModuleBadge(name, certPath) {
     return `
         <button class="view-cert-btn" data-cert="${certPath}" data-title="${name}" data-type="image"
-                style="padding: 0.75rem 1rem; background: rgba(124, 58, 237, 0.3); border: 1px solid rgba(124, 58, 237, 0.5); border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; color: #e2e8f0;">
+                style="padding: 0.75rem 1rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; color: #1a1a1a;">
             <span style="font-size: 1.5rem;">🔐</span>
-            <span style="font-size: 0.85rem; font-weight: 600;">${name}</span>
-            <span style="font-size: 0.75rem; color: #94a3b8;">Click to view</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: #1a1a1a;">${name}</span>
+            <span style="font-size: 0.75rem; color: #666;">Click to view</span>
         </button>
     `;
 }
 
 function createContactItem(icon, label, value, link) {
     const content = link 
-        ? `<a href="${link}" target="_blank" rel="noopener noreferrer" style="color: #5eb3ff; text-decoration: none;">${value}</a>`
+        ? `<a href="${link}" target="_blank" rel="noopener noreferrer" style="color: #2171d6; text-decoration: none;">${value}</a>`
         : value;
     
     return `
-        <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; display: flex; align-items: center; gap: 1rem;">
+        <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
             <div style="font-size: 2rem;">${icon}</div>
             <div style="flex: 1;">
-                <div style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.25rem;">${label}</div>
-                <div style="color: #e2e8f0; font-size: 1rem; word-break: break-word;">${content}</div>
+                <div style="color: #666; font-size: 0.85rem; margin-bottom: 0.25rem;">${label}</div>
+                <div style="color: #1a1a1a; font-size: 1rem; word-break: break-word; font-weight: 500;">${content}</div>
             </div>
         </div>
     `;
