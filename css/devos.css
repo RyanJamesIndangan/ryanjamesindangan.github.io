@@ -319,20 +319,19 @@ body {
 
 .window {
     position: absolute;
-    background: #f8f8f8;
-    backdrop-filter: blur(8px);
-    border: 1px solid #d0d0d0;
-    border-radius: 6px;
+    background: linear-gradient(to bottom, #ffffff 0%, #f5f7fa 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
     box-shadow: 
-        0 0 0 1px rgba(255, 255, 255, 0.7) inset,
-        0 1px 0 rgba(255, 255, 255, 0.7) inset,
-        0 2px 4px rgba(0, 0, 0, 0.15),
-        0 4px 12px rgba(0, 0, 0, 0.1);
+        0 8px 32px rgba(0, 0, 0, 0.12),
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     pointer-events: auto;
-    transition: opacity var(--transition-fast), transform var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .window.minimized {
@@ -350,17 +349,16 @@ body {
 }
 
 .window-header {
-    height: var(--window-header-height);
-    background: linear-gradient(to bottom, #e8f4f8 0%, #d0e8f0 50%, #b8d9e6 100%);
-    border-bottom: 1px solid #a0bcc8;
+    height: 48px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 8px;
+    padding: 0 16px;
     cursor: move;
-    box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.9),
-        0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .window-title {
@@ -434,9 +432,9 @@ body {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 16px;
-    background: #fafafa;
-    color: #000000;
+    padding: 24px;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8fafc 100%);
+    color: #1e293b;
     margin: 0;
 }
 
@@ -518,17 +516,15 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: var(--taskbar-height);
-    background: linear-gradient(to bottom, 
-        rgba(0, 0, 0, 0.7) 0%,
-        rgba(0, 0, 0, 0.85) 100%);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3);
+    height: 56px;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 8px;
+    padding: 0 12px;
     z-index: 1000;
 }
 
@@ -548,29 +544,29 @@ body {
 .start-button {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 16px;
-    background: linear-gradient(to bottom, #4a9eff 0%, #2171d6 100%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
+    gap: 10px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    border: none;
+    border-radius: 12px;
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-    height: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    height: 40px;
     box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.3),
-        0 1px 2px rgba(0, 0, 0, 0.2);
+        0 4px 12px rgba(99, 102, 241, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .start-button:hover {
-    background: linear-gradient(to bottom, #5aafff 0%, #3181e6 100%);
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    transform: translateY(-2px);
     box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        0 1px 3px rgba(0, 0, 0, 0.3);
+        0 6px 20px rgba(99, 102, 241, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .start-button:active {
@@ -591,37 +587,39 @@ body {
 
 .taskbar-app {
     position: relative;
-    padding: 6px 14px;
-    background: transparent;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
     border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 11px;
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
-    gap: 8px;
-    max-width: 200px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 10px;
+    max-width: 220px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-weight: 500;
-    height: 38px;
+    height: 44px;
 }
 
 .taskbar-app:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
 }
 
 .taskbar-app:active {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(0);
 }
 
 .taskbar-app.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
     color: #fff;
     box-shadow: 
-        inset 0 0 1px rgba(255, 255, 255, 0.3),
-        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        0 4px 12px rgba(99, 102, 241, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .taskbar-app.active::before {
@@ -631,8 +629,9 @@ body {
     left: 0;
     width: 100%;
     height: 3px;
-    background: #4a9eff;
-    box-shadow: 0 -1px 3px rgba(74, 158, 255, 0.5);
+    background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.6);
 }
 
 .system-tray {

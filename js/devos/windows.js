@@ -294,12 +294,21 @@ class WindowManager {
         const windowEl = this.windows.get(appId);
         if (!windowEl) return;
 
-        windowEl.classList.toggle('minimized');
+        const isMinimized = windowEl.classList.contains('minimized');
         
-        // Update taskbar button
-        const taskbarBtn = document.querySelector(`.taskbar-app[data-app="${appId}"]`);
-        if (taskbarBtn) {
-            taskbarBtn.classList.toggle('active');
+        if (isMinimized) {
+            // Restore window
+            windowEl.classList.remove('minimized');
+            this.focusWindow(appId);
+        } else {
+            // Minimize window
+            windowEl.classList.add('minimized');
+            
+            // Update taskbar button - remove active state when minimized
+            const taskbarBtn = document.querySelector(`.taskbar-app[data-app="${appId}"]`);
+            if (taskbarBtn) {
+                taskbarBtn.classList.remove('active');
+            }
         }
     }
 
@@ -322,10 +331,20 @@ class WindowManager {
         
         button.addEventListener('click', () => {
             const windowEl = this.windows.get(appId);
+            if (!windowEl) return;
+            
             if (windowEl.classList.contains('minimized')) {
+                // Restore minimized window
                 this.minimizeWindow(appId);
             } else {
-                this.focusWindow(appId);
+                // Focus or minimize if already focused
+                if (this.activeWindow === windowEl) {
+                    // If already active, minimize it
+                    this.minimizeWindow(appId);
+                } else {
+                    // Focus it
+                    this.focusWindow(appId);
+                }
             }
         });
         
