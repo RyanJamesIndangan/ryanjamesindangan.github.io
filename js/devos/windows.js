@@ -182,6 +182,13 @@ class WindowManager {
 
         // Create taskbar button
         this.createTaskbarButton(appId, title, icon);
+        
+        // Trigger event for snake icon update
+        if (appId === 'snake') {
+            setTimeout(() => {
+                document.dispatchEvent(new CustomEvent('snakeWindowCreated'));
+            }, 100);
+        }
 
         // Animate window in
         setTimeout(() => {
