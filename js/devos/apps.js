@@ -210,16 +210,43 @@ const apps = {
                     )}
                     
                     <div style="padding: 2rem; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px;">
-                        <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🔐 Ethical Hacking Course</h3>
-                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">Great Learning • Completed 2024</p>
-                        <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1rem;">
-                            Comprehensive security training covering penetration testing, vulnerability assessment, and security best practices.
+                        <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🔐 Hacker-X Ethical Hacking Course</h3>
+                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">Hacker-X • Completed 2024</p>
+                        <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1.5rem;">
+                            Comprehensive cybersecurity training covering penetration testing, vulnerability assessment, network security, and ethical hacking practices.
                         </p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem;">
-                            ${createCertModuleBadge('Database Hacking', 'assets/certificates/database-hacking.jpg')}
-                            ${createCertModuleBadge('Website Security', 'assets/certificates/bringing-down-a-website.jpg')}
-                            ${createCertModuleBadge('Password Security', 'assets/certificates/hacking-passwords.jpg')}
-                            ${createCertModuleBadge('Data Protection', 'assets/certificates/make-your-data-safe.jpg')}
+                        
+                        ${createCertCard(
+                            '🏆 Hacker-X Final Certificate',
+                            'Hacker-X',
+                            'Completed 2024',
+                            'Comprehensive completion certificate for the complete Hacker-X ethical hacking course series.',
+                            'assets/certificates/Hacker-X/hacker-x-final-certificate.jpg'
+                        )}
+                        
+                        <h4 style="color: #5eb3ff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem;">Course Modules (21 Modules)</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                            ${createCertModuleBadge('1. Know the OS', 'assets/certificates/Hacker-X/1-know-the-os.jpg')}
+                            ${createCertModuleBadge('2. Hack the Mac', 'assets/certificates/Hacker-X/2-hack-the-mac.jpg')}
+                            ${createCertModuleBadge('3. Gathering Information', 'assets/certificates/Hacker-X/3-gathering-information.jpg')}
+                            ${createCertModuleBadge('4. Leveraging AI for Hacking', 'assets/certificates/Hacker-X/4-leveraging-ai-for-hacking.jpg')}
+                            ${createCertModuleBadge('5. Prompt Guide for Hacking', 'assets/certificates/Hacker-X/5-prompt-guide-for-hacking.jpg')}
+                            ${createCertModuleBadge('6. Surfing Anonymously', 'assets/certificates/Hacker-X/6-surfing-anonymously.jpg')}
+                            ${createCertModuleBadge('7. Hiding Messages', 'assets/certificates/Hacker-X/7-hiding-messages.jpg')}
+                            ${createCertModuleBadge('8. Social Media Hacking', 'assets/certificates/Hacker-X/8-social-media-hacking.jpg')}
+                            ${createCertModuleBadge('9. Credit/Debit Card Frauds', 'assets/certificates/Hacker-X/9-credit-card-and-debit-card-frauds.jpg')}
+                            ${createCertModuleBadge('10. Keyboard Spying', 'assets/certificates/Hacker-X/10-keyboard-spying.jpg')}
+                            ${createCertModuleBadge('11. WiFi Hacking - WEP', 'assets/certificates/Hacker-X/11-wifi-hacking-wep-cracking.jpg')}
+                            ${createCertModuleBadge('12. WiFi Hacking - WPA/WPA2', 'assets/certificates/Hacker-X/12-wifi-hacking-wpa-wpa2-cracking.jpg')}
+                            ${createCertModuleBadge('13. Network Spying', 'assets/certificates/Hacker-X/13-network-spying.jpg')}
+                            ${createCertModuleBadge('14. Database Hacking', 'assets/certificates/Hacker-X/14-database-hacking.jpg')}
+                            ${createCertModuleBadge('15. Android Hacking', 'assets/certificates/Hacker-X/15-android-hacking.jpg')}
+                            ${createCertModuleBadge('16. Bringing Down a Website', 'assets/certificates/Hacker-X/16-bringing-down-a-website.jpg')}
+                            ${createCertModuleBadge('17. Cross-Site Scripting', 'assets/certificates/Hacker-X/17-cross-site-scripting.jpg')}
+                            ${createCertModuleBadge('18. Make Your Data Safe', 'assets/certificates/Hacker-X/18-make-your-data-safe.jpg')}
+                            ${createCertModuleBadge('19. Hacking Passwords', 'assets/certificates/Hacker-X/19-hacking-passwords.jpg')}
+                            ${createCertModuleBadge('20. WordPress Scanning', 'assets/certificates/Hacker-X/20-wordpress-scanning.jpg')}
+                            ${createCertModuleBadge('21. Vulnerability Scanning', 'assets/certificates/Hacker-X/21-vulnerability-scanning-and-reporting.jpg')}
                         </div>
                     </div>
                 </div>

@@ -90,11 +90,31 @@ const CONFIG = {
         profilePhoto: 'assets/profile-photo.jpg',
         certificates: {
             cto: 'assets/certificates/cto-certificate.pdf',
-            ethicalHacking: {
-                database: 'assets/certificates/database-hacking.jpg',
-                website: 'assets/certificates/bringing-down-a-website.jpg',
-                passwords: 'assets/certificates/hacking-passwords.jpg',
-                dataSafe: 'assets/certificates/make-your-data-safe.jpg'
+            hackerX: {
+                final: 'assets/certificates/Hacker-X/hacker-x-final-certificate.jpg',
+                modules: {
+                    1: 'assets/certificates/Hacker-X/1-know-the-os.jpg',
+                    2: 'assets/certificates/Hacker-X/2-hack-the-mac.jpg',
+                    3: 'assets/certificates/Hacker-X/3-gathering-information.jpg',
+                    4: 'assets/certificates/Hacker-X/4-leveraging-ai-for-hacking.jpg',
+                    5: 'assets/certificates/Hacker-X/5-prompt-guide-for-hacking.jpg',
+                    6: 'assets/certificates/Hacker-X/6-surfing-anonymously.jpg',
+                    7: 'assets/certificates/Hacker-X/7-hiding-messages.jpg',
+                    8: 'assets/certificates/Hacker-X/8-social-media-hacking.jpg',
+                    9: 'assets/certificates/Hacker-X/9-credit-card-and-debit-card-frauds.jpg',
+                    10: 'assets/certificates/Hacker-X/10-keyboard-spying.jpg',
+                    11: 'assets/certificates/Hacker-X/11-wifi-hacking-wep-cracking.jpg',
+                    12: 'assets/certificates/Hacker-X/12-wifi-hacking-wpa-wpa2-cracking.jpg',
+                    13: 'assets/certificates/Hacker-X/13-network-spying.jpg',
+                    14: 'assets/certificates/Hacker-X/14-database-hacking.jpg',
+                    15: 'assets/certificates/Hacker-X/15-android-hacking.jpg',
+                    16: 'assets/certificates/Hacker-X/16-bringing-down-a-website.jpg',
+                    17: 'assets/certificates/Hacker-X/17-cross-site-scripting.jpg',
+                    18: 'assets/certificates/Hacker-X/18-make-your-data-safe.jpg',
+                    19: 'assets/certificates/Hacker-X/19-hacking-passwords.jpg',
+                    20: 'assets/certificates/Hacker-X/20-wordpress-scanning.jpg',
+                    21: 'assets/certificates/Hacker-X/21-vulnerability-scanning-and-reporting.jpg'
+                }
             }
         }
     },
