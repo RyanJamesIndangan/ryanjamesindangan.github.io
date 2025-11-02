@@ -234,7 +234,7 @@ const apps = {
         icon: '🚀',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Showcase</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Showcase</h2>
                 
                 <div style="display: grid; gap: 2rem;">
                     ${createProjectCard(
@@ -278,7 +278,7 @@ const apps = {
         icon: '🎓',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Professional Credentials</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Credentials</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createCertCard(
@@ -290,9 +290,9 @@ const apps = {
                     )}
                     
                     <div style="padding: 2rem; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px;">
-                        <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🔐 Hacker-X Ethical Hacking Course</h3>
-                        <p style="color: #94a3b8; margin-bottom: 1.5rem;">Hacker-X • Completed 2025</p>
-                        <p style="color: #e2e8f0; line-height: 1.6; margin-bottom: 1.5rem;">
+                        <h3 style="color: #1a1a1a; margin-bottom: 1rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
+                        <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.9rem;">Hacker-X • Completed 2025</p>
+                        <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
                             Comprehensive cybersecurity training covering penetration testing, vulnerability assessment, network security, and ethical hacking practices.
                         </p>
                         
@@ -304,7 +304,7 @@ const apps = {
                             'assets/certificates/Hacker-X/hacker-x-final-certificate.jpg'
                         )}
                         
-                        <h4 style="color: #5eb3ff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem;">Course Modules (21 Modules)</h4>
+                        <h4 style="color: #1a1a1a; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Course Modules (21 Modules)</h4>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
                             ${createCertModuleBadge('1. Know the OS', 'assets/certificates/Hacker-X/1-know-the-os.jpg')}
                             ${createCertModuleBadge('2. Hack the Mac', 'assets/certificates/Hacker-X/2-hack-the-mac.jpg')}
@@ -339,8 +339,8 @@ const apps = {
         icon: '📧',
         content: `
             <div style="max-width: 600px;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #5eb3ff;">Let's Connect</h2>
-                <p style="color: #94a3b8; margin-bottom: 3rem; font-size: 1.1rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Let's Connect</h2>
+                <p style="color: #666; margin-bottom: 3rem; font-size: 1.1rem;">
                     Looking for a skilled developer? Let's discuss your project!
                 </p>
                 
@@ -355,19 +355,19 @@ const apps = {
                 </div>
 
                 <div style="margin-top: 3rem; padding: 2rem; background: rgba(100, 255, 218, 0.1); border-radius: 12px; text-align: center;">
-                    <h3 style="color: #5eb3ff; margin-bottom: 1rem;">🌟 Social Proof</h3>
+                    <h3 style="color: #1a1a1a; margin-bottom: 1rem; font-weight: 700;">🌟 Social Proof</h3>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
                         <div>
-                            <div style="font-size: 1.5rem; color: #5eb3ff; font-weight: bold;">Top Rated</div>
-                            <div style="font-size: 0.85rem; color: #94a3b8;">on Upwork</div>
+                            <div style="font-size: 1.5rem; color: #2171d6; font-weight: bold;">Top Rated</div>
+                            <div style="font-size: 0.85rem; color: #666;">on Upwork</div>
                         </div>
                         <div>
-                            <div style="font-size: 1.5rem; color: #5eb3ff; font-weight: bold;">758+</div>
-                            <div style="font-size: 0.85rem; color: #94a3b8;">LinkedIn Connections</div>
+                            <div style="font-size: 1.5rem; color: #2171d6; font-weight: bold;">758+</div>
+                            <div style="font-size: 0.85rem; color: #666;">LinkedIn Connections</div>
                         </div>
                         <div>
                             <div style="font-size: 1.5rem; color: #f59e0b; font-weight: bold;">Certified</div>
-                            <div style="font-size: 0.85rem; color: #94a3b8;">CTO</div>
+                            <div style="font-size: 0.85rem; color: #666;">CTO</div>
                         </div>
                     </div>
                 </div>
