@@ -289,7 +289,7 @@ const apps = {
                         'assets/certificates/cto-certificate.pdf'
                     )}
                     
-                    <div style="padding: 2rem; background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.3); border-radius: 12px;">
+                    <div style="padding: 1.5rem; background: #f5f5f5; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                         <h3 style="color: #1a1a1a; margin-bottom: 1rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
                         <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.9rem;">Hacker-X • Completed 2025</p>
                         <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
@@ -354,7 +354,7 @@ const apps = {
                     ${createContactItem('👥', 'Facebook', '@0RyanSimper0', 'https://www.facebook.com/0RyanSimper0/')}
                 </div>
 
-                <div style="margin-top: 3rem; padding: 2rem; background: rgba(100, 255, 218, 0.1); border-radius: 12px; text-align: center;">
+                <div style="margin-top: 3rem; padding: 2rem; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; text-align: center;">
                     <h3 style="color: #1a1a1a; margin-bottom: 1rem; font-weight: 700;">🌟 Social Proof</h3>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
                         <div>
