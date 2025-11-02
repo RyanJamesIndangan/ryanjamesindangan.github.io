@@ -666,19 +666,18 @@ body {
 
 .start-menu {
     position: fixed;
-    bottom: calc(var(--taskbar-height) + 8px);
-    left: 16px;
-    width: 500px;
-    max-height: 650px;
-    background: rgba(30, 36, 66, 0.95);
-    backdrop-filter: blur(30px);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    bottom: calc(var(--taskbar-height) + 4px);
+    left: 4px;
+    width: 350px;
+    max-height: 500px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
+    border-radius: 0;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
-    transition: all var(--transition-medium);
+    transform: translateY(10px);
+    transition: all 0.15s ease;
     z-index: 999;
     display: flex;
     flex-direction: column;
@@ -739,16 +738,22 @@ body {
 
 .start-menu-apps {
     flex: 1;
-    padding: 20px;
+    padding: 8px;
     overflow-y: auto;
+    background: #ece9d8;
 }
 
 .start-menu-apps h3 {
-    font-size: 0.8rem;
+    font-size: 11px;
     text-transform: uppercase;
-    color: var(--text-secondary);
-    margin-bottom: 16px;
+    color: #000;
+    margin-bottom: 8px;
     letter-spacing: 0.5px;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 4px 8px;
+    background: #c0c0c0;
+    border-bottom: 1px solid #808080;
 }
 
 .app-grid {
@@ -758,23 +763,29 @@ body {
 }
 
 .app-tile {
-    padding: 16px;
-    background: var(--glass-bg);
-    border: 1px solid transparent;
-    border-radius: 8px;
+    padding: 8px 12px;
+    background: #ece9d8;
+    border: 1px outset #ece9d8;
+    border-radius: 0;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: none;
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: var(--text-primary);
+    gap: 8px;
+    color: #000;
     text-align: left;
+    font-size: 11px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .app-tile:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--primary);
-    transform: translateY(-2px);
+    background: #d4d0c8;
+    border: 1px outset #ece9d8;
+}
+
+.app-tile:active {
+    border: 1px inset #ece9d8;
+    background: #b4b4b4;
 }
 
 .app-icon {
