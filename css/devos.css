@@ -442,20 +442,31 @@ body {
 
 /* Custom Scrollbar */
 .window-content::-webkit-scrollbar {
-    width: 8px;
+    width: 16px;
 }
 
 .window-content::-webkit-scrollbar-track {
-    background: transparent;
+    background: #c0c0c0;
+    border: 1px inset #c0c0c0;
 }
 
 .window-content::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    background: #c0c0c0;
+    border: 2px outset #c0c0c0;
 }
 
 .window-content::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: #d4d0c8;
+}
+
+.window-content::-webkit-scrollbar-button {
+    background: #c0c0c0;
+    border: 1px outset #c0c0c0;
+    height: 16px;
+}
+
+.window-content::-webkit-scrollbar-button:hover {
+    background: #d4d0c8;
 }
 
 /* Resize Handles */
