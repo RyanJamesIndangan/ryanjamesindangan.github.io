@@ -69,9 +69,11 @@ const apps = {
                 <div style="display: grid; gap: 1.5rem;">
                     ${createSkillCategory('💻 Frontend', ['React', 'Vue.js', 'Angular', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'jQuery'])}
                     
-                    ${createSkillCategory('⚙️ Backend', ['PHP', 'CodeIgniter', 'Laravel', 'Node.js', 'Express', 'Python', 'Django', 'Java', 'Spring Boot'])}
+                    ${createSkillCategory('⚙️ Backend', ['PHP', 'CodeIgniter', 'Laravel', 'Node.js', 'Express', 'Python', 'Django', 'Java', 'Spring Boot', 'Socket.io'])}
                     
                     ${createSkillCategory('🗄️ Database', ['MySQL', 'PostgreSQL', 'MongoDB', 'Firebase', 'REST APIs', 'GraphQL', 'WebSockets'])}
+                    
+                    ${createSkillCategory('🔐 Cybersecurity', ['Penetration Testing', 'Vulnerability Assessment', 'Network Security', 'Database Security', 'WiFi Security', 'Android Security', 'XSS Prevention', 'Password Security', 'Network Spying', 'Security Best Practices'])}
                     
                     ${createSkillCategory('☁️ Cloud & DevOps', ['AWS (EC2, RDS, Lambda, S3)', 'Docker', 'Kubernetes', 'DigitalOcean', 'Jenkins', 'GitHub Actions', 'CI/CD'])}
                     
@@ -91,7 +93,23 @@ const apps = {
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Professional Journey</h2>
                 
                 ${createExperienceCard(
-                    'Senior Full-Stack Developer',
+                    'Support Engineer',
+                    'Bada LLC',
+                    'Apr 24, 2025 - Oct 24, 2025',
+                    'Remote',
+                    [
+                        'Developed and scripted solutions for data management and client image migrations',
+                        'Created custom templates for InDesign, Word, and PowerPoint',
+                        'Integrated systems using REST APIs and JavaScript',
+                        'Troubleshot issues across server-side, end-user, and code base environments',
+                        'Managed client support tickets from start to resolution',
+                        'Provided clear, concise technical guidance to clients'
+                    ],
+                    ['JavaScript (ES5)', 'ZenDesk', 'InDesign', 'JSON', 'REST APIs', 'Windows Server', 'Linux Server']
+                )}
+                
+                ${createExperienceCard(
+                    'IT Consultant',
                     'GlobalX Digital Corporation',
                     'Feb 2024 - Present',
                     'Caloocan City, Metro Manila',
@@ -105,17 +123,74 @@ const apps = {
                 )}
                 
                 ${createExperienceCard(
-                    'Chief Technology Officer',
-                    'Payo Digital Corporation',
+                    'Chief Technology Officer / Co-Founder',
+                    'Intermobile Solutions Corporation',
                     'Apr 2023 - Jan 2024',
                     'Caloocan City, Metro Manila',
                     [
                         'Established comprehensive tech infrastructure from ground up',
                         'Architected scalable systems using AWS and modern frameworks',
                         'Built and mentored development team across multiple projects',
-                        'Implemented agile workflows improving delivery speed by 60%'
+                        'Implemented agile workflows improving delivery speed by 60%',
+                        'Co-founded technology startup focusing on mobile solutions'
                     ],
                     ['AWS', 'CodeIgniter', 'Laravel', 'Vue.js', 'MongoDB']
+                )}
+                
+                ${createExperienceCard(
+                    'Back-End Developer',
+                    'NetGlobal Solutions, Inc.',
+                    'Date Range - TBD',
+                    'Metro Manila',
+                    [
+                        'Developed robust backend solutions for enterprise clients',
+                        'Optimized database performance and query efficiency',
+                        'Collaborated with frontend teams to deliver seamless APIs',
+                        'Maintained and scaled existing applications'
+                    ],
+                    ['PHP', 'Laravel', 'MySQL', 'REST APIs', 'AWS']
+                )}
+                
+                ${createExperienceCard(
+                    'IT Director',
+                    'Microbitz Solutions Inc.',
+                    'Date Range - TBD',
+                    'Metro Manila',
+                    [
+                        'Directed IT operations and strategic technology initiatives',
+                        'Managed development teams and technical projects',
+                        'Oversaw infrastructure improvements and system integrations',
+                        'Established technology standards and best practices'
+                    ],
+                    ['Project Management', 'Team Leadership', 'AWS', 'DevOps', 'Agile']
+                )}
+                
+                ${createExperienceCard(
+                    'Systems Developer II',
+                    'ADEC Innovations',
+                    'Date Range - TBD',
+                    'Metro Manila',
+                    [
+                        'Developed and maintained enterprise-level systems',
+                        'Implemented complex business logic and integrations',
+                        'Collaborated with cross-functional teams on large-scale projects',
+                        'Performed code reviews and quality assurance'
+                    ],
+                    ['Java', 'Spring Boot', 'MySQL', 'REST APIs', 'Git']
+                )}
+                
+                ${createExperienceCard(
+                    'Senior Developer',
+                    'IAm TechSolution Inc',
+                    'Date Range - TBD',
+                    'Metro Manila',
+                    [
+                        'Led development of critical application features',
+                        'Mentored junior developers and conducted code reviews',
+                        'Optimized application performance and scalability',
+                        'Architected solutions for complex business requirements'
+                    ],
+                    ['PHP', 'Laravel', 'React', 'MySQL', 'AWS']
                 )}
                 
                 ${createExperienceCard(
@@ -197,7 +272,7 @@ const apps = {
         title: 'Certifications',
         icon: '🎓',
         content: `
-            <div style="max-width: 700px;">
+            <div style="max-width: 900px;">
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #5eb3ff;">Professional Credentials</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
@@ -225,7 +300,7 @@ const apps = {
                         )}
                         
                         <h4 style="color: #5eb3ff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem;">Course Modules (21 Modules)</h4>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
                             ${createCertModuleBadge('1. Know the OS', 'assets/certificates/Hacker-X/1-know-the-os.jpg')}
                             ${createCertModuleBadge('2. Hack the Mac', 'assets/certificates/Hacker-X/2-hack-the-mac.jpg')}
                             ${createCertModuleBadge('3. Gathering Information', 'assets/certificates/Hacker-X/3-gathering-information.jpg')}
