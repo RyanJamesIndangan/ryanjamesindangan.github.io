@@ -640,12 +640,12 @@ function autoOpenApps() {
         return;
     }
     
-    // Desktop: Open apps in a tiled grid layout (2x2)
+    // Desktop: Open apps in a mixed layout (About Me + Skills split on left, Experience and Certifications full height)
     const appsToOpen = [
         { id: 'about', delay: 0, position: 'top-left' },
-        { id: 'skills', delay: 300, position: 'top-right' },
-        { id: 'projects', delay: 600, position: 'bottom-left' },
-        { id: 'contact', delay: 900, position: 'bottom-right' }
+        { id: 'skills', delay: 150, position: 'bottom-left' },
+        { id: 'experience', delay: 300, position: 'top-center' },
+        { id: 'certifications', delay: 450, position: 'top-right' }
     ];
     
     appsToOpen.forEach(app => {

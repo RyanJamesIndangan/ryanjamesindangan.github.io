@@ -63,9 +63,9 @@ const CONFIG = {
         minHeight: 300,
         autoOpenApps: [
             { id: 'about', position: 'top-left' },
-            { id: 'skills', position: 'top-right' },
-            { id: 'projects', position: 'bottom-left' },
-            { id: 'contact', position: 'bottom-right' }
+            { id: 'skills', position: 'bottom-left' },
+            { id: 'experience', position: 'top-center' },
+            { id: 'certifications', position: 'top-right' }
         ]
     },
 

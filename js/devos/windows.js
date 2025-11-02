@@ -38,36 +38,102 @@ class WindowManager {
             windowEl.style.width = '100%';
             windowEl.style.height = `calc(100% - var(--taskbar-height))`;
         } else {
-            // Calculate tiled layout positions (2x2 grid)
+            // Calculate tiled layout positions (supporting 2x2 grid or 3-column layout)
             if (position) {
                 const desktopIconWidth = 130; // Reserve space for desktop icons on the left
                 const desktopWidth = window.innerWidth - desktopIconWidth;
                 const desktopHeight = window.innerHeight - 60; // Subtract taskbar height
-                const windowWidth = (desktopWidth / 2) - 20; // 2 columns with 20px gap
-                const windowHeight = (desktopHeight / 2) - 20; // 2 rows with 20px gap
                 const gap = 10;
                 const leftOffset = desktopIconWidth; // Start windows after desktop icons
                 
-                switch(position) {
-                    case 'top-left':
-                        windowEl.style.left = `${leftOffset + gap}px`;
-                        windowEl.style.top = `${gap}px`;
-                        break;
-                    case 'top-right':
-                        windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
-                        windowEl.style.top = `${gap}px`;
-                        break;
-                    case 'bottom-left':
-                        windowEl.style.left = `${leftOffset + gap}px`;
-                        windowEl.style.top = `${desktopHeight / 2 + gap}px`;
-                        break;
-                    case 'bottom-right':
-                        windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
-                        windowEl.style.top = `${desktopHeight / 2 + gap}px`;
-                        break;
+                // Mixed layout: Left column split (About Me top, Skills bottom), 
+                // Center and Right columns full height (Experience, Certifications)
+                const fullHeightApps = ['experience', 'certifications'];
+                const isFullHeight = fullHeightApps.includes(appId);
+                const isMixedLayout = isFullHeight || appId === 'about' || appId === 'skills';
+                
+                if (isMixedLayout) {
+                    // Calculate widths for 3-column layout
+                    const leftColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
+                    const centerColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
+                    const rightColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
+                    const fullHeight = desktopHeight - (gap * 2);
+                    // About Me takes 35% of height, Skills takes the rest to align bottom with center column
+                    // Center column bottom = gap + (desktopHeight - gap * 2) = desktopHeight - gap
+                    const aboutMeHeight = desktopHeight * 0.35 - gap;
+                    const skillsTop = desktopHeight * 0.35 + gap;
+                    const skillsHeight = (desktopHeight - gap) - skillsTop; // Aligns bottom with center column
+                    
+                    switch(position) {
+                        case 'top-left':
+                            // About Me - 35% height in left column
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${leftColumnWidth}px`;
+                            windowEl.style.height = `${aboutMeHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'bottom-left':
+                            // Skills - fills remaining height, bottom aligned with center column
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${skillsTop}px`;
+                            windowEl.style.width = `${leftColumnWidth}px`;
+                            windowEl.style.height = `${skillsHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'top-center':
+                            // Experience - full height in center column
+                            windowEl.style.left = `${leftOffset + desktopWidth / 3 + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${centerColumnWidth}px`;
+                            windowEl.style.height = `${fullHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'top-right':
+                            // Certifications - full height in right column
+                            windowEl.style.left = `${leftOffset + (desktopWidth / 3) * 2 + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${rightColumnWidth}px`;
+                            windowEl.style.height = `${fullHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                    }
+                } else {
+                    // Default 2-column layout (original behavior)
+                    const windowWidth = (desktopWidth / 2) - (gap * 1.5);
+                    const windowHeight = (desktopHeight / 2) - gap;
+                    
+                    switch(position) {
+                        case 'top-left':
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${windowWidth}px`;
+                            windowEl.style.height = `${windowHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'top-right':
+                            windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${windowWidth}px`;
+                            windowEl.style.height = `${windowHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'bottom-left':
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${desktopHeight / 2 + gap}px`;
+                            windowEl.style.width = `${windowWidth}px`;
+                            windowEl.style.height = `${(desktopHeight / 2) - gap}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'bottom-right':
+                            windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
+                            windowEl.style.top = `${desktopHeight / 2 + gap}px`;
+                            windowEl.style.width = `${windowWidth}px`;
+                            windowEl.style.height = `${(desktopHeight / 2) - gap}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                    }
                 }
-                windowEl.style.width = `${windowWidth}px`;
-                windowEl.style.height = `${windowHeight}px`;
             } else {
                 // Default cascading position for manually opened windows
                 const offset = (this.windows.size * 30) % 100;

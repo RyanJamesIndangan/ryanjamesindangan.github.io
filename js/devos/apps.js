@@ -109,94 +109,86 @@ const apps = {
                 )}
                 
                 ${createExperienceCard(
-                    'IT Consultant',
+                    'Consultant',
                     'GlobalX Digital Corporation',
-                    'Feb 2024 - Present',
-                    'Caloocan City, Metro Manila',
+                    'Jan 2025 - Apr 2025',
+                    'Hybrid / Unit  901,  9th  Floor  I-Land  Bay  Plaza  D-Macapagal  Blvd  Pasay  City, National  Capital  Region  (NCR),  1503',
                     [
-                        'Led complete database architecture redesign for enhanced scalability',
-                        'Directed team of 12 developers across 3 specialized teams',
-                        'Revived stalled project, delivering Version 2 in 2 months',
-                        'Implemented AI-powered automation reducing development time by 40%'
+                        'Led the redesign of database architecture, creating scalable, high-performing systems that improved data integrity and business alignment',
+                        'Developed and secured API endpoints, strengthening system communication and overall reliability',
+                        'Directed 12 developers across 3 teams, providing technical guidance, architectural leadership, and workflow documentation',
+                        'Revived a stalled project by assuming ownership, delivering a fully enhanced Version 2 within 2 months after 9 months of failed prior leadership',
+                        'Acted as Technical Lead, aligning goals among cross-functional teams and stakeholders to ensure delivery within strict timelines'
                     ],
-                    ['Laravel', 'React', 'AWS', 'Docker', 'MySQL']
+                    ['PHP', 'MySQL', 'AWS', 'API Development', 'Laravel']
                 )}
                 
+                 
                 ${createExperienceCard(
                     'Chief Technology Officer / Co-Founder',
                     'Intermobile Solutions Corporation',
-                    'Apr 2023 - Jan 2024',
-                    'Caloocan City, Metro Manila',
+                    'Sep 2023 - Jan 2024',
+                    'Hybrid / Rm. 312 National Life Insurance Building, Ayala Ave, Legazpi Village, Makati City, Metro Manila',
                     [
-                        'Established comprehensive tech infrastructure from ground up',
-                        'Architected scalable systems using AWS and modern frameworks',
-                        'Built and mentored development team across multiple projects',
-                        'Implemented agile workflows improving delivery speed by 60%',
-                        'Co-founded technology startup focusing on mobile solutions'
+                        'Spearheaded product design and technical direction for early-stage startup projects under Intermobile Solutions Corporation.',
+                        'Developed proof-of-concept applications and internal systems to demonstrate product viability to investors.',
+                        'Established foundational infrastructure, workflows, and code standards for rapid prototyping and small-scale deployment.',
+                        'Collaborated with cross-functional teams to define project goals, timelines, and feature priorities.',
+                        'Provided technical mentoring and handled initial backend and API integrations for pilot products.',
                     ],
-                    ['AWS', 'CodeIgniter', 'Laravel', 'Vue.js', 'MongoDB']
+                    ['Node.js', 'PHP', 'MySQL', 'AWS', 'Git', 'REST API']
                 )}
                 
+ 
                 ${createExperienceCard(
-                    'Back-End Developer',
-                    'NetGlobal Solutions, Inc.',
-                    'Date Range - TBD',
-                    'Metro Manila',
-                    [
-                        'Developed robust backend solutions for enterprise clients',
-                        'Optimized database performance and query efficiency',
-                        'Collaborated with frontend teams to deliver seamless APIs',
-                        'Maintained and scaled existing applications'
-                    ],
-                    ['PHP', 'Laravel', 'MySQL', 'REST APIs', 'AWS']
-                )}
-                
-                ${createExperienceCard(
-                    'IT Director',
+                    'IT Director / Full-Stack Software Engineer',
                     'Microbitz Solutions Inc.',
-                    'Date Range - TBD',
-                    'Metro Manila',
+                    'Jul 2023 - Jan 2024',
+                    'Hybrid / Rm. 312 National Life Insurance Building, Ayala Ave, Legazpi Village, Makati City, Metro Manila',
                     [
-                        'Directed IT operations and strategic technology initiatives',
-                        'Managed development teams and technical projects',
-                        'Oversaw infrastructure improvements and system integrations',
-                        'Established technology standards and best practices'
+                        'Led the full-cycle development of an online lottery platform, from architecture planning to deployment and maintenance.',
+                        'Designed and managed the system infrastructure, ensuring high availability, scalability, and data security.',
+                        'Developed and optimized backend APIs for secure and efficient transaction processing.',
+                        'Built and maintained the database schema, implementing reliable data integrity and backup strategies.',
+                        'Oversaw technical direction, guided developers, and enforced coding standards and best practices.',
+                        'Implemented CI/CD processes and server monitoring to maintain uptime and streamline updates.',
+                        'Collaborated with stakeholders to align business goals with technical implementation.',
+                        'Conducted code reviews, security audits, and performance tuning to ensure system reliability.',
                     ],
-                    ['Project Management', 'Team Leadership', 'AWS', 'DevOps', 'Agile']
+                    ['PHP', 'MySQL', 'AWS', 'API Development', 'CodeIgniter 3', 'CI/CD', 'System Architecture', 'Code Review', 'Security Audit', 'Performance Tuning']
+                )}
+
+                ${createExperienceCard(
+                    'Back End Developer / Project Lead',
+                    'Net Global Solutions Inc.',
+                    'Apr 2023 - Nov 2024',
+                    'Hybrid / 59 W Capitol Dr, Pasig, 1603 Metro Manila',
+                    [
+                        'Served as Project Lead & Lead Programmer for PAGCOR compliance system (Back Office Access), ensuring regulatory adherence',
+                        'Managed PEZA Digital Marketplace (Builder.ai) as Project Manager, enabling streamlined data management for the Philippine Economic Zone Authority',
+                        'Built a custom PHP framework to enhance API development and system performance',
+                        'Developed a Sports Data Management System, Automated Billing System, and multiple enterprise solutions as Lead Programmer'
+                    ],
+                    ['PHP', 'MySQL', 'Custom Framework', 'REST APIs', 'Project Management']
                 )}
                 
                 ${createExperienceCard(
                     'Systems Developer II',
                     'ADEC Innovations',
-                    'Date Range - TBD',
-                    'Metro Manila',
+                    'Mar 2022 - Apr 2023',
+                    'Remote',
                     [
-                        'Developed and maintained enterprise-level systems',
-                        'Implemented complex business logic and integrations',
-                        'Collaborated with cross-functional teams on large-scale projects',
-                        'Performed code reviews and quality assurance'
+                        'Developed the UN-Habitat SDG Cities platform as part of a United Nations initiative',
+                        'Built the Disaster Risk Reduction Management Information System for the Department of Education (DepEd)',
+                        'Created a database automated-remapping system ("Bucket Service") to optimize DepEd\'s database management'
                     ],
-                    ['Java', 'Spring Boot', 'MySQL', 'REST APIs', 'Git']
+                    ['Laravel', 'Vue.js', 'PostgreSQL', 'AWS', 'Database Management']
                 )}
-                
-                ${createExperienceCard(
-                    'Senior Developer',
-                    'IAm TechSolution Inc',
-                    'Date Range - TBD',
-                    'Metro Manila',
-                    [
-                        'Led development of critical application features',
-                        'Mentored junior developers and conducted code reviews',
-                        'Optimized application performance and scalability',
-                        'Architected solutions for complex business requirements'
-                    ],
-                    ['PHP', 'Laravel', 'React', 'MySQL', 'AWS']
-                )}
-                
+
                 ${createExperienceCard(
                     'Full-Stack Developer (Top Rated)',
                     'Upwork',
-                    'Apr 2021 - Present',
+                    'Apr 2021 - October 2025',
                     'Remote',
                     [
                         'Achieved Top Rated status with 100% job success score',
@@ -206,19 +198,32 @@ const apps = {
                     ],
                     ['PHP', 'Laravel', 'React', 'Node.js', 'AWS']
                 )}
-                
+
                 ${createExperienceCard(
-                    'Junior Web Developer',
-                    'EEZEETEL',
-                    'Mar 2018 - Sep 2018',
-                    'Manila, Philippines',
+                    'Full-Stack Web Developer',
+                    'Freelance',
+                    '2019 - Apr 2023',
+                    'Remote',
                     [
-                        'Built and maintained e-commerce platform features',
-                        'Collaborated with senior developers on complex projects',
-                        'Implemented responsive designs and API integrations',
-                        'Gained foundation in professional development practices'
+                        'Designed and developed a Sports Data Management System for a private company',
+                        'Built an Online Human Resource Information System for STI Muñoz EDSA',
+                        'Delivered custom websites and applications for small businesses and organizations'
                     ],
-                    ['HTML', 'CSS', 'JavaScript', 'PHP', 'MySQL']
+                    ['PHP', 'Laravel', 'MySQL', 'JavaScript', 'React']
+                )}
+
+                ${createExperienceCard(
+                    'Senior Web Developer',
+                    'iAm Tech Solutions Inc.',
+                    'Mar 2018 - Apr 2021',
+                    'Remote',
+                    [
+                        'Directed large-scale web and mobile projects including Lotto Play Mobile App, Wholesale E-Commerce, and whitelabeled Learning Management Systems',
+                        'Built enterprise systems: Online Inventory & Asset Tracking, Package Tracking, Broker Accreditation (Ayala Land), and Log Monitoring with Digital Signature',
+                        'Delivered custom after-sales service and tracking solutions for corporate clients (Esquire Tech, Chubb Limited, Marmo Pizzara Trading)',
+                        'Provided technical leadership as Lead Programmer, ensuring quality delivery and scalable architecture across projects'
+                    ],
+                    ['CodeIgniter', 'React', 'MySQL', 'AWS', 'Mobile Development']
                 )}
             </div>
         `
