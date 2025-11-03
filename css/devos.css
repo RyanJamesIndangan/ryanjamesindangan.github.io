@@ -661,11 +661,6 @@ body {
         0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.start-button:active {
-    background: linear-gradient(to bottom, #3a8eef 0%, #1161c6 100%);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
 .start-button.active {
     background: linear-gradient(to bottom, #5aafff 0%, #3181e6 100%);
     box-shadow: 
@@ -837,7 +832,8 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    margin-left: -1px;
 }
 
 .start-menu-header {
