@@ -195,30 +195,78 @@ function drawGame() {
     );
     snakeGame.ctx.fill();
     
-    // Draw snake
+    // Draw snake - make it look like an actual snake
     snakeGame.snake.forEach((segment, index) => {
-        if (index === 0) {
-            // Head
-            snakeGame.ctx.fillStyle = '#64ffda';
-        } else {
-            // Body
-            const gradient = snakeGame.ctx.createLinearGradient(
-                segment.x * snakeGame.gridSize,
-                segment.y * snakeGame.gridSize,
-                (segment.x + 1) * snakeGame.gridSize,
-                (segment.y + 1) * snakeGame.gridSize
-            );
-            gradient.addColorStop(0, '#64ffda');
-            gradient.addColorStop(1, '#5eb3ff');
-            snakeGame.ctx.fillStyle = gradient;
-        }
+        const x = segment.x * snakeGame.gridSize + snakeGame.gridSize / 2;
+        const y = segment.y * snakeGame.gridSize + snakeGame.gridSize / 2;
+        const radius = snakeGame.gridSize / 2 - 1;
         
-        snakeGame.ctx.fillRect(
-            segment.x * snakeGame.gridSize + 1,
-            segment.y * snakeGame.gridSize + 1,
-            snakeGame.gridSize - 2,
-            snakeGame.gridSize - 2
-        );
+        if (index === 0) {
+            // Head - rounded with eyes
+            snakeGame.ctx.fillStyle = '#22c55e';
+            snakeGame.ctx.beginPath();
+            snakeGame.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            snakeGame.ctx.fill();
+            
+            // Add highlight
+            snakeGame.ctx.fillStyle = '#4ade80';
+            snakeGame.ctx.beginPath();
+            snakeGame.ctx.arc(x - 3, y - 3, 3, 0, 2 * Math.PI);
+            snakeGame.ctx.fill();
+            
+            // Draw eyes based on direction
+            snakeGame.ctx.fillStyle = '#ffffff';
+            if (snakeGame.dx === 1) { // Moving right
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x + 4, y - 2, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x + 4, y + 2, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+            } else if (snakeGame.dx === -1) { // Moving left
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x - 4, y - 2, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x - 4, y + 2, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+            } else if (snakeGame.dy === -1) { // Moving up
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x - 2, y - 4, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x + 2, y - 4, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+            } else if (snakeGame.dy === 1) { // Moving down
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x - 2, y + 4, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+                snakeGame.ctx.beginPath();
+                snakeGame.ctx.arc(x + 2, y + 4, 2, 0, 2 * Math.PI);
+                snakeGame.ctx.fill();
+            }
+        } else {
+            // Body segments - rounded circles that connect
+            const prevSegment = snakeGame.snake[index - 1];
+            const bodyGradient = snakeGame.ctx.createRadialGradient(
+                x, y, 0,
+                x, y, radius
+            );
+            bodyGradient.addColorStop(0, '#4ade80');
+            bodyGradient.addColorStop(0.7, '#22c55e');
+            bodyGradient.addColorStop(1, '#16a34a');
+            
+            snakeGame.ctx.fillStyle = bodyGradient;
+            snakeGame.ctx.beginPath();
+            snakeGame.ctx.arc(x, y, radius - 1, 0, 2 * Math.PI);
+            snakeGame.ctx.fill();
+            
+            // Add scales/texture
+            snakeGame.ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            snakeGame.ctx.beginPath();
+            snakeGame.ctx.arc(x - 2, y - 2, 1.5, 0, 2 * Math.PI);
+            snakeGame.ctx.fill();
+        }
     });
 }
 

@@ -43,21 +43,45 @@ function createSnakeIcon() {
         ctx.fillStyle = '#fff';
         ctx.fillRect(food.x * gridSize + 2, food.y * gridSize + 2, 4, 4);
         
-        // Draw snake
+        // Draw snake - make it look like an actual snake with rounded segments
         snake.forEach((segment, index) => {
-            if (index === 0) {
-                // Head - darker green
-                ctx.fillStyle = '#22c55e';
-            } else {
-                // Body - lighter green
-                ctx.fillStyle = '#4ade80';
-            }
-            ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+            const x = segment.x * gridSize + gridSize / 2;
+            const y = segment.y * gridSize + gridSize / 2;
+            const radius = gridSize / 2 - 1;
             
-            // Add highlight
             if (index === 0) {
-                ctx.fillStyle = '#86efac';
-                ctx.fillRect(segment.x * gridSize + 1, segment.y * gridSize + 1, 2, 2);
+                // Head - rounded circle with eyes
+                ctx.fillStyle = '#22c55e';
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Eyes
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(x + 3, y - 1, 1.5, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(x + 3, y + 1, 1.5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Highlight
+                ctx.fillStyle = '#4ade80';
+                ctx.beginPath();
+                ctx.arc(x - 2, y - 2, 2, 0, 2 * Math.PI);
+                ctx.fill();
+            } else {
+                // Body - rounded circles
+                ctx.fillStyle = '#4ade80';
+                ctx.beginPath();
+                ctx.arc(x, y, radius - 0.5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Add subtle scale texture
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.beginPath();
+                ctx.arc(x - 1, y - 1, 1, 0, 2 * Math.PI);
+                ctx.fill();
             }
         });
     }

@@ -57,7 +57,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0a0e27 0%, #1e2442 100%);
+    background: linear-gradient(to bottom, #0078d7 0%, #0066cc 50%, #0052a3 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,6 +66,20 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s ease, visibility 0.5s ease;
+    overflow: hidden;
+}
+
+.boot-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+    animation: lightSweep 8s ease-in-out infinite alternate;
 }
 
 .boot-screen.active {
@@ -75,7 +89,9 @@ body {
 
 .boot-logo {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 1;
 }
 
 .logo-icon {
@@ -85,13 +101,16 @@ body {
 }
 
 .logo-profile-pic {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 1rem;
-    border-radius: 50%;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto 1.5rem;
+    border-radius: 8px;
     overflow: hidden;
-    border: 3px solid var(--primary);
-    box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
     animation: pulse 2s ease-in-out infinite;
 }
 
@@ -102,41 +121,81 @@ body {
 }
 
 .boot-logo h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--primary);
-    text-shadow: 0 2px 10px rgba(51, 153, 255, 0.5);
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     margin-bottom: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .version {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .boot-progress {
-    width: 300px;
+    width: 280px;
+    position: relative;
+    z-index: 1;
 }
 
 .progress-bar {
-    height: 4px;
-    background: var(--bg-tertiary);
-    border-radius: 2px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1px;
     overflow: hidden;
     margin-bottom: 1rem;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    background: #ffffff;
     width: 0%;
     animation: loadProgress 2s ease-in-out forwards;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.5);
 }
 
 .boot-text {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
     text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.boot-windows-logo {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    z-index: 1;
+}
+
+.windows-flag {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #f65314 0% 25%, #7cbb00 25% 50%, #00a1f1 50% 75%, #ffbb00 75%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.windows-text {
+    font-size: 24px;
+    font-weight: 300;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.windows-version {
+    font-size: 11px;
+    opacity: 0.9;
+    margin-left: 4px;
 }
 
 @keyframes pulse {
@@ -703,21 +762,19 @@ body {
     position: fixed;
     bottom: calc(var(--taskbar-height) + 6px);
     left: 8px;
-    width: 400px;
-    max-height: 550px;
-    background: linear-gradient(to bottom, #f8f8f8 0%, #ffffff 100%);
-    border: 1px solid #b0b0b0;
-    border-radius: 6px;
-    box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    width: 500px;
+    max-height: 600px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.2s ease;
     z-index: 999;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .start-menu.active {
@@ -726,31 +783,55 @@ body {
     transform: translateY(0);
 }
 
-.start-menu-header {
-    padding: 16px;
-    border-bottom: 1px solid #d0d0d0;
+.start-menu-left {
+    width: 270px;
     background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.start-menu-right {
+    width: 230px;
+    background: linear-gradient(to bottom, #2d5aa0 0%, #1a3d73 100%);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.start-menu-header {
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
 }
 
 .user-profile {
     display: flex;
     align-items: center;
     gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .user-avatar {
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
     font-size: 1.2rem;
     overflow: hidden;
-    border: 2px solid var(--primary);
-    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .user-avatar img {
@@ -765,13 +846,15 @@ body {
 
 .user-name {
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 14px;
     margin-bottom: 2px;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .user-title {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .start-menu-apps {
@@ -795,17 +878,17 @@ body {
 
 .app-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 2px;
 }
 
 .app-tile {
-    padding: 10px 14px;
+    padding: 8px 12px;
     background: transparent;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 0;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.15s ease;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -813,16 +896,102 @@ body {
     text-align: left;
     font-size: 13px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
 }
 
 .app-tile:hover {
-    background: #e8f4f8;
-    border: 1px solid rgba(74, 158, 255, 0.3);
+    background: rgba(0, 120, 215, 0.1);
+    border: 1px solid rgba(0, 120, 215, 0.2);
 }
 
 .app-tile:active {
-    background: #d9e8ed;
-    border: 1px solid rgba(74, 158, 255, 0.5);
+    background: rgba(0, 120, 215, 0.2);
+}
+
+.start-menu-search {
+    padding: 8px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #c0c0c0;
+    border-radius: 3px;
+    padding: 6px 10px;
+    gap: 8px;
+}
+
+.search-icon {
+    font-size: 14px;
+    color: #666;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 12px;
+    color: #1a1a1a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.start-menu-links {
+    flex: 1;
+    padding: 8px 0;
+    overflow-y: auto;
+}
+
+.menu-link {
+    display: block;
+    padding: 8px 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background 0.15s ease;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.menu-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.start-menu-footer {
+    padding: 8px 0 0 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.shutdown-btn {
+    width: 100%;
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 13px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.15s ease;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.shutdown-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.shutdown-btn .arrow {
+    font-size: 10px;
+    opacity: 0.7;
 }
 
 .app-icon {

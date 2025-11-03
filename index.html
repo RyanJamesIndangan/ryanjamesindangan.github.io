@@ -31,7 +31,7 @@
     <div id="bootScreen" class="boot-screen active">
         <div class="boot-logo">
             <div class="logo-profile-pic">
-                <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.parentElement.innerHTML='<div class=\'logo-icon\'>👨‍💻</div>';" />
+                <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.parentElement.innerHTML='RJ';" />
             </div>
             <h1>Ryan James Indangan</h1>
             <div class="version">Full-Stack Developer & CTO</div>
@@ -41,6 +41,11 @@
                 <div class="progress-fill"></div>
             </div>
             <p class="boot-text">Loading portfolio...</p>
+        </div>
+        <div class="boot-windows-logo">
+            <div class="windows-flag"></div>
+            <span class="windows-text">Windows</span>
+            <span class="windows-version">Portfolio OS</span>
         </div>
     </div>
 
@@ -117,19 +122,8 @@
 
         <!-- Start Menu -->
         <div class="start-menu" id="startMenu">
-            <div class="start-menu-header">
-                <div class="user-profile">
-                    <div class="user-avatar" id="userAvatar">
-                        <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.style.display='none'; this.parentElement.innerHTML='RJ';" />
-                    </div>
-                    <div class="user-info">
-                        <div class="user-name">Ryan James Indangan</div>
-                        <div class="user-title">Full-Stack Developer & CTO</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="start-menu-apps">
+            <div class="start-menu-left">
+                <div class="start-menu-apps">
                 <h3>Applications</h3>
                 <div class="app-grid">
                     <button class="app-tile" data-app="about">
