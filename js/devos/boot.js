@@ -4,15 +4,20 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const bootScreen = document.getElementById('bootScreen');
+    const desktop = document.getElementById('desktop');
     
-    // Simulate boot process
+    // Simulate boot process - Windows 7 style
     setTimeout(() => {
-        bootScreen.classList.remove('active');
+        // Fade out boot screen
+        bootScreen.classList.add('fade-out');
         
-        // Initialize desktop after boot
+        // Fade in desktop
+        desktop.classList.add('loaded');
+        
+        // Hide boot screen after transition
         setTimeout(() => {
             bootScreen.style.display = 'none';
-        }, 500);
+        }, 800);
     }, 2500);
 });
 

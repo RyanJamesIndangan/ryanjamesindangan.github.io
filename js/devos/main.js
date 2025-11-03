@@ -77,10 +77,18 @@ function initializeDesktopIcons() {
     const desktopIcons = document.querySelectorAll('.desktop-icon');
     
     desktopIcons.forEach(icon => {
+        const appId = icon.dataset.app;
+        const iconType = icon.dataset.icon;
+        
         // Double-click to open
         icon.addEventListener('dblclick', () => {
-            const appId = icon.dataset.app;
-            openApp(appId);
+            if (appId) {
+                openApp(appId);
+            } else if (iconType === 'recycle') {
+                showNotification('Recycle Bin is empty');
+            } else if (iconType === 'network') {
+                showNotification('Network connection active');
+            }
         });
         
         // Single click to select
@@ -103,7 +111,9 @@ function initializeDesktopIcons() {
         // Enter key to open selected icon
         if (e.key === 'Enter' && selectedIcon) {
             const appId = selectedIcon.dataset.app;
-            openApp(appId);
+            if (appId) {
+                openApp(appId);
+            }
             return;
         }
         
@@ -238,6 +248,20 @@ function initializeAppTiles() {
     appTiles.forEach(tile => {
         tile.addEventListener('click', () => {
             const appId = tile.dataset.app;
+            openApp(appId);
+            
+            // Close start menu
+            document.getElementById('startMenu').classList.remove('active');
+            document.getElementById('startButton').classList.remove('active');
+        });
+    });
+    
+    // Handle menu links in right pane (Certifications, Contact)
+    const menuLinks = document.querySelectorAll('.menu-link[data-app]');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const appId = link.dataset.app;
             openApp(appId);
             
             // Close start menu

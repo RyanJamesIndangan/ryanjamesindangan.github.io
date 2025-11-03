@@ -267,14 +267,19 @@ class WindowManager {
         if (!windowEl) return;
 
         // Update z-index
-        this.windows.forEach(win => win.style.zIndex = 100);
+        this.windows.forEach(win => {
+            if (win !== windowEl) {
+                win.style.zIndex = 100;
+            }
+        });
         windowEl.style.zIndex = ++this.zIndex;
+        this.activeWindow = windowEl;
         
-        // Update taskbar
+        // Update taskbar - remove active from all, add to current
         document.querySelectorAll('.taskbar-app').forEach(btn => {
             btn.classList.remove('active');
         });
-        const taskbarBtn = document.querySelector(`[data-app="${appId}"]`);
+        const taskbarBtn = document.querySelector(`.taskbar-app[data-app="${appId}"]`);
         if (taskbarBtn) {
             taskbarBtn.classList.add('active');
         }
@@ -311,10 +316,15 @@ class WindowManager {
             // Minimize window
             windowEl.classList.add('minimized');
             
-            // Update taskbar button - remove active state when minimized
+            // Update taskbar button - keep button but remove active state
             const taskbarBtn = document.querySelector(`.taskbar-app[data-app="${appId}"]`);
             if (taskbarBtn) {
                 taskbarBtn.classList.remove('active');
+            }
+            
+            // Clear active window if it was the minimized one
+            if (this.activeWindow === windowEl) {
+                this.activeWindow = null;
             }
         }
     }
@@ -342,7 +352,8 @@ class WindowManager {
             
             if (windowEl.classList.contains('minimized')) {
                 // Restore minimized window
-                this.minimizeWindow(appId);
+                windowEl.classList.remove('minimized');
+                this.focusWindow(appId);
             } else {
                 // Focus or minimize if already focused
                 if (this.activeWindow === windowEl) {

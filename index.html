@@ -22,6 +22,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Segoe UI font for Windows 7 theme -->
+    <style>
+        @font-face {
+            font-family: 'Segoe UI';
+            src: local('Segoe UI'), local('SegoeUI-Regular');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/devos.css">
@@ -29,60 +38,44 @@
 <body>
     <!-- Boot Screen -->
     <div id="bootScreen" class="boot-screen active">
-        <div class="boot-logo">
-            <div class="logo-profile-pic">
-                <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.parentElement.innerHTML='RJ';" />
+        <div class="boot-content">
+            <div class="boot-logo">
+                <div class="logo-profile-pic">
+                    <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.parentElement.innerHTML='RJ';" />
+                </div>
+                <h1>Ryan James Indangan</h1>
+                <div class="version">Full-Stack Developer & CTO</div>
             </div>
-            <h1>Ryan James Indangan</h1>
-            <div class="version">Full-Stack Developer & CTO</div>
-        </div>
-        <div class="boot-progress">
-            <div class="progress-bar">
-                <div class="progress-fill"></div>
+            <div class="boot-loader">
+                <div class="windows-busy-cursor"></div>
+                <p class="boot-text">Welcome</p>
             </div>
-            <p class="boot-text">Loading portfolio...</p>
-        </div>
-        <div class="boot-windows-logo">
-            <div class="windows-flag"></div>
-            <span class="windows-text">Windows</span>
-            <span class="windows-version">Portfolio OS</span>
+            <div class="boot-windows-logo">
+                <div class="windows-flag"></div>
+                <span class="windows-text">Windows</span>
+                <span class="windows-version">Portfolio OS</span>
+            </div>
         </div>
     </div>
 
     <!-- Main Desktop Environment -->
     <div id="desktop" class="desktop">
         <!-- Wallpaper -->
-        <div class="wallpaper"></div>
+        <div class="wallpaper" id="wallpaper"></div>
 
         <!-- Desktop Icons -->
         <div class="desktop-icons">
-            <div class="desktop-icon" data-app="about">
-                <div class="icon">👨‍💻</div>
-                <span>About Me</span>
+            <div class="desktop-icon" data-app="about" data-icon="portfolio">
+                <div class="icon">📁</div>
+                <span>My Portfolio</span>
             </div>
-            <div class="desktop-icon" data-app="skills">
-                <div class="icon">🛠️</div>
-                <span>Skills</span>
+            <div class="desktop-icon" data-icon="recycle">
+                <div class="icon">🗑️</div>
+                <span>Recycle Bin</span>
             </div>
-            <div class="desktop-icon" data-app="experience">
-                <div class="icon">💼</div>
-                <span>Experience</span>
-            </div>
-            <div class="desktop-icon" data-app="projects">
-                <div class="icon">🚀</div>
-                <span>Projects</span>
-            </div>
-            <div class="desktop-icon" data-app="certifications">
-                <div class="icon">🎓</div>
-                <span>Certificates</span>
-            </div>
-            <div class="desktop-icon" data-app="contact">
-                <div class="icon">📧</div>
-                <span>Contact</span>
-            </div>
-            <div class="desktop-icon" data-app="snake">
-                <div class="icon">🐍</div>
-                <span>Snake Game</span>
+            <div class="desktop-icon" data-icon="network">
+                <div class="icon">🌐</div>
+                <span>Network</span>
             </div>
         </div>
 
@@ -95,7 +88,7 @@
         <div class="taskbar">
             <div class="taskbar-start">
                 <button class="start-button" id="startButton">
-                    <span class="windows-flag"></span>
+                    <!-- Windows flag icon rendered via CSS ::after pseudo-element -->
                 </button>
             </div>
             
@@ -122,45 +115,32 @@
         <!-- Start Menu -->
         <div class="start-menu" id="startMenu">
             <div class="start-menu-left">
+                <div class="start-menu-header">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="userAvatar">
+                            <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.parentElement.innerHTML='RJ';" />
+                        </div>
+                        <div class="user-info">
+                            <div class="user-name">Ryan James Indangan</div>
+                            <div class="user-title">Full-Stack Developer & CTO</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="start-menu-apps">
-                <h3>Applications</h3>
-                <div class="app-grid">
-                    <button class="app-tile" data-app="about">
-                        <span class="app-icon">👨‍💻</span>
-                        <span class="app-name">About Me</span>
-                    </button>
-                    <button class="app-tile" data-app="skills">
-                        <span class="app-icon">🛠️</span>
-                        <span class="app-name">Skills</span>
-                    </button>
-                    <button class="app-tile" data-app="experience">
-                        <span class="app-icon">💼</span>
-                        <span class="app-name">Experience</span>
-                    </button>
-                    <button class="app-tile" data-app="projects">
-                        <span class="app-icon">🚀</span>
-                        <span class="app-name">Projects</span>
-                    </button>
-                    <button class="app-tile" data-app="certifications">
-                        <span class="app-icon">🎓</span>
-                        <span class="app-name">Certificates</span>
-                    </button>
-                    <button class="app-tile" data-app="contact">
-                        <span class="app-icon">📧</span>
-                        <span class="app-name">Contact</span>
-                    </button>
-                    <button class="app-tile" data-app="terminal">
-                        <span class="app-icon">⌨️</span>
-                        <span class="app-name">Terminal</span>
-                    </button>
-                    <button class="app-tile" data-app="resume">
-                        <span class="app-icon">📄</span>
-                        <span class="app-name">Resume</span>
-                    </button>
-                    <button class="app-tile" data-app="snake">
-                        <span class="app-icon">🐍</span>
-                        <span class="app-name">Snake Game</span>
-                    </button>
+                    <div class="app-list">
+                        <button class="app-tile" data-app="about">
+                            <span class="app-icon">👨‍💻</span>
+                            <span class="app-name">About Me</span>
+                        </button>
+                        <button class="app-tile" data-app="skills">
+                            <span class="app-icon">🛠️</span>
+                            <span class="app-name">Tech Stack & Expertise</span>
+                        </button>
+                        <button class="app-tile" data-app="experience">
+                            <span class="app-icon">💼</span>
+                            <span class="app-name">Professional Journey</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="start-menu-search">
                     <div class="search-box">
@@ -170,26 +150,15 @@
                 </div>
             </div>
             <div class="start-menu-right">
-                <div class="start-menu-header">
-                    <div class="user-profile">
-                        <div class="user-avatar" id="userAvatar">
-                            <img src="assets/profile-photo.jpg" alt="Ryan James Indangan" onerror="this.parentElement.innerHTML='RJ';" />
-                        </div>
-                        <div class="user-info">
-                            <div class="user-name">Ryan James Indangan</div>
-                        </div>
-                    </div>
-                </div>
                 <div class="start-menu-links">
-                    <a href="#" class="menu-link">Documents</a>
-                    <a href="#" class="menu-link">Pictures</a>
-                    <a href="#" class="menu-link">Music</a>
-                    <a href="#" class="menu-link">Games</a>
-                    <a href="#" class="menu-link">Computer</a>
-                    <a href="#" class="menu-link">Control Panel</a>
-                    <a href="#" class="menu-link">Devices and Printers</a>
-                    <a href="#" class="menu-link">Default Programs</a>
-                    <a href="#" class="menu-link">Help and Support</a>
+                    <a href="#" class="menu-link" data-app="certifications">
+                        <span class="link-icon">🎓</span>
+                        <span>Certifications</span>
+                    </a>
+                    <a href="#" class="menu-link" data-app="contact">
+                        <span class="link-icon">📧</span>
+                        <span>Contact</span>
+                    </a>
                 </div>
                 <div class="start-menu-footer">
                     <button class="shutdown-btn">
