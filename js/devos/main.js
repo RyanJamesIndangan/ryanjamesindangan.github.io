@@ -9,15 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeDesktopIcons();
     initializeSelectionBox();
     initializeAppTiles();
+    initializeSystemTray();
     updateExperienceYears();
     initializeThemeToggle();
     initializeGitHubStats();
     initializeCertificateModal();
     
     // Auto-open apps in a nice cascading manner after boot
+    // Wait for boot screen to finish (2500ms fade + 800ms transition = 3300ms)
     setTimeout(() => {
         autoOpenApps();
-    }, 3000); // Wait for boot screen to finish
+    }, 3500); // Wait for boot screen to fully finish
 });
 
 // ===========================
@@ -33,10 +35,11 @@ function initializeClock() {
             minute: '2-digit',
             hour12: true 
         });
-        const dateStr = now.toLocaleDateString('en-US', { 
-            month: 'short', 
-            day: 'numeric' 
-        });
+        // Windows 7 style date format: "28/08/2014" or "MM/DD/YYYY"
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const year = now.getFullYear();
+        const dateStr = `${day}/${month}/${year}`;
         
         clockEl.querySelector('.time').textContent = timeStr;
         clockEl.querySelector('.date').textContent = dateStr;
@@ -44,6 +47,63 @@ function initializeClock() {
     
     updateClock();
     setInterval(updateClock, 1000);
+}
+
+// ===========================
+// System Tray
+// ===========================
+function initializeSystemTray() {
+    const trayChevron = document.getElementById('trayChevron');
+    const trayHiddenIcons = document.getElementById('trayHiddenIcons');
+    const trayCloseBtn = document.getElementById('trayCloseBtn');
+    
+    if (trayChevron && trayHiddenIcons) {
+        // Toggle hidden icons popup
+        trayChevron.addEventListener('click', (e) => {
+            e.stopPropagation();
+            trayHiddenIcons.classList.toggle('active');
+        });
+        
+        // Close on close button click
+        if (trayCloseBtn) {
+            trayCloseBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                trayHiddenIcons.classList.remove('active');
+            });
+        }
+        
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!trayChevron.contains(e.target) && !trayHiddenIcons.contains(e.target)) {
+                trayHiddenIcons.classList.remove('active');
+            }
+        });
+        
+        // Prevent closing when clicking inside popup
+        trayHiddenIcons.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    // WiFi icon functionality (placeholder)
+    const wifiIcon = document.getElementById('wifiIcon');
+    if (wifiIcon) {
+        wifiIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showNotification('📶 Network settings (Coming soon)');
+            trayHiddenIcons?.classList.remove('active');
+        });
+    }
+    
+    // Volume icon functionality (placeholder)
+    const volumeIcon = document.getElementById('volumeIcon');
+    if (volumeIcon) {
+        volumeIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showNotification('🔊 Volume control (Coming soon)');
+            trayHiddenIcons?.classList.remove('active');
+        });
+    }
 }
 
 // ===========================
@@ -81,13 +141,21 @@ function initializeDesktopIcons() {
         const iconType = icon.dataset.icon;
         
         // Double-click to open
-        icon.addEventListener('dblclick', () => {
+        icon.addEventListener('dblclick', (e) => {
+            e.stopPropagation();
             if (appId) {
-                openApp(appId);
+                // Check if window exists and is minimized
+                const windowEl = window.windowManager?.windows.get(appId);
+                if (windowEl && windowEl.classList.contains('minimized')) {
+                    // Restore minimized window
+                    window.windowManager.minimizeWindow(appId);
+                } else {
+                    // Open or focus window
+                    openApp(appId);
+                }
             } else if (iconType === 'recycle') {
-                showNotification('Recycle Bin is empty');
-            } else if (iconType === 'network') {
-                showNotification('Network connection active');
+                // Show confirmation dialog before opening external link
+                showRecycleBinDialog();
             }
         });
         
@@ -112,7 +180,12 @@ function initializeDesktopIcons() {
         if (e.key === 'Enter' && selectedIcon) {
             const appId = selectedIcon.dataset.app;
             if (appId) {
-                openApp(appId);
+                const windowEl = window.windowManager?.windows.get(appId);
+                if (windowEl && windowEl.classList.contains('minimized')) {
+                    window.windowManager.minimizeWindow(appId);
+                } else {
+                    openApp(appId);
+                }
             }
             return;
         }
@@ -123,6 +196,67 @@ function initializeDesktopIcons() {
             navigateIcons(e.key);
         }
     });
+}
+
+// ===========================
+// Recycle Bin Dialog
+// ===========================
+function showRecycleBinDialog() {
+    // Create Windows 7-style confirmation dialog
+    const dialog = document.createElement('div');
+    dialog.className = 'windows-dialog';
+    dialog.innerHTML = `
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <div class="dialog-icon">🗑️</div>
+                <div class="dialog-title">Recycle Bin</div>
+            </div>
+            <div class="dialog-body">
+                <p>Open external link?</p>
+                <p class="dialog-message">This will open your GitHub profile in a new tab.</p>
+            </div>
+            <div class="dialog-footer">
+                <button class="dialog-btn dialog-btn-primary" id="dialogOk">OK</button>
+                <button class="dialog-btn" id="dialogCancel">Cancel</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialog);
+    
+    // Show dialog with animation
+    setTimeout(() => {
+        dialog.classList.add('active');
+    }, 10);
+    
+    // Handle OK button
+    document.getElementById('dialogOk').addEventListener('click', () => {
+        dialog.classList.remove('active');
+        setTimeout(() => {
+            dialog.remove();
+            window.open('https://github.com/ryanjamesindangan', '_blank');
+        }, 200);
+    });
+    
+    // Handle Cancel button
+    document.getElementById('dialogCancel').addEventListener('click', () => {
+        dialog.classList.remove('active');
+        setTimeout(() => {
+            dialog.remove();
+        }, 200);
+    });
+    
+    // Close on Escape key
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+            dialog.classList.remove('active');
+            setTimeout(() => {
+                dialog.remove();
+                document.removeEventListener('keydown', handleEscape);
+            }, 200);
+        }
+    };
+    document.addEventListener('keydown', handleEscape);
 }
 
 function selectIcon(icon) {
@@ -140,60 +274,111 @@ function deselectAllIcons() {
 
 function navigateIcons(direction) {
     const icons = Array.from(document.querySelectorAll('.desktop-icon'));
-    const currentIndex = icons.indexOf(selectedIcon);
+    if (icons.length === 0) return;
     
-    if (currentIndex === -1) return;
-    
-    let nextIndex;
-    
-    switch(direction) {
-        case 'ArrowUp':
-            // Move up in the column
-            nextIndex = currentIndex - 1;
-            break;
-        case 'ArrowDown':
-            // Move down in the column
-            nextIndex = currentIndex + 1;
-            break;
-        case 'ArrowLeft':
-            // For single column layout, same as up
-            nextIndex = currentIndex - 1;
-            break;
-        case 'ArrowRight':
-            // For single column layout, same as down
-            nextIndex = currentIndex + 1;
-            break;
+    // If no icon is selected, select the first one
+    if (!selectedIcon || !icons.includes(selectedIcon)) {
+        selectIcon(icons[0]);
+        return;
     }
     
-    // Wrap around
-    if (nextIndex < 0) {
-        nextIndex = icons.length - 1;
-    } else if (nextIndex >= icons.length) {
-        nextIndex = 0;
+    const currentRect = selectedIcon.getBoundingClientRect();
+    const currentCenterX = currentRect.left + currentRect.width / 2;
+    const currentCenterY = currentRect.top + currentRect.height / 2;
+    
+    let bestIcon = null;
+    let bestDistance = Infinity;
+    
+    icons.forEach(icon => {
+        if (icon === selectedIcon) return;
+        
+        const iconRect = icon.getBoundingClientRect();
+        const iconCenterX = iconRect.left + iconRect.width / 2;
+        const iconCenterY = iconRect.top + iconRect.height / 2;
+        
+        let isValid = false;
+        let distance = 0;
+        
+        switch(direction) {
+            case 'ArrowUp':
+                // Find icon above current (smaller Y)
+                if (iconCenterY < currentCenterY) {
+                    isValid = true;
+                    // Prefer icons that are closer horizontally (same column)
+                    const horizontalDistance = Math.abs(iconCenterX - currentCenterX);
+                    // Prefer icons directly above (small horizontal distance)
+                    distance = iconCenterY - currentCenterY + horizontalDistance * 0.5;
+                }
+                break;
+            case 'ArrowDown':
+                // Find icon below current (larger Y)
+                if (iconCenterY > currentCenterY) {
+                    isValid = true;
+                    const horizontalDistance = Math.abs(iconCenterX - currentCenterX);
+                    distance = iconCenterY - currentCenterY + horizontalDistance * 0.5;
+                }
+                break;
+            case 'ArrowLeft':
+                // Find icon to the left (smaller X)
+                if (iconCenterX < currentCenterX) {
+                    isValid = true;
+                    const verticalDistance = Math.abs(iconCenterY - currentCenterY);
+                    distance = currentCenterX - iconCenterX + verticalDistance * 0.5;
+                }
+                break;
+            case 'ArrowRight':
+                // Find icon to the right (larger X)
+                if (iconCenterX > currentCenterX) {
+                    isValid = true;
+                    const verticalDistance = Math.abs(iconCenterY - currentCenterY);
+                    distance = iconCenterX - currentCenterX + verticalDistance * 0.5;
+                }
+                break;
+        }
+        
+        if (isValid && distance < bestDistance) {
+            bestDistance = distance;
+            bestIcon = icon;
+        }
+    });
+    
+    // If no icon found in that direction, wrap around
+    if (!bestIcon && icons.length > 1) {
+        if (direction === 'ArrowUp' || direction === 'ArrowLeft') {
+            // Wrap to last icon
+            bestIcon = icons[icons.length - 1];
+        } else {
+            // Wrap to first icon
+            bestIcon = icons[0];
+        }
     }
     
-    if (icons[nextIndex]) {
-        selectIcon(icons[nextIndex]);
-        // Scroll icon into view if needed
-        icons[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (bestIcon) {
+        selectIcon(bestIcon);
+        bestIcon.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }
 
 function makeDraggable(icon) {
     let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let initialY;
+    let currentX = 0;
+    let currentY = 0;
+    let initialX = 0;
+    let initialY = 0;
     let xOffset = 0;
     let yOffset = 0;
+    let rafId = null;
+    let mouseX = 0;
+    let mouseY = 0;
+    let startMouseX = 0;
+    let startMouseY = 0;
     
-    // Get current position from inline styles or computed position
-    const rect = icon.getBoundingClientRect();
-    const desktopRect = document.querySelector('.desktop-icons').getBoundingClientRect();
+    // Enable hardware acceleration
+    icon.style.willChange = 'transform';
+    icon.style.transform = 'translate3d(0, 0, 0)';
     
     icon.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', drag);
+    document.addEventListener('mousemove', updateMousePosition);
     document.addEventListener('mouseup', dragEnd);
     
     function dragStart(e) {
@@ -202,40 +387,74 @@ function makeDraggable(icon) {
         // Prevent dragging if it's a double-click
         if (e.detail === 2) return;
         
-        initialX = e.clientX - xOffset;
-        initialY = e.clientY - yOffset;
+        // Get current transform values to track accumulated offset
+        const transform = window.getComputedStyle(icon).transform;
+        if (transform && transform !== 'none') {
+            const matrix = new DOMMatrix(transform);
+            xOffset = matrix.m41 || 0;
+            yOffset = matrix.m42 || 0;
+        } else {
+            xOffset = 0;
+            yOffset = 0;
+        }
+        
+        // Store starting mouse position
+        startMouseX = e.clientX;
+        startMouseY = e.clientY;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         
         if (e.target === icon || icon.contains(e.target)) {
             isDragging = true;
             icon.style.cursor = 'grabbing';
+            icon.style.userSelect = 'none';
+            icon.style.zIndex = '1000';
+            
+            // Start smooth animation loop
+            animate();
         }
     }
     
-    function drag(e) {
+    function updateMousePosition(e) {
         if (isDragging) {
-            e.preventDefault();
-            
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
-            
-            xOffset = currentX;
-            yOffset = currentY;
-            
-            setTranslate(currentX, currentY, icon);
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         }
+    }
+    
+    function animate() {
+        if (!isDragging) return;
+        
+        // Calculate delta from starting mouse position (simple and correct)
+        const deltaX = mouseX - startMouseX;
+        const deltaY = mouseY - startMouseY;
+        
+        // Apply delta to existing offset
+        currentX = xOffset + deltaX;
+        currentY = yOffset + deltaY;
+        
+        // Update position with hardware acceleration
+        icon.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        
+        // Continue animation loop
+        rafId = requestAnimationFrame(animate);
     }
     
     function dragEnd(e) {
         if (isDragging) {
-            initialX = currentX;
-            initialY = currentY;
             isDragging = false;
+            xOffset = currentX;
+            yOffset = currentY;
             icon.style.cursor = 'pointer';
+            icon.style.userSelect = '';
+            icon.style.zIndex = '';
+            
+            // Cancel animation frame
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
         }
-    }
-    
-    function setTranslate(xPos, yPos, el) {
-        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
     }
 }
 
@@ -256,7 +475,7 @@ function initializeAppTiles() {
         });
     });
     
-    // Handle menu links in right pane (Certifications, Contact)
+    // Handle menu links in right pane (Certifications, Contact, Resume)
     const menuLinks = document.querySelectorAll('.menu-link[data-app]');
     menuLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -269,6 +488,17 @@ function initializeAppTiles() {
             document.getElementById('startButton').classList.remove('active');
         });
     });
+    
+    // External links (GitHub, LinkedIn) - let them work normally
+    const externalLinks = document.querySelectorAll('.menu-link.external-link');
+    externalLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            // Close start menu when opening external link
+            document.getElementById('startMenu').classList.remove('active');
+            document.getElementById('startButton').classList.remove('active');
+            // Let the link work normally (open in new tab)
+        });
+    });
 }
 
 // ===========================
@@ -278,13 +508,31 @@ function openApp(appId, position = null) {
     const app = apps[appId];
     if (!app) return;
     
-    window.windowManager.createWindow(
-        appId,
-        app.title,
-        app.icon,
-        app.content,
-        position
-    );
+    // Check if window already exists
+    const existingWindow = window.windowManager?.windows.get(appId);
+    if (existingWindow) {
+        // If window exists but is minimized, restore it
+        if (existingWindow.classList.contains('minimized')) {
+            window.windowManager.minimizeWindow(appId);
+        } else {
+            // If window exists and is visible, focus it
+            window.windowManager.focusWindow(appId);
+        }
+        return;
+    }
+    
+    // Create new window
+    if (window.windowManager) {
+        window.windowManager.createWindow(
+            appId,
+            app.title,
+            app.icon,
+            app.content,
+            position
+        );
+    } else {
+        console.error('WindowManager not initialized');
+    }
     
     // Initialize terminal if opened
     if (appId === 'terminal') {
@@ -666,6 +914,13 @@ function autoOpenApps() {
     if (isMobile) {
         // On mobile, just show a welcome notification
         showNotification('👋 Welcome! Tap Menu to explore');
+        return;
+    }
+    
+    // Ensure windowManager is initialized
+    if (!window.windowManager) {
+        console.error('WindowManager not initialized, retrying...');
+        setTimeout(autoOpenApps, 100);
         return;
     }
     

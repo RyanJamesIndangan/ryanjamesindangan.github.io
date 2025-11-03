@@ -10,13 +10,13 @@
 
 
     
-    <title>Ryan James Indangan - Developer Portfolio OS</title>
+    <title>Ryan James Indangan</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-icon-180x180.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-icon-180x180.png">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,16 +66,44 @@
         <!-- Desktop Icons -->
         <div class="desktop-icons">
             <div class="desktop-icon" data-app="about" data-icon="portfolio">
-                <div class="icon">📁</div>
-                <span>My Portfolio</span>
+                <div class="icon">👨‍💻</div>
+                <span>About Me</span>
             </div>
-            <div class="desktop-icon" data-icon="recycle">
-                <div class="icon">🗑️</div>
+            <div class="desktop-icon" data-app="skills" data-icon="skills">
+                <div class="icon">🛠️</div>
+                <span>Technical Skills</span>
+            </div>
+            <div class="desktop-icon" data-app="experience" data-icon="experience">
+                <div class="icon">💼</div>
+                <span>Work Experience</span>
+            </div>
+            <div class="desktop-icon" data-app="certifications" data-icon="certifications">
+                <div class="icon">🎓</div>
+                <span>Certifications</span>
+            </div>
+            <div class="desktop-icon" data-app="projects" data-icon="projects">
+                <div class="icon">🚀</div>
+                <span>Projects</span>
+            </div>
+            <div class="desktop-icon" data-app="contact" data-icon="contact">
+                <div class="icon">📧</div>
+                <span>Contact</span>
+            </div>
+            <div class="desktop-icon" data-app="terminal" data-icon="terminal">
+                <div class="icon">⌨️</div>
+                <span>Terminal</span>
+            </div>
+            <div class="desktop-icon" data-app="resume" data-icon="resume">
+                <div class="icon">📄</div>
+                <span>Resume</span>
+            </div>
+            <div class="desktop-icon" data-app="snake" data-icon="snake">
+                <div class="icon">🐍</div>
+                <span>Snake Game</span>
+            </div>
+            <div class="desktop-icon" data-icon="recycle" id="recycleBinIcon">
+                <div class="icon recycle-bin-icon">🗑️</div>
                 <span>Recycle Bin</span>
-            </div>
-            <div class="desktop-icon" data-icon="network">
-                <div class="icon">🌐</div>
-                <span>Network</span>
             </div>
         </div>
 
@@ -88,7 +116,7 @@
         <div class="taskbar">
             <div class="taskbar-start">
                 <button class="start-button" id="startButton">
-                    <!-- Windows flag icon rendered via CSS ::after pseudo-element -->
+                    <div class="windows-flag-start"></div>
                 </button>
             </div>
             
@@ -98,12 +126,29 @@
             
             <div class="taskbar-end">
                 <div class="system-tray">
-                    <button class="tray-item" id="githubStats" title="GitHub Activity">
-                        <span class="icon">📊</span>
+                    <button class="tray-item tray-chevron" id="trayChevron" title="Show hidden icons">
+                        <span class="chevron-icon">▲</span>
                     </button>
-                    <button class="tray-item" id="themeToggle" title="Toggle Theme">
-                        <span class="icon">🌙</span>
-                    </button>
+                    <div class="tray-hidden-icons" id="trayHiddenIcons">
+                        <div class="tray-hidden-header">
+                            <span>System Icons</span>
+                            <button class="tray-close-btn" id="trayCloseBtn">×</button>
+                        </div>
+                        <div class="tray-hidden-content">
+                            <button class="tray-item" id="wifiIcon" title="Network">
+                                <span class="icon">📶</span>
+                            </button>
+                            <button class="tray-item" id="volumeIcon" title="Volume">
+                                <span class="icon">🔊</span>
+                            </button>
+                            <button class="tray-item" id="githubStats" title="GitHub Activity">
+                                <span class="icon">📊</span>
+                            </button>
+                            <button class="tray-item" id="themeToggle" title="Toggle Theme">
+                                <span class="icon">🌙</span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="tray-clock" id="clock">
                         <div class="time">12:00</div>
                         <div class="date">Jan 1</div>
@@ -140,6 +185,22 @@
                             <span class="app-icon">💼</span>
                             <span class="app-name">Professional Journey</span>
                         </button>
+                        <button class="app-tile" data-app="projects">
+                            <span class="app-icon">🚀</span>
+                            <span class="app-name">Featured Projects</span>
+                        </button>
+                        <button class="app-tile" data-app="certifications">
+                            <span class="app-icon">🎓</span>
+                            <span class="app-name">Certifications</span>
+                        </button>
+                        <button class="app-tile" data-app="terminal">
+                            <span class="app-icon">⌨️</span>
+                            <span class="app-name">Terminal</span>
+                        </button>
+                        <button class="app-tile" data-app="snake">
+                            <span class="app-icon">🐍</span>
+                            <span class="app-name">Snake Game</span>
+                        </button>
                     </div>
                 </div>
                 <div class="start-menu-search">
@@ -151,13 +212,21 @@
             </div>
             <div class="start-menu-right">
                 <div class="start-menu-links">
-                    <a href="#" class="menu-link" data-app="certifications">
-                        <span class="link-icon">🎓</span>
-                        <span>Certifications</span>
-                    </a>
                     <a href="#" class="menu-link" data-app="contact">
                         <span class="link-icon">📧</span>
                         <span>Contact</span>
+                    </a>
+                    <a href="#" class="menu-link" data-app="resume">
+                        <span class="link-icon">📄</span>
+                        <span>Resume</span>
+                    </a>
+                    <a href="https://github.com/ryanjamesindangan" target="_blank" class="menu-link external-link">
+                        <span class="link-icon">🔗</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ryan-james-indangan-63b271164/" target="_blank" class="menu-link external-link">
+                        <span class="link-icon">💼</span>
+                        <span>LinkedIn</span>
                     </a>
                 </div>
                 <div class="start-menu-footer">

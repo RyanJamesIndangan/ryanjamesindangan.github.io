@@ -1,51 +1,82 @@
-# Ryan James Indangan - Portfolio
+# Ryan James Indangan - Portfolio OS
 
 [![Live Site](https://img.shields.io/badge/Live-Site-success)](https://ryanjamesindangan.github.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-My personal portfolio website showcasing my work as a Full-Stack Developer with 7+ years of experience in web development, cloud architecture, and team leadership.
+An interactive **Windows 7-inspired portfolio website** showcasing my work as a Full-Stack Developer with 7+ years of experience in web development, cloud architecture, and team leadership. Experience a nostalgic desktop environment with authentic Windows 7 Aero Glass effects, functional windows, taskbar, and desktop icons.
 
 ## 🌐 Live Demo
 
-Visit the live site: [ryanjamesindangan.github.io](https://ryanjamesindangan.github.io)
+Visit the live site: **[ryanjamesindangan.github.io](https://ryanjamesindangan.github.io)**
+
+## ✨ Features
+
+### 🎨 Windows 7 Desktop Experience
+- **Authentic Aero Glass UI** - Translucent blue taskbar with blur effects
+- **Functional Windows** - Draggable, resizable, minimize/maximize/close
+- **Start Menu** - Two-column layout with user profile area
+- **Taskbar** - Active window highlighting, system tray, clock
+- **Desktop Icons** - Double-click to open applications
+- **Boot Screen** - Windows 7-style loading screen with profile photo
+
+### 🎮 Interactive Applications
+- **About Me** - Professional summary with stats and experience
+- **Technical Skills** - Categorized skills showcase
+- **Work Experience** - Interactive timeline of professional journey
+- **Certifications** - Certificate gallery with modal viewer
+- **Snake Game** - Enhanced game with power-ups, special food, and smooth animations
+
+### 🎯 Technical Highlights
+- **Smooth Animations** - RequestAnimationFrame for 60fps gameplay
+- **Modern UI** - Gradient backgrounds, glow effects, glassmorphism
+- **Game Mechanics** - Speed increase, special food, power-ups (speed/slow/shield)
+- **Responsive Design** - Optimized for desktop and mobile
+- **Performance Optimized** - Efficient rendering and event handling
 
 ## 📁 Project Structure
 
 ```
 ryanjamesindangan.github.io/
-├── index.html              # Main HTML file
+├── index.html              # Main HTML entry point
 ├── css/
-│   └── styles.css         # All styling
+│   ├── devos.css          # Windows 7 OS styling (Aero Glass, taskbar, windows)
+│   └── styles.css         # Additional styles
 ├── js/
-│   └── script.js          # Interactive features
+│   ├── devos/
+│   │   ├── boot.js        # Boot screen logic
+│   │   ├── main.js        # Main application logic, desktop icons, start menu
+│   │   ├── windows.js    # Window management (create, drag, resize, minimize/maximize)
+│   │   ├── apps.js        # Application content definitions
+│   │   └── snake-game.js # Enhanced Snake game with power-ups
+│   ├── config/
+│   │   └── config.js      # Configuration constants
+│   ├── modules/
+│   │   ├── componentLoader.js
+│   │   └── config.js
+│   └── utils/
+│       └── helpers.js     # Utility functions
 ├── assets/
+│   ├── profile-photo.jpg   # Profile photo for boot screen
+│   ├── background.jpg     # Desktop wallpaper
+│   ├── certificates/      # Certificate PDFs and images
 │   └── *.png              # Favicon and app icons
-├── README.md              # Project documentation
-├── LICENSE                # MIT License
-└── .gitignore            # Git ignore rules
+├── docs/
+│   ├── ARCHITECTURE.md    # System architecture documentation
+│   ├── PROJECT-STRUCTURE.md # Detailed file organization
+│   ├── VERSIONING.md      # Git Flow & releases
+│   └── PROFILE-PHOTO-SETUP.md # Photo setup instructions
+├── README.md              # This file
+└── LICENSE                # MIT License
 ```
 
 ## 💻 Tech Stack
 
 - **HTML5** - Semantic markup structure
-- **CSS3** - Custom properties, Grid, Flexbox, animations
-- **JavaScript (ES6+)** - Vanilla JS for interactions
+- **CSS3** - Custom properties, Grid, Flexbox, animations, backdrop-filter (Aero Glass)
+- **JavaScript (ES6+)** - Vanilla JS, no dependencies
+- **Canvas API** - For Snake game rendering
+- **LocalStorage** - High score persistence
 - **GitHub Pages** - Static site hosting
-- **Git** - Version control
-
-## ✨ Features
-
-- 🎨 **Modern Design** - Clean, professional interface with dark theme
-- 🌙 **Custom Theme** - Carefully selected color palette with vibrant accents
-- 📱 **Fully Responsive** - Optimized for mobile, tablet, and desktop
-- ✨ **Smooth Animations** - Scroll-triggered and interactive animations
-- 🎯 **Particle System** - Animated background with custom particle effects
-- ⌨️ **Typing Animation** - Dynamic hero section with rotating titles
-- 🎪 **3D Tilt Effects** - Interactive project cards with perspective
-- 🖱️ **Cursor Trail** - Subtle cursor effects for desktop users
-- ⚡ **Performance Optimized** - Intersection Observers, debounced events
-- 🔍 **SEO Friendly** - Semantic HTML and meta tags
-- ♿ **Accessible** - ARIA labels and keyboard navigation
 
 ## 🚀 Quick Start
 
@@ -70,41 +101,34 @@ ryanjamesindangan.github.io/
 
 No build process or dependencies required!
 
-## 📁 Project Structure
+## 🎮 Snake Game Features
 
-This project follows enterprise-grade organization principles with modular architecture.
+The portfolio includes an enhanced Snake game with:
 
-**See [`docs/PROJECT-STRUCTURE.md`](docs/PROJECT-STRUCTURE.md) for detailed documentation.**
+- **Smooth Animations** - 60fps gameplay using requestAnimationFrame
+- **Progressive Difficulty** - Speed increases every 50 points
+- **Special Food** - Golden food worth 50 points (appears randomly)
+- **Power-Ups**:
+  - **Speed** - Temporary speed boost
+  - **Slow** - Temporary slow motion
+  - **Shield** - Protection indicator (visual only)
+- **Pause Functionality** - Press Space to pause/resume
+- **Modern UI** - Gradient backgrounds, glow effects, glassmorphism
+- **High Score Tracking** - Persisted in localStorage
 
-```
-├── assets/          # Static assets (images, certificates)
-├── css/             # Stylesheets  
-├── js/              # JavaScript modules
-│   ├── config/      # Configuration & constants
-│   ├── core/        # Core system functionality
-│   ├── components/  # UI component logic
-│   ├── utils/       # Utility & helper functions
-│   └── devos/       # Main application logic
-├── docs/            # Comprehensive documentation
-└── index.html       # Main entry point
-```
-
-**Key Documentation:**
-- 📖 [Project Structure](docs/PROJECT-STRUCTURE.md) - Detailed file organization
-- 🏗️ [Architecture](docs/ARCHITECTURE.md) - System design
-- 🔖 [Versioning](docs/VERSIONING.md) - Git Flow & releases
-- 📸 [Profile Photo Setup](docs/PROFILE-PHOTO-SETUP.md) - Photo instructions
+### Controls
+- **Arrow Keys** or **WASD** - Move snake
+- **Space** - Pause/Resume game
 
 ## 📄 Sections
 
 | Section | Description |
 |---------|-------------|
-| **Home** | Hero section with animated background and dynamic typing |
-| **About** | Professional summary, experience highlights, and code snippet |
-| **Skills** | Categorized technical skills including frontend, backend, cloud, DevOps, and tools |
-| **Experience** | Detailed work history with interactive timeline |
-| **Projects** | Showcase of featured projects with technology stacks |
-| **Contact** | Multiple ways to get in touch with social links |
+| **About Me** | Professional summary, experience highlights, and code snippet |
+| **Technical Skills** | Categorized technical skills (frontend, backend, cloud, DevOps, tools) |
+| **Work Experience** | Detailed work history with interactive timeline |
+| **Certifications** | Certificate gallery with modal viewer |
+| **Snake Game** | Enhanced game with power-ups and special mechanics |
 
 ## 🛠️ Technologies & Tools Showcased
 
@@ -126,6 +150,35 @@ Git • GitHub/GitLab • N8N • Cursor AI • v0 by Vercel • Postman • Doc
 ### Project Management
 Jira • Confluence • Asana • Monday.com • ClickUp • Slack • MS Teams • Agile/Scrum
 
+## 🎨 Windows 7 UI Components
+
+### Taskbar
+- Translucent blue Aero Glass background
+- Start button with Windows logo
+- Active window highlighting
+- System tray with clock (DD/MM/YYYY format)
+- Application buttons with icons
+
+### Windows
+- Draggable title bar
+- Minimize, Maximize, Close buttons
+- Resizable corners and edges
+- Aero Glass window background
+- Z-index management for focus
+
+### Start Menu
+- Two-column layout
+- Left: Application shortcuts
+- Right: User profile area with vertical separator
+- Search functionality
+- Smooth animations
+
+### Desktop Icons
+- Double-click to open applications
+- Hover effects with glow
+- Icon labels with text shadows
+- Drag and drop support
+
 ## 📬 Contact
 
 - 📧 **Email:** [ryanjamesfranciscoindangan@yahoo.com](mailto:ryanjamesfranciscoindangan@yahoo.com)
@@ -141,13 +194,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
+- Windows 7 UI design inspiration
+- Aero Glass effects using CSS backdrop-filter
 - Icons and favicons generated using various tools
-- Fonts: Inter and JetBrains Mono from Google Fonts
-- Inspired by modern portfolio design trends
+- Fonts: Segoe UI (system), Inter and JetBrains Mono from Google Fonts
 
 ---
 
 **Built with ❤️ by Ryan James Indangan**
 
 *Available for freelance work and full-time opportunities*
-

@@ -16,6 +16,10 @@ class WindowManager {
         this.startHeight = 0;
         this.startLeft = 0;
         this.startTop = 0;
+        this.dragRafId = null;
+        this.resizeRafId = null;
+        this.mouseX = 0;
+        this.mouseY = 0;
     }
 
     createWindow(appId, title, icon, content, position = null) {
@@ -215,9 +219,35 @@ class WindowManager {
             
             this.isDragging = true;
             this.activeWindow = windowEl;
-            this.startX = e.clientX - windowEl.offsetLeft;
-            this.startY = e.clientY - windowEl.offsetTop;
+            
+            // Get current window position and mouse position
+            const rect = windowEl.getBoundingClientRect();
+            const desktop = document.querySelector('.desktop');
+            const desktopRect = desktop.getBoundingClientRect();
+            
+            // Calculate offset from mouse to window's top-left corner
+            // This offset will remain constant during dragging
+            this.startX = e.clientX - rect.left;
+            this.startY = e.clientY - rect.top;
+            
+            // Store initial window position relative to desktop
+            this.startLeft = rect.left - desktopRect.left;
+            this.startTop = rect.top - desktopRect.top;
+            
+            // Enable hardware acceleration
+            windowEl.style.willChange = 'transform';
+            windowEl.style.transition = 'none';
             header.style.cursor = 'grabbing';
+            header.style.userSelect = 'none';
+            
+            // Initialize mouse position
+            this.mouseX = e.clientX;
+            this.mouseY = e.clientY;
+            
+            // Start smooth animation loop
+            if (!this.dragRafId) {
+                this.dragRafId = requestAnimationFrame(() => this.updateWindowDrag());
+            }
         });
 
         // Close
@@ -343,7 +373,7 @@ class WindowManager {
         button.dataset.app = appId;
         button.innerHTML = `
             <span class="app-icon">${icon}</span>
-            <span class="app-name">${title}</span>
+            <span class="app-name">${title.length > 20 ? title.substring(0, 18) + '...' : title}</span>
         `;
         
         button.addEventListener('click', () => {
@@ -368,62 +398,157 @@ class WindowManager {
         
         taskbarApps.appendChild(button);
     }
-}
 
-// Global mouse events for dragging and resizing
-document.addEventListener('mousemove', (e) => {
-    if (window.windowManager.isDragging && window.windowManager.activeWindow) {
-        const windowEl = window.windowManager.activeWindow;
-        if (windowEl.classList.contains('maximized')) return;
+    updateWindowDrag() {
+        if (!this.isDragging || !this.activeWindow) {
+            this.dragRafId = null;
+            return;
+        }
         
-        const newLeft = e.clientX - window.windowManager.startX;
-        const newTop = e.clientY - window.windowManager.startY;
+        const windowEl = this.activeWindow;
+        if (windowEl.classList.contains('maximized')) {
+            this.dragRafId = null;
+            return;
+        }
         
-        windowEl.style.left = `${Math.max(0, newLeft)}px`;
-        windowEl.style.top = `${Math.max(0, newTop)}px`;
+        // Get desktop bounds
+        const desktop = document.querySelector('.desktop');
+        const desktopRect = desktop.getBoundingClientRect();
+        const taskbarHeight = 40;
+        
+        // Calculate new position relative to desktop
+        // mouseX/mouseY are in viewport coordinates, so we subtract desktopRect.left/top
+        const newLeft = (this.mouseX - desktopRect.left) - this.startX;
+        const newTop = (this.mouseY - desktopRect.top) - this.startY;
+        
+        // Constrain to desktop area (excluding taskbar)
+        const minLeft = 0;
+        const maxLeft = desktopRect.width - windowEl.offsetWidth;
+        const minTop = 0;
+        const maxTop = desktopRect.height - taskbarHeight - windowEl.offsetHeight;
+        
+        // Apply constraints
+        const constrainedLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+        const constrainedTop = Math.max(minTop, Math.min(maxTop, newTop));
+        
+        // Update position with hardware acceleration
+        windowEl.style.left = `${constrainedLeft}px`;
+        windowEl.style.top = `${constrainedTop}px`;
+        
+        // Continue animation loop
+        this.dragRafId = requestAnimationFrame(() => this.updateWindowDrag());
     }
     
-    if (window.windowManager.isResizing && window.windowManager.activeWindow) {
-        const windowEl = window.windowManager.activeWindow;
-        const deltaX = e.clientX - window.windowManager.startX;
-        const deltaY = e.clientY - window.windowManager.startY;
-        const handle = window.windowManager.currentHandle;
-        
-        let newWidth = window.windowManager.startWidth;
-        let newHeight = window.windowManager.startHeight;
-        let newLeft = window.windowManager.startLeft;
-        let newTop = window.windowManager.startTop;
-        
-        if (handle.includes('e')) newWidth = window.windowManager.startWidth + deltaX;
-        if (handle.includes('w')) {
-            newWidth = window.windowManager.startWidth - deltaX;
-            newLeft = window.windowManager.startLeft + deltaX;
-        }
-        if (handle.includes('s')) newHeight = window.windowManager.startHeight + deltaY;
-        if (handle.includes('n')) {
-            newHeight = window.windowManager.startHeight - deltaY;
-            newTop = window.windowManager.startTop + deltaY;
+    updateWindowResize() {
+        if (!this.isResizing || !this.activeWindow || !this.currentHandle) {
+            this.resizeRafId = null;
+            return;
         }
         
-        // Minimum size
-        newWidth = Math.max(400, newWidth);
-        newHeight = Math.max(300, newHeight);
+        const windowEl = this.activeWindow;
+        const handle = this.currentHandle;
         
+        // Get desktop bounds
+        const desktop = document.querySelector('.desktop');
+        const desktopRect = desktop.getBoundingClientRect();
+        const taskbarHeight = 40;
+        const minWidth = 300;
+        const minHeight = 200;
+        const maxWidth = desktopRect.width;
+        const maxHeight = desktopRect.height - taskbarHeight;
+        
+        // Calculate delta relative to desktop
+        const deltaX = this.mouseX - this.startX;
+        const deltaY = this.mouseY - this.startY;
+        
+        // Calculate new size and position
+        let newWidth = this.startWidth;
+        let newHeight = this.startHeight;
+        let newLeft = this.startLeft - desktopRect.left;
+        let newTop = this.startTop - desktopRect.top;
+        
+        // Handle resize based on direction
+        if (handle.classList.contains('e') || handle.classList.contains('ne') || handle.classList.contains('se')) {
+            newWidth = Math.max(minWidth, Math.min(maxWidth, this.startWidth + deltaX));
+        }
+        if (handle.classList.contains('w') || handle.classList.contains('nw') || handle.classList.contains('sw')) {
+            newWidth = Math.max(minWidth, Math.min(maxWidth, this.startWidth - deltaX));
+            newLeft = newLeft + (this.startWidth - newWidth);
+        }
+        if (handle.classList.contains('s') || handle.classList.contains('se') || handle.classList.contains('sw')) {
+            newHeight = Math.max(minHeight, Math.min(maxHeight, this.startHeight + deltaY));
+        }
+        if (handle.classList.contains('n') || handle.classList.contains('ne') || handle.classList.contains('nw')) {
+            newHeight = Math.max(minHeight, Math.min(maxHeight, this.startHeight - deltaY));
+            newTop = newTop + (this.startHeight - newHeight);
+        }
+        
+        // Apply constraints
+        newLeft = Math.max(0, Math.min(desktopRect.width - newWidth, newLeft));
+        newTop = Math.max(0, Math.min(desktopRect.height - taskbarHeight - newHeight, newTop));
+        
+        // Update window
         windowEl.style.width = `${newWidth}px`;
         windowEl.style.height = `${newHeight}px`;
         windowEl.style.left = `${newLeft}px`;
         windowEl.style.top = `${newTop}px`;
+        
+        // Continue animation loop
+        this.resizeRafId = requestAnimationFrame(() => this.updateWindowResize());
     }
+}
+
+// Global mouse events for dragging and resizing
+document.addEventListener('mousemove', (e) => {
+    if (window.windowManager.isDragging || window.windowManager.isResizing) {
+        window.windowManager.mouseX = e.clientX;
+        window.windowManager.mouseY = e.clientY;
+        
+        // Start animation loop if not already running
+        if (window.windowManager.isDragging && !window.windowManager.dragRafId) {
+            window.windowManager.dragRafId = requestAnimationFrame(() => window.windowManager.updateWindowDrag());
+        }
+        if (window.windowManager.isResizing && !window.windowManager.resizeRafId) {
+            window.windowManager.resizeRafId = requestAnimationFrame(() => window.windowManager.updateWindowResize());
+        }
+    }
+    
 });
 
 document.addEventListener('mouseup', () => {
     if (window.windowManager.isDragging) {
         const header = window.windowManager.activeWindow?.querySelector('.window-header');
-        if (header) header.style.cursor = 'move';
+        if (header) {
+            header.style.cursor = 'move';
+            header.style.userSelect = '';
+        }
+        const windowEl = window.windowManager.activeWindow;
+        if (windowEl) {
+            windowEl.style.willChange = 'auto';
+            windowEl.style.transition = '';
+        }
+        // Cancel animation frame
+        if (window.windowManager.dragRafId) {
+            cancelAnimationFrame(window.windowManager.dragRafId);
+            window.windowManager.dragRafId = null;
+        }
+    }
+    if (window.windowManager.isResizing) {
+        const windowEl = window.windowManager.activeWindow;
+        if (windowEl) {
+            windowEl.style.willChange = 'auto';
+            windowEl.style.transition = '';
+        }
+        // Cancel animation frame
+        if (window.windowManager.resizeRafId) {
+            cancelAnimationFrame(window.windowManager.resizeRafId);
+            window.windowManager.resizeRafId = null;
+        }
     }
     window.windowManager.isDragging = false;
     window.windowManager.isResizing = false;
     window.windowManager.activeWindow = null;
+    window.windowManager.currentHandle = null;
 });
 
 // Initialize window manager

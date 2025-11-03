@@ -20,7 +20,7 @@
     --windows-hover: #1e90ff;
     
     /* Spacing */
-    --taskbar-height: 48px;
+    --taskbar-height: 40px;
     --window-header-height: 32px;
     --border-radius: 8px;
     --gap: 16px;
@@ -83,9 +83,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 2rem;
     position: relative;
     z-index: 1;
+    min-height: 100vh;
+    padding-bottom: 100px;
 }
 
 .boot-screen::before {
@@ -169,8 +171,9 @@ body {
     align-items: center;
     gap: 1.5rem;
     position: relative;
-    z-index: 1;
+    z-index: 2;
     animation: fadeInUp 0.8s ease-out 0.3s both;
+    margin: 2rem 0;
 }
 
 .windows-busy-cursor {
@@ -304,7 +307,6 @@ body {
     height: 100%;
     background: 
         linear-gradient(135deg, rgba(13, 17, 23, 0.4) 0%, rgba(26, 29, 41, 0.3) 50%, rgba(13, 17, 23, 0.4) 100%),
-        url('../assets/image_146bfd.jpg') center center / cover no-repeat,
         url('../assets/background.jpg') center center / cover no-repeat;
     z-index: 0;
     filter: blur(0.5px);
@@ -446,6 +448,76 @@ body {
     text-align: center;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     font-weight: 500;
+}
+
+/* Recycle Bin Icon Styling - Windows 7 Style */
+.recycle-bin-icon {
+    position: relative;
+    font-size: 2.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.recycle-bin-icon::before {
+    content: '♻';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    color: #0066cc;
+    opacity: 0.9;
+    z-index: 1;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+#recycleBinIcon .icon {
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(173, 216, 230, 0.15) 30%,
+        rgba(135, 206, 250, 0.2) 60%,
+        rgba(100, 149, 237, 0.15) 100%);
+    border-radius: 12px 12px 0 0;
+    padding: 8px;
+    position: relative;
+    box-shadow: 
+        inset 0 2px 4px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#recycleBinIcon .icon::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 8px;
+    background: linear-gradient(to bottom,
+        rgba(192, 192, 192, 0.9) 0%,
+        rgba(169, 169, 169, 0.9) 100%);
+    border-radius: 0 0 4px 4px;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.4),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#recycleBinIcon .icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 6px;
+    background: linear-gradient(to bottom,
+        rgba(192, 192, 192, 0.95) 0%,
+        rgba(169, 169, 169, 0.95) 100%);
+    border-radius: 3px;
+    box-shadow: 
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2);
 }
 
 /* ===================================
@@ -737,37 +809,43 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 48px;
+    height: 40px;
     background: linear-gradient(to top, 
-        rgba(26, 85, 153, 0.98) 0%,
-        rgba(42, 104, 176, 0.98) 50%,
-        rgba(59, 122, 199, 0.98) 100%);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
+        rgba(30, 60, 100, 0.75) 0%,
+        rgba(40, 80, 140, 0.70) 50%,
+        rgba(50, 100, 180, 0.65) 100%);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 -2px 12px rgba(0, 0, 0, 0.5),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(100, 181, 246, 0.2);
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 -1px 0 rgba(0, 0, 0, 0.15),
+        0 -2px 6px rgba(0, 0, 0, 0.25);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 4px;
+    padding: 0 2px;
     z-index: 1000;
 }
 
 .taskbar-start, .taskbar-center, .taskbar-end {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
+    height: 100%;
 }
 
 .taskbar-center {
     flex: 1;
-    justify-content: center;
-    gap: 4px;
-    padding: 0 16px;
+    justify-content: flex-start;
+    gap: 2px;
+    padding: 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.taskbar-center::-webkit-scrollbar {
+    display: none;
 }
 
 .start-button {
@@ -775,25 +853,25 @@ body {
     align-items: center;
     justify-content: center;
     padding: 0;
-    width: 48px;
-    height: 44px;
+    width: 40px;
+    height: 36px;
     background: radial-gradient(circle at 30% 30%, 
-        rgba(255, 255, 255, 0.4) 0%,
-        rgba(255, 255, 255, 0.2) 30%,
-        rgba(74, 144, 226, 0.9) 50%,
-        rgba(53, 122, 189, 0.95) 70%,
-        rgba(42, 107, 165, 1) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.15) 25%,
+        rgba(70, 130, 200, 0.85) 50%,
+        rgba(50, 110, 180, 0.90) 70%,
+        rgba(40, 90, 160, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     color: #fff;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.15s ease;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     box-shadow: 
-        inset 0 1px 3px rgba(255, 255, 255, 0.5),
-        inset 0 -1px 3px rgba(0, 0, 0, 0.4),
-        0 2px 6px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(74, 144, 226, 0.4);
+        inset 0 1px 2px rgba(255, 255, 255, 0.4),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(70, 130, 200, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -813,41 +891,20 @@ body {
     border-radius: 50%;
 }
 
-.start-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 24px;
-    height: 24px;
-    background: 
-        linear-gradient(to right, #00A1F1 0%, #00A1F1 49%, #7CBB00 49%, #7CBB00 100%),
-        linear-gradient(to right, #F65314 0%, #F65314 49%, #FFBB00 49%, #FFBB00 100%);
-    background-size: 100% 50%;
-    background-position: 0 0, 0 50%;
-    background-repeat: no-repeat;
-    border: 0.5px solid rgba(255, 255, 255, 0.4);
-    border-radius: 2px;
-    box-shadow: 
-        0 1px 2px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
 
 .start-button:hover {
     background: radial-gradient(circle at 30% 30%, 
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.3) 30%,
-        rgba(100, 181, 246, 0.95) 50%,
-        rgba(64, 169, 255, 1) 70%,
-        rgba(53, 122, 189, 1) 100%);
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.2) 25%,
+        rgba(80, 140, 210, 0.9) 50%,
+        rgba(60, 120, 190, 0.95) 70%,
+        rgba(50, 100, 170, 1) 100%);
     box-shadow: 
-        inset 0 1px 4px rgba(255, 255, 255, 0.6),
-        inset 0 -1px 3px rgba(0, 0, 0, 0.3),
-        0 3px 8px rgba(0, 0, 0, 0.4),
-        0 0 25px rgba(100, 181, 246, 0.7),
-        0 0 40px rgba(100, 181, 246, 0.4);
-    transform: scale(1.05);
+        inset 0 1px 3px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.25),
+        0 2px 5px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(80, 140, 210, 0.5);
+    transform: scale(1.02);
 }
 
 .start-button:active {
@@ -884,33 +941,92 @@ body {
     position: relative;
 }
 
-.start-button .windows-flag {
-    z-index: 2;
+/* Windows logo in Start button - High quality version matching boot screen */
+.windows-flag-start {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
     position: relative;
+    z-index: 2;
+    box-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: 
+        linear-gradient(to right, #00A1F1 0%, #00A1F1 49%, #7CBB00 49%, #7CBB00 100%),
+        linear-gradient(to right, #F65314 0%, #F65314 49%, #FFBB00 49%, #FFBB00 100%);
+    background-size: 100% 50%;
+    background-position: 0 0, 0 50%;
+    background-repeat: no-repeat;
+    border: 0.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.windows-flag-start::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
+        linear-gradient(to right, transparent 49%, rgba(0, 0, 0, 0.1) 49.5%, rgba(0, 0, 0, 0.1) 50.5%, transparent 51%);
+    pointer-events: none;
+}
+
+.windows-flag-start::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .taskbar-app {
     position: relative;
-    padding: 4px 12px;
+    padding: 2px 8px;
     background: transparent;
     border: none;
     border-radius: 0;
     color: #ffffff;
     font-size: 11px;
     cursor: pointer;
-    transition: background 0.15s ease;
+    transition: all 0.15s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     max-width: 200px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     height: 32px;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    min-height: 32px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.taskbar-app .app-icon {
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.taskbar-app .app-name {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .taskbar-app:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .taskbar-app:active {
@@ -919,17 +1035,15 @@ body {
 
 .taskbar-app.active {
     background: linear-gradient(to top,
-        rgba(255, 255, 255, 0.25) 0%,
-        rgba(255, 255, 255, 0.15) 50%,
-        rgba(255, 255, 255, 0.1) 100%);
+        rgba(255, 255, 255, 0.20) 0%,
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.10) 70%,
+        rgba(255, 255, 255, 0.06) 100%);
     color: #fff;
     box-shadow: 
-        inset 0 0 1px rgba(255, 255, 255, 0.4),
-        inset 0 1px 2px rgba(255, 255, 255, 0.3),
-        inset 0 -1px 1px rgba(0, 0, 0, 0.1),
-        0 0 8px rgba(100, 181, 246, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-bottom: none;
+        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .taskbar-app.active::before {
@@ -938,25 +1052,23 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px;
-    background: linear-gradient(to right,
-        rgba(100, 181, 246, 0.8) 0%,
-        rgba(100, 181, 246, 1) 50%,
-        rgba(100, 181, 246, 0.8) 100%);
-    box-shadow: 
-        0 0 6px rgba(100, 181, 246, 0.8),
-        0 0 12px rgba(100, 181, 246, 0.4);
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 .system-tray {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    height: 100%;
+    padding: 0 4px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tray-item {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     background: transparent;
     border: none;
     border-radius: 0;
@@ -966,47 +1078,167 @@ body {
     align-items: center;
     justify-content: center;
     transition: background 0.15s ease;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.tray-chevron {
+    width: 18px;
+    height: 22px;
+    font-size: 10px;
+    padding: 0 2px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.tray-chevron .chevron-icon {
+    color: #ffffff;
+    opacity: 0.9;
+    font-size: 9px;
+    line-height: 1;
+    display: block;
+    transform: translateY(-1px);
+}
+
+.tray-chevron:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tray-chevron:hover .chevron-icon {
+    opacity: 1;
+}
+
+.tray-chevron:active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Hidden Icons Popup */
+.tray-hidden-icons {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 4px;
+    background: linear-gradient(to bottom,
+        rgba(30, 40, 60, 0.98) 0%,
+        rgba(25, 35, 55, 0.98) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    box-shadow: 
+        0 -4px 20px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    min-width: 200px;
+    max-width: 300px;
+    display: none;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.tray-hidden-icons.active {
+    display: block;
+    animation: slideUpFade 0.2s ease-out;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tray-hidden-header {
+    padding: 8px 12px;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.tray-close-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+}
+
+.tray-close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.tray-hidden-content {
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+
+.tray-hidden-content .tray-item {
+    width: 32px;
+    height: 32px;
     font-size: 14px;
+    padding: 4px;
 }
 
 .tray-item:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .tray-item:active {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .tray-clock {
-    padding: 2px 8px;
+    padding: 3px 8px;
     background: transparent;
     border: none;
     border-radius: 0;
     text-align: center;
     cursor: default;
     transition: background 0.15s ease;
-    min-width: 70px;
+    min-width: 65px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 10px;
 }
 
 .tray-clock:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .tray-clock .time {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 400;
     color: #fff;
-    line-height: 1.2;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    line-height: 1.3;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .tray-clock .date {
     font-size: 9px;
-    color: rgba(255, 255, 255, 0.95);
+    color: rgba(255, 255, 255, 0.9);
     margin-top: 1px;
-    line-height: 1.1;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    line-height: 1.2;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ===================================
@@ -1076,6 +1308,22 @@ body {
     flex-direction: column;
     position: relative;
     z-index: 2;
+}
+
+.start-menu-right::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 10%,
+        rgba(255, 255, 255, 0.3) 90%,
+        transparent 100%);
+    box-shadow: -1px 0 2px rgba(0, 0, 0, 0.1);
+    z-index: 3;
 }
 
 .start-menu-header {
@@ -1883,5 +2131,184 @@ body {
     .cert-modal-body embed {
         min-height: 400px !important;
     }
+}
+
+/* ===================================
+   Windows 7 Dialog
+   =================================== */
+
+.windows-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.windows-dialog.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog-content {
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(248, 248, 248, 0.95) 100%);
+    border: 1px solid rgba(180, 180, 180, 0.8);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    min-width: 400px;
+    max-width: 500px;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.windows-dialog.active .dialog-content {
+    transform: scale(1);
+}
+
+.dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: linear-gradient(to bottom,
+        rgba(240, 248, 255, 0.5) 0%,
+        rgba(230, 240, 255, 0.3) 100%);
+    border-bottom: 1px solid rgba(200, 200, 200, 0.6);
+}
+
+.dialog-icon {
+    font-size: 32px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dialog-body {
+    padding: 20px;
+}
+
+.dialog-body p {
+    color: #1a1a1a;
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.dialog-message {
+    color: #666;
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 12px 20px;
+    background: linear-gradient(to bottom,
+        rgba(248, 248, 248, 0.8) 0%,
+        rgba(240, 240, 240, 0.8) 100%);
+    border-top: 1px solid rgba(200, 200, 200, 0.6);
+}
+
+.dialog-btn {
+    padding: 6px 20px;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(240, 240, 240, 0.9) 50%,
+        rgba(220, 220, 220, 0.9) 100%);
+    border: 1px solid rgba(150, 150, 150, 0.6);
+    color: #1a1a1a;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+        0 1px 1px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-width: 75px;
+}
+
+.dialog-btn:hover {
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(248, 248, 248, 1) 50%,
+        rgba(240, 240, 240, 1) 100%);
+    border-color: rgba(100, 181, 246, 0.6);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+        0 1px 2px rgba(255, 255, 255, 0.6),
+        0 0 4px rgba(100, 181, 246, 0.3);
+}
+
+.dialog-btn:active {
+    background: linear-gradient(to bottom,
+        rgba(220, 220, 220, 0.9) 0%,
+        rgba(200, 200, 200, 0.9) 50%,
+        rgba(180, 180, 180, 0.9) 100%);
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.2),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.dialog-btn-primary {
+    background: linear-gradient(to bottom,
+        rgba(100, 181, 246, 0.9) 0%,
+        rgba(64, 169, 255, 0.9) 50%,
+        rgba(53, 122, 189, 0.9) 100%);
+    color: #fff;
+    border-color: rgba(53, 122, 189, 0.8);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.dialog-btn-primary:hover {
+    background: linear-gradient(to bottom,
+        rgba(120, 201, 255, 0.95) 0%,
+        rgba(84, 179, 255, 0.95) 50%,
+        rgba(73, 142, 209, 0.95) 100%);
+    border-color: rgba(73, 142, 209, 0.9);
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+        0 1px 2px rgba(255, 255, 255, 0.4),
+        0 0 8px rgba(100, 181, 246, 0.5);
+}
+
+.dialog-btn-primary:active {
+    background: linear-gradient(to bottom,
+        rgba(53, 122, 189, 0.9) 0%,
+        rgba(43, 109, 169, 0.9) 50%,
+        rgba(33, 96, 149, 0.9) 100%);
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.3),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.2);
 }
 

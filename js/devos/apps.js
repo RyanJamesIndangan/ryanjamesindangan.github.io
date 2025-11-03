@@ -289,20 +289,22 @@ const apps = {
                         'assets/certificates/cto-certificate.pdf'
                     )}
                     
-                    <div style="padding: 1.5rem; background: #f5f5f5; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
-                        <h3 style="color: #1a1a1a; margin-bottom: 1rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
-                        <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.9rem;">Hacker-X • Completed 2025</p>
+                    <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+                        <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Hacker-X • Started Sep 2024 • Completed Nov 2025</p>
                         <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
-                            Comprehensive cybersecurity training covering penetration testing, vulnerability assessment, network security, and ethical hacking practices.
+                            Comprehensive cybersecurity training covering penetration testing, vulnerability assessment, network security, and ethical hacking practices. Completed the full 21-module course series.
                         </p>
-                        
-                        ${createCertCard(
-                            '🏆 Hacker-X Final Certificate',
-                            'Hacker-X',
-                            'Completed 2024',
-                            'Comprehensive completion certificate for the complete Hacker-X ethical hacking course series.',
-                            'assets/certificates/Hacker-X/hacker-x-final-certificate.jpg'
-                        )}
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                            <button class="view-cert-btn" data-cert="assets/certificates/Hacker-X/hacker-x-final-certificate.jpg" data-title="Hacker-X Final Certificate" data-type="image"
+                                    style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                                👁️ View Certificate
+                            </button>
+                            <a href="assets/certificates/Hacker-X/hacker-x-final-certificate.jpg" download 
+                               style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                                📥 Download
+                            </a>
+                        </div>
                         
                         <h4 style="color: #1a1a1a; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Course Modules (21 Modules)</h4>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
@@ -399,34 +401,39 @@ const apps = {
         title: 'Snake Game',
         icon: '🐍',
         content: `
-            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: #1a1a1a;">
-                <div style="padding: 1rem; background: rgba(0, 0, 0, 0.3); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);">
+                <div style="padding: 1.25rem; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)); border-bottom: 1px solid rgba(100, 255, 218, 0.2); backdrop-filter: blur(10px);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                         <div>
-                            <h3 style="color: #64ffda; margin: 0; font-size: 1.2rem;">🐍 Snake Game</h3>
-                            <p style="color: #94a3b8; margin: 0.25rem 0 0 0; font-size: 0.85rem;">Use arrow keys or WASD to play</p>
+                            <h3 style="color: #64ffda; margin: 0; font-size: 1.3rem; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);">🐍 Snake Game</h3>
+                            <p style="color: #94a3b8; margin: 0.25rem 0 0 0; font-size: 0.85rem;">Arrow keys / WASD • Space to pause</p>
                         </div>
-                        <div style="display: flex; gap: 1.5rem; align-items: center;">
-                            <div style="text-align: center;">
-                                <div style="color: #94a3b8; font-size: 0.75rem;">Score</div>
-                                <div id="snakeScore" style="color: #64ffda; font-size: 1.5rem; font-weight: bold;">0</div>
+                        <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
+                            <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.1); border-radius: 8px; border: 1px solid rgba(100, 255, 218, 0.2);">
+                                <div style="color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">Score</div>
+                                <div id="snakeScore" style="color: #64ffda; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);">0</div>
                             </div>
-                            <div style="text-align: center;">
-                                <div style="color: #94a3b8; font-size: 0.75rem;">High</div>
-                                <div id="snakeHighScore" style="color: #f59e0b; font-size: 1.5rem; font-weight: bold;">0</div>
+                            <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
+                                <div style="color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">High</div>
+                                <div id="snakeHighScore" style="color: #fbbf24; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);">0</div>
                             </div>
-                            <button id="snakeStartBtn" style="padding: 0.5rem 1.5rem; background: #64ffda; color: #000; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
-                                Start
-                            </button>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button id="snakeStartBtn" style="padding: 0.6rem 1.5rem; background: linear-gradient(135deg, #64ffda, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3); transition: transform 0.2s;">
+                                    Start
+                                </button>
+                                <button id="snakePauseBtn" style="padding: 0.6rem 1.5rem; background: rgba(100, 255, 218, 0.1); color: #64ffda; border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
+                                    Pause
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
-                    <canvas id="snakeCanvas" style="border: 2px solid #64ffda; background: #0a0a0a; box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);"></canvas>
-                    <div id="snakeGameOver" style="position: absolute; background: rgba(0, 0, 0, 0.9); padding: 2rem; border-radius: 12px; text-align: center; display: none; border: 2px solid #64ffda;">
-                        <h3 style="color: #64ffda; margin: 0 0 1rem 0; font-size: 1.5rem;">Game Over!</h3>
-                        <p style="color: #e2e8f0; margin: 0 0 1.5rem 0;">Final Score: <span id="finalScore" style="color: #64ffda; font-weight: bold;">0</span></p>
-                        <button id="snakeRestartBtn" style="padding: 0.75rem 2rem; background: #64ffda; color: #000; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 1rem;">
+                    <canvas id="snakeCanvas" style="border: 3px solid #64ffda; border-radius: 12px; background: #0a0a0a; box-shadow: 0 0 30px rgba(100, 255, 218, 0.4), inset 0 0 30px rgba(100, 255, 218, 0.1);"></canvas>
+                    <div id="snakeGameOver" style="position: absolute; background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)); padding: 3rem; border-radius: 16px; text-align: center; display: none; border: 2px solid #64ffda; box-shadow: 0 0 40px rgba(100, 255, 218, 0.5); backdrop-filter: blur(10px);">
+                        <h3 style="color: #64ffda; margin: 0 0 1rem 0; font-size: 2rem; text-shadow: 0 0 20px rgba(100, 255, 218, 0.8);">Game Over!</h3>
+                        <p style="color: #e2e8f0; margin: 0 0 1.5rem 0; font-size: 1.1rem;">Final Score: <span id="finalScore" style="color: #64ffda; font-weight: bold; font-size: 1.5rem;">0</span></p>
+                        <button id="snakeRestartBtn" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #64ffda, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; box-shadow: 0 4px 15px rgba(100, 255, 218, 0.4);">
                             Play Again
                         </button>
                     </div>
@@ -439,38 +446,62 @@ const apps = {
         title: 'Resume / CV',
         icon: '📄',
         content: `
-            <div style="max-width: 700px; text-align: center;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #5eb3ff;">Resume / CV</h2>
-                <p style="color: #94a3b8; margin-bottom: 2rem;">
+            <div style="max-width: 800px; text-align: center;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem; color: #1a1a1a; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Resume / CV</h2>
+                <p style="color: #4a5568; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 500;">
                     Download my complete resume in your preferred format
                 </p>
                 
-                <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <div style="display: grid; gap: 1.25rem; margin-bottom: 2.5rem;">
+                    <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
                         <button class="view-cert-btn" data-cert="assets/resume.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
-                                style="flex: 1; min-width: 200px; padding: 1.5rem; background: linear-gradient(135deg, #7c3aed, #64ffda); border: none; border-radius: 12px; color: #fff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s;">
+                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #2171d6, #1e90ff); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(33, 113, 214, 0.3);"
+                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(33, 113, 214, 0.4)';"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(33, 113, 214, 0.3)';">
                             👁️ Preview Resume
                         </button>
                         <a href="assets/resume.pdf" download="Ryan-James-Indangan-Resume.pdf"
-                           style="flex: 1; min-width: 200px; padding: 1.5rem; background: rgba(100, 255, 218, 0.1); border: 2px solid #64ffda; border-radius: 12px; color: #5eb3ff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.2s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #2171d6; border-radius: 12px; color: #2171d6; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(33, 113, 214, 0.2);"
+                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(33, 113, 214, 0.3)';"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(33, 113, 214, 0.2)';">
                             📥 Download PDF Resume
                         </a>
                     </div>
                     <button onclick="window.open('https://www.linkedin.com/in/ryan-james-indangan-63b271164/', '_blank')"
-                            style="padding: 1.5rem; background: rgba(124, 58, 237, 0.1); border: 2px solid #7c3aed; border-radius: 12px; color: #5eb3ff; cursor: pointer; font-size: 1.1rem; transition: all 0.2s;">
+                            style="padding: 1.5rem 2rem; background: linear-gradient(135deg, #0077b5, #00a0dc); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0, 119, 181, 0.3);"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 119, 181, 0.4)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 119, 181, 0.3)';">
                         💼 View LinkedIn Profile
                     </button>
                 </div>
 
-                <div style="padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; text-align: left;">
-                    <h3 style="color: #5eb3ff; margin-bottom: 1rem;">Quick Stats</h3>
-                    <div style="color: #e2e8f0; line-height: 2;">
-                        <div>📅 <strong>Experience:</strong> <span id="yearsExp3">7</span>+ years</div>
-                        <div>🎓 <strong>Education:</strong> BS Computer Science</div>
-                        <div>🏆 <strong>Certification:</strong> Certified CTO</div>
-                        <div>💼 <strong>Role:</strong> Full-Stack Developer & CTO</div>
-                        <div>🌍 <strong>Location:</strong> Metro Manila, Philippines</div>
-                        <div>✉️ <strong>Email:</strong> ryanjamesfranciscoindangan@yahoo.com</div>
+                <div style="padding: 2.5rem; background: linear-gradient(135deg, #f7fafc, #edf2f7); border: 2px solid #e2e8f0; border-radius: 16px; text-align: left; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
+                    <h3 style="color: #1a1a1a; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #2171d6; padding-bottom: 0.75rem;">Quick Stats</h3>
+                    <div style="color: #2d3748; line-height: 2.5; font-size: 1.05rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">📅</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Experience:</strong> <span style="color: #2171d6; font-weight: 600;" id="yearsExp3">7</span>+ years</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">🎓</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Education:</strong> <span style="color: #4a5568;">BS Computer Science</span></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">🏆</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certification:</strong> <span style="color: #2171d6; font-weight: 600;">Certified CTO</span></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">💼</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">Full-Stack Developer & CTO</span></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">🌍</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Location:</strong> <span style="color: #4a5568;">Metro Manila, Philippines</span></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">✉️</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Email:</strong> <span style="color: #2171d6; font-weight: 500;">ryanjamesfranciscoindangan@yahoo.com</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
