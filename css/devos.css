@@ -183,13 +183,43 @@ body {
     height: 20px;
     position: relative;
     z-index: 1;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 1px 2px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     background: 
-        linear-gradient(to right, #f65314 0%, #f65314 50%, #7cbb00 50%, #7cbb00 100%),
-        linear-gradient(to right, #00a1f1 0%, #00a1f1 50%, #ffbb00 50%, #ffbb00 100%);
+        linear-gradient(to right, #00A1F1 0%, #00A1F1 49%, #7CBB00 49%, #7CBB00 100%),
+        linear-gradient(to right, #F65314 0%, #F65314 49%, #FFBB00 49%, #FFBB00 100%);
     background-size: 100% 50%;
     background-position: 0 0, 0 50%;
     background-repeat: no-repeat;
+    border: 0.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.windows-flag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
+        linear-gradient(to right, transparent 49%, rgba(0, 0, 0, 0.1) 49.5%, rgba(0, 0, 0, 0.1) 50.5%, transparent 51%);
+    pointer-events: none;
+}
+
+.windows-flag::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .windows-text {
