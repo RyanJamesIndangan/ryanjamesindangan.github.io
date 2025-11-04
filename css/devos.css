@@ -789,16 +789,83 @@ body {
 .resize-handle {
     position: absolute;
     z-index: 10;
+    background: transparent;
+    transition: background 0.15s ease;
 }
 
-.resize-handle.n { top: 0; left: 0; width: 100%; height: 4px; cursor: n-resize; }
-.resize-handle.s { bottom: 0; left: 0; width: 100%; height: 4px; cursor: s-resize; }
-.resize-handle.e { top: 0; right: 0; width: 4px; height: 100%; cursor: e-resize; }
-.resize-handle.w { top: 0; left: 0; width: 4px; height: 100%; cursor: w-resize; }
-.resize-handle.ne { top: 0; right: 0; width: 12px; height: 12px; cursor: ne-resize; }
-.resize-handle.nw { top: 0; left: 0; width: 12px; height: 12px; cursor: nw-resize; }
-.resize-handle.se { bottom: 0; right: 0; width: 12px; height: 12px; cursor: se-resize; }
-.resize-handle.sw { bottom: 0; left: 0; width: 12px; height: 12px; cursor: sw-resize; }
+/* Hover effect for better visibility */
+.resize-handle:hover {
+    background: rgba(33, 113, 214, 0.3);
+}
+
+/* Edge handles - thin but clickable */
+.resize-handle.n { 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 4px; 
+    cursor: n-resize; 
+}
+.resize-handle.s { 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 4px; 
+    cursor: s-resize; 
+}
+.resize-handle.e { 
+    top: 0; 
+    right: 0; 
+    width: 4px; 
+    height: 100%; 
+    cursor: e-resize; 
+}
+.resize-handle.w { 
+    top: 0; 
+    left: 0; 
+    width: 4px; 
+    height: 100%; 
+    cursor: w-resize; 
+}
+
+/* Corner handles - larger and more visible */
+.resize-handle.ne { 
+    top: 0; 
+    right: 0; 
+    width: 12px; 
+    height: 12px; 
+    cursor: ne-resize; 
+    border-radius: 0 8px 0 0;
+}
+.resize-handle.nw { 
+    top: 0; 
+    left: 0; 
+    width: 12px; 
+    height: 12px; 
+    cursor: nw-resize; 
+    border-radius: 8px 0 0 0;
+}
+.resize-handle.se { 
+    bottom: 0; 
+    right: 0; 
+    width: 12px; 
+    height: 12px; 
+    cursor: se-resize; 
+    border-radius: 0 0 8px 0;
+}
+.resize-handle.sw { 
+    bottom: 0; 
+    left: 0; 
+    width: 12px; 
+    height: 12px; 
+    cursor: sw-resize; 
+    border-radius: 0 0 0 8px;
+}
+
+/* Disable resize handles when maximized */
+.window.maximized .resize-handle {
+    display: none;
+}
 
 /* ===================================
    Taskbar

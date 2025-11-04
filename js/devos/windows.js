@@ -281,15 +281,41 @@ class WindowManager {
     }
 
     startResize(e, windowEl, direction) {
+        if (windowEl.classList.contains('maximized')) return;
+        
         this.isResizing = true;
         this.activeWindow = windowEl;
         this.currentHandle = direction;
+        
+        // Get current window position and size
+        const rect = windowEl.getBoundingClientRect();
+        const desktop = document.querySelector('.desktop');
+        const desktopRect = desktop.getBoundingClientRect();
+        
+        // Store initial mouse position
         this.startX = e.clientX;
         this.startY = e.clientY;
-        this.startWidth = windowEl.offsetWidth;
-        this.startHeight = windowEl.offsetHeight;
-        this.startLeft = windowEl.offsetLeft;
-        this.startTop = windowEl.offsetTop;
+        this.mouseX = e.clientX;
+        this.mouseY = e.clientY;
+        
+        // Store initial window dimensions and position relative to desktop
+        this.startWidth = rect.width;
+        this.startHeight = rect.height;
+        this.startLeft = rect.left - desktopRect.left;
+        this.startTop = rect.top - desktopRect.top;
+        
+        // Disable transitions for smooth resizing
+        windowEl.style.transition = 'none';
+        windowEl.style.willChange = 'width, height, left, top';
+        
+        // Prevent text selection during resize
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = getComputedStyle(e.target).cursor;
+        
+        // Start resize animation loop
+        if (!this.resizeRafId) {
+            this.resizeRafId = requestAnimationFrame(() => this.updateWindowResize());
+        }
     }
 
     focusWindow(appId) {
@@ -446,7 +472,12 @@ class WindowManager {
         }
         
         const windowEl = this.activeWindow;
-        const handle = this.currentHandle;
+        if (windowEl.classList.contains('maximized')) {
+            this.resizeRafId = null;
+            return;
+        }
+        
+        const handle = this.currentHandle; // This is a string like "n", "s", "e", "w", "ne", "nw", "se", "sw"
         
         // Get desktop bounds
         const desktop = document.querySelector('.desktop');
@@ -457,37 +488,64 @@ class WindowManager {
         const maxWidth = desktopRect.width;
         const maxHeight = desktopRect.height - taskbarHeight;
         
-        // Calculate delta relative to desktop
+        // Calculate delta from starting mouse position
         const deltaX = this.mouseX - this.startX;
         const deltaY = this.mouseY - this.startY;
+        
+        // Get current window position relative to desktop
+        const windowRect = windowEl.getBoundingClientRect();
+        const currentLeft = windowRect.left - desktopRect.left;
+        const currentTop = windowRect.top - desktopRect.top;
         
         // Calculate new size and position
         let newWidth = this.startWidth;
         let newHeight = this.startHeight;
-        let newLeft = this.startLeft - desktopRect.left;
-        let newTop = this.startTop - desktopRect.top;
+        let newLeft = this.startLeft;
+        let newTop = this.startTop;
         
         // Handle resize based on direction
-        if (handle.classList.contains('e') || handle.classList.contains('ne') || handle.classList.contains('se')) {
+        // East (right) edge
+        if (handle === 'e' || handle === 'ne' || handle === 'se') {
             newWidth = Math.max(minWidth, Math.min(maxWidth, this.startWidth + deltaX));
         }
-        if (handle.classList.contains('w') || handle.classList.contains('nw') || handle.classList.contains('sw')) {
+        
+        // West (left) edge
+        if (handle === 'w' || handle === 'nw' || handle === 'sw') {
             newWidth = Math.max(minWidth, Math.min(maxWidth, this.startWidth - deltaX));
-            newLeft = newLeft + (this.startWidth - newWidth);
-        }
-        if (handle.classList.contains('s') || handle.classList.contains('se') || handle.classList.contains('sw')) {
-            newHeight = Math.max(minHeight, Math.min(maxHeight, this.startHeight + deltaY));
-        }
-        if (handle.classList.contains('n') || handle.classList.contains('ne') || handle.classList.contains('nw')) {
-            newHeight = Math.max(minHeight, Math.min(maxHeight, this.startHeight - deltaY));
-            newTop = newTop + (this.startHeight - newHeight);
+            newLeft = this.startLeft + (this.startWidth - newWidth);
         }
         
-        // Apply constraints
+        // South (bottom) edge
+        if (handle === 's' || handle === 'se' || handle === 'sw') {
+            newHeight = Math.max(minHeight, Math.min(maxHeight, this.startHeight + deltaY));
+        }
+        
+        // North (top) edge
+        if (handle === 'n' || handle === 'ne' || handle === 'nw') {
+            newHeight = Math.max(minHeight, Math.min(maxHeight, this.startHeight - deltaY));
+            newTop = this.startTop + (this.startHeight - newHeight);
+        }
+        
+        // Apply constraints to keep window within desktop bounds
         newLeft = Math.max(0, Math.min(desktopRect.width - newWidth, newLeft));
         newTop = Math.max(0, Math.min(desktopRect.height - taskbarHeight - newHeight, newTop));
         
-        // Update window
+        // Ensure minimum size is maintained
+        if (newWidth < minWidth) {
+            newWidth = minWidth;
+            if (handle === 'w' || handle === 'nw' || handle === 'sw') {
+                newLeft = this.startLeft + this.startWidth - minWidth;
+            }
+        }
+        if (newHeight < minHeight) {
+            newHeight = minHeight;
+            if (handle === 'n' || handle === 'ne' || handle === 'nw') {
+                newTop = this.startTop + this.startHeight - minHeight;
+            }
+        }
+        
+        // Update window with hardware acceleration
+        windowEl.style.transition = 'none';
         windowEl.style.width = `${newWidth}px`;
         windowEl.style.height = `${newHeight}px`;
         windowEl.style.left = `${newLeft}px`;
@@ -539,6 +597,9 @@ document.addEventListener('mouseup', () => {
             windowEl.style.willChange = 'auto';
             windowEl.style.transition = '';
         }
+        // Restore body cursor and userSelect
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
         // Cancel animation frame
         if (window.windowManager.resizeRafId) {
             cancelAnimationFrame(window.windowManager.resizeRafId);
