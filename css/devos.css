@@ -941,50 +941,44 @@ body {
     position: relative;
 }
 
-/* Windows logo in Start button - High quality version matching boot screen */
+/* Windows logo in Start button - SVG-based for perfect scaling */
 .windows-flag-start {
     display: inline-block;
     width: 20px;
     height: 20px;
+    min-width: 20px;
+    min-height: 20px;
     position: relative;
     z-index: 2;
-    box-shadow: 
-        0 1px 2px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    background: 
-        linear-gradient(to right, #00A1F1 0%, #00A1F1 49%, #7CBB00 49%, #7CBB00 100%),
-        linear-gradient(to right, #F65314 0%, #F65314 49%, #FFBB00 49%, #FFBB00 100%);
-    background-size: 100% 50%;
-    background-position: 0 0, 0 50%;
-    background-repeat: no-repeat;
-    border: 0.5px solid rgba(255, 255, 255, 0.4);
-    border-radius: 2px;
-    overflow: hidden;
+    /* Ensure crisp rendering on all devices */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* Strong 3D shadow for depth and authenticity */
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6)) 
+            drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5))
+            drop-shadow(0 0 1px rgba(255, 255, 255, 0.3));
+    /* Smooth scaling */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
-.windows-flag-start::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
-        linear-gradient(to right, transparent 49%, rgba(0, 0, 0, 0.1) 49.5%, rgba(0, 0, 0, 0.1) 50.5%, transparent 51%);
-    pointer-events: none;
+/* Ensure SVG scales properly on mobile */
+@media (max-width: 768px) {
+    .windows-flag-start {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        min-height: 22px;
+    }
 }
 
-.windows-flag-start::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: rgba(0, 0, 0, 0.15);
-    transform: translateY(-50%);
-    pointer-events: none;
+@media (max-width: 480px) {
+    .windows-flag-start {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        min-height: 24px;
+    }
 }
 
 .taskbar-app {

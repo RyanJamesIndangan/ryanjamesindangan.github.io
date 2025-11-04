@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <!-- Gradient for glossy blue orb effect -->
+    <radialGradient id="orbGradient" cx="25%" cy="25%">
+      <stop offset="0%" stop-color="#8bc5ff" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#6bb0ff" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#4a9eff" stop-opacity="1"/>
+      <stop offset="75%" stop-color="#2171d6" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#1a5fb8" stop-opacity="1"/>
+    </radialGradient>
+    <!-- Strong highlight for glossy effect -->
+    <radialGradient id="highlight" cx="25%" cy="25%" r="45%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="30%" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Secondary highlight -->
+    <radialGradient id="highlight2" cx="20%" cy="20%" r="35%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Shadow for depth -->
+    <radialGradient id="shadow" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.4"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background circle for shadow -->
+  <circle cx="32" cy="32" r="31" fill="url(#shadow)"/>
+  
+  <!-- Main glossy blue orb -->
+  <circle cx="32" cy="32" r="30" fill="url(#orbGradient)"/>
+  
+  <!-- Glossy highlights -->
+  <circle cx="32" cy="32" r="30" fill="url(#highlight)"/>
+  <circle cx="32" cy="32" r="30" fill="url(#highlight2)"/>
+  
+  <!-- Inner Windows logo rectangle with white background -->
+  <rect x="22" y="22" width="20" height="20" rx="1.5" fill="#ffffff" opacity="0.98"/>
+  
+  <!-- Windows logo 4 colored panes -->
+  <!-- Top Left - Blue #00A1F1 -->
+  <rect x="23" y="23" width="9" height="9" fill="#00A1F1"/>
+  <!-- Top Right - Green #7CBB00 -->
+  <rect x="33" y="23" width="9" height="9" fill="#7CBB00"/>
+  <!-- Bottom Left - Red/Orange #F65314 -->
+  <rect x="23" y="33" width="9" height="9" fill="#F65314"/>
+  <!-- Bottom Right - Yellow #FFBB00 -->
+  <rect x="33" y="33" width="9" height="9" fill="#FFBB00"/>
+  
+  <!-- Subtle separator lines between panes -->
+  <line x1="32" y1="23" x2="32" y2="42" stroke="#ffffff" stroke-width="0.3" opacity="0.6"/>
+  <line x1="23" y1="32" x2="42" y2="32" stroke="#ffffff" stroke-width="0.3" opacity="0.6"/>
+  
+  <!-- Inner highlight on logo for subtle 3D effect -->
+  <rect x="22" y="22" width="20" height="20" rx="1.5" fill="url(#highlight2)" opacity="0.15"/>
+</svg>
+
