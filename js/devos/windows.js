@@ -48,20 +48,20 @@ class WindowManager {
         } else {
             // Calculate tiled layout positions (responsive based on screen size)
             if (position) {
-                // Adjust desktop icon width based on screen size
-                let desktopIconWidth = 130;
+                // Adjust desktop icon width based on screen size (2-column layout: max-width 280px + padding)
+                let desktopIconWidth = 300; // 280px max-width + 20px padding
                 if (isSmallLaptop) {
-                    desktopIconWidth = 100;
+                    desktopIconWidth = 240; // Smaller for small laptops
                 } else if (isLaptop) {
-                    desktopIconWidth = 110;
+                    desktopIconWidth = 270; // Slightly smaller for laptops
                 } else if (isTablet) {
-                    desktopIconWidth = 80;
+                    desktopIconWidth = 220; // Smaller for tablets
                 }
                 
                 const desktopWidth = window.innerWidth - desktopIconWidth;
                 const desktopHeight = window.innerHeight - 60; // Subtract taskbar height
                 const gap = 10;
-                const leftOffset = desktopIconWidth; // Start windows after desktop icons
+                const leftOffset = desktopIconWidth; // Start windows after desktop icons (2 columns)
                 
                 // For laptops, use 2-column layout instead of 3-column for better usability
                 const useTwoColumnLayout = isSmallLaptop || isLaptop;
@@ -196,8 +196,18 @@ class WindowManager {
                 }
             } else {
                 // Default cascading position for manually opened windows
+                // Account for 2-column desktop icons layout (max-width 280px + padding)
+                let desktopIconWidth = 300; // 280px max-width + 20px padding
+                if (isSmallLaptop) {
+                    desktopIconWidth = 240;
+                } else if (isLaptop) {
+                    desktopIconWidth = 270;
+                } else if (isTablet) {
+                    desktopIconWidth = 220;
+                }
+                
                 const offset = (this.windows.size * 30) % 100;
-                const leftOffset = 130; // Keep space for desktop icons
+                const leftOffset = desktopIconWidth; // Keep space for desktop icons (2 columns)
                 windowEl.style.left = `${leftOffset + 100 + offset}px`;
                 windowEl.style.top = `${50 + offset}px`;
                 windowEl.style.width = '800px';
@@ -503,8 +513,21 @@ class WindowManager {
         const newLeft = (this.mouseX - desktopRect.left) - this.startX;
         const newTop = (this.mouseY - desktopRect.top) - this.startY;
         
-        // Constrain to desktop area (excluding taskbar)
-        const minLeft = 0;
+        // Calculate desktop icon width (2-column layout: max-width 280px + padding)
+        const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+        const isLaptop = window.innerWidth > 1024 && window.innerWidth <= 1920;
+        const isSmallLaptop = window.innerWidth > 1024 && window.innerWidth <= 1366;
+        let desktopIconWidth = 300; // 280px max-width + 20px padding
+        if (isSmallLaptop) {
+            desktopIconWidth = 240;
+        } else if (isLaptop) {
+            desktopIconWidth = 270;
+        } else if (isTablet) {
+            desktopIconWidth = 220;
+        }
+        
+        // Constrain to desktop area (excluding taskbar and desktop icons)
+        const minLeft = desktopIconWidth; // Keep space for desktop icons (2 columns)
         const maxLeft = desktopRect.width - windowEl.offsetWidth;
         const minTop = 0;
         const maxTop = desktopRect.height - taskbarHeight - windowEl.offsetHeight;
@@ -582,8 +605,21 @@ class WindowManager {
             newTop = this.startTop + (this.startHeight - newHeight);
         }
         
-        // Apply constraints to keep window within desktop bounds
-        newLeft = Math.max(0, Math.min(desktopRect.width - newWidth, newLeft));
+        // Calculate desktop icon width (2-column layout: max-width 280px + padding)
+        const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+        const isLaptop = window.innerWidth > 1024 && window.innerWidth <= 1920;
+        const isSmallLaptop = window.innerWidth > 1024 && window.innerWidth <= 1366;
+        let desktopIconWidth = 300; // 280px max-width + 20px padding
+        if (isSmallLaptop) {
+            desktopIconWidth = 240;
+        } else if (isLaptop) {
+            desktopIconWidth = 270;
+        } else if (isTablet) {
+            desktopIconWidth = 220;
+        }
+        
+        // Apply constraints to keep window within desktop bounds (excluding desktop icons)
+        newLeft = Math.max(desktopIconWidth, Math.min(desktopRect.width - newWidth, newLeft)); // Keep space for desktop icons (2 columns)
         newTop = Math.max(0, Math.min(desktopRect.height - taskbarHeight - newHeight, newTop));
         
         // Ensure minimum size is maintained
