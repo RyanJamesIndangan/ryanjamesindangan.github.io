@@ -36,19 +36,35 @@ class WindowManager {
 
         // Set initial position and size
         const isMobile = window.innerWidth <= 768;
+        const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+        const isLaptop = window.innerWidth > 1024 && window.innerWidth <= 1920;
+        const isSmallLaptop = window.innerWidth > 1024 && window.innerWidth <= 1366;
+        
         if (isMobile) {
             windowEl.style.left = '0';
             windowEl.style.top = '0';
             windowEl.style.width = '100%';
             windowEl.style.height = `calc(100% - var(--taskbar-height))`;
         } else {
-            // Calculate tiled layout positions (supporting 2x2 grid or 3-column layout)
+            // Calculate tiled layout positions (responsive based on screen size)
             if (position) {
-                const desktopIconWidth = 130; // Reserve space for desktop icons on the left
+                // Adjust desktop icon width based on screen size
+                let desktopIconWidth = 130;
+                if (isSmallLaptop) {
+                    desktopIconWidth = 100;
+                } else if (isLaptop) {
+                    desktopIconWidth = 110;
+                } else if (isTablet) {
+                    desktopIconWidth = 80;
+                }
+                
                 const desktopWidth = window.innerWidth - desktopIconWidth;
                 const desktopHeight = window.innerHeight - 60; // Subtract taskbar height
                 const gap = 10;
                 const leftOffset = desktopIconWidth; // Start windows after desktop icons
+                
+                // For laptops, use 2-column layout instead of 3-column for better usability
+                const useTwoColumnLayout = isSmallLaptop || isLaptop;
                 
                 // Mixed layout: Left column split (About Me top, Skills bottom), 
                 // Center and Right columns full height (Experience, Certifications)
@@ -56,14 +72,13 @@ class WindowManager {
                 const isFullHeight = fullHeightApps.includes(appId);
                 const isMixedLayout = isFullHeight || appId === 'about' || appId === 'skills';
                 
-                if (isMixedLayout) {
-                    // Calculate widths for 3-column layout
+                if (isMixedLayout && !useTwoColumnLayout) {
+                    // 3-column layout for large screens (original behavior)
                     const leftColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
                     const centerColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
                     const rightColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
                     const fullHeight = desktopHeight - (gap * 2);
                     // About Me takes 35% of height, Skills takes the rest to align bottom with center column
-                    // Center column bottom = gap + (desktopHeight - gap * 2) = desktopHeight - gap
                     const aboutMeHeight = desktopHeight * 0.35 - gap;
                     const skillsTop = desktopHeight * 0.35 + gap;
                     const skillsHeight = (desktopHeight - gap) - skillsTop; // Aligns bottom with center column
@@ -102,8 +117,49 @@ class WindowManager {
                             windowEl.dataset.position = position;
                             break;
                     }
+                } else if (isMixedLayout && useTwoColumnLayout) {
+                    // 2-column layout for laptops (better for smaller screens)
+                    const leftColumnWidth = (desktopWidth / 2) - (gap * 1.5);
+                    const rightColumnWidth = (desktopWidth / 2) - (gap * 1.5);
+                    const fullHeight = desktopHeight - (gap * 2);
+                    const halfHeight = (desktopHeight / 2) - (gap * 1.5);
+                    
+                    switch(position) {
+                        case 'top-left':
+                            // About Me - top half of left column
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${leftColumnWidth}px`;
+                            windowEl.style.height = `${halfHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'bottom-left':
+                            // Skills - bottom half of left column
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${halfHeight + gap * 2}px`;
+                            windowEl.style.width = `${leftColumnWidth}px`;
+                            windowEl.style.height = `${halfHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'top-center':
+                            // Experience - top half of right column
+                            windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${rightColumnWidth}px`;
+                            windowEl.style.height = `${halfHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'top-right':
+                            // Certifications - bottom half of right column
+                            windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
+                            windowEl.style.top = `${halfHeight + gap * 2}px`;
+                            windowEl.style.width = `${rightColumnWidth}px`;
+                            windowEl.style.height = `${halfHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                    }
                 } else {
-                    // Default 2-column layout (original behavior)
+                    // Default 2-column layout for other cases
                     const windowWidth = (desktopWidth / 2) - (gap * 1.5);
                     const windowHeight = (desktopHeight / 2) - gap;
                     

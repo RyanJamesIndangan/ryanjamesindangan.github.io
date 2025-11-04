@@ -372,6 +372,9 @@ body {
     flex-direction: column;
     gap: 16px;
     z-index: 10;
+    /* Prevent desktop icons from interfering with windows */
+    max-width: 130px;
+    overflow: visible;
 }
 
 .desktop-icon {
@@ -554,6 +557,11 @@ body {
     flex-direction: column;
     pointer-events: auto;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 300px;
+    min-height: 200px;
+    max-width: 100vw;
+    max-height: 100vh;
+    box-sizing: border-box;
 }
 
 .window.minimized {
@@ -717,6 +725,10 @@ body {
     -webkit-backdrop-filter: blur(10px);
     color: #1e293b;
     margin: 0;
+    /* Ensure content is scrollable and doesn't overflow */
+    min-height: 0;
+    max-height: 100%;
+    box-sizing: border-box;
 }
 
 .window-content * {
@@ -1740,6 +1752,134 @@ body {
     background: linear-gradient(to right, transparent, #d0d0d0 10%, #d0d0d0 90%, transparent);
     margin: 3px 2px;
     border-top: 1px solid #fff;
+}
+
+/* ===================================
+   Laptop & Tablet Responsive
+   =================================== */
+
+/* Laptop screens (1366px - 1920px width) */
+@media (max-width: 1920px) and (min-width: 1024px) {
+    /* Reduce desktop icon column width on laptops */
+    .desktop-icons {
+        max-width: 110px;
+    }
+    
+    .desktop-icon {
+        width: 100px;
+        font-size: 0.85rem;
+    }
+    
+    .desktop-icon .icon {
+        font-size: 2.5rem;
+        width: 60px;
+        height: 60px;
+    }
+    
+    /* Ensure windows don't overflow */
+    .window {
+        max-width: 95vw;
+        max-height: 90vh;
+    }
+    
+    /* Adjust window content for better readability */
+    .window-content {
+        font-size: 0.95rem;
+        padding: 1rem;
+    }
+    
+    /* Smaller headings on laptops */
+    .window-content h2 {
+        font-size: 1.75rem !important;
+    }
+    
+    .window-content h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Compact skill tags */
+    .window-content [style*="skill-tag"],
+    .window-content span[style*="padding: 0.5rem"] {
+        font-size: 0.85rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+    
+    /* Compact stats/highlights */
+    .window-content [style*="highlight-number"] {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* Smaller laptops (1024px - 1366px) */
+@media (max-width: 1366px) and (min-width: 1024px) {
+    /* Further reduce desktop icon space */
+    .desktop-icons {
+        max-width: 100px;
+    }
+    
+    .desktop-icon {
+        width: 90px;
+        font-size: 0.8rem;
+    }
+    
+    .desktop-icon .icon {
+        font-size: 2.2rem;
+        width: 55px;
+        height: 55px;
+    }
+    
+    /* Ensure windows fit within viewport */
+    .window {
+        max-width: 98vw;
+        max-height: 92vh;
+    }
+    
+    /* More compact content */
+    .window-content {
+        font-size: 0.9rem;
+        padding: 0.875rem;
+    }
+    
+    .window-content h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    .window-content h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Even more compact tags */
+    .window-content [style*="skill-tag"],
+    .window-content span[style*="padding: 0.5rem"] {
+        font-size: 0.8rem !important;
+        padding: 0.35rem 0.7rem !important;
+    }
+}
+
+/* Tablet screens (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    /* Hide desktop icons on tablets or make them very compact */
+    .desktop-icons {
+        max-width: 80px;
+        opacity: 0.7;
+    }
+    
+    .desktop-icon {
+        width: 70px;
+        font-size: 0.75rem;
+    }
+    
+    .desktop-icon .icon {
+        font-size: 2rem;
+        width: 50px;
+        height: 50px;
+    }
+    
+    /* Windows should be more flexible */
+    .window {
+        max-width: 98vw;
+        max-height: 95vh;
+    }
 }
 
 /* ===================================
