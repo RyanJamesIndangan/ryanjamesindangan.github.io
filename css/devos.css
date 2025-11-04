@@ -368,13 +368,17 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, auto);
+    grid-auto-flow: row;
+    gap: 16px 20px;
     z-index: 10;
     /* Prevent desktop icons from interfering with windows */
-    max-width: 130px;
+    width: auto;
+    max-width: 280px;
     overflow: visible;
+    align-items: start;
 }
 
 .desktop-icon {
