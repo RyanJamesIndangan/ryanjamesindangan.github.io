@@ -456,71 +456,100 @@ body {
 /* Recycle Bin Icon Styling - Windows 7 Style */
 .recycle-bin-icon {
     position: relative;
-    font-size: 2.5rem;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    font-size: 0;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
 }
 
+/* Recycle Symbol - Add recycling arrows */
 .recycle-bin-icon::before {
     content: '♻';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #0066cc;
-    opacity: 0.9;
-    z-index: 1;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+    opacity: 0.85;
+    z-index: 3;
+    text-shadow: 
+        0 1px 2px rgba(255, 255, 255, 0.5),
+        0 -1px 1px rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
 }
 
 #recycleBinIcon .icon {
-    background: linear-gradient(to bottom,
-        rgba(255, 255, 255, 0.1) 0%,
-        rgba(173, 216, 230, 0.15) 30%,
-        rgba(135, 206, 250, 0.2) 60%,
-        rgba(100, 149, 237, 0.15) 100%);
-    border-radius: 12px 12px 0 0;
-    padding: 8px;
+    background-image: 
+        linear-gradient(to right, 
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 20%),
+        linear-gradient(to bottom,
+            rgba(220, 220, 220, 0.95) 0%,
+            rgba(200, 200, 200, 0.95) 20%,
+            rgba(180, 180, 180, 0.95) 50%,
+            rgba(160, 160, 160, 0.95) 80%,
+            rgba(140, 140, 140, 0.95) 100%);
+    border-radius: 8px 8px 4px 4px;
+    padding: 0;
     position: relative;
+    width: 50px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-shadow: 
-        inset 0 2px 4px rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
-        0 2px 6px rgba(0, 0, 0, 0.2);
+        inset 0 2px 4px rgba(255, 255, 255, 0.6),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+        inset -2px 0 2px rgba(0, 0, 0, 0.2),
+        inset 2px 0 2px rgba(255, 255, 255, 0.4),
+        0 3px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 #recycleBinIcon .icon::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -3px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    height: 8px;
+    width: 52px;
+    height: 6px;
     background: linear-gradient(to bottom,
-        rgba(192, 192, 192, 0.9) 0%,
-        rgba(169, 169, 169, 0.9) 100%);
-    border-radius: 0 0 4px 4px;
+        rgba(200, 200, 200, 0.95) 0%,
+        rgba(180, 180, 180, 0.95) 50%,
+        rgba(160, 160, 160, 0.95) 100%);
+    border-radius: 3px;
     box-shadow: 
-        inset 0 1px 2px rgba(255, 255, 255, 0.4),
-        inset 0 -1px 1px rgba(0, 0, 0, 0.2),
-        0 1px 2px rgba(0, 0, 0, 0.2);
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1;
 }
 
 #recycleBinIcon .icon::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -4px;
     left: 50%;
     transform: translateX(-50%);
-    width: 70%;
-    height: 6px;
+    width: 55px;
+    height: 8px;
     background: linear-gradient(to bottom,
-        rgba(192, 192, 192, 0.95) 0%,
-        rgba(169, 169, 169, 0.95) 100%);
-    border-radius: 3px;
+        rgba(240, 240, 240, 0.98) 0%,
+        rgba(220, 220, 220, 0.98) 30%,
+        rgba(200, 200, 200, 0.98) 60%,
+        rgba(180, 180, 180, 0.98) 100%);
+    border-radius: 6px 6px 2px 2px;
     box-shadow: 
-        inset 0 1px 2px rgba(255, 255, 255, 0.5),
-        inset 0 -1px 1px rgba(0, 0, 0, 0.2);
+        inset 0 2px 3px rgba(255, 255, 255, 0.7),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.2),
+        0 2px 5px rgba(0, 0, 0, 0.4),
+        0 -1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
 
 /* ===================================
