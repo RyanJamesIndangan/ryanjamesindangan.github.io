@@ -966,13 +966,20 @@ function initializeCertificateModal() {
         modalTitle.textContent = title;
         modalBody.innerHTML = '';
         
+        // Properly encode the path for use in URLs
+        // Split the path into directory and filename, encode only the filename
+        const pathParts = certPath.split('/');
+        const filename = pathParts.pop();
+        const directory = pathParts.join('/');
+        const encodedPath = directory ? `${directory}/${encodeURIComponent(filename)}` : encodeURIComponent(filename);
+        
         if (type === 'pdf') {
             // Use iframe for better compatibility
             modalBody.innerHTML = `
                 <div style="width: 100%; height: 100%; display: flex; flex-direction: column;">
                     <div style="flex: 1; position: relative; min-height: 500px;">
                         <iframe 
-                            src="${certPath}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" 
+                            src="${encodedPath}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" 
                             type="application/pdf"
                             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; background: #525659;"
                             onload="this.style.background='#fff';"
@@ -983,11 +990,11 @@ function initializeCertificateModal() {
                             📄 PDF Document • Use the buttons below for more options
                         </p>
                         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                            <a href="${certPath}" target="_blank" rel="noopener noreferrer"
+                            <a href="${encodedPath}" target="_blank" rel="noopener noreferrer"
                                style="padding: 0.75rem 1.5rem; background: var(--windows-blue); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                                 🔗 Open in New Tab
                             </a>
-                            <a href="${certPath}" download
+                            <a href="${encodedPath}" download="${filename}"
                                style="padding: 0.75rem 1.5rem; background: var(--success); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                                 📥 Download PDF
                             </a>
@@ -996,11 +1003,10 @@ function initializeCertificateModal() {
                 </div>
             `;
         } else {
-            modalBody.innerHTML = `<img src="${certPath}" alt="${title}" />`;
+            modalBody.innerHTML = `<img src="${encodedPath}" alt="${title}" />`;
         }
         
-        downloadBtn.href = certPath;
-        const filename = certPath.split('/').pop();
+        downloadBtn.href = encodedPath;
         downloadBtn.download = filename;
         
         modal.classList.add('active');

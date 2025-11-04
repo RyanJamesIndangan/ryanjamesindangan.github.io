@@ -454,13 +454,13 @@ const apps = {
                 
                 <div style="display: grid; gap: 1.25rem; margin-bottom: 2.5rem;">
                     <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
-                        <button class="view-cert-btn" data-cert="assets/resume.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
-                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #2171d6, #1e90ff); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(33, 113, 214, 0.3);"
-                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(33, 113, 214, 0.4)';"
-                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(33, 113, 214, 0.3)';">
-                            👁️ Preview Resume
-                        </button>
-                        <a href="assets/resume.pdf" download="Ryan-James-Indangan-Resume.pdf"
+                        <button class="view-cert-btn" data-cert="assets/certificates/[09-28-25] Ryan-James-Indangan-Resume_2025.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
+                                    style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #2171d6, #1e90ff); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(33, 113, 214, 0.3);"
+                                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(33, 113, 214, 0.4)';"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(33, 113, 214, 0.3)';">
+                                👁️ Preview Resume
+                            </button>
+                            <a href="assets/certificates/[09-28-25] Ryan-James-Indangan-Resume_2025.pdf" download="Ryan-James-Indangan-Resume.pdf"
                            style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #2171d6; border-radius: 12px; color: #2171d6; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(33, 113, 214, 0.2);"
                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(33, 113, 214, 0.3)';"
                            onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(33, 113, 214, 0.2)';">
