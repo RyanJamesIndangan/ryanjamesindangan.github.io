@@ -283,7 +283,7 @@ const apps = {
                 <div style="display: grid; gap: 1.5rem;">
                     ${createCertCard(
                         '👨‍💼 Certified Chief Technology Officer',
-                        'TechSherpas',
+                        'IMTF',
                         'Issued Jul 2023',
                         'Comprehensive CTO certification covering technology leadership, strategic planning, team management, and enterprise architecture.',
                         'assets/certificates/cto-certificate.pdf'
