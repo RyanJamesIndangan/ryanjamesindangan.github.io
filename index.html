@@ -130,6 +130,10 @@
                 <div class="icon">🚀</div>
                 <span>Projects</span>
             </div>
+            <div class="desktop-icon" data-app="ai-lab" data-icon="ai-lab">
+                <div class="icon">🤖</div>
+                <span>AI Lab</span>
+            </div>
             <!-- Row 6 -->
             <div class="desktop-icon" data-icon="recycle" id="recycleBinIcon">
                 <div class="icon recycle-bin-icon">🗑️</div>
@@ -140,6 +144,27 @@
         <!-- Windows Container -->
         <div class="windows-container" id="windowsContainer">
             <!-- Windows will be dynamically created here -->
+        </div>
+
+        <!-- AI Assistant Widget -->
+        <div class="ai-assistant-widget" id="aiAssistantWidget" onclick="openApp('ai-lab')">
+            <div class="ai-assistant-widget-header">
+                <div class="ai-assistant-icon">🤖</div>
+                <h3 class="ai-assistant-title">AI Assistant</h3>
+            </div>
+            <div class="ai-assistant-stats">
+                <div class="ai-stat-item">
+                    <span class="ai-stat-number">10K+</span>
+                    <span class="ai-stat-label">Documents Processed</span>
+                </div>
+                <div class="ai-stat-item">
+                    <span class="ai-stat-number">94%</span>
+                    <span class="ai-stat-label">OCR Accuracy</span>
+                </div>
+            </div>
+            <div class="ai-assistant-message">
+                Click to explore Document Intelligence capabilities and AI/ML projects
+            </div>
         </div>
 
         <!-- Taskbar -->
@@ -289,6 +314,10 @@
                             <span class="app-icon">🐍</span>
                             <span class="app-name">Snake Game</span>
                         </button>
+                        <button class="app-tile" data-app="ai-lab">
+                            <span class="app-icon">🤖</span>
+                            <span class="app-name">AI Lab</span>
+                        </button>
                     </div>
                 </div>
                 <div class="start-menu-search">
@@ -364,6 +393,7 @@
     <script src="js/devos/boot.js"></script>
     <script src="js/devos/windows.js"></script>
     <script src="js/devos/apps.js"></script>
+    <script src="js/devos/keyboard-shortcuts.js"></script>
     <script src="js/devos/snake-icon.js"></script>
     <script src="js/devos/snake-game.js"></script>
     <script src="js/devos/main.js"></script>

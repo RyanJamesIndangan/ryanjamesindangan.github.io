@@ -20,6 +20,8 @@ class WindowManager {
         this.resizeRafId = null;
         this.mouseX = 0;
         this.mouseY = 0;
+        this.snapThreshold = 20; // Pixels for snapping detection
+        this.snappedPosition = null; // Track if window is snapped
     }
 
     createWindow(appId, title, icon, content, position = null) {
@@ -431,12 +433,25 @@ class WindowManager {
         const isMinimized = windowEl.classList.contains('minimized');
         
         if (isMinimized) {
-            // Restore window
+            // Restore window with animation
+            windowEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
             windowEl.classList.remove('minimized');
             this.focusWindow(appId);
+            setTimeout(() => {
+                windowEl.style.transition = '';
+            }, 200);
         } else {
-            // Minimize window
-            windowEl.classList.add('minimized');
+            // Minimize window with smooth animation
+            windowEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            windowEl.style.transform = 'scale(0.8) translateY(20px)';
+            windowEl.style.opacity = '0';
+            
+            setTimeout(() => {
+                windowEl.classList.add('minimized');
+                windowEl.style.transform = '';
+                windowEl.style.opacity = '';
+                windowEl.style.transition = '';
+            }, 200);
             
             // Update taskbar button - keep button but remove active state
             const taskbarBtn = document.querySelector(`.taskbar-app[data-app="${appId}"]`);
@@ -455,7 +470,107 @@ class WindowManager {
         const windowEl = this.windows.get(appId);
         if (!windowEl) return;
 
-        windowEl.classList.toggle('maximized');
+        const isMaximized = windowEl.classList.contains('maximized');
+        
+        if (isMaximized) {
+            // Restore window
+            windowEl.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            windowEl.classList.remove('maximized');
+            // Restore previous position if stored
+            if (windowEl.dataset.restoreLeft && windowEl.dataset.restoreTop) {
+                windowEl.style.left = windowEl.dataset.restoreLeft;
+                windowEl.style.top = windowEl.dataset.restoreTop;
+                windowEl.style.width = windowEl.dataset.restoreWidth || '800px';
+                windowEl.style.height = windowEl.dataset.restoreHeight || '600px';
+            }
+            setTimeout(() => {
+                windowEl.style.transition = '';
+            }, 300);
+        } else {
+            // Store current position
+            windowEl.dataset.restoreLeft = windowEl.style.left;
+            windowEl.dataset.restoreTop = windowEl.style.top;
+            windowEl.dataset.restoreWidth = windowEl.style.width;
+            windowEl.dataset.restoreHeight = windowEl.style.height;
+            
+            // Maximize with animation
+            windowEl.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            windowEl.classList.add('maximized');
+            setTimeout(() => {
+                windowEl.style.transition = '';
+            }, 300);
+        }
+    }
+    
+    // Window snapping functionality
+    checkSnapPosition(windowEl, newLeft, newTop) {
+        const desktop = document.querySelector('.desktop');
+        const desktopRect = desktop.getBoundingClientRect();
+        const taskbarHeight = 40;
+        const snapThreshold = this.snapThreshold;
+        
+        // Calculate desktop icon width
+        const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+        const isLaptop = window.innerWidth > 1024 && window.innerWidth <= 1920;
+        const isSmallLaptop = window.innerWidth > 1024 && window.innerWidth <= 1366;
+        let desktopIconWidth = 300;
+        if (isSmallLaptop) desktopIconWidth = 240;
+        else if (isLaptop) desktopIconWidth = 270;
+        else if (isTablet) desktopIconWidth = 220;
+        
+        const availableWidth = desktopRect.width - desktopIconWidth;
+        const availableHeight = desktopRect.height - taskbarHeight;
+        const windowWidth = windowEl.offsetWidth;
+        const windowHeight = windowEl.offsetHeight;
+        
+        // Check for edge snapping
+        // Left edge
+        if (Math.abs(newLeft - desktopIconWidth) < snapThreshold) {
+            return { left: desktopIconWidth, top: newTop, snap: 'left' };
+        }
+        // Right edge
+        if (Math.abs(newLeft + windowWidth - desktopRect.width) < snapThreshold) {
+            return { left: desktopRect.width - windowWidth, top: newTop, snap: 'right' };
+        }
+        // Top edge
+        if (Math.abs(newTop) < snapThreshold) {
+            return { left: newLeft, top: 0, snap: 'top' };
+        }
+        // Bottom edge
+        if (Math.abs(newTop + windowHeight - availableHeight) < snapThreshold) {
+            return { left: newLeft, top: availableHeight - windowHeight, snap: 'bottom' };
+        }
+        
+        // Check for corner snapping
+        // Top-left corner
+        if (Math.abs(newLeft - desktopIconWidth) < snapThreshold && Math.abs(newTop) < snapThreshold) {
+            return { left: desktopIconWidth, top: 0, snap: 'top-left' };
+        }
+        // Top-right corner
+        if (Math.abs(newLeft + windowWidth - desktopRect.width) < snapThreshold && Math.abs(newTop) < snapThreshold) {
+            return { left: desktopRect.width - windowWidth, top: 0, snap: 'top-right' };
+        }
+        // Bottom-left corner
+        if (Math.abs(newLeft - desktopIconWidth) < snapThreshold && Math.abs(newTop + windowHeight - availableHeight) < snapThreshold) {
+            return { left: desktopIconWidth, top: availableHeight - windowHeight, snap: 'bottom-left' };
+        }
+        // Bottom-right corner
+        if (Math.abs(newLeft + windowWidth - desktopRect.width) < snapThreshold && Math.abs(newTop + windowHeight - availableHeight) < snapThreshold) {
+            return { left: desktopRect.width - windowWidth, top: availableHeight - windowHeight, snap: 'bottom-right' };
+        }
+        
+        // Check for half-screen snapping (left/right)
+        const halfWidth = availableWidth / 2;
+        // Left half
+        if (Math.abs(newLeft - desktopIconWidth) < snapThreshold && windowWidth >= halfWidth * 0.8) {
+            return { left: desktopIconWidth, top: newTop, width: halfWidth, height: availableHeight, snap: 'left-half' };
+        }
+        // Right half
+        if (Math.abs(newLeft + windowWidth - desktopRect.width) < snapThreshold && windowWidth >= halfWidth * 0.8) {
+            return { left: desktopRect.width - halfWidth, top: newTop, width: halfWidth, height: availableHeight, snap: 'right-half' };
+        }
+        
+        return null; // No snapping
     }
 
     createTaskbarButton(appId, title, icon) {
@@ -463,6 +578,7 @@ class WindowManager {
         const button = document.createElement('button');
         button.className = 'taskbar-app active';
         button.dataset.app = appId;
+        button.setAttribute('data-app-name', title);
         button.innerHTML = `
             <span class="app-icon">${icon}</span>
             <span class="app-name">${title.length > 20 ? title.substring(0, 18) + '...' : title}</span>
@@ -532,13 +648,36 @@ class WindowManager {
         const minTop = 0;
         const maxTop = desktopRect.height - taskbarHeight - windowEl.offsetHeight;
         
-        // Apply constraints
-        const constrainedLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
-        const constrainedTop = Math.max(minTop, Math.min(maxTop, newTop));
+        // Check for snapping
+        const snapResult = this.checkSnapPosition(windowEl, newLeft, newTop);
+        
+        let finalLeft, finalTop;
+        if (snapResult) {
+            finalLeft = snapResult.left;
+            finalTop = snapResult.top;
+            this.snappedPosition = snapResult.snap;
+            
+            // Apply snap sizing if provided
+            if (snapResult.width) {
+                windowEl.style.width = `${snapResult.width}px`;
+            }
+            if (snapResult.height) {
+                windowEl.style.height = `${snapResult.height}px`;
+            }
+            
+            // Visual feedback for snapping
+            windowEl.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+        } else {
+            // Apply constraints normally
+            finalLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
+            finalTop = Math.max(minTop, Math.min(maxTop, newTop));
+            this.snappedPosition = null;
+            windowEl.style.transition = 'none';
+        }
         
         // Update position with hardware acceleration
-        windowEl.style.left = `${constrainedLeft}px`;
-        windowEl.style.top = `${constrainedTop}px`;
+        windowEl.style.left = `${finalLeft}px`;
+        windowEl.style.top = `${finalTop}px`;
         
         // Continue animation loop
         this.dragRafId = requestAnimationFrame(() => this.updateWindowDrag());
@@ -675,7 +814,15 @@ document.addEventListener('mouseup', () => {
         const windowEl = window.windowManager.activeWindow;
         if (windowEl) {
             windowEl.style.willChange = 'auto';
-            windowEl.style.transition = '';
+            // Keep transition if snapped, otherwise remove it
+            if (!window.windowManager.snappedPosition) {
+                windowEl.style.transition = '';
+            } else {
+                // Clear snap transition after a moment
+                setTimeout(() => {
+                    windowEl.style.transition = '';
+                }, 200);
+            }
         }
         // Cancel animation frame
         if (window.windowManager.dragRafId) {

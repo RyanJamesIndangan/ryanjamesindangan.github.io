@@ -616,23 +616,37 @@ function initializeTerminal() {
     
     terminalInput.focus();
     
+    // Command history
+    let commandHistory = [];
+    let historyIndex = -1;
+    
     const commands = {
         help: () => `
 Available commands:
-  about       - Display information about me
-  skills      - List technical skills
-  experience  - Show work experience
-  projects    - Display featured projects
-  contact     - Show contact information
-  clear       - Clear terminal screen
-  github      - Open GitHub profile
-  linkedin    - Open LinkedIn profile
-  help        - Show this help message
+  General:
+    about       - Display information about me
+    skills      - List technical skills
+    experience  - Show work experience
+    projects    - Display featured projects
+    contact     - Show contact information
+    clear       - Clear terminal screen
+    github      - Open GitHub profile
+    linkedin    - Open LinkedIn profile
+    help        - Show this help message
+    
+  AI/ML Commands:
+    ai-about    - AI-focused professional summary
+    ai-skills    - Detailed AI/ML skills breakdown
+    ai-projects  - Document Intelligence projects
+    ocr-demo     - Simulate OCR processing
+    llm-status   - Check LLM connection status
+    extract-doc  - Simulate document extraction
+    watermark    - Watermark removal demo
         `,
-        about: () => 'Ryan James Indangan - Full-Stack Developer & CTO\n7+ years of experience in web development',
-        skills: () => 'Frontend: React, Vue, Angular\nBackend: PHP, Laravel, Node.js\nCloud: AWS, Docker, Kubernetes',
-        experience: () => 'Senior Full-Stack Developer at GlobalX Digital\nFormer CTO at Payo Digital\nTop Rated on Upwork',
-        projects: () => 'Check out my projects:\n- Crypto Checkout Simulator\n- Supplier Order Management\n- GlobalX Platform Redesign',
+        about: () => 'Ryan James Indangan - Full-Stack Developer & CTO\n7+ years of experience in web development\nSpecializing in AI/ML and Document Intelligence',
+        skills: () => 'Frontend: React, Vue, Angular, Next.js\nBackend: PHP, Laravel, Node.js, FastAPI, Django\nCloud: AWS, Docker, Kubernetes\nAI/ML: Document Intelligence, OCR, LLM Integration',
+        experience: () => 'AI Developer/ML Engineer at Alliance Global Solutions (Nov 2025 - Present)\nSenior Full-Stack Developer at GlobalX Digital\nFormer CTO at Payo Digital\nTop Rated on Upwork',
+        projects: () => 'Check out my projects:\n- Crypto Checkout Simulator\n- Supplier Order Management\n- GlobalX Platform Redesign\n- Document Intelligence Pipeline',
         contact: () => 'Email: ryanjamesfranciscoindangan@yahoo.com\nPhone: +63 999 333 9030\nLinkedIn: ryan-james-indangan',
         github: () => {
             window.open('https://github.com/ryanjamesindangan', '_blank');
@@ -645,13 +659,227 @@ Available commands:
         clear: () => {
             terminalOutput.innerHTML = '';
             return '';
+        },
+        // AI/ML Commands
+        'ai-about': () => {
+            return `🤖 AI Developer & Machine Learning Engineer
+
+Specializing in Document Intelligence and AI-powered automation:
+• End-to-end bank statement extraction pipelines
+• Advanced OCR with multi-angle scanning
+• ML-based watermark removal (RandomForest)
+• LLM integration (Ollama, vLLM, OpenAI APIs)
+• FastAPI SSE for real-time processing
+
+Current Role: AI Developer/ML Engineer at Alliance Global Solutions BPO
+Focus: Financial document processing and automated underwriting`;
+        },
+        'ai-skills': () => {
+            return `🤖 AI & Machine Learning Stack:
+
+Document Intelligence:
+  • OCR: Tesseract, OpenCV, PIL
+  • PDF Processing: PyMuPDF, pdfplumber, pdf2image
+  • Computer Vision: OpenCV, scikit-image
+
+Machine Learning:
+  • Classification: RandomForest, scikit-learn
+  • Feature Engineering
+  • Model Training & Validation
+
+LLM Integration:
+  • Ollama (Local LLMs)
+  • vLLM (High-performance inference)
+  • OpenAI-compatible APIs
+  • Token-efficient payloads
+
+Pipeline Architecture:
+  • Validation-first extraction
+  • Real-time processing (FastAPI SSE)
+  • Secure service architecture (JWT, RSA)`;
+        },
+        'ai-projects': () => {
+            return `📄 Document Intelligence Projects:
+
+1. Bank Statement Extraction Pipeline
+   - Native PDF text + OCR fallback
+   - Multi-angle OCR with quality scoring
+   - Validation-first framework
+
+2. Watermark Removal System
+   - ML-based detection (RandomForest)
+   - Feature engineering
+   - Automated routing to removal strategies
+
+3. LLM Underwriting Summaries
+   - Ollama integration
+   - Structured output generation
+   - Real-time processing visibility
+
+4. Secure AI Gateway
+   - Node.js with JWT/RSA
+   - Rate limiting & CORS
+   - FastAPI SSE streaming`;
+        },
+        'ocr-demo': () => {
+            return `🔍 OCR Processing Simulation...
+
+[1/4] Loading document... ✓
+[2/4] Preprocessing (denoising, thresholding, deskewing)... ✓
+[3/4] Multi-angle OCR scanning... ✓
+[4/4] Quality scoring & text extraction... ✓
+
+Result: Successfully extracted 1,247 characters
+Confidence: 94.3%
+Processing time: 2.3s
+
+Document Type: Bank Statement
+Pages: 3
+Text Regions: 45 detected`;
+        },
+        'llm-status': () => {
+            return `🤖 LLM Service Status:
+
+Ollama (Local):
+  Status: ✓ Connected
+  Model: llama3.1:8b
+  Tokens/sec: 45.2
+  Memory: 8.2GB / 16GB
+
+vLLM (Production):
+  Status: ✓ Running
+  Endpoint: https://api.example.com/vllm
+  Latency: 120ms avg
+  Queue: 0 pending
+
+OpenAI API:
+  Status: ✓ Available
+  Model: gpt-4-turbo
+  Rate Limit: 500 req/min
+
+All systems operational! 🚀`;
+        },
+        'extract-doc': () => {
+            return `📄 Document Extraction Simulation...
+
+Document: bank_statement_2025.pdf
+Size: 2.4 MB
+Pages: 3
+
+[Processing Pipeline]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Step 1: Native PDF extraction...     ✓ 100%
+Step 2: OCR fallback (if needed)...  ✓ 100%
+Step 3: Structure validation...      ✓ 100%
+Step 4: Data normalization...         ✓ 100%
+Step 5: Classification...             ✓ 100%
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Extracted Data:
+• Account Number: ****1234
+• Statement Period: Nov 2025
+• Transactions: 47
+• Total Deposits: $12,450.00
+• Total Withdrawals: $8,230.00
+• Balance: $4,220.00
+
+Validation: ✓ Passed
+Integrity: ✓ Verified
+Ready for underwriting review.`;
+        },
+        'watermark': () => {
+            return `💧 Watermark Removal Demo...
+
+[Analyzing Document]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Feature Extraction...        ✓
+Watermark Type Detection...   ✓
+ML Classification...          ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Detected: Text Watermark
+Confidence: 87.3%
+Strategy: RandomForest Classifier
+
+[Removal Process]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Preprocessing...             ✓
+Feature Engineering...        ✓
+Classification...            ✓
+Removal Applied...            ✓
+Quality Check...              ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Result: Watermark successfully removed
+Quality Score: 92.1%
+Processing Time: 1.8s`;
         }
     };
     
     terminalInput.addEventListener('keydown', (e) => {
+        // Command history navigation
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (commandHistory.length > 0) {
+                if (historyIndex === -1) {
+                    historyIndex = commandHistory.length - 1;
+                } else if (historyIndex > 0) {
+                    historyIndex--;
+                }
+                terminalInput.value = commandHistory[historyIndex];
+            }
+            return;
+        }
+        
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex !== -1) {
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    terminalInput.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = -1;
+                    terminalInput.value = '';
+                }
+            }
+            return;
+        }
+        
+        // Tab completion (basic)
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const input = terminalInput.value.trim().toLowerCase();
+            const matches = Object.keys(commands).filter(cmd => cmd.startsWith(input));
+            if (matches.length === 1) {
+                terminalInput.value = matches[0];
+            } else if (matches.length > 1) {
+                // Show possible completions
+                const completionLine = document.createElement('div');
+                completionLine.style.color = '#94a3b8';
+                completionLine.style.fontSize = '0.85rem';
+                completionLine.textContent = `Possible completions: ${matches.join(', ')}`;
+                terminalOutput.appendChild(completionLine);
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+            return;
+        }
+        
         if (e.key === 'Enter') {
-            const command = terminalInput.value.trim().toLowerCase();
+            const command = terminalInput.value.trim();
+            const commandLower = command.toLowerCase();
             terminalInput.value = '';
+            
+            // Reset history index
+            historyIndex = -1;
+            
+            // Add to history if not empty
+            if (command) {
+                commandHistory.push(command);
+                // Keep only last 50 commands
+                if (commandHistory.length > 50) {
+                    commandHistory.shift();
+                }
+            }
             
             // Display command
             const commandLine = document.createElement('div');
@@ -665,9 +893,10 @@ Available commands:
                 output.style.color = '#e2e8f0';
                 output.style.whiteSpace = 'pre-wrap';
                 output.style.marginBottom = '1rem';
+                output.style.fontFamily = 'JetBrains Mono, monospace';
                 
-                if (commands[command]) {
-                    output.textContent = commands[command]();
+                if (commands[commandLower]) {
+                    output.textContent = commands[commandLower]();
                 } else {
                     output.textContent = `Command not found: ${command}\nType 'help' for available commands`;
                     output.style.color = '#ef4444';

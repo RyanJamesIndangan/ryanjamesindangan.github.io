@@ -67,19 +67,19 @@ const apps = {
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Tech Stack & Expertise</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
-                    ${createSkillCategory('💻 Frontend', ['React', 'Vue.js', 'Angular', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'jQuery'])}
+                    ${createSkillCategory('🤖 AI & Machine Learning', ['Document Intelligence', 'OCR (Tesseract, OpenCV)', 'PDF Processing (PyMuPDF, pdfplumber)', 'Computer Vision', 'Watermark Removal (RandomForest/scikit-learn)', 'LLM Integration (Ollama, vLLM, OpenAI APIs)', 'Feature Engineering', 'End-to-end AI Pipeline Design'])}
                     
-                    ${createSkillCategory('⚙️ Backend', ['PHP', 'CodeIgniter', 'Laravel', 'Node.js', 'Express', 'Python', 'Django', 'Java', 'Spring Boot', 'Socket.io'])}
+                    ${createSkillCategory('💻 Frontend', ['React', 'Next.js', 'Vue.js', 'Angular', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'jQuery'])}
                     
-                    ${createSkillCategory('🗄️ Database', ['MySQL', 'PostgreSQL', 'MongoDB', 'Firebase', 'REST APIs', 'GraphQL', 'WebSockets'])}
+                    ${createSkillCategory('⚙️ Backend', ['PHP', 'CodeIgniter', 'Laravel', 'Node.js', 'Express', 'Python', 'FastAPI', 'Django', 'Java', 'Spring Boot', 'Socket.io', 'RESTful APIs', 'GraphQL', 'WebSockets'])}
+                    
+                    ${createSkillCategory('🗄️ Database & Data Management', ['MySQL', 'PostgreSQL', 'MongoDB', 'Firebase', 'SQLite', 'Data Normalization', 'Structured Extraction', 'Excel Reporting (openpyxl)'])}
                     
                     ${createSkillCategory('🔐 Cybersecurity', ['Penetration Testing', 'Vulnerability Assessment', 'Network Security', 'Database Security', 'WiFi Security', 'Android Security', 'XSS Prevention', 'Password Security', 'Network Spying', 'Security Best Practices'])}
                     
-                    ${createSkillCategory('☁️ Cloud & DevOps', ['AWS (EC2, RDS, Lambda, S3)', 'Docker', 'Kubernetes', 'DigitalOcean', 'Jenkins', 'GitHub Actions', 'CI/CD'])}
+                    ${createSkillCategory('☁️ Cloud, DevOps & Infrastructure', ['AWS (EC2, RDS, Lambda, EventBridge, S3, CloudFront)', 'DigitalOcean', 'Docker', 'Docker Compose', 'Kubernetes', 'CI/CD Pipelines (GitHub Actions, Jenkins, Bitbucket Pipelines)'])}
                     
-                    ${createSkillCategory('🛠️ Tools & Automation', ['Git', 'GitHub / GitLab', 'N8N', 'Cursor AI', 'v0 by Vercel', 'Postman', 'Docker Compose', 'Selenium', 'Cypress'])}
-                    
-                    ${createSkillCategory('📊 Project Management', ['Jira', 'Confluence', 'Asana', 'Monday.com', 'ClickUp', 'Slack', 'MS Teams', 'Agile / Scrum'])}
+                    ${createSkillCategory('🛠️ Tools, Testing & Project Management', ['Git', 'GitHub / GitLab', 'Postman', 'Insomnia', 'Pytest', 'Jest', 'Mocha', 'Selenium', 'Cypress', 'Jira', 'Confluence', 'Asana', 'Trello', 'Slack', 'MS Teams', 'ClickUp', 'Monday.com'])}
                 </div>
             </div>
         `
@@ -91,6 +91,22 @@ const apps = {
         content: `
             <div style="max-width: 800px;">
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Journey</h2>
+                
+                ${createExperienceCard(
+                    'AI Developer / Machine Learning Engineer',
+                    'Alliance Global Solutions BPO Intl Corp. (Alternative Funding Group)',
+                    'Nov 2025 – Present',
+                    'Remote',
+                    [
+                        'Built end-to-end bank statement extraction and validation pipelines using native PDF text and OCR fallback',
+                        'Implemented advanced OCR preprocessing (OpenCV/PIL) with multi-angle scanning and quality scoring',
+                        'Designed an ML-based watermark removal subsystem using RandomForest classification',
+                        'Created a validation-first extraction framework for financial data integrity',
+                        'Integrated local LLM workflows (Ollama) for structured underwriting summaries',
+                        'Built a secure Node gateway with JWT/RSA management and FastAPI SSE for real-time processing visibility'
+                    ],
+                    ['Python', 'FastAPI', 'OpenCV', 'LLM', 'Ollama', 'PyMuPDF', 'pdfplumber', 'Tesseract OCR', 'RandomForest', 'scikit-learn', 'Node.js', 'JWT', 'RSA', 'Server-Sent Events']
+                )}
                 
                 ${createExperienceCard(
                     'Support Engineer',
@@ -454,13 +470,13 @@ const apps = {
                 
                 <div style="display: grid; gap: 1.25rem; margin-bottom: 2.5rem;">
                     <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
-                        <button class="view-cert-btn" data-cert="assets/certificates/[09-28-25] Ryan-James-Indangan-Resume_2025.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
+                        <button class="view-cert-btn" data-cert="assets/certificates/Ryan James Indangan Resume 2026.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
                                     style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #2171d6, #1e90ff); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(33, 113, 214, 0.3);"
                                     onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(33, 113, 214, 0.4)';"
                                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(33, 113, 214, 0.3)';">
                                 👁️ Preview Resume
                             </button>
-                            <a href="assets/certificates/[09-28-25] Ryan-James-Indangan-Resume_2025.pdf" download="Ryan-James-Indangan-Resume.pdf"
+                            <a href="assets/certificates/Ryan James Indangan Resume 2026.pdf" download="Ryan-James-Indangan-Resume-2026.pdf"
                            style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #2171d6; border-radius: 12px; color: #2171d6; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(33, 113, 214, 0.2);"
                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(33, 113, 214, 0.3)';"
                            onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(33, 113, 214, 0.2)';">
@@ -575,6 +591,79 @@ const apps = {
                        style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
+                </div>
+            </div>
+        `
+    },
+
+    'ai-lab': {
+        title: 'AI Lab',
+        icon: '🤖',
+        content: `
+            <div style="max-width: 1000px;">
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Document Intelligence Lab</h2>
+                
+                <div style="display: grid; gap: 2rem;">
+                    ${createAIFeatureCard(
+                        '📄 Document Extraction Pipeline',
+                        'End-to-end bank statement extraction with native PDF text and OCR fallback',
+                        [
+                            'Native PDF text extraction (PyMuPDF)',
+                            'OCR fallback (Tesseract + OpenCV)',
+                            'Multi-angle scanning with quality scoring',
+                            'Validation-first framework for data integrity'
+                        ],
+                        ['Python', 'PyMuPDF', 'Tesseract', 'OpenCV']
+                    )}
+                    
+                    ${createAIFeatureCard(
+                        '💧 Watermark Removal System',
+                        'ML-based watermark detection and removal using RandomForest classification',
+                        [
+                            'Feature engineering for watermark detection',
+                            'RandomForest classifier for type identification',
+                            'Automated routing to removal strategies',
+                            'Quality scoring and validation'
+                        ],
+                        ['Python', 'scikit-learn', 'RandomForest', 'OpenCV']
+                    )}
+                    
+                    ${createAIFeatureCard(
+                        '🧠 LLM Integration',
+                        'Local and cloud LLM workflows for structured underwriting summaries',
+                        [
+                            'Ollama for local LLM inference',
+                            'vLLM for high-performance production',
+                            'OpenAI-compatible API integration',
+                            'Token-efficient payload optimization'
+                        ],
+                        ['Ollama', 'vLLM', 'OpenAI API', 'FastAPI']
+                    )}
+                    
+                    ${createAIFeatureCard(
+                        '🔒 Secure AI Gateway',
+                        'Production-ready service architecture with JWT/RSA and real-time processing',
+                        [
+                            'Node.js gateway with JWT authentication',
+                            'RSA key management',
+                            'Rate limiting and CORS allowlists',
+                            'FastAPI Server-Sent Events for real-time updates'
+                        ],
+                        ['Node.js', 'JWT', 'RSA', 'FastAPI', 'SSE']
+                    )}
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border-left: 4px solid #2171d6; border-radius: 8px;">
+                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">🚀 Try It Out</h3>
+                    <p style="color: #1a1a1a; margin-bottom: 1rem;">
+                        Open the Terminal and try these AI commands:
+                    </p>
+                    <div style="background: #1a1a1a; padding: 1rem; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                        <div style="color: #64ffda;">$ ai-about</div>
+                        <div style="color: #64ffda;">$ ocr-demo</div>
+                        <div style="color: #64ffda;">$ extract-doc</div>
+                        <div style="color: #64ffda;">$ llm-status</div>
+                    </div>
                 </div>
             </div>
         `
@@ -702,6 +791,28 @@ function createContactItem(icon, label, value, link) {
             <div style="flex: 1;">
                 <div style="color: #666; font-size: 0.85rem; margin-bottom: 0.25rem;">${label}</div>
                 <div style="color: #1a1a1a; font-size: 1rem; word-break: break-word; font-weight: 500;">${content}</div>
+            </div>
+        </div>
+    `;
+}
+
+function createAIFeatureCard(title, description, features, tech) {
+    return `
+        <div style="padding: 1.5rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #2171d6; border-radius: 8px;">
+            <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
+            <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">${description}</p>
+            <div style="margin-bottom: 1rem;">
+                <h4 style="color: #2171d6; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Key Features:</h4>
+                <ul style="color: #1a1a1a; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 1rem;">
+                    ${features.map(feature => `<li style="margin-bottom: 0.25rem; font-size: 0.9rem;">${feature}</li>`).join('')}
+                </ul>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                ${tech.map(t => `
+                    <span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
+                        ${t}
+                    </span>
+                `).join('')}
             </div>
         </div>
     `;
