@@ -9,7 +9,7 @@
     <meta name="geo.region" content="PH">
     <meta name="geo.placename" content="Caloocan City, Metro Manila">
     <meta name="language" content="English">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.github.com https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; object-src 'self'; media-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://api.github.com https://www.youtube.com https://www.youtube-nocookie.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; script-src-elem 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; object-src 'self'; media-src 'self';">
 
 
     
@@ -303,8 +303,8 @@
         <div class="ai-assistant-widget" id="aiAssistantWidget" role="dialog" aria-label="AI Assistant Chat" aria-modal="false">
             <div class="ai-assistant-widget-header">
                 <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                    <div class="ai-assistant-icon" aria-hidden="true">🤖</div>
-                    <h3 class="ai-assistant-title">AI Assistant</h3>
+                    <div class="clippy-container" id="clippyHeader"></div>
+                    <h3 class="ai-assistant-title">Clippy Assistant</h3>
                     <span class="ai-status-indicator" id="aiStatusIndicator" aria-label="AI Assistant status: Online" role="status"></span>
                 </div>
                 <div class="ai-header-actions">
@@ -603,7 +603,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
     
     <!-- expr-eval: Safe math expression evaluator -->
-    <script src="https://cdn.jsdelivr.net/npm/expr-eval@2.0.2/dist/bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/expr-eval@2.0.2/dist/umd/expr-eval.min.js" defer></script>
     <script src="js/devos/boot.js" defer></script>
     <script src="js/devos/windows.js" defer></script>
     <script src="js/devos/apps.js" defer></script>
@@ -616,6 +616,13 @@
     <script src="js/devos/snake-icon.js" defer></script>
     <script src="js/devos/snake-game.js" defer></script>
     <script src="js/devos/ai-demos.js" defer></script>
+    <script src="js/devos/easter-eggs.js" defer></script>
+    <script src="js/devos/social-sharing.js" defer></script>
+    <script src="js/devos/contact-form.js" defer></script>
+    <script src="js/devos/analytics.js" defer></script>
+    <script src="js/devos/analytics-dashboard.js" defer></script>
+    <script src="js/devos/code-snippets.js" defer></script>
+    <script src="js/devos/clippy.js" defer></script>
     <script src="js/devos/main.js" defer></script>
 </body>
 </html>

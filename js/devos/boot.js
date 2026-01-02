@@ -49,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Hide boot screen after transition
                     setTimeout(() => {
                         bootScreen.style.display = 'none';
+                        // Dispatch boot complete event
+                        document.dispatchEvent(new CustomEvent('bootComplete'));
                     }, 800);
                 }, 800);
             }

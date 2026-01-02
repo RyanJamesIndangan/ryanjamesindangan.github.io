@@ -1541,6 +1541,9 @@ class PortfolioChatbot {
     // Handle math/calculation questions
     handleMathQuestion(message) {
         // Pattern: "1+1", "2*3", "10/2", "5-3", "what is 1+1", "calculate 2*5", etc.
+        // First, check if it's a simple math question like "what is 1+1"
+        const lowerMessage = message.toLowerCase().trim();
+        
         // Replace words with operators
         let expression = message.trim();
         expression = expression.replace(/\bplus\b/gi, '+');
@@ -1552,27 +1555,42 @@ class PortfolioChatbot {
         expression = expression.trim();
         
         // Check if it looks like a math expression (numbers, operators, parentheses, spaces)
+        // Updated regex to be more explicit: must contain at least one operator and numbers
         const mathRegex = /^[\d+\-*/().\s^]+$/;
-        if (!mathRegex.test(expression)) {
+        const hasOperator = /[+\-*/^]/.test(expression);
+        const hasNumber = /\d/.test(expression);
+        
+        if (!mathRegex.test(expression) || !hasOperator || !hasNumber) {
             return null;
         }
         
         // Try to evaluate using expr-eval library (if available) or safe eval
         try {
             let result;
+            let parser = null;
+            
+            // Try multiple possible global names for expr-eval
+            if (typeof Parser !== 'undefined') {
+                parser = new Parser();
+            } else if (typeof exprEval !== 'undefined' && exprEval.Parser) {
+                parser = new exprEval.Parser();
+            } else if (typeof window !== 'undefined' && window.Parser) {
+                parser = new window.Parser();
+            } else if (typeof window !== 'undefined' && window.exprEval && window.exprEval.Parser) {
+                parser = new window.exprEval.Parser();
+            }
             
             // Use expr-eval if available (safer)
-            if (typeof Parser !== 'undefined') {
-                const parser = new Parser();
+            if (parser) {
                 // Replace ^ with ** for power
-                expression = expression.replace(/\^/g, '**');
-                result = parser.evaluate(expression);
+                const cleanExpression = expression.replace(/\^/g, '**').replace(/\s/g, '');
+                result = parser.evaluate(cleanExpression);
             } else {
                 // Fallback: Safe evaluation for simple expressions only
                 // Only allow numbers, operators, and parentheses
-                const safeExpression = expression.replace(/[^0-9+\-*/().\s]/g, '');
-                if (safeExpression !== expression.replace(/\s/g, '')) {
-                    return null; // Contains unsafe characters
+                const safeExpression = expression.replace(/[^0-9+\-*/().\s]/g, '').replace(/\s/g, '');
+                if (safeExpression.length === 0 || !/^[\d+\-*/().]+$/.test(safeExpression)) {
+                    return null; // Contains unsafe characters or empty
                 }
                 // Use Function constructor (safer than eval)
                 result = Function('"use strict"; return (' + safeExpression + ')')();
@@ -1581,8 +1599,13 @@ class PortfolioChatbot {
             // Format result
             const formattedResult = Number.isInteger(result) ? result : parseFloat(result.toFixed(10));
             
+            // Handle edge cases
+            if (isNaN(formattedResult) || !isFinite(formattedResult)) {
+                return null;
+            }
+            
             return {
-                text: `**${expression}** = **${formattedResult}** 🧮\n\nI can help with:\n• Basic arithmetic (+, -, *, /)\n• Complex expressions\n• Powers (^ or **)\n\nTry asking: "What is 15 * 23?" or "Calculate 100 / 4"`,
+                text: `**${expression.replace(/\s/g, '')}** = **${formattedResult}** 🧮\n\nI can help with:\n• Basic arithmetic (+, -, *, /)\n• Complex expressions\n• Powers (^ or **)\n\nTry asking: "What is 15 * 23?" or "Calculate 100 / 4"`,
                 suggestions: [
                     "What is 2+2?",
                     "Calculate 10*5",
@@ -1592,19 +1615,33 @@ class PortfolioChatbot {
             };
         } catch (error) {
             // If evaluation fails, it's probably not a math question
+            console.debug('Math evaluation failed:', error, 'for expression:', expression);
             return null;
         }
     }
     
     // Handle general knowledge questions
     handleGeneralKnowledge(message) {
-        const lowerMessage = message.toLowerCase();
+        const lowerMessage = message.toLowerCase().trim();
+        
+        // First, try to catch math questions that might have been missed by handleMathQuestion
+        // This is a fallback for questions like "what is 1+1" with variations
+        const mathPattern = /what\s+(?:is|'s)\s+([\d+\-*/().\s^]+)/i;
+        const mathMatch = message.match(mathPattern);
+        if (mathMatch && mathMatch[1]) {
+            const mathResult = this.handleMathQuestion(mathMatch[1].trim());
+            if (mathResult) {
+                return mathResult;
+            }
+        }
         
         // Simple Q&A pairs
         const knowledgeBase = {
-            // Math basics
+            // Math basics (exact matches)
             'what is 1+1': '1 + 1 = **2** 🧮',
+            'what\'s 1+1': '1 + 1 = **2** 🧮',
             'what is 2+2': '2 + 2 = **4** 🧮',
+            'what\'s 2+2': '2 + 2 = **4** 🧮',
             'what is 1+1+1': '1 + 1 + 1 = **3** 🧮',
             
             // General knowledge

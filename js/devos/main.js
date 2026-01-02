@@ -11,6 +11,22 @@ const initNonCritical = (callback) => {
     }
 };
 
+// ===========================
+// Clippy Avatar Helper
+// ===========================
+function getClippyAvatar() {
+    // Return Clippy SVG for message avatars
+    return `<div class="clippy-avatar-inline" style="width: 40px; height: 40px; display: inline-block;">
+        <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 30 20 Q 20 20 20 30 L 20 50 Q 20 60 30 60 L 50 60 Q 60 60 60 50 L 60 30 Q 60 20 50 20 L 30 20 Z" 
+                  fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+            <circle cx="35" cy="35" r="4" fill="#000"/>
+            <circle cx="55" cy="35" r="4" fill="#000"/>
+            <path d="M 35 50 Q 45 55 55 50" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Critical: Initialize immediately
     initializeClock();
@@ -2036,7 +2052,7 @@ function addChatMessage(message, role, suggestions = [], messageId = null) {
     const formattedMessage = formatChatMessage(message, isUserMessage);
     
     messageEl.innerHTML = `
-        <div class="ai-message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
+        <div class="ai-message-avatar">${role === 'user' ? '👤' : getClippyAvatar()}</div>
         <div class="ai-message-content">
             <div class="ai-message-text">${formattedMessage}</div>
             ${suggestionsHTML}

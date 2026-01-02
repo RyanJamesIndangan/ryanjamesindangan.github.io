@@ -393,38 +393,134 @@ const apps = {
         title: 'Get in Touch',
         icon: '📧',
         content: `
-            <div style="max-width: 600px;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Let's Connect</h2>
-                <p style="color: #666; margin-bottom: 3rem; font-size: 1.1rem;">
+            <div style="max-width: 700px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">Let's Connect</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
                     Looking for a skilled developer? Let's discuss your project!
                 </p>
                 
-                <div style="display: grid; gap: 1.5rem;">
-                    ${createContactItem('📧', 'Email', 'ryanjamesfranciscoindangan@yahoo.com', 'mailto:ryanjamesfranciscoindangan@yahoo.com')}
-                    ${createContactItem('📱', 'Phone', '+63 999 333 9030', 'tel:+639993339030')}
-                    ${createContactItem('📍', 'Location', 'Caloocan City, Metro Manila, Philippines', null)}
-                    ${createContactItem('💼', 'LinkedIn', 'ryan-james-indangan', 'https://www.linkedin.com/in/ryan-james-indangan-63b271164/')}
-                    ${createContactItem('👨‍💻', 'GitHub', 'ryanjamesindangan', 'https://github.com/ryanjamesindangan')}
-                    ${createContactItem('🎯', 'Upwork', 'Top Rated Developer', 'https://www.upwork.com/freelancers/~01d452f9125d3dcdf1')}
-                    ${createContactItem('👥', 'Facebook', '@0RyanSimper0', 'https://www.facebook.com/0RyanSimper0/')}
+                <!-- Contact Form -->
+                <div style="margin-bottom: 3rem; padding: 2rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 600; font-size: 1.3rem;">📝 Send a Message</h3>
+                    <form id="contactForm" style="display: grid; gap: 1.5rem;">
+                        <div>
+                            <label for="contactName" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">Name *</label>
+                            <input type="text" id="contactName" name="name" required 
+                                style="width: 100%; padding: 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); font-size: 1rem; box-sizing: border-box;"
+                                placeholder="Your name">
+                        </div>
+                        <div>
+                            <label for="contactEmail" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">Email *</label>
+                            <input type="email" id="contactEmail" name="email" required 
+                                style="width: 100%; padding: 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); font-size: 1rem; box-sizing: border-box;"
+                                placeholder="your.email@example.com">
+                        </div>
+                        <div>
+                            <label for="contactSubject" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">Subject *</label>
+                            <input type="text" id="contactSubject" name="subject" required 
+                                style="width: 100%; padding: 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); font-size: 1rem; box-sizing: border-box;"
+                                placeholder="What's this about?">
+                        </div>
+                        <div>
+                            <label for="contactMessage" style="display: block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">Message *</label>
+                            <textarea id="contactMessage" name="message" required rows="5"
+                                style="width: 100%; padding: 0.75rem; background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); font-size: 1rem; box-sizing: border-box; resize: vertical; font-family: inherit;"
+                                placeholder="Tell me about your project or inquiry..."></textarea>
+                        </div>
+                        <div id="contactFormStatus" style="display: none; padding: 1rem; border-radius: 6px; margin-top: 0.5rem;"></div>
+                        <button type="submit" 
+                            style="padding: 1rem 2rem; background: var(--windows-blue); color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;"
+                            onmouseover="this.style.background='var(--windows-hover)'" 
+                            onmouseout="this.style.background='var(--windows-blue)'">
+                            Send Message 📤
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Information -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1.5rem; font-weight: 600; font-size: 1.3rem;">📞 Contact Information</h3>
+                    <div style="display: grid; gap: 1.5rem;">
+                        ${createContactItem('📧', 'Email', 'ryanjamesfranciscoindangan@yahoo.com', 'mailto:ryanjamesfranciscoindangan@yahoo.com')}
+                        ${createContactItem('📱', 'Phone', '+63 999 333 9030', 'tel:+639993339030')}
+                        ${createContactItem('📍', 'Location', 'Caloocan City, Metro Manila, Philippines', null)}
+                        ${createContactItem('💼', 'LinkedIn', 'ryan-james-indangan', 'https://www.linkedin.com/in/ryan-james-indangan-63b271164/')}
+                        ${createContactItem('👨‍💻', 'GitHub', 'ryanjamesindangan', 'https://github.com/ryanjamesindangan')}
+                        ${createContactItem('🎯', 'Upwork', 'Top Rated Developer', 'https://www.upwork.com/freelancers/~01d452f9125d3dcdf1')}
+                        ${createContactItem('👥', 'Facebook', '@0RyanSimper0', 'https://www.facebook.com/0RyanSimper0/')}
+                    </div>
                 </div>
 
-                <div style="margin-top: 3rem; padding: 2rem; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; text-align: center;">
-                    <h3 style="color: #1a1a1a; margin-bottom: 1rem; font-weight: 700;">🌟 Social Proof</h3>
+                <!-- Social Sharing -->
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; text-align: center; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 600;">🔗 Share My Portfolio</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">Know someone who might be interested? Share this portfolio!</p>
+                    <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="social-share-btn" onclick="window.socialSharing?.shareToPlatform('linkedin')" style="margin: 0;">
+                            <span class="share-icon">💼</span>
+                            <span>LinkedIn</span>
+                        </button>
+                        <button class="social-share-btn" onclick="window.socialSharing?.shareToPlatform('twitter')" style="margin: 0;">
+                            <span class="share-icon">🐦</span>
+                            <span>Twitter</span>
+                        </button>
+                        <button class="social-share-btn share-primary" onclick="window.socialSharing?.nativeShare()" style="margin: 0;">
+                            <span class="share-icon">🔗</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Social Proof -->
+                <div style="padding: 2rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; text-align: center; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 700;">🌟 Social Proof</h3>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
                         <div>
-                            <div style="font-size: 1.5rem; color: #2171d6; font-weight: bold;">Top Rated</div>
-                            <div style="font-size: 0.85rem; color: #666;">on Upwork</div>
+                            <div style="font-size: 1.5rem; color: var(--windows-blue); font-weight: bold;">Top Rated</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">on Upwork</div>
                         </div>
                         <div>
-                            <div style="font-size: 1.5rem; color: #2171d6; font-weight: bold;">758+</div>
-                            <div style="font-size: 0.85rem; color: #666;">LinkedIn Connections</div>
+                            <div style="font-size: 1.5rem; color: var(--windows-blue); font-weight: bold;">758+</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">LinkedIn Connections</div>
                         </div>
                         <div>
-                            <div style="font-size: 1.5rem; color: #f59e0b; font-weight: bold;">Certified</div>
-                            <div style="font-size: 0.85rem; color: #666;">CTO</div>
+                            <div style="font-size: 1.5rem; color: var(--accent); font-weight: bold;">Certified</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">CTO</div>
                         </div>
                     </div>
+                </div>
+            </div>
+        `
+    },
+
+    analytics: {
+        title: 'Analytics Dashboard',
+        icon: '📊',
+        content: `
+            <div style="max-width: 800px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">📊 Portfolio Analytics</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1rem;">
+                    Privacy-friendly analytics dashboard. All data is stored locally in your browser.
+                </p>
+                
+                <div id="analyticsDashboard" style="display: grid; gap: 1.5rem;">
+                    <div style="padding: 1.5rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                        <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 600;">Loading analytics...</h3>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 600;">🔒 Privacy Notice</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6;">
+                        All analytics data is stored locally in your browser using localStorage. No data is sent to external servers. 
+                        You can reset your analytics data at any time using the button below.
+                    </p>
+                    <button onclick="if(window.portfolioAnalytics) { window.portfolioAnalytics.reset(); location.reload(); }" 
+                        style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 6px; color: #ef4444; cursor: pointer; font-size: 0.9rem; transition: all 0.2s ease;"
+                        onmouseover="this.style.background='rgba(239, 68, 68, 0.3)'" 
+                        onmouseout="this.style.background='rgba(239, 68, 68, 0.2)'">
+                        Reset Analytics Data
+                    </button>
                 </div>
             </div>
         `
@@ -976,6 +1072,235 @@ const apps = {
                 </div>
             </div>
         `
+    },
+
+    'code-snippets': {
+        title: 'Code Examples',
+        icon: '💻',
+        content: `
+            <div style="max-width: 1200px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary); font-weight: 700;">💻 Code Examples</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6;">
+                    Interactive code snippets showcasing coding style, best practices, and real-world examples from my projects.
+                </p>
+                
+                <div style="display: grid; gap: 2rem;">
+                    <!-- Python: Document Intelligence Pipeline -->
+                    <div class="code-snippet-container" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--glass-border);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.2rem;">🐍</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">Python - Document Intelligence Pipeline</span>
+                            </div>
+                            <button class="code-copy-btn" style="padding: 0.5rem 1rem; background: var(--windows-blue); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='var(--windows-hover)'" onmouseout="this.style.background='var(--windows-blue)'">
+                                📋 Copy Code
+                            </button>
+                        </div>
+                        <pre style="margin: 0; padding: 1.5rem; background: #1e1e1e; color: #d4d4d4; overflow-x: auto; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.6;"><code>def extract_bank_statement(pdf_path):
+    """
+    Extract text from bank statement PDF with OCR fallback.
+    Uses native PDF text extraction first, falls back to OCR if needed.
+    """
+    try:
+        # Try native PDF text extraction
+        doc = fitz.open(pdf_path)
+        text = ""
+        for page in doc:
+            text += page.get_text()
+        doc.close()
+        
+        if len(text.strip()) > 100:  # Sufficient text extracted
+            return {"method": "native", "text": text, "confidence": 1.0}
+    except Exception as e:
+        logger.warning(f"Native extraction failed: {e}")
+    
+    # Fallback to OCR with preprocessing
+    image = pdf2image.convert_from_path(pdf_path)[0]
+    processed = preprocess_image(image)  # Denoise, threshold, deskew
+    text = pytesseract.image_to_string(processed, lang='eng')
+    
+    return {
+        "method": "ocr",
+        "text": text,
+        "confidence": calculate_confidence(text)
+    }</code></pre>
+                    </div>
+                    
+                    <!-- JavaScript: Window Management -->
+                    <div class="code-snippet-container" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--glass-border);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.2rem;">⚡</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">JavaScript - Window Management (Vanilla JS)</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="code-run-btn" style="padding: 0.5rem 1rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#45a049'" onmouseout="this.style.background='#4caf50'">
+                                    ▶️ Run
+                                </button>
+                                <button class="code-copy-btn" style="padding: 0.5rem 1rem; background: var(--windows-blue); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='var(--windows-hover)'" onmouseout="this.style.background='var(--windows-blue)'">
+                                    📋 Copy
+                                </button>
+                            </div>
+                        </div>
+                        <pre style="margin: 0; padding: 1.5rem; background: #1e1e1e; color: #d4d4d4; overflow-x: auto; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.6;"><code>// Window management with drag, resize, and snap
+class WindowManager {
+    constructor() {
+        this.windows = new Map();
+        this.activeWindow = null;
+    }
+    
+    createWindow(config) {
+        const window = document.createElement('div');
+        window.className = 'window';
+        window.dataset.appId = config.id;
+        
+        // Make draggable
+        this.makeDraggable(window, config.title);
+        
+        // Make resizable
+        this.makeResizable(window);
+        
+        this.windows.set(config.id, window);
+        return window;
+    }
+    
+    makeDraggable(element, title) {
+        let isDragging = false;
+        let startX, startY, startLeft, startTop;
+        
+        element.querySelector('.window-header').addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            const rect = element.getBoundingClientRect();
+            startLeft = rect.left;
+            startTop = rect.top;
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            element.style.left = (startLeft + deltaX) + 'px';
+            element.style.top = (startTop + deltaY) + 'px';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    }
+}</code></pre>
+                    </div>
+                    
+                    <!-- FastAPI: Real-time Processing -->
+                    <div class="code-snippet-container" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--glass-border);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.2rem;">🚀</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">FastAPI - Server-Sent Events for Real-time Processing</span>
+                            </div>
+                            <button class="code-copy-btn" style="padding: 0.5rem 1rem; background: var(--windows-blue); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='var(--windows-hover)'" onmouseout="this.style.background='var(--windows-blue)'">
+                                📋 Copy Code
+                            </button>
+                        </div>
+                        <pre style="margin: 0; padding: 1.5rem; background: #1e1e1e; color: #d4d4d4; overflow-x: auto; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.6;"><code>from fastapi import FastAPI
+from fastapi.responses import StreamingResponse
+import asyncio
+import json
+
+app = FastAPI()
+
+@app.post("/process-document")
+async def process_document(document_id: str):
+    """
+    Process document with real-time progress updates via SSE.
+    """
+    async def event_generator():
+        stages = [
+            ("loading", "Loading document..."),
+            ("preprocessing", "Preprocessing image..."),
+            ("ocr", "Running OCR..."),
+            ("validation", "Validating extracted data..."),
+            ("complete", "Processing complete!")
+        ]
+        
+        for stage, message in stages:
+            yield f"data: {json.dumps({'stage': stage, 'message': message})}\n\n"
+            await asyncio.sleep(1)  # Simulate processing
+        
+        # Final result
+        result = {"status": "success", "data": {...}}
+        yield f"data: {json.dumps(result)}\n\n"
+    
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream"
+    )</code></pre>
+                    </div>
+                    
+                    <!-- React: Component Example -->
+                    <div class="code-snippet-container" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-tertiary); border-bottom: 1px solid var(--glass-border);">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="font-size: 1.2rem;">⚛️</span>
+                                <span style="color: var(--text-primary); font-weight: 600;">React - Reusable Component Pattern</span>
+                            </div>
+                            <button class="code-copy-btn" style="padding: 0.5rem 1rem; background: var(--windows-blue); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='var(--windows-hover)'" onmouseout="this.style.background='var(--windows-blue)'">
+                                📋 Copy Code
+                            </button>
+                        </div>
+                        <pre style="margin: 0; padding: 1.5rem; background: #1e1e1e; color: #d4d4d4; overflow-x: auto; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.6;"><code>import React, { useState, useEffect } from 'react';
+
+const DocumentProcessor = ({ documentId, onComplete }) => {
+    const [status, setStatus] = useState('idle');
+    const [progress, setProgress] = useState(0);
+    
+    useEffect(() => {
+        const eventSource = new EventSource(
+            \`/api/process-document/\${documentId}\`
+        );
+        
+        eventSource.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            setStatus(data.stage);
+            setProgress(calculateProgress(data.stage));
+            
+            if (data.status === 'success') {
+                onComplete(data.data);
+                eventSource.close();
+            }
+        };
+        
+        return () => eventSource.close();
+    }, [documentId, onComplete]);
+    
+    return (
+        <div className="processor">
+            <div className="status">{status}</div>
+            <div className="progress-bar">
+                <div style={{ width: \`\${progress}%\` }} />
+            </div>
+        </div>
+    );
+};
+
+export default DocumentProcessor;</code></pre>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 600;">💡 Best Practices Demonstrated</h3>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; margin: 0; padding-left: 1.5rem;">
+                        <li>Clean, readable code with proper documentation</li>
+                        <li>Error handling and fallback strategies</li>
+                        <li>Real-time processing with Server-Sent Events</li>
+                        <li>Reusable component patterns</li>
+                        <li>TypeScript-ready JavaScript patterns</li>
+                        <li>Performance optimization considerations</li>
+                    </ul>
+                </div>
+            </div>
+        `
     }
 };
 
@@ -1290,15 +1615,15 @@ function createCertModuleBadge(name, certPath) {
 
 function createContactItem(icon, label, value, link) {
     const content = link 
-        ? `<a href="${link}" target="_blank" rel="noopener noreferrer" style="color: #2171d6; text-decoration: none;">${value}</a>`
+        ? `<a href="${link}" target="_blank" rel="noopener noreferrer" style="color: var(--windows-blue); text-decoration: none; transition: color 0.2s ease;" onmouseover="this.style.color='var(--windows-hover)'" onmouseout="this.style.color='var(--windows-blue)'">${value}</a>`
         : value;
     
     return `
-        <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; display: flex; align-items: center; gap: 1rem;">
+        <div style="padding: 1.5rem; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; display: flex; align-items: center; gap: 1rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: all 0.2s ease;" onmouseover="this.style.borderColor='var(--windows-blue)'" onmouseout="this.style.borderColor='var(--glass-border)'">
             <div style="font-size: 2rem;">${icon}</div>
             <div style="flex: 1;">
-                <div style="color: #666; font-size: 0.85rem; margin-bottom: 0.25rem;">${label}</div>
-                <div style="color: #1a1a1a; font-size: 1rem; word-break: break-word; font-weight: 500;">${content}</div>
+                <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.25rem;">${label}</div>
+                <div style="color: var(--text-primary); font-size: 1rem; word-break: break-word; font-weight: 500;">${content}</div>
             </div>
         </div>
     `;
