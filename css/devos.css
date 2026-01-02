@@ -2815,6 +2815,110 @@ body {
     padding: 0 0.5rem;
 }
 
+/* Quick Reply Buttons */
+.ai-quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(100, 255, 218, 0.1);
+}
+
+.ai-quick-reply-btn {
+    background: rgba(100, 255, 218, 0.15);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.ai-quick-reply-btn:hover {
+    background: rgba(100, 255, 218, 0.25);
+    border-color: rgba(100, 255, 218, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.2);
+}
+
+.ai-quick-reply-btn:active {
+    transform: translateY(0);
+    background: rgba(100, 255, 218, 0.2);
+}
+
+/* Chat Action Buttons (Open App buttons) */
+.chat-action-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.2) 0%, rgba(100, 255, 218, 0.15) 100%);
+    border: 1px solid rgba(100, 255, 218, 0.4);
+    color: #64ffda;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0.25rem 0.25rem 0.25rem 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+}
+
+.chat-action-btn:hover {
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.3) 0%, rgba(100, 255, 218, 0.25) 100%);
+    border-color: rgba(100, 255, 218, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.3);
+}
+
+.chat-action-btn:active {
+    transform: translateY(0);
+}
+
+/* Typing Indicator */
+.ai-typing-indicator {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.ai-typing-text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.75rem 1rem !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(100, 255, 218, 0.1) !important;
+}
+
+.ai-typing-dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(100, 255, 218, 0.6);
+    border-radius: 50%;
+    animation: typingPulse 1.4s ease-in-out infinite;
+}
+
+.ai-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ai-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingPulse {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    30% {
+        transform: translateY(-8px);
+        opacity: 1;
+    }
+}
+
 .ai-chat-input-container {
     display: flex;
     gap: 0.5rem;

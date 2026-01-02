@@ -50,13 +50,19 @@ class PortfolioChatbot {
             timestamp: new Date().toISOString()
         });
 
-        // Pattern matching for responses
+        // Pattern matching for responses (now returns object with text and suggestions)
         let response = this.generateResponse(lowerMessage);
+        
+        // Ensure response is an object
+        if (typeof response === 'string') {
+            response = { text: response, suggestions: [] };
+        }
         
         // Add bot response to history
         this.conversationHistory.push({
             role: 'assistant',
-            message: response,
+            message: response.text,
+            suggestions: response.suggestions || [],
             timestamp: new Date().toISOString()
         });
 
@@ -67,27 +73,67 @@ class PortfolioChatbot {
     generateResponse(message) {
         // Greetings
         if (this.matches(message, ['hi', 'hello', 'hey', 'greetings'])) {
-            return "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?";
+            return {
+                text: "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?",
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "What projects have you built?"
+                ]
+            };
         }
 
         // Skills & Expertise
         if (this.matches(message, ['skill', 'expertise', 'technology', 'tech stack', 'what can', 'what do you know'])) {
-            return `Ryan specializes in:\n\n🤖 **AI/ML**: Document Intelligence, OCR (Tesseract, OpenCV), PDF processing, Watermark Removal (RandomForest), LLM Integration (Ollama, vLLM)\n\n💻 **Full-Stack**: React, Next.js, Vue, Angular, Node.js, Python, FastAPI, PHP, Laravel\n\n☁️ **DevOps**: AWS (Lambda, EventBridge), Docker, Kubernetes, CI/CD\n\n💾 **Databases**: MySQL, PostgreSQL, MongoDB\n\nAsk me about specific technologies or check out the "Technical Skills" app!`;
+            return {
+                text: `Ryan specializes in:\n\n🤖 **AI/ML**: Document Intelligence, OCR (Tesseract, OpenCV), PDF processing, Watermark Removal (RandomForest), LLM Integration (Ollama, vLLM)\n\n💻 **Full-Stack**: React, Next.js, Vue, Angular, Node.js, Python, FastAPI, PHP, Laravel\n\n☁️ **DevOps**: AWS (Lambda, EventBridge), Docker, Kubernetes, CI/CD\n\n💾 **Databases**: MySQL, PostgreSQL, MongoDB\n\nAsk me about specific technologies or [Open Technical Skills] to see more!`,
+                suggestions: [
+                    "Tell me about AI/ML",
+                    "What frameworks do you use?",
+                    "Show me your projects",
+                    "Open Technical Skills"
+                ]
+            };
         }
 
         // AI/ML Focus
         if (this.matches(message, ['ai', 'machine learning', 'ml', 'document intelligence', 'ocr', 'llm'])) {
-            return `Ryan is an **AI Developer / Machine Learning Engineer** with deep expertise in:\n\n📄 **Document Intelligence**: End-to-end pipelines for bank statement extraction, validation, and data extraction\n\n👁️ **Computer Vision**: OCR preprocessing with OpenCV, multi-angle scanning, quality scoring\n\n💧 **Watermark Removal**: ML-based detection using RandomForest classification\n\n🧠 **LLM Integration**: Local LLM workflows (Ollama) for structured underwriting summaries\n\n🔒 **Secure AI Gateway**: Node.js gateway with JWT/RSA management and FastAPI SSE\n\nTry opening the "AI Lab" app to see more details!`;
+            return {
+                text: `Ryan is an **AI Developer / Machine Learning Engineer** with deep expertise in:\n\n📄 **Document Intelligence**: End-to-end pipelines for bank statement extraction, validation, and data extraction\n\n👁️ **Computer Vision**: OCR preprocessing with OpenCV, multi-angle scanning, quality scoring\n\n💧 **Watermark Removal**: ML-based detection using RandomForest classification\n\n🧠 **LLM Integration**: Local LLM workflows (Ollama) for structured underwriting summaries\n\n🔒 **Secure AI Gateway**: Node.js gateway with JWT/RSA management and FastAPI SSE\n\n[Open AI Lab] to see more details!`,
+                suggestions: [
+                    "Tell me about OCR",
+                    "What is document intelligence?",
+                    "Show me AI projects",
+                    "Open AI Lab"
+                ]
+            };
         }
 
         // Experience
         if (this.matches(message, ['experience', 'work', 'job', 'role', 'position', 'current', 'where do you work'])) {
-            return `Ryan currently works as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Present)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n• Built secure Node gateway with JWT/RSA\n\nPrevious role: Support Engineer at Bada LLC (Apr 2025 - Oct 2025)\n\nCheck the "Work Experience" app for full details!`;
+            return {
+                text: `Ryan currently works as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Present)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n• Built secure Node gateway with JWT/RSA\n\nPrevious role: Support Engineer at Bada LLC (Apr 2025 - Oct 2025)\n\n[Open Work Experience] for full details!`,
+                suggestions: [
+                    "What technologies did you use?",
+                    "Tell me about your projects",
+                    "Show me your skills",
+                    "Open Work Experience"
+                ]
+            };
         }
 
         // Projects
         if (this.matches(message, ['project', 'what have you built', 'portfolio', 'showcase'])) {
-            return `Ryan has delivered **50+ projects** with expertise in:\n\n🏦 **Bank Statement Extraction**: Native PDF + OCR fallback pipeline\n💧 **Watermark Removal**: ML-based automated detection and removal\n🧠 **LLM Underwriting**: Structured summaries using Ollama\n🔒 **Secure AI Gateway**: Real-time processing with FastAPI SSE\n\nPlus full-stack web applications, APIs, and automation systems.\n\nOpen the "Projects" app to explore more!`;
+            return {
+                text: `Ryan has delivered **50+ projects** with expertise in:\n\n🏦 **Bank Statement Extraction**: Native PDF + OCR fallback pipeline\n💧 **Watermark Removal**: ML-based automated detection and removal\n🧠 **LLM Underwriting**: Structured summaries using Ollama\n🔒 **Secure AI Gateway**: Real-time processing with FastAPI SSE\n\nPlus full-stack web applications, APIs, and automation systems.\n\n[Open Projects] to explore more!`,
+                suggestions: [
+                    "Tell me about AI projects",
+                    "What technologies?",
+                    "Show me your skills",
+                    "Open Projects"
+                ]
+            };
         }
 
         // How to navigate
@@ -117,7 +163,15 @@ class PortfolioChatbot {
 
         // Help
         if (this.matches(message, ['help', 'what can you do', 'commands'])) {
-            return `I can help you with:\n\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Navigation Help\n✅ Contact Information\n\nJust ask me anything about Ryan's portfolio! Try:\n• "What are your skills?"\n• "Tell me about your AI work"\n• "Show me your experience"\n• "How do I navigate this?"`;
+            return {
+                text: `I can help you with:\n\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Navigation Help\n✅ Contact Information\n\nJust ask me anything about Ryan's portfolio!`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "How do I navigate this?"
+                ]
+            };
         }
 
         // Fun responses
@@ -131,7 +185,15 @@ class PortfolioChatbot {
         }
 
         // Default response
-        return `I'm not sure I understand that. 🤔\n\nTry asking me about:\n• Skills & expertise\n• Work experience\n• AI/ML projects\n• How to navigate\n• Certifications\n\nOr type "help" for more options!`;
+        return {
+            text: `I'm not sure I understand that. 🤔\n\nTry asking me about:`,
+            suggestions: [
+                "What are your skills?",
+                "Tell me about your experience",
+                "Show me AI projects",
+                "Help"
+            ]
+        };
     }
 
     matches(message, keywords) {

@@ -1322,13 +1322,25 @@ function initializeAIAssistant() {
         if (toggleBtn) toggleBtn.classList.remove('visible');
     }
 
-    // Load conversation history
+    // Load conversation history or show initial greeting
     if (window.portfolioChatbot && window.portfolioChatbot.conversationHistory.length > 0) {
         chatMessages.innerHTML = '';
         window.portfolioChatbot.conversationHistory.forEach(msg => {
-            addChatMessage(msg.message, msg.role);
+            addChatMessage(msg.message, msg.role, msg.suggestions || []);
         });
         scrollChatToBottom();
+    } else {
+        // Show initial greeting with suggestions if no history
+        const initialGreeting = {
+            text: "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?",
+            suggestions: [
+                "What are your skills?",
+                "Tell me about your AI work",
+                "Show me your experience",
+                "What projects have you built?"
+            ]
+        };
+        addChatMessage(initialGreeting.text, 'assistant', initialGreeting.suggestions);
     }
 
     // Close button
@@ -1374,42 +1386,52 @@ function initializeAIAssistant() {
     }
 }
 
-function sendChatMessage() {
+function sendChatMessage(messageText = null) {
     const chatInput = document.getElementById('aiChatInput');
     const chatMessages = document.getElementById('aiChatMessages');
     const sendBtn = document.getElementById('aiSendBtn');
     
     if (!chatInput || !chatMessages || !window.portfolioChatbot) return;
     
-    const message = chatInput.value.trim();
+    const message = messageText || chatInput.value.trim();
     if (!message) return;
 
     // Disable input while processing
     chatInput.disabled = true;
     if (sendBtn) sendBtn.disabled = true;
 
+    // Clear input if using text input
+    if (!messageText) {
+        chatInput.value = '';
+    }
+
     // Add user message
     addChatMessage(message, 'user');
-    chatInput.value = '';
     scrollChatToBottom();
+
+    // Show typing indicator
+    showTypingIndicator();
 
     // Simulate typing delay
     setTimeout(() => {
-        // Get bot response
+        // Get bot response (now returns object with text and suggestions)
         const response = window.portfolioChatbot.processMessage(message);
         
-        // Add bot response
-        addChatMessage(response, 'assistant');
+        // Hide typing indicator
+        hideTypingIndicator();
+        
+        // Add bot response with suggestions
+        addChatMessage(response.text, 'assistant', response.suggestions || []);
         scrollChatToBottom();
 
         // Re-enable input
         chatInput.disabled = false;
         if (sendBtn) sendBtn.disabled = false;
         chatInput.focus();
-    }, 300);
+    }, 500 + Math.random() * 500); // Random delay between 500-1000ms for more natural feel
 }
 
-function addChatMessage(message, role) {
+function addChatMessage(message, role, suggestions = []) {
     const chatMessages = document.getElementById('aiChatMessages');
     if (!chatMessages) return;
 
@@ -1419,30 +1441,141 @@ function addChatMessage(message, role) {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
     
+    // Build suggestions HTML if provided (only for assistant messages)
+    let suggestionsHTML = '';
+    if (role === 'assistant' && suggestions && suggestions.length > 0) {
+        suggestionsHTML = `
+            <div class="ai-quick-replies">
+                ${suggestions.map(suggestion => `
+                    <button class="ai-quick-reply-btn" onclick="sendChatMessage('${suggestion.replace(/'/g, "\\'")}')">
+                        ${suggestion}
+                    </button>
+                `).join('')}
+            </div>
+        `;
+    }
+    
     messageEl.innerHTML = `
         <div class="ai-message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
         <div class="ai-message-content">
             <div class="ai-message-text">${formatChatMessage(message)}</div>
+            ${suggestionsHTML}
             <div class="ai-message-time">${timeStr}</div>
         </div>
     `;
     
     chatMessages.appendChild(messageEl);
+    
+    // Attach event listeners for action buttons (Open App, etc.)
+    attachChatActionListeners(messageEl);
 }
 
 function formatChatMessage(text) {
+    if (!text) return '';
+    
+    // Convert [Open AppName] to clickable action buttons
+    text = text.replace(/\[Open (.+?)\]/g, (match, appName) => {
+        const appId = mapAppNameToId(appName);
+        if (appId) {
+            return `<button class="chat-action-btn" data-app-id="${appId}" onclick="openApp('${appId}'); this.style.opacity='0.6';">📂 Open ${appName}</button>`;
+        }
+        return match;
+    });
+    
+    // Convert URLs to clickable links
+    text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: underline;">$1</a>');
+    
     // Convert markdown-style formatting to HTML
-    return text
+    text = text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/`(.*?)`/g, '<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace;">$1</code>')
+        .replace(/`(.*?)`/g, '<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">$1</code>')
         .replace(/\n/g, '<br>');
+    
+    return text;
+}
+
+function mapAppNameToId(appName) {
+    const appMap = {
+        'technical skills': 'skills',
+        'tech stack': 'skills',
+        'skills': 'skills',
+        'work experience': 'experience',
+        'experience': 'experience',
+        'projects': 'projects',
+        'ai lab': 'ai-lab',
+        'ai': 'ai-lab',
+        'certifications': 'certifications',
+        'certificates': 'certifications',
+        'about me': 'about',
+        'about': 'about',
+        'contact': 'contact',
+        'resume': 'resume',
+        'terminal': 'terminal',
+        'snake game': 'snake',
+        'snake': 'snake'
+    };
+    
+    return appMap[appName.toLowerCase()] || null;
+}
+
+function attachChatActionListeners(messageEl) {
+    // Handle action buttons (Open App buttons)
+    const actionButtons = messageEl.querySelectorAll('.chat-action-btn');
+    actionButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const appId = btn.dataset.appId;
+            if (appId) {
+                openApp(appId);
+            }
+        });
+    });
 }
 
 function scrollChatToBottom() {
     const chatMessages = document.getElementById('aiChatMessages');
     if (chatMessages) {
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Small delay to ensure DOM is updated
+        setTimeout(() => {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 50);
+    }
+}
+
+function showTypingIndicator() {
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (!chatMessages) return;
+    
+    // Remove existing typing indicator if any
+    const existing = chatMessages.querySelector('.ai-typing-indicator');
+    if (existing) existing.remove();
+    
+    const typingEl = document.createElement('div');
+    typingEl.className = 'ai-message ai-message-assistant ai-typing-indicator';
+    typingEl.innerHTML = `
+        <div class="ai-message-avatar">🤖</div>
+        <div class="ai-message-content">
+            <div class="ai-message-text ai-typing-text">
+                <span class="ai-typing-dot"></span>
+                <span class="ai-typing-dot"></span>
+                <span class="ai-typing-dot"></span>
+            </div>
+        </div>
+    `;
+    
+    chatMessages.appendChild(typingEl);
+    scrollChatToBottom();
+}
+
+function hideTypingIndicator() {
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (!chatMessages) return;
+    
+    const typingEl = chatMessages.querySelector('.ai-typing-indicator');
+    if (typingEl) {
+        typingEl.style.opacity = '0';
+        setTimeout(() => typingEl.remove(), 200);
     }
 }
 
