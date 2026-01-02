@@ -58,129 +58,7 @@ class Clippy {
     getClippySVG() {
         return `
             <div class="clippy-character" title="It looks like you're trying to chat! Would you like help?">
-                <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <!-- Paperclip gradient for 3D metallic effect -->
-                        <linearGradient id="paperclipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#A89BB8;stop-opacity:1" />
-                            <stop offset="30%" style="stop-color:#8B7D9B;stop-opacity:1" />
-                            <stop offset="70%" style="stop-color:#6B5D7B;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#8B7D9B;stop-opacity:1" />
-                        </linearGradient>
-                        <!-- Paperclip highlight -->
-                        <linearGradient id="paperclipHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:0.4" />
-                            <stop offset="50%" style="stop-color:#FFFFFF;stop-opacity:0.1" />
-                            <stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0" />
-                        </linearGradient>
-                        <!-- Paper shadow -->
-                        <filter id="paperShadow">
-                            <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
-                            <feOffset dx="0" dy="2" result="offsetblur"/>
-                            <feComponentTransfer>
-                                <feFuncA type="linear" slope="0.3"/>
-                            </feComponentTransfer>
-                            <feMerge>
-                                <feMergeNode/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    
-                    <!-- Yellow Lined Paper Background -->
-                    <rect class="clippy-paper" x="20" y="25" width="60" height="70" rx="1" fill="#FFFACD" stroke="#E6E6B8" stroke-width="0.5" filter="url(#paperShadow)"/>
-                    
-                    <!-- Paper Lines (more subtle) -->
-                    <line x1="25" y1="38" x2="75" y2="38" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    <line x1="25" y1="46" x2="75" y2="46" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    <line x1="25" y1="54" x2="75" y2="54" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    <line x1="25" y1="62" x2="75" y2="62" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    <line x1="25" y1="70" x2="75" y2="70" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    <line x1="25" y1="78" x2="75" y2="78" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    <line x1="25" y1="86" x2="75" y2="86" stroke="#B8B894" stroke-width="0.4" opacity="0.5"/>
-                    
-                    <!-- Red Margin Line -->
-                    <line x1="27" y1="25" x2="27" y2="95" stroke="#DC143C" stroke-width="1.2" opacity="0.7"/>
-                    
-                    <!-- Clippy Paperclip - Realistic 3D Purple-Grey Metal -->
-                    <!-- Main paperclip body with proper curves -->
-                    <path class="clippy-body" d="M 45 22 
-                        C 38 22, 32 26, 32 33
-                        L 32 42
-                        C 32 49, 38 53, 45 53
-                        L 50 53
-                        C 57 53, 63 49, 63 42
-                        L 63 38
-                        C 63 31, 57 27, 50 27
-                        L 45 27
-                        C 38 27, 32 31, 32 38
-                        L 32 58
-                        C 32 65, 38 69, 45 69
-                        L 50 69
-                        C 57 69, 63 65, 63 58
-                        L 63 54
-                        C 63 47, 57 43, 50 43
-                        L 45 43
-                        C 38 43, 32 47, 32 54
-                        L 32 73
-                        C 32 80, 38 84, 45 84
-                        L 50 84
-                        C 57 84, 63 80, 63 73
-                        Z" 
-                        fill="url(#paperclipGradient)" 
-                        stroke="#5A4D6A" 
-                        stroke-width="1.2"
-                        stroke-linejoin="round"/>
-                    
-                    <!-- Paperclip highlight for 3D effect -->
-                    <path class="clippy-highlight" d="M 45 22 
-                        C 38 22, 32 26, 32 33
-                        L 32 42
-                        C 32 49, 38 53, 45 53
-                        L 50 53
-                        C 57 53, 63 49, 63 42
-                        L 63 38
-                        C 63 31, 57 27, 50 27
-                        L 45 27
-                        C 38 27, 32 31, 32 38
-                        L 32 58
-                        C 32 65, 38 69, 45 69
-                        L 50 69
-                        C 57 69, 63 65, 63 58
-                        L 63 54
-                        C 63 47, 57 43, 50 43
-                        L 45 43
-                        C 38 43, 32 47, 32 54
-                        L 32 73
-                        C 32 80, 38 84, 45 84
-                        L 50 84
-                        C 57 84, 63 80, 63 73
-                        Z" 
-                        fill="url(#paperclipHighlight)" 
-                        opacity="0.6"/>
-                    
-                    <!-- Paperclip shadow on paper -->
-                    <ellipse cx="47.5" cy="88" rx="6" ry="2" fill="#000000" opacity="0.2"/>
-                    
-                    <!-- Googly Eyes (Large white with black pupils) -->
-                    <!-- Left Eye White -->
-                    <circle class="clippy-eye-white" cx="44" cy="35" r="5.5" fill="#FFFFFF" stroke="#D0D0D0" stroke-width="0.8"/>
-                    <!-- Left Eye Pupil -->
-                    <circle class="clippy-eye-pupil" cx="44" cy="35" r="3.2" fill="#000000"/>
-                    <!-- Left Eye Highlight -->
-                    <circle cx="45" cy="34" r="1" fill="#FFFFFF" opacity="0.8"/>
-                    
-                    <!-- Right Eye White -->
-                    <circle class="clippy-eye-white" cx="51" cy="35" r="5.5" fill="#FFFFFF" stroke="#D0D0D0" stroke-width="0.8"/>
-                    <!-- Right Eye Pupil -->
-                    <circle class="clippy-eye-pupil" cx="51" cy="35" r="3.2" fill="#000000"/>
-                    <!-- Right Eye Highlight -->
-                    <circle cx="52" cy="34" r="1" fill="#FFFFFF" opacity="0.8"/>
-                    
-                    <!-- Arched Eyebrows (thick and expressive) -->
-                    <path class="clippy-eyebrow" d="M 39 29 Q 44 27 44 29" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round"/>
-                    <path class="clippy-eyebrow" d="M 51 29 Q 56 27 56 29" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round"/>
-                </svg>
+                <img src="assets/clippy.png" alt="Clippy" class="clippy-image" />
             </div>
         `;
     }
@@ -253,8 +131,8 @@ class Clippy {
                                     (avatar.textContent.includes('🤖') || avatar.innerHTML.includes('🤖')));
                 
                 if (isAssistant) {
-                    // Only replace if it's still an emoji or doesn't have Clippy SVG
-                    if (avatar.textContent.includes('🤖') || !avatar.querySelector('svg')) {
+                    // Only replace if it's still an emoji or doesn't have Clippy image
+                    if (avatar.textContent.includes('🤖') || !avatar.querySelector('.clippy-image')) {
                         avatar.innerHTML = this.getClippySVG();
                         avatar.classList.add('clippy-avatar');
                     }
@@ -279,7 +157,7 @@ class Clippy {
                                                 (avatar.textContent.includes('🤖') || avatar.innerHTML.includes('🤖')));
                             
                             if (isAssistant) {
-                                if (avatar.textContent.includes('🤖') || !avatar.querySelector('svg')) {
+                                if (avatar.textContent.includes('🤖') || !avatar.querySelector('.clippy-image')) {
                                     avatar.innerHTML = this.getClippySVG();
                                     avatar.classList.add('clippy-avatar');
                                     
