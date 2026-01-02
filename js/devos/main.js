@@ -680,18 +680,44 @@ function initializeContextMenu() {
     
     // Create handler function
     desktop._contextMenuHandler = (e) => {
+        console.log('Context menu event triggered on:', e.target, 'closest desktop:', e.target.closest('.desktop'));
+        
         // Only show on desktop area, not on windows, icons, or other interactive elements
         const target = e.target;
         
         // Check if clicking on interactive elements
-        if (target.closest('.window')) return;
-        if (target.closest('.desktop-icon')) return;
-        if (target.closest('.taskbar')) return;
-        if (target.closest('.ai-assistant-widget')) return;
-        if (target.closest('.context-menu')) return;
-        if (target.closest('.start-menu')) return;
-        if (target.closest('.notification')) return;
-        if (target.closest('.wallpaper-menu')) return;
+        if (target.closest('.window')) {
+            console.log('Blocked: clicked on window');
+            return;
+        }
+        if (target.closest('.desktop-icon')) {
+            console.log('Blocked: clicked on desktop icon');
+            return;
+        }
+        if (target.closest('.taskbar')) {
+            console.log('Blocked: clicked on taskbar');
+            return;
+        }
+        if (target.closest('.ai-assistant-widget')) {
+            console.log('Blocked: clicked on AI assistant');
+            return;
+        }
+        if (target.closest('.context-menu')) {
+            console.log('Blocked: clicked on context menu');
+            return;
+        }
+        if (target.closest('.start-menu')) {
+            console.log('Blocked: clicked on start menu');
+            return;
+        }
+        if (target.closest('.notification')) {
+            console.log('Blocked: clicked on notification');
+            return;
+        }
+        if (target.closest('.wallpaper-menu')) {
+            console.log('Blocked: clicked on wallpaper menu');
+            return;
+        }
         
         // Allow right-click on wallpaper or empty desktop area
         e.preventDefault();
@@ -703,14 +729,32 @@ function initializeContextMenu() {
         
         contextMenu.style.left = `${x}px`;
         contextMenu.style.top = `${y}px`;
+        contextMenu.style.display = 'block'; // Ensure it's visible
         contextMenu.classList.add('active');
         
-        console.log('Context menu shown at', x, y); // Debug log
+        console.log('Context menu shown at', x, y, 'menu element:', contextMenu); // Debug log
     };
     
     // Add context menu event listener to desktop
     // Use capture phase to ensure we catch the event before other handlers
     desktop.addEventListener('contextmenu', desktop._contextMenuHandler, true);
+    
+    // Also add to document as fallback
+    document.addEventListener('contextmenu', (e) => {
+        // Only handle if clicking on desktop or wallpaper
+        if (e.target.closest('.desktop') || e.target.classList.contains('wallpaper') || e.target.id === 'wallpaper') {
+            // Check if it's not already handled by desktop handler
+            if (!e.target.closest('.window') && 
+                !e.target.closest('.desktop-icon') && 
+                !e.target.closest('.taskbar') &&
+                !e.target.closest('.ai-assistant-widget') &&
+                !e.target.closest('.context-menu') &&
+                !e.target.closest('.start-menu')) {
+                console.log('Document-level context menu handler triggered');
+                desktop._contextMenuHandler(e);
+            }
+        }
+    }, true);
     
     // Close context menu on click outside
     document.addEventListener('click', (e) => {
@@ -2749,68 +2793,31 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     }
     
     function stopVoiceRecording() {
+        console.log('Stopping voice recording, capturedTranscript:', capturedTranscript);
+        
         if (!isRecording) return; // Already stopped
         
         isRecording = false;
         voiceBtn.classList.remove('recording');
         voiceBtn.title = 'Voice Input (Click to start recording)';
         
-        // Stop recognition
-        try {
-            recognition.stop();
-        } catch (err) {
-            // Ignore errors when stopping (might already be stopped)
-        }
-        
-        // If we have a captured transcript, use it
-        if (capturedTranscript && chatInput) {
-            chatInput.value = capturedTranscript;
-            chatInput.focus();
-            // Auto-send after a short delay to allow user to review
-            setTimeout(() => {
-                if (window.sendChatMessage) {
-                    window.sendChatMessage();
-                }
-            }, 500);
-            window.showNotification('Voice transcribed! Sending... 🎤', 'info');
-            capturedTranscript = ''; // Clear after using
-        } else if (!capturedTranscript) {
-            // No transcript captured - might be because user stopped too quickly
-            window.showNotification('No speech detected. Please try again.', 'warning');
-        }
-    }
-    
-    recognition.onresult = (event) => {
-        // Process all results (including interim)
-        let finalTranscript = '';
-        let interimTranscript = '';
-        
-        for (let i = 0; i < event.results.length; i++) {
-            const result = event.results[i];
-            const transcript = result[0].transcript;
-            
-            if (result.isFinal) {
-                finalTranscript += transcript + ' ';
-            } else {
-                interimTranscript += transcript + ' ';
+        // Wait a moment for any pending results before stopping
+        setTimeout(() => {
+            // Stop recognition
+            try {
+                recognition.stop();
+            } catch (err) {
+                // Ignore errors when stopping (might already be stopped)
             }
-        }
-        
-        // Use final transcript if available, otherwise use interim
-        const transcript = (finalTranscript || interimTranscript).trim();
-        
-        if (transcript) {
-            // Store transcript for use when manually stopped
-            capturedTranscript = transcript;
             
-            // If we have final results, process immediately
-            if (finalTranscript) {
+            // If we have a captured transcript, use it
+            if (capturedTranscript && capturedTranscript.trim()) {
+                console.log('Using captured transcript:', capturedTranscript);
                 if (chatInput) {
-                    chatInput.value = transcript;
+                    chatInput.value = capturedTranscript;
                     chatInput.focus();
                 }
-                stopVoiceRecording();
-                // Auto-send after a short delay
+                // Auto-send after a short delay to allow user to review
                 setTimeout(() => {
                     if (window.sendChatMessage) {
                         window.sendChatMessage();
@@ -2819,11 +2826,66 @@ function initializeVoiceInput(voiceBtn, chatInput) {
                 window.showNotification('Voice transcribed! Sending... 🎤', 'info');
                 capturedTranscript = ''; // Clear after using
             } else {
+                // No transcript captured - might be because user stopped too quickly
+                console.warn('No transcript captured when stopping');
+                window.showNotification('No speech detected. Please try again.', 'warning');
+            }
+        }, 300); // Wait 300ms for any pending results
+    }
+    
+    recognition.onresult = (event) => {
+        console.log('Speech recognition result received:', event.results.length, 'results');
+        
+        // Process all results (including interim)
+        let finalTranscript = '';
+        let interimTranscript = '';
+        
+        for (let i = 0; i < event.results.length; i++) {
+            const result = event.results[i];
+            if (result && result.length > 0 && result[0]) {
+                const transcript = result[0].transcript;
+                console.log(`Result ${i}: isFinal=${result.isFinal}, transcript="${transcript}"`);
+                
+                if (result.isFinal) {
+                    finalTranscript += transcript + ' ';
+                } else {
+                    interimTranscript += transcript + ' ';
+                }
+            }
+        }
+        
+        // Use final transcript if available, otherwise use interim
+        const transcript = (finalTranscript || interimTranscript).trim();
+        console.log('Combined transcript:', transcript);
+        
+        if (transcript) {
+            // Store transcript for use when manually stopped
+            capturedTranscript = transcript;
+            console.log('Stored capturedTranscript:', capturedTranscript);
+            
+            // If we have final results, process immediately
+            if (finalTranscript) {
+                if (chatInput) {
+                    chatInput.value = transcript;
+                    chatInput.focus();
+                }
+                // Don't stop here - let it continue or stop naturally
+                // Auto-send after a short delay
+                setTimeout(() => {
+                    if (window.sendChatMessage) {
+                        window.sendChatMessage();
+                    }
+                }, 500);
+                window.showNotification('Voice transcribed! Sending... 🎤', 'info');
+                // Don't clear capturedTranscript here - keep it in case user stops manually
+            } else {
                 // Update input with interim results for preview
                 if (chatInput) {
                     chatInput.value = transcript;
                 }
             }
+        } else {
+            console.warn('No transcript found in results');
         }
     };
     
@@ -2850,6 +2912,8 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     };
     
     recognition.onend = () => {
+        console.log('Recognition ended, isRecording:', isRecording, 'capturedTranscript:', capturedTranscript);
+        
         // Reset recording state when recognition ends
         // This handles cases where recognition ends naturally (after getting results)
         // or when user manually stops it
@@ -2860,18 +2924,24 @@ function initializeVoiceInput(voiceBtn, chatInput) {
             voiceBtn.classList.remove('recording');
             voiceBtn.title = 'Voice Input (Click to start recording)';
             
-            // Check if we have a captured transcript (might have been captured in onresult before onend fired)
-            if (capturedTranscript && chatInput) {
-                chatInput.value = capturedTranscript;
-                chatInput.focus();
-                setTimeout(() => {
-                    if (window.sendChatMessage) {
-                        window.sendChatMessage();
-                    }
-                }, 500);
-                window.showNotification('Voice transcribed! Sending... 🎤', 'info');
-                capturedTranscript = ''; // Clear after using
-            }
+            // Wait a moment for any final results to be processed
+            setTimeout(() => {
+                // Check if we have a captured transcript (might have been captured in onresult before onend fired)
+                if (capturedTranscript && capturedTranscript.trim() && chatInput) {
+                    console.log('Using transcript from onend:', capturedTranscript);
+                    chatInput.value = capturedTranscript;
+                    chatInput.focus();
+                    setTimeout(() => {
+                        if (window.sendChatMessage) {
+                            window.sendChatMessage();
+                        }
+                    }, 500);
+                    window.showNotification('Voice transcribed! Sending... 🎤', 'info');
+                    capturedTranscript = ''; // Clear after using
+                } else if (!capturedTranscript || !capturedTranscript.trim()) {
+                    console.warn('No transcript available when recognition ended');
+                }
+            }, 200);
         }
     };
     
