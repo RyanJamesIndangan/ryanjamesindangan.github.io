@@ -1803,9 +1803,9 @@ body {
    =================================== */
 
 .context-menu {
-    position: fixed;
-    background: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 100%);
-    border: 1px solid #b0b0b0;
+    position: fixed !important;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 100%) !important;
+    border: 1px solid #b0b0b0 !important;
     border-radius: 4px;
     padding: 4px;
     min-width: 200px;
@@ -1816,16 +1816,18 @@ body {
     opacity: 0;
     visibility: hidden;
     transform: scale(0.98);
-    transition: all 0.15s ease;
-    z-index: 100000 !important; /* Ensure it's above everything */
+    transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
+    z-index: 100001 !important; /* Ensure it's above everything */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     pointer-events: auto; /* Ensure it can receive clicks */
+    top: 0;
+    left: 0;
 }
 
 .context-menu.active {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: scale(1);
+    transform: scale(1) !important;
     display: block !important; /* Force display */
 }
 

@@ -656,7 +656,7 @@ function initializeDemoButtons() {
 // Context Menu
 // ===========================
 function initializeContextMenu() {
-    const contextMenu = document.getElementById('contextMenu');
+    let contextMenu = document.getElementById('contextMenu');
     const desktop = document.getElementById('desktop') || document.querySelector('.desktop');
     
     if (!contextMenu) {
@@ -664,6 +664,12 @@ function initializeContextMenu() {
         // Retry after a delay
         setTimeout(initializeContextMenu, 500);
         return;
+    }
+    
+    // Move context menu to body if it's not already there (to avoid overflow:hidden clipping)
+    if (contextMenu.parentElement !== document.body) {
+        console.log('Moving context menu to body');
+        document.body.appendChild(contextMenu);
     }
     
     if (!desktop) {
@@ -727,21 +733,36 @@ function initializeContextMenu() {
         const x = Math.min(e.clientX, window.innerWidth - 220); // Prevent overflow
         const y = Math.min(e.clientY, window.innerHeight - 300); // Prevent overflow
         
-        contextMenu.style.left = `${x}px`;
-        contextMenu.style.top = `${y}px`;
-        contextMenu.style.display = 'block'; // Ensure it's visible
-        contextMenu.style.zIndex = '100001'; // Ensure it's above everything
-        contextMenu.style.opacity = '1'; // Force opacity
-        contextMenu.style.visibility = 'visible'; // Force visibility
+        // Force all styles inline to override any CSS
+        contextMenu.style.cssText = `
+            position: fixed !important;
+            left: ${x}px !important;
+            top: ${y}px !important;
+            display: block !important;
+            z-index: 100001 !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: scale(1) !important;
+            pointer-events: auto !important;
+        `;
         contextMenu.classList.add('active');
+        
+        // Ensure it's in the body, not nested
+        if (contextMenu.parentElement !== document.body) {
+            document.body.appendChild(contextMenu);
+        }
         
         console.log('Context menu shown at', x, y, 'menu element:', contextMenu); // Debug log
         console.log('Context menu computed styles:', {
             display: window.getComputedStyle(contextMenu).display,
             opacity: window.getComputedStyle(contextMenu).opacity,
             visibility: window.getComputedStyle(contextMenu).visibility,
-            zIndex: window.getComputedStyle(contextMenu).zIndex
+            zIndex: window.getComputedStyle(contextMenu).zIndex,
+            position: window.getComputedStyle(contextMenu).position,
+            left: window.getComputedStyle(contextMenu).left,
+            top: window.getComputedStyle(contextMenu).top
         });
+        console.log('Context menu parent:', contextMenu.parentElement);
     };
     
     // Add context menu event listener to desktop
