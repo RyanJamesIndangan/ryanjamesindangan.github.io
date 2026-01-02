@@ -786,17 +786,42 @@ function initializeContextMenu() {
         }
     }, true);
     
+    // Function to close context menu properly (make it globally accessible)
+    window.closeContextMenu = () => {
+        const menu = document.getElementById('contextMenu');
+        if (menu) {
+            menu.classList.remove('active');
+            // Reset inline styles
+            menu.style.cssText = '';
+            // Re-apply base styles
+            menu.style.position = 'fixed';
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+        }
+    };
+    
+    const closeContextMenu = window.closeContextMenu;
+    
     // Close context menu on click outside
     document.addEventListener('click', (e) => {
-        if (!contextMenu.contains(e.target)) {
-            contextMenu.classList.remove('active');
+        if (!contextMenu.contains(e.target) && contextMenu.classList.contains('active')) {
+            closeContextMenu();
         }
     });
     
     // Close context menu on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && contextMenu.classList.contains('active')) {
-            contextMenu.classList.remove('active');
+            closeContextMenu();
+        }
+    });
+    
+    // Close context menu when wallpaper menu opens
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.wallpaper-menu') || e.target.closest('.wallpaper-option')) {
+            if (contextMenu.classList.contains('active')) {
+                closeContextMenu();
+            }
         }
     });
     
@@ -804,44 +829,50 @@ function initializeContextMenu() {
     contextMenu.querySelectorAll('.context-item').forEach(item => {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             const action = item.dataset.action;
             
             // Close menu first
-            contextMenu.classList.remove('active');
+            closeContextMenu();
             
-            switch(action) {
-                case 'refresh':
-                    showNotification('Refreshing desktop...', 'info', 1000);
-                    setTimeout(() => location.reload(), 500);
-                    break;
-                case 'view-code':
-                    window.open('https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', '_blank');
-                    showNotification('Opening GitHub repository...', 'success');
-                    break;
-                case 'show-all-windows':
-                    // Restore all minimized windows
-                    window.windowManager?.windows.forEach((windowEl, appId) => {
-                        if (windowEl.classList.contains('minimized')) {
-                            window.windowManager.minimizeWindow(appId);
+            // Small delay to ensure menu closes before other actions
+            setTimeout(() => {
+                switch(action) {
+                    case 'refresh':
+                        showNotification('Refreshing desktop...', 'info', 1000);
+                        setTimeout(() => location.reload(), 500);
+                        break;
+                    case 'view-code':
+                        window.open('https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', '_blank');
+                        showNotification('Opening GitHub repository...', 'success');
+                        break;
+                    case 'show-all-windows':
+                        // Restore all minimized windows
+                        window.windowManager?.windows.forEach((windowEl, appId) => {
+                            if (windowEl.classList.contains('minimized')) {
+                                window.windowManager.minimizeWindow(appId);
+                            }
+                        });
+                        showNotification('All windows restored', 'success');
+                        break;
+                    case 'minimize-all':
+                        window.keyboardShortcuts?.showDesktop();
+                        showNotification('All windows minimized', 'info');
+                        break;
+                    case 'change-wallpaper':
+                        if (window.wallpaperSelector) {
+                            // Close context menu before opening wallpaper menu
+                            closeContextMenu();
+                            window.wallpaperSelector.showWallpaperMenu();
+                        } else {
+                            showNotification('Wallpaper selector not available', 'error');
                         }
-                    });
-                    showNotification('All windows restored', 'success');
-                    break;
-                case 'minimize-all':
-                    window.keyboardShortcuts?.showDesktop();
-                    showNotification('All windows minimized', 'info');
-                    break;
-                case 'change-wallpaper':
-                    if (window.wallpaperSelector) {
-                        window.wallpaperSelector.showWallpaperMenu();
-                    } else {
-                        showNotification('Wallpaper selector not available', 'error');
-                    }
-                    break;
-                case 'about-portfolio':
-                    showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
-                    break;
-            }
+                        break;
+                    case 'about-portfolio':
+                        showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
+                        break;
+                }
+            }, 50);
         });
     });
 }

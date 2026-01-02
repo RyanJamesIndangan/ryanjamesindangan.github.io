@@ -1817,7 +1817,7 @@ body {
     visibility: hidden;
     transform: scale(0.98);
     transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
-    z-index: 100001 !important; /* Ensure it's above everything */
+    z-index: 10000 !important; /* Lower than wallpaper menu */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     pointer-events: auto; /* Ensure it can receive clicks */
     top: 0;

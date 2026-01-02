@@ -129,6 +129,11 @@ class WallpaperSelector {
     }
 
     showWallpaperMenu() {
+        // Close context menu if open
+        if (window.closeContextMenu) {
+            window.closeContextMenu();
+        }
+        
         // Remove existing menu if any
         const existingMenu = document.querySelector('.wallpaper-menu');
         if (existingMenu) {
