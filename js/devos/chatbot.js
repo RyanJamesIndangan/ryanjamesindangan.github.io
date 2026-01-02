@@ -620,8 +620,8 @@ class PortfolioChatbot {
             };
         }
 
-        // Skills & Expertise
-        if (this.matches(message, ['skill', 'expertise', 'technology', 'tech stack', 'what can', 'what do you know'])) {
+        // Skills & Expertise - check for technologies/tech questions
+        if (this.matches(message, ['technolog', 'tech', 'skill', 'expertise', 'what can', 'what do you know', 'what tools', 'what stack', 'what framework'])) {
             return {
                 text: `Ryan specializes in:\n\n🤖 **AI/ML**: Document Intelligence, OCR (Tesseract, OpenCV), PDF processing, Watermark Removal (RandomForest), LLM Integration (Ollama, vLLM)\n\n💻 **Full-Stack**: React, Next.js, Vue, Angular, Node.js, Python, FastAPI, PHP, Laravel\n\n☁️ **DevOps**: AWS (Lambda, EventBridge), Docker, Kubernetes, CI/CD\n\n💾 **Databases**: MySQL, PostgreSQL, MongoDB\n\nAsk me about specific technologies or [Open Technical Skills] to see more!`,
                 suggestions: [
@@ -782,13 +782,28 @@ class PortfolioChatbot {
             };
         }
 
-        // Default response
+        // Default response - try to be more helpful
+        // Check if it's a question (contains what, how, when, where, why, tell me, show me)
+        const isQuestion = this.matches(message, ['what', 'how', 'when', 'where', 'why', 'tell me', 'show me', 'explain', 'describe']);
+        
+        if (isQuestion) {
+            return {
+                text: `I'm not sure I understand that question. 🤔\n\nTry asking me about:\n• Skills & Technologies\n• Work Experience\n• AI/ML Projects\n• Certifications\n• Or say "Help" for more options!`,
+                suggestions: [
+                    "What are your skills?",
+                    "What technologies?",
+                    "Tell me about your experience",
+                    "Help"
+                ]
+            };
+        }
+        
         return {
             text: `I'm not sure I understand that. 🤔\n\nTry asking me about:`,
             suggestions: [
                 "What are your skills?",
+                "What technologies?",
                 "Tell me about your experience",
-                "Show me AI projects",
                 "Help"
             ]
         };
