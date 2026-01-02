@@ -496,6 +496,15 @@ body {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
+.desktop-icon .icon .clippy-icon,
+.app-icon .clippy-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
 /* Selection Box (Rubber Band) */
 .selection-box {
     position: fixed;
@@ -1618,6 +1627,12 @@ body {
 .app-icon canvas {
     width: 32px;
     height: 32px;
+}
+
+.app-icon .clippy-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
 }
 
 .app-grid {
@@ -3381,6 +3396,13 @@ body {
     flex-shrink: 0;
     background: rgba(100, 255, 218, 0.2);
     border: 1px solid rgba(100, 255, 218, 0.3);
+    overflow: hidden;
+}
+
+.ai-message-avatar .clippy-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .ai-message-user .ai-message-avatar {

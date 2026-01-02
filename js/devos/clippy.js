@@ -128,11 +128,11 @@ class Clippy {
                 // Check if it's assistant message by checking for assistant class or by checking if it doesn't have user class
                 const isAssistant = message.classList.contains('ai-message-assistant') || 
                                    (!message.classList.contains('ai-message-user') && 
-                                    (avatar.textContent.includes('🤖') || avatar.innerHTML.includes('🤖')));
+                                    (avatar.textContent.includes('🤖') || avatar.innerHTML.includes('🤖') || avatar.querySelector('img[src*="clippy"]')));
                 
                 if (isAssistant) {
                     // Only replace if it's still an emoji or doesn't have Clippy image
-                    if (avatar.textContent.includes('🤖') || !avatar.querySelector('.clippy-image')) {
+                    if (avatar.textContent.includes('🤖') || (!avatar.querySelector('.clippy-image') && !avatar.querySelector('img[src*="clippy"]'))) {
                         avatar.innerHTML = this.getClippySVG();
                         avatar.classList.add('clippy-avatar');
                     }
@@ -154,10 +154,10 @@ class Clippy {
                             // Check if it's assistant message
                             const isAssistant = node.classList.contains('ai-message-assistant') || 
                                                (!node.classList.contains('ai-message-user') && 
-                                                (avatar.textContent.includes('🤖') || avatar.innerHTML.includes('🤖')));
+                                                (avatar.textContent.includes('🤖') || avatar.innerHTML.includes('🤖') || avatar.querySelector('img[src*="clippy"]')));
                             
                             if (isAssistant) {
-                                if (avatar.textContent.includes('🤖') || !avatar.querySelector('.clippy-image')) {
+                                if (avatar.textContent.includes('🤖') || (!avatar.querySelector('.clippy-image') && !avatar.querySelector('img[src*="clippy"]'))) {
                                     avatar.innerHTML = this.getClippySVG();
                                     avatar.classList.add('clippy-avatar');
                                     

@@ -731,7 +731,7 @@ const apps = {
 
     'ai-lab': {
         title: 'AI Lab',
-        icon: '🤖',
+        icon: '<img src="assets/clippy-on-yellow-paper.png" alt="Clippy" class="clippy-icon">',
         content: `
             <div style="max-width: 1200px;">
                 <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Document Intelligence Lab</h2>

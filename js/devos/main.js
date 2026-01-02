@@ -1264,7 +1264,7 @@ Available commands:
         },
         // AI/ML Commands
         'ai-about': () => {
-            return `🤖 AI Developer & Machine Learning Engineer
+            return `📎 Clippy: AI Developer & Machine Learning Engineer
 
 Specializing in Document Intelligence and AI-powered automation:
 • End-to-end bank statement extraction pipelines
@@ -1277,7 +1277,7 @@ Current Role: AI Developer/ML Engineer at Alliance Global Solutions BPO
 Focus: Financial document processing and automated underwriting`;
         },
         'ai-skills': () => {
-            return `🤖 AI & Machine Learning Stack:
+            return `📎 Clippy: AI & Machine Learning Stack:
 
 Document Intelligence:
   • OCR: Tesseract, OpenCV, PIL
@@ -1340,7 +1340,7 @@ Pages: 3
 Text Regions: 45 detected`;
         },
         'llm-status': () => {
-            return `🤖 LLM Service Status:
+            return `📎 Clippy: LLM Service Status:
 
 Ollama (Local):
   Status: ✓ Connected
@@ -2849,7 +2849,7 @@ function showTypingIndicator() {
     const typingEl = document.createElement('div');
     typingEl.className = 'ai-message ai-message-assistant ai-typing-indicator';
     typingEl.innerHTML = `
-        <div class="ai-message-avatar">🤖</div>
+        <div class="ai-message-avatar"><img src="assets/clippy.png" alt="Clippy" class="clippy-avatar"></div>
         <div class="ai-message-content">
             <div class="ai-message-text ai-typing-text">
                 <span class="ai-typing-dot"></span>
@@ -3679,7 +3679,19 @@ function initializeProjectModals() {
             const btn = e.target.classList.contains('project-live-demo-btn') ? e.target : e.target.closest('.project-live-demo-btn');
             const liveUrl = btn.dataset.liveDemo;
             if (liveUrl) {
-                openProjectModal(btn.closest('.project-card'), liveUrl);
+                // Check if URL is accessible before opening modal
+                checkUrlAccessibility(liveUrl).then(isAccessible => {
+                    if (isAccessible) {
+                        openProjectModal(btn.closest('.project-card'), liveUrl);
+                    } else {
+                        showNotification('⚠️ Live demo is currently unavailable. The repository may not have GitHub Pages enabled or the URL may be incorrect.', 'warning', 5000);
+                        // Still open modal but with error message
+                        openProjectModal(btn.closest('.project-card'), liveUrl);
+                    }
+                }).catch(() => {
+                    // If check fails, still try to open (might be CORS issue)
+                    openProjectModal(btn.closest('.project-card'), liveUrl);
+                });
             }
         }
         
@@ -3738,13 +3750,95 @@ function openProjectModal(card, liveUrl) {
                 <button class="close-project-modal" style="background: none; border: none; font-size: 2rem; color: #666; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;">×</button>
             </div>
             <div style="flex: 1; overflow: hidden; position: relative;">
-                <iframe src="${liveUrl}" style="width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen></iframe>
+                <div id="demo-error" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; padding: 2rem; background: rgba(255, 255, 255, 0.95); border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 10;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                    <h4 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;">Demo Not Available</h4>
+                    <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">The live demo is currently unavailable. This could be due to:</p>
+                    <ul style="color: #666; text-align: left; margin-bottom: 1rem; font-size: 0.85rem; padding-left: 1.5rem;">
+                        <li>GitHub Pages not enabled for this repository</li>
+                        <li>Repository is private</li>
+                        <li>Deployment in progress</li>
+                    </ul>
+                    <a href="${liveUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem;">Try Opening Directly</a>
+                </div>
+                <iframe id="demo-iframe" src="${liveUrl}" style="width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen onerror="document.getElementById('demo-error').style.display='block'; document.getElementById('demo-iframe').style.display='none';"></iframe>
             </div>
         </div>
     `;
     
     document.body.appendChild(modal);
     document.body.style.overflow = 'hidden';
+    
+    // Check if iframe loads successfully
+    const iframe = modal.querySelector('#demo-iframe');
+    const errorDiv = modal.querySelector('#demo-error');
+    
+    if (iframe) {
+        let loadTimeout;
+        let hasLoaded = false;
+        
+        // Set a timeout to check if the page loaded
+        loadTimeout = setTimeout(() => {
+            if (!hasLoaded && errorDiv) {
+                // Try to detect if it's a 404 by checking iframe content
+                try {
+                    const iframeWindow = iframe.contentWindow;
+                    if (iframeWindow) {
+                        // Check if we can access the location (might be cross-origin)
+                        try {
+                            const currentUrl = iframeWindow.location.href;
+                            // If URL changed or is different, might be an error page
+                            if (currentUrl !== liveUrl && !currentUrl.includes('github.io')) {
+                                showError();
+                            }
+                        } catch (e) {
+                            // Cross-origin - can't check directly
+                            // Show error after timeout as fallback
+                            showError();
+                        }
+                    }
+                } catch (err) {
+                    showError();
+                }
+            }
+        }, 5000); // Wait 5 seconds
+        
+        iframe.addEventListener('load', () => {
+            hasLoaded = true;
+            clearTimeout(loadTimeout);
+            
+            // Try to detect 404 by checking iframe content
+            setTimeout(() => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const bodyText = iframeDoc.body ? iframeDoc.body.innerText.toLowerCase() : '';
+                    
+                    // Check for common 404 indicators
+                    if (bodyText.includes('404') || 
+                        bodyText.includes('not found') || 
+                        bodyText.includes('page not found') ||
+                        iframeDoc.title.toLowerCase().includes('404')) {
+                        showError();
+                    }
+                } catch (e) {
+                    // Cross-origin - can't check, assume it loaded
+                    console.log('Cross-origin iframe, cannot verify content');
+                }
+            }, 1000);
+        });
+        
+        iframe.addEventListener('error', () => {
+            showError();
+        });
+        
+        function showError() {
+            if (errorDiv && iframe) {
+                errorDiv.style.display = 'block';
+                iframe.style.display = 'none';
+                clearTimeout(loadTimeout);
+            }
+        }
+    }
     
     // Close handlers
     modal.querySelector('.close-project-modal').addEventListener('click', () => {

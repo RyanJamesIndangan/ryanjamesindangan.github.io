@@ -100,7 +100,7 @@ class MobileEnhancements {
             { id: 'projects', icon: '🚀', name: 'Projects' },
             { id: 'certifications', icon: '🎓', name: 'Certifications' },
             { id: 'terminal', icon: '⌨️', name: 'Terminal' },
-            { id: 'ai-lab', icon: '🤖', name: 'AI Lab' },
+            { id: 'ai-lab', icon: '<img src="assets/clippy-on-yellow-paper.png" alt="Clippy" class="clippy-icon">', name: 'AI Lab' },
             { id: 'snake', icon: '🐍', name: 'Snake Game' },
             { id: 'contact', icon: '📧', name: 'Contact' },
             { id: 'resume', icon: '📄', name: 'Resume' }

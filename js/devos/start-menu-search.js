@@ -30,7 +30,7 @@ class StartMenuSearch {
             { id: 'projects', name: 'Featured Projects', icon: '🚀', keywords: ['projects', 'portfolio', 'work', 'apps', 'applications'] },
             { id: 'certifications', name: 'Certifications', icon: '🎓', keywords: ['certifications', 'certificates', 'credentials', 'education', 'courses'] },
             { id: 'terminal', name: 'Terminal', icon: '⌨️', keywords: ['terminal', 'command', 'cli', 'console', 'shell'] },
-            { id: 'ai-lab', name: 'AI Lab', icon: '🤖', keywords: ['ai', 'artificial intelligence', 'ml', 'machine learning', 'lab', 'document intelligence'] },
+            { id: 'ai-lab', name: 'AI Lab', icon: '<img src="assets/clippy-on-yellow-paper.png" alt="Clippy" class="clippy-icon">', keywords: ['ai', 'artificial intelligence', 'ml', 'machine learning', 'lab', 'document intelligence'] },
             { id: 'snake', name: 'Snake Game', icon: '🐍', keywords: ['snake', 'game', 'play', 'entertainment', 'fun'] },
             { id: 'contact', name: 'Contact', icon: '📧', keywords: ['contact', 'email', 'reach', 'connect', 'message'] },
             { id: 'resume', name: 'Resume', icon: '📄', keywords: ['resume', 'cv', 'curriculum vitae', 'download'] }
