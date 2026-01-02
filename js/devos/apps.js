@@ -1301,6 +1301,174 @@ export default DocumentProcessor;</code></pre>
                 </div>
             </div>
         `
+    },
+
+    'easter-eggs': {
+        title: 'Easter Eggs & Hidden Features',
+        icon: '🥚',
+        content: `
+            <div style="max-width: 800px;">
+                <h1 style="font-size: 2rem; margin-bottom: 1.5rem; color: #1a1a1a; font-weight: 700;">
+                    🥚 Easter Eggs & Hidden Features
+                </h1>
+                <p style="line-height: 1.8; margin-bottom: 2rem; color: #666;">
+                    Discover all the hidden tricks and easter eggs in this portfolio! These features showcase 
+                    the interactive nature of this Web OS experience.
+                </p>
+                
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- Konami Code -->
+                    <div style="padding: 1.5rem; background: #fff8e1; border: 2px solid #ffc107; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2.5rem;">🎮</div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                    Konami Code
+                                </h3>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    The classic cheat code from retro gaming! Type this sequence anywhere on the page:
+                                </p>
+                                <div style="background: #1a1a1a; color: #fff; padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 1.1rem; text-align: center; margin-bottom: 1rem;">
+                                    ↑ ↑ ↓ ↓ ← → ← → B A
+                                </div>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    <strong>What happens:</strong> Confetti falls from the sky, rainbow effects appear, and a celebration notification!
+                                </p>
+                                <button class="try-konami-btn" style="padding: 0.75rem 1.5rem; background: #ffc107; border: none; border-radius: 6px; color: #1a1a1a; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                                    🎯 Try It Now (Click to simulate)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Keyboard Shortcuts -->
+                    <div style="padding: 1.5rem; background: #e8f5e9; border: 2px solid #4caf50; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2.5rem;">⌨️</div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                    Keyboard Shortcuts
+                                </h3>
+                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + D</kbd>
+                                        <span style="flex: 1; color: #666;">Developer mode - Shows console messages</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + M</kbd>
+                                        <span style="flex: 1; color: #666;">Matrix mode - Green rain effect overlay</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + S</kbd>
+                                        <span style="flex: 1; color: #666;">Quick launch Snake game</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Win + D</kbd>
+                                        <span style="flex: 1; color: #666;">Show desktop (minimize all windows)</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Alt + F4</kbd>
+                                        <span style="flex: 1; color: #666;">Close active window</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Secret Click Counter -->
+                    <div style="padding: 1.5rem; background: #f3e5f5; border: 2px solid #9c27b0; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2.5rem;">🔍</div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                    Secret Click Counter
+                                </h3>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    Triple-click on the profile photo during the boot screen to discover a secret counter!
+                                </p>
+                                <p style="color: #999; font-size: 0.9rem; font-style: italic;">
+                                    💡 Hint: Wait for the boot screen to appear, then triple-click the profile picture
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Console Secrets -->
+                    <div style="padding: 1.5rem; background: #e3f2fd; border: 2px solid #2196f3; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2.5rem;">💻</div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                    Console Secrets
+                                </h3>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    Open your browser's developer console (F12) to see friendly messages and hints about hidden features!
+                                </p>
+                                <button class="open-console-hint-btn" style="padding: 0.75rem 1.5rem; background: #2196f3; border: none; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                                    📖 Show Console Hint
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right-Click Menu -->
+                    <div style="padding: 1.5rem; background: #fff3e0; border: 2px solid #ff9800; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2.5rem;">🖱️</div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                    Desktop Context Menu
+                                </h3>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    Right-click on an empty area of the desktop to access:
+                                </p>
+                                <ul style="color: #666; line-height: 1.8; padding-left: 1.5rem;">
+                                    <li>🔄 Refresh Desktop</li>
+                                    <li>👁️ View Source Code</li>
+                                    <li>📋 Show All Windows</li>
+                                    <li>⬇️ Minimize All</li>
+                                    <li>🖼️ Change Wallpaper</li>
+                                    <li>ℹ️ About This Portfolio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Assistant Features -->
+                    <div style="padding: 1.5rem; background: #e0f2f1; border: 2px solid #009688; border-radius: 8px;">
+                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
+                            <div style="font-size: 2.5rem;">🤖</div>
+                            <div style="flex: 1;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                    AI Assistant Features
+                                </h3>
+                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
+                                    The AI Assistant has many hidden features:
+                                </p>
+                                <ul style="color: #666; line-height: 1.8; padding-left: 1.5rem;">
+                                    <li>🎤 Voice input (click the mic button)</li>
+                                    <li>🔍 Conversation search</li>
+                                    <li>💬 Quick reply buttons</li>
+                                    <li>😊 Message reactions</li>
+                                    <li>📤 Export conversations</li>
+                                    <li>🧠 Remembers your name</li>
+                                    <li>🎨 Conversation modes (Professional, Casual, Technical)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f5f5f5; border-radius: 8px; text-align: center;">
+                    <p style="color: #666; margin-bottom: 0.5rem;">
+                        <strong>💡 Pro Tip:</strong> Try combining features! For example, activate Matrix mode and then use the Konami Code for a double effect!
+                    </p>
+                    <p style="color: #999; font-size: 0.9rem;">
+                        Found all the easter eggs? Check the console for more developer secrets! 🎉
+                    </p>
+                </div>
+            </div>
+        `
     }
 };
 
@@ -1733,176 +1901,11 @@ function createPipelineFlowchart() {
             </div>
         </div>
     `;
-},
+}
 
-    'easter-eggs': {
-        title: 'Easter Eggs & Hidden Features',
-        icon: '🥚',
-        content: `
-            <div style="max-width: 800px;">
-                <h1 style="font-size: 2rem; margin-bottom: 1.5rem; color: #1a1a1a; font-weight: 700;">
-                    🥚 Easter Eggs & Hidden Features
-                </h1>
-                <p style="line-height: 1.8; margin-bottom: 2rem; color: #666;">
-                    Discover all the hidden tricks and easter eggs in this portfolio! These features showcase 
-                    the interactive nature of this Web OS experience.
-                </p>
-                
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <!-- Konami Code -->
-                    <div style="padding: 1.5rem; background: #fff8e1; border: 2px solid #ffc107; border-radius: 8px;">
-                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem;">🎮</div>
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
-                                    Konami Code
-                                </h3>
-                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                                    The classic cheat code from retro gaming! Type this sequence anywhere on the page:
-                                </p>
-                                <div style="background: #1a1a1a; color: #fff; padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 1.1rem; text-align: center; margin-bottom: 1rem;">
-                                    ↑ ↑ ↓ ↓ ← → ← → B A
-                                </div>
-                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                                    <strong>What happens:</strong> Confetti falls from the sky, rainbow effects appear, and a celebration notification!
-                                </p>
-                                <button class="try-konami-btn" style="padding: 0.75rem 1.5rem; background: #ffc107; border: none; border-radius: 6px; color: #1a1a1a; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-                                    🎯 Try It Now (Click to simulate)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Keyboard Shortcuts -->
-                    <div style="padding: 1.5rem; background: #e8f5e9; border: 2px solid #4caf50; border-radius: 8px;">
-                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem;">⌨️</div>
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
-                                    Keyboard Shortcuts
-                                </h3>
-                                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + D</kbd>
-                                        <span style="flex: 1; color: #666;">Developer mode - Shows console messages</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + M</kbd>
-                                        <span style="flex: 1; color: #666;">Matrix mode - Green rain effect overlay</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + S</kbd>
-                                        <span style="flex: 1; color: #666;">Quick launch Snake game</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Win + D</kbd>
-                                        <span style="flex: 1; color: #666;">Show desktop (minimize all windows)</span>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Alt + F4</kbd>
-                                        <span style="flex: 1; color: #666;">Close active window</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Secret Click Counter -->
-                    <div style="padding: 1.5rem; background: #f3e5f5; border: 2px solid #9c27b0; border-radius: 8px;">
-                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem;">🔍</div>
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
-                                    Secret Click Counter
-                                </h3>
-                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                                    Triple-click on the profile photo during the boot screen to discover a secret counter!
-                                </p>
-                                <p style="color: #999; font-size: 0.9rem; font-style: italic;">
-                                    💡 Hint: Wait for the boot screen to appear, then triple-click the profile picture
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Console Secrets -->
-                    <div style="padding: 1.5rem; background: #e3f2fd; border: 2px solid #2196f3; border-radius: 8px;">
-                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem;">💻</div>
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
-                                    Console Secrets
-                                </h3>
-                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                                    Open your browser's developer console (F12) to see friendly messages and hints about hidden features!
-                                </p>
-                                <button class="open-console-hint-btn" style="padding: 0.75rem 1.5rem; background: #2196f3; border: none; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-                                    📖 Show Console Hint
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Right-Click Menu -->
-                    <div style="padding: 1.5rem; background: #fff3e0; border: 2px solid #ff9800; border-radius: 8px;">
-                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem;">🖱️</div>
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
-                                    Desktop Context Menu
-                                </h3>
-                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                                    Right-click on an empty area of the desktop to access:
-                                </p>
-                                <ul style="color: #666; line-height: 1.8; padding-left: 1.5rem;">
-                                    <li>🔄 Refresh Desktop</li>
-                                    <li>👁️ View Source Code</li>
-                                    <li>📋 Show All Windows</li>
-                                    <li>⬇️ Minimize All</li>
-                                    <li>🖼️ Change Wallpaper</li>
-                                    <li>ℹ️ About This Portfolio</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- AI Assistant Features -->
-                    <div style="padding: 1.5rem; background: #e0f2f1; border: 2px solid #009688; border-radius: 8px;">
-                        <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem;">🤖</div>
-                            <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
-                                    AI Assistant Features
-                                </h3>
-                                <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
-                                    The AI Assistant has many hidden features:
-                                </p>
-                                <ul style="color: #666; line-height: 1.8; padding-left: 1.5rem;">
-                                    <li>🎤 Voice input (click the mic button)</li>
-                                    <li>🔍 Conversation search</li>
-                                    <li>💬 Quick reply buttons</li>
-                                    <li>😊 Message reactions</li>
-                                    <li>📤 Export conversations</li>
-                                    <li>🧠 Remembers your name</li>
-                                    <li>🎨 Conversation modes (Professional, Casual, Technical)</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 2rem; padding: 1.5rem; background: #f5f5f5; border-radius: 8px; text-align: center;">
-                    <p style="color: #666; margin-bottom: 0.5rem;">
-                        <strong>💡 Pro Tip:</strong> Try combining features! For example, activate Matrix mode and then use the Konami Code for a double effect!
-                    </p>
-                    <p style="color: #999; font-size: 0.9rem;">
-                        Found all the easter eggs? Check the console for more developer secrets! 🎉
-                    </p>
-                </div>
-            </div>
-        `
-    }
-};
+// ===========================
+// Helper Functions
+// ===========================
 
 // Make apps globally available
 if (typeof window !== 'undefined') {
