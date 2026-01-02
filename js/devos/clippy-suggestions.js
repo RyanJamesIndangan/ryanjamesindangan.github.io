@@ -307,6 +307,12 @@ class ClippySuggestions {
         const globallyDisabled = localStorage.getItem('clippy-suggestions-disabled') === 'true';
         if (globallyDisabled) return;
         
+        // Don't show if chat widget is already open (except for startup-chat which should show anyway)
+        const chatWidget = document.getElementById('aiAssistantWidget');
+        if (chatWidget && !chatWidget.classList.contains('hidden') && suggestionId !== 'startup-chat') {
+            return; // Don't show suggestions if chat is already open (except startup)
+        }
+        
         const suggestion = this.suggestionTypes[suggestionId];
         if (!suggestion) return;
         
@@ -393,6 +399,14 @@ class ClippySuggestions {
         
         if (!bubble || !clippy) return;
         
+        // Check if chat widget is open
+        const chatWidget = document.getElementById('aiAssistantWidget');
+        const isChatOpen = chatWidget && !chatWidget.classList.contains('hidden');
+        let chatWidgetRect = null;
+        if (isChatOpen) {
+            chatWidgetRect = chatWidget.getBoundingClientRect();
+        }
+        
         // Calculate positions
         const bubbleWidth = 320;
         const bubbleHeight = 200;
@@ -403,6 +417,38 @@ class ClippySuggestions {
         const toggleCenterX = toggleRect.left + (toggleRect.width / 2);
         let bubbleLeft = toggleCenterX - (bubbleWidth / 2);
         let bubbleTop = toggleRect.top - bubbleHeight - gap;
+        
+        // If chat widget is open, make sure bubble doesn't overlap with it
+        if (isChatOpen && chatWidgetRect) {
+            // Check if bubble would overlap with chat widget
+            const bubbleRight = bubbleLeft + bubbleWidth;
+            const bubbleBottom = bubbleTop + bubbleHeight;
+            const chatTop = chatWidgetRect.top;
+            const chatLeft = chatWidgetRect.left;
+            const chatRight = chatWidgetRect.right;
+            
+            // If bubble overlaps with chat widget vertically
+            if (bubbleBottom > chatTop && bubbleTop < chatTop) {
+                // Position bubble above the chat widget instead
+                bubbleTop = chatTop - bubbleHeight - gap;
+            }
+            
+            // If bubble overlaps with chat widget horizontally
+            if ((bubbleLeft < chatRight && bubbleRight > chatLeft)) {
+                // Shift bubble to the left to avoid overlap
+                bubbleLeft = chatLeft - bubbleWidth - gap;
+                
+                // If that would push it off screen, try right side
+                if (bubbleLeft < 20) {
+                    bubbleLeft = chatRight + gap;
+                    // If still off screen, center it above toggle but smaller gap
+                    if (bubbleLeft + bubbleWidth > window.innerWidth - 20) {
+                        bubbleLeft = toggleCenterX - (bubbleWidth / 2);
+                        bubbleTop = chatTop - bubbleHeight - gap - 10; // Extra gap above chat
+                    }
+                }
+            }
+        }
         
         // Position Clippy to the left of bubble
         let clippyLeft = bubbleLeft - clippySize - gap;
@@ -430,7 +476,12 @@ class ClippySuggestions {
         
         // Ensure bubble doesn't go off top
         if (bubbleTop < 20) {
-            bubbleTop = toggleRect.bottom + gap;
+            // If chat is open, position below toggle instead
+            if (isChatOpen && chatWidgetRect) {
+                bubbleTop = toggleRect.bottom + gap;
+            } else {
+                bubbleTop = toggleRect.bottom + gap;
+            }
         }
         
         // Ensure Clippy doesn't go off screen
