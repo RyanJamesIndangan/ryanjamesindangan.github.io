@@ -3153,17 +3153,21 @@ body {
 }
 
 .clippy-paper {
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
 
 .clippy-body {
-    fill: #8B7D9B;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
     transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.clippy-highlight {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .clippy-eye-white {
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.15));
     transition: all 0.2s ease;
 }
 
