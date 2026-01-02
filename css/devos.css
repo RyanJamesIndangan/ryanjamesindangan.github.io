@@ -1817,14 +1817,16 @@ body {
     visibility: hidden;
     transform: scale(0.98);
     transition: all 0.15s ease;
-    z-index: 9999;
+    z-index: 100000 !important; /* Ensure it's above everything */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    pointer-events: auto; /* Ensure it can receive clicks */
 }
 
 .context-menu.active {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
     transform: scale(1);
+    display: block !important; /* Force display */
 }
 
 .context-item {

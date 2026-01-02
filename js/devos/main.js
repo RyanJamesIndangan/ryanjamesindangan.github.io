@@ -730,9 +730,18 @@ function initializeContextMenu() {
         contextMenu.style.left = `${x}px`;
         contextMenu.style.top = `${y}px`;
         contextMenu.style.display = 'block'; // Ensure it's visible
+        contextMenu.style.zIndex = '100001'; // Ensure it's above everything
+        contextMenu.style.opacity = '1'; // Force opacity
+        contextMenu.style.visibility = 'visible'; // Force visibility
         contextMenu.classList.add('active');
         
         console.log('Context menu shown at', x, y, 'menu element:', contextMenu); // Debug log
+        console.log('Context menu computed styles:', {
+            display: window.getComputedStyle(contextMenu).display,
+            opacity: window.getComputedStyle(contextMenu).opacity,
+            visibility: window.getComputedStyle(contextMenu).visibility,
+            zIndex: window.getComputedStyle(contextMenu).zIndex
+        });
     };
     
     // Add context menu event listener to desktop
