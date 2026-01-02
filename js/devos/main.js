@@ -2,7 +2,17 @@
 // Portfolio Main Application
 // ===========================
 
+// Performance: Use requestIdleCallback for non-critical initialization
+const initNonCritical = (callback) => {
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(callback, { timeout: 2000 });
+    } else {
+        setTimeout(callback, 1);
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Critical: Initialize immediately
     initializeClock();
     initializeStartMenu();
     initializeContextMenu();
@@ -12,9 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSystemTray();
     updateExperienceYears();
     initializeThemeToggle();
-    initializeGitHubStats();
     initializeCertificateModal();
     initializeAIAssistant();
+    
+    // Non-critical: Defer GitHub stats (external API call)
+    initNonCritical(() => {
+        initializeGitHubStats();
+    });
     
     // Auto-open apps in a nice cascading manner after boot
     // Wait for boot screen to finish (2500ms fade + 800ms transition = 3300ms)
@@ -542,12 +556,51 @@ function openApp(appId, position = null) {
     
     // Initialize demo buttons if projects window opened
     if (appId === 'projects') {
-        setTimeout(() => initializeDemoButtons(), 100);
+        setTimeout(() => {
+            initializeDemoButtons();
+            initializeProjectFilters();
+            initializeProjectModals();
+        }, 100);
     }
     
     // Initialize Snake game if opened
     if (appId === 'snake') {
         setTimeout(() => initializeSnakeGame(), 100);
+    }
+    
+    // Initialize testimonials carousel if opened
+    if (appId === 'testimonials') {
+        setTimeout(() => initializeTestimonialsCarousel(), 100);
+    }
+    
+    // Initialize GitHub stats if opened
+    if (appId === 'github-stats') {
+        setTimeout(() => loadGitHubStats(), 100);
+    }
+    
+    // Initialize blog if opened
+    if (appId === 'blog') {
+        setTimeout(() => {
+            initializeBlogFilters();
+            initializeBlogSearch();
+            initializeBlogPostModals();
+        }, 100);
+    }
+    
+    // Initialize AI Lab demos if opened
+    if (appId === 'ai-lab') {
+        setTimeout(() => {
+            initializeOCRDemo();
+            initializePipelineVisualization();
+            initializeWatermarkDemo();
+        }, 100);
+    }
+    
+    // Update experience years when About app is opened
+    if (appId === 'about') {
+        setTimeout(() => {
+            updateExperienceYears();
+        }, 200);
     }
 }
 
@@ -664,7 +717,12 @@ Available commands:
     extract-doc  - Simulate document extraction
     watermark    - Watermark removal demo
         `,
-        about: () => 'Ryan James Indangan - Full-Stack Developer & CTO\n7+ years of experience in web development\nSpecializing in AI/ML and Document Intelligence',
+        about: () => {
+            const startYear = 2018;
+            const currentYear = new Date().getFullYear();
+            const years = currentYear - startYear;
+            return `Ryan James Indangan - Full-Stack Developer & CTO\n${years}+ years of experience in web development\nSpecializing in AI/ML and Document Intelligence`;
+        },
         skills: () => 'Frontend: React, Vue, Angular, Next.js\nBackend: PHP, Laravel, Node.js, FastAPI, Django\nCloud: AWS, Docker, Kubernetes\nAI/ML: Document Intelligence, OCR, LLM Integration',
         experience: () => 'AI Developer/ML Engineer at Alliance Global Solutions (Nov 2025 - Present)\nSenior Full-Stack Developer at GlobalX Digital\nFormer CTO at Payo Digital\nTop Rated on Upwork',
         projects: () => 'Check out my projects:\n- Crypto Checkout Simulator\n- Supplier Order Management\n- GlobalX Platform Redesign\n- Document Intelligence Pipeline',
@@ -953,16 +1011,59 @@ function updateExperienceYears() {
 // ===========================
 function initializeThemeToggle() {
     const themeToggle = document.getElementById('themeToggle');
-    let isDark = true;
+    if (!themeToggle) return;
     
+    // Detect system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Get saved theme or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    // Apply initial theme
+    applyTheme(initialTheme);
+    
+    // Update icon based on initial theme
+    updateThemeIcon(initialTheme === 'dark');
+    
+    // Listen for system preference changes (if no manual preference set)
+    if (!savedTheme) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const newTheme = e.matches ? 'dark' : 'light';
+            applyTheme(newTheme);
+            updateThemeIcon(newTheme === 'dark');
+        });
+    }
+    
+    // Toggle on click
     themeToggle.addEventListener('click', () => {
-        isDark = !isDark;
-        themeToggle.querySelector('.icon').textContent = isDark ? '🌙' : '☀️';
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
-        // Could add theme switching logic here
-        // For now, just show a message
-        showNotification(isDark ? 'Dark mode active' : 'Light mode coming soon!');
+        applyTheme(newTheme);
+        updateThemeIcon(newTheme === 'dark');
+        
+        // Save preference
+        localStorage.setItem('theme', newTheme);
+        
+        // Show notification
+        showNotification(newTheme === 'dark' ? '🌙 Dark mode activated' : '☀️ Light mode activated', 'success', 2000);
     });
+    
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+            document.documentElement.removeAttribute('data-theme');
+        }
+    }
+    
+    function updateThemeIcon(isDark) {
+        const icon = themeToggle.querySelector('.icon');
+        if (icon) {
+            icon.textContent = isDark ? '🌙' : '☀️';
+        }
+    }
 }
 
 // ===========================
@@ -970,10 +1071,164 @@ function initializeThemeToggle() {
 // ===========================
 function initializeGitHubStats() {
     const githubStats = document.getElementById('githubStats');
+    if (!githubStats) return;
     
     githubStats.addEventListener('click', () => {
-        showNotification('GitHub: 50+ projects | Top Rated on Upwork', 'success');
+        // Open GitHub Stats window
+        if (window.openApp) {
+            window.openApp('github-stats');
+        } else {
+            showNotification('GitHub: 50+ projects | Top Rated on Upwork', 'success');
+        }
     });
+}
+
+// ===========================
+// Load GitHub Stats Data
+// ===========================
+async function loadGitHubStats() {
+    const loadingEl = document.getElementById('githubStatsLoading');
+    const errorEl = document.getElementById('githubStatsError');
+    const contentEl = document.getElementById('githubStatsContent');
+    
+    if (!loadingEl || !errorEl || !contentEl) return;
+    
+    // Show loading, hide error and content
+    loadingEl.style.display = 'block';
+    errorEl.style.display = 'none';
+    contentEl.style.display = 'none';
+    
+    try {
+        const username = 'ryanjamesindangan';
+        
+        // Fetch user data
+        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        if (!userResponse.ok) throw new Error('Failed to fetch user data');
+        const userData = await userResponse.json();
+        
+        // Fetch repositories (sorted by stars)
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=5`);
+        if (!reposResponse.ok) throw new Error('Failed to fetch repositories');
+        const reposData = await reposResponse.json();
+        
+        // Fetch recent events
+        const eventsResponse = await fetch(`https://api.github.com/users/${username}/events/public?per_page=10`);
+        if (!eventsResponse.ok) throw new Error('Failed to fetch events');
+        const eventsData = await eventsResponse.json();
+        
+        // Calculate total stars
+        const totalStars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+        
+        // Update user stats
+        document.getElementById('githubPublicRepos').textContent = userData.public_repos || 0;
+        document.getElementById('githubFollowers').textContent = userData.followers || 0;
+        document.getElementById('githubFollowing').textContent = userData.following || 0;
+        document.getElementById('githubTotalStars').textContent = totalStars;
+        
+        // Update top repositories
+        const topReposEl = document.getElementById('githubTopRepos');
+        if (topReposEl) {
+            topReposEl.innerHTML = reposData.map(repo => `
+                <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                        <h4 style="color: #1a1a1a; font-size: 1.1rem; font-weight: 700; margin: 0;">
+                            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="color: #2171d6; text-decoration: none;">
+                                ${repo.name}
+                            </a>
+                        </h4>
+                        <div style="display: flex; gap: 1rem; align-items: center;">
+                            <span style="color: #666; font-size: 0.85rem;">⭐ ${repo.stargazers_count || 0}</span>
+                            <span style="color: #666; font-size: 0.85rem;">🍴 ${repo.forks_count || 0}</span>
+                        </div>
+                    </div>
+                    ${repo.description ? `<p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; line-height: 1.5;">${repo.description}</p>` : ''}
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${repo.language ? `<span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">${repo.language}</span>` : ''}
+                        <span style="padding: 0.25rem 0.75rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 4px; color: #666; font-size: 0.85rem;">
+                            Updated ${formatDate(repo.updated_at)}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Update recent activity
+        const activityEl = document.getElementById('githubRecentActivity');
+        if (activityEl) {
+            activityEl.innerHTML = eventsData.slice(0, 5).map(event => {
+                const eventType = event.type;
+                const repo = event.repo.name;
+                const date = formatDate(event.created_at);
+                let icon = '📝';
+                let description = '';
+                
+                switch(eventType) {
+                    case 'PushEvent':
+                        icon = '📤';
+                        description = `Pushed ${event.payload.commits?.length || 0} commit(s) to ${repo}`;
+                        break;
+                    case 'CreateEvent':
+                        icon = '✨';
+                        description = `Created ${event.payload.ref_type} in ${repo}`;
+                        break;
+                    case 'WatchEvent':
+                        icon = '⭐';
+                        description = `Starred ${repo}`;
+                        break;
+                    case 'ForkEvent':
+                        icon = '🍴';
+                        description = `Forked ${repo}`;
+                        break;
+                    case 'IssuesEvent':
+                        icon = '🐛';
+                        description = `${event.payload.action} issue in ${repo}`;
+                        break;
+                    case 'PullRequestEvent':
+                        icon = '🔀';
+                        description = `${event.payload.action} pull request in ${repo}`;
+                        break;
+                    default:
+                        description = `${eventType} in ${repo}`;
+                }
+                
+                return `
+                    <div style="padding: 1rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 6px; display: flex; align-items: center; gap: 1rem;">
+                        <div style="font-size: 1.5rem;">${icon}</div>
+                        <div style="flex: 1;">
+                            <div style="color: #1a1a1a; font-size: 0.9rem; font-weight: 500;">${description}</div>
+                            <div style="color: #999; font-size: 0.8rem; margin-top: 0.25rem;">${date}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('') || '<p style="color: #666; text-align: center; padding: 2rem;">No recent activity</p>';
+        }
+        
+        // Hide loading, show content
+        loadingEl.style.display = 'none';
+        contentEl.style.display = 'block';
+        
+    } catch (error) {
+        console.error('GitHub Stats Error:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+    }
+}
+
+// Helper function to format dates
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+    
+    if (diffMins < 1) return 'just now';
+    if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+    if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+    if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+    
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined });
 }
 
 // ===========================
@@ -1266,7 +1521,7 @@ function initializeCertificateModal() {
                 </div>
             `;
         } else {
-            modalBody.innerHTML = `<img src="${encodedPath}" alt="${title}" />`;
+            modalBody.innerHTML = `<img src="${encodedPath}" alt="${title}" loading="lazy" />`;
         }
         
         downloadBtn.href = encodedPath;
@@ -1489,6 +1744,45 @@ function initializeAIAssistant() {
             if (menuDropdown) menuDropdown.classList.remove('show');
         });
     }
+    
+    // Conversation Mode Selector
+    const modeItems = document.querySelectorAll('.mode-item');
+    const updateModeDisplay = () => {
+        if (window.portfolioChatbot) {
+            const currentMode = window.portfolioChatbot.conversationMode || 'professional';
+            modeItems.forEach(item => {
+                if (item.dataset.mode === currentMode) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+    };
+    
+    // Initialize mode display
+    updateModeDisplay();
+    
+    modeItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const mode = item.dataset.mode;
+            if (window.portfolioChatbot) {
+                window.portfolioChatbot.setConversationMode(mode);
+                updateModeDisplay();
+                
+                // Show notification
+                const modeNames = {
+                    'professional': 'Professional',
+                    'casual': 'Casual',
+                    'technical': 'Technical'
+                };
+                showNotification(`Switched to ${modeNames[mode]} Mode`, 'success', 2000);
+            }
+            if (menuDropdown) menuDropdown.classList.remove('show');
+        });
+    });
 
     // Send message on Enter
     if (chatInput) {
@@ -2538,3 +2832,374 @@ function clearSearchHighlights() {
     }
 }
 
+// ===========================
+// Testimonials Carousel
+// ===========================
+function initializeTestimonialsCarousel() {
+    const carousel = document.getElementById('testimonialsCarousel');
+    if (!carousel) return;
+    
+    const cards = carousel.querySelectorAll('.testimonial-card');
+    if (cards.length === 0) return;
+    
+    const prevBtn = document.querySelector('.testimonial-prev');
+    const nextBtn = document.querySelector('.testimonial-next');
+    const dotsContainer = document.querySelector('.testimonial-dots');
+    
+    let currentIndex = 0;
+    const cardWidth = cards[0].offsetWidth + 24; // card width + gap
+    
+    // Create dots
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        cards.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = 'testimonial-dot';
+            dot.setAttribute('data-index', index);
+            dot.style.cssText = 'width: 12px; height: 12px; border-radius: 50%; border: none; background: #ccc; cursor: pointer; transition: all 0.2s;';
+            if (index === 0) {
+                dot.style.background = '#2171d6';
+                dot.style.transform = 'scale(1.2)';
+            }
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+    }
+    
+    function updateCarousel() {
+        carousel.scrollTo({
+            left: currentIndex * cardWidth,
+            behavior: 'smooth'
+        });
+        
+        // Update dots
+        if (dotsContainer) {
+            dotsContainer.querySelectorAll('.testimonial-dot').forEach((dot, index) => {
+                if (index === currentIndex) {
+                    dot.style.background = '#2171d6';
+                    dot.style.transform = 'scale(1.2)';
+                } else {
+                    dot.style.background = '#ccc';
+                    dot.style.transform = 'scale(1)';
+                }
+            });
+        }
+    }
+    
+    function goToSlide(index) {
+        currentIndex = Math.max(0, Math.min(index, cards.length - 1));
+        updateCarousel();
+    }
+    
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarousel();
+    }
+    
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+    }
+    
+    // Auto-scroll (optional)
+    let autoScrollInterval;
+    function startAutoScroll() {
+        autoScrollInterval = setInterval(nextSlide, 5000);
+    }
+    
+    function stopAutoScroll() {
+        clearInterval(autoScrollInterval);
+    }
+    
+    // Start auto-scroll
+    startAutoScroll();
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', stopAutoScroll);
+    carousel.addEventListener('mouseleave', startAutoScroll);
+    
+    // Handle scroll snap
+    carousel.addEventListener('scroll', () => {
+        const scrollLeft = carousel.scrollLeft;
+        const newIndex = Math.round(scrollLeft / cardWidth);
+        if (newIndex !== currentIndex && newIndex >= 0 && newIndex < cards.length) {
+            currentIndex = newIndex;
+            if (dotsContainer) {
+                dotsContainer.querySelectorAll('.testimonial-dot').forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.style.background = '#2171d6';
+                        dot.style.transform = 'scale(1.2)';
+                    } else {
+                        dot.style.background = '#ccc';
+                        dot.style.transform = 'scale(1)';
+                    }
+                });
+            }
+        }
+    });
+    
+    // Keyboard navigation
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+        }
+    });
+}
+
+// ===========================
+// Project Filters
+// ===========================
+function initializeProjectFilters() {
+    const filterButtons = document.querySelectorAll('.project-filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter;
+            
+            // Update active state
+            filterButtons.forEach(b => {
+                b.classList.remove('active');
+                b.style.background = '#f0f0f0';
+                b.style.color = '#1a1a1a';
+                b.style.border = '1px solid #e0e0e0';
+            });
+            btn.classList.add('active');
+            btn.style.background = '#2171d6';
+            btn.style.color = '#fff';
+            btn.style.border = '1px solid #1a5fb8';
+            
+            // Filter projects
+            projectCards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 10);
+                } else {
+                    const category = card.dataset.category;
+                    const tech = card.dataset.tech || '';
+                    
+                    if (category === filter || tech.includes(filter)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                }
+            });
+        });
+    });
+}
+
+// ===========================
+// Project Modals & Live Demos
+// ===========================
+function initializeProjectModals() {
+    // Live demo buttons
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('project-live-demo-btn') || e.target.closest('.project-live-demo-btn')) {
+            const btn = e.target.classList.contains('project-live-demo-btn') ? e.target : e.target.closest('.project-live-demo-btn');
+            const liveUrl = btn.dataset.liveDemo;
+            if (liveUrl) {
+                openProjectModal(btn.closest('.project-card'), liveUrl);
+            }
+        }
+        
+        // Details button
+        if (e.target.classList.contains('project-details-btn') || e.target.closest('.project-details-btn')) {
+            const btn = e.target.classList.contains('project-details-btn') ? e.target : e.target.closest('.project-details-btn');
+            const title = btn.dataset.title;
+            const description = btn.dataset.description;
+            const tech = btn.dataset.tech;
+            const github = btn.dataset.github;
+            const live = btn.dataset.live;
+            
+            showProjectDetailsModal(title, description, tech, github, live);
+        }
+    });
+    
+    // Project card hover effects
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.style.transition = 'all 0.3s ease';
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = 'none';
+        });
+    });
+}
+
+function openProjectModal(card, liveUrl) {
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'project-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    `;
+    
+    modal.innerHTML = `
+        <div style="background: #fff; border-radius: 12px; width: 100%; max-width: 1200px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="color: #1a1a1a; font-size: 1.5rem; font-weight: 700; margin: 0;">Live Demo</h3>
+                <button class="close-project-modal" style="background: none; border: none; font-size: 2rem; color: #666; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;">×</button>
+            </div>
+            <div style="flex: 1; overflow: hidden; position: relative;">
+                <iframe src="${liveUrl}" style="width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Close handlers
+    modal.querySelector('.close-project-modal').addEventListener('click', () => {
+        modal.remove();
+        document.body.style.overflow = '';
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // ESC key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            modal.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}
+
+function showProjectDetailsModal(title, description, tech, github, live) {
+    const modal = document.createElement('div');
+    modal.className = 'project-details-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    `;
+    
+    modal.innerHTML = `
+        <div style="background: #fff; border-radius: 12px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+            <div style="padding: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
+                    <h3 style="color: #1a1a1a; font-size: 1.8rem; font-weight: 700; margin: 0;">${title}</h3>
+                    <button class="close-project-details-modal" style="background: none; border: none; font-size: 2rem; color: #666; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;">×</button>
+                </div>
+                <p style="color: #666; line-height: 1.8; margin-bottom: 1.5rem; font-size: 1rem;">${description}</p>
+                <div style="margin-bottom: 1.5rem;">
+                    <h4 style="color: #1a1a1a; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">Technologies Used</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${tech.split(', ').map(t => `
+                            <span style="padding: 0.5rem 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; color: #2171d6; font-size: 0.9rem; font-weight: 500;">
+                                ${t}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    ${live ? `
+                        <button class="project-live-demo-btn-modal" data-live-demo="${live}" 
+                           style="padding: 1rem 2rem; background: #4caf50; border: 1px solid #45a049; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            🌐 View Live Demo
+                        </button>
+                    ` : ''}
+                    ${github ? `
+                        <a href="${github}" target="_blank" rel="noopener noreferrer" 
+                           style="padding: 1rem 2rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            📂 View on GitHub
+                        </a>
+                    ` : `
+                        <span style="color: #999; font-size: 0.9rem; padding: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;">🔒 Private Repository</span>
+                    `}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Close handlers
+    modal.querySelector('.close-project-details-modal').addEventListener('click', () => {
+        modal.remove();
+        document.body.style.overflow = '';
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.remove();
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Live demo button in modal
+    const liveBtn = modal.querySelector('.project-live-demo-btn-modal');
+    if (liveBtn) {
+        liveBtn.addEventListener('click', () => {
+            modal.remove();
+            document.body.style.overflow = '';
+            openProjectModal(null, liveBtn.dataset.liveDemo);
+        });
+    }
+    
+    // ESC key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            modal.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}

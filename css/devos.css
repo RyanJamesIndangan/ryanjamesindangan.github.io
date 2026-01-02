@@ -1,9 +1,13 @@
 /* ===================================
    DevOS Portfolio - Modern OS Interface
+   Performance Optimizations:
+   - font-display: swap for faster text rendering
+   - will-change hints for animated elements
+   - contain: layout for better rendering performance
    =================================== */
 
 :root {
-    /* Windows 7 Inspired Colors */
+    /* Windows 7 Inspired Colors - Dark Mode (Default) */
     --primary: #3399ff;
     --secondary: #0078d7;
     --accent: #ffb900;
@@ -29,6 +33,27 @@
     --transition-fast: 0.2s ease;
     --transition-medium: 0.3s ease;
     --transition-slow: 0.5s ease;
+    
+    /* Theme Transition */
+    --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Light Mode Theme */
+[data-theme="light"] {
+    --primary: #0066cc;
+    --secondary: #0052a3;
+    --accent: #cc8800;
+    --success: #00a855;
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e8e8e8;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --glass-bg: rgba(0, 0, 0, 0.05);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --shadow: rgba(0, 0, 0, 0.15);
+    --windows-blue: #0066cc;
+    --windows-hover: #0052a3;
 }
 
 * {
@@ -45,6 +70,12 @@ body {
     user-select: none;
     width: 100vw;
     height: 100vh;
+    /* Performance: Optimize font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Theme Transition */
+    transition: var(--theme-transition);
 }
 
 /* ===================================
@@ -310,6 +341,9 @@ body {
         url('../assets/background.jpg') center center / cover no-repeat;
     z-index: 0;
     filter: blur(0.5px);
+    /* Performance: Optimize background rendering */
+    will-change: transform;
+    contain: layout style paint;
 }
 
 .wallpaper::before {
@@ -389,30 +423,31 @@ body {
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--theme-transition), all 0.2s ease;
     width: 90px;
     user-select: none;
     position: relative;
     background: transparent;
     border: 2px solid transparent;
+    color: var(--text-primary);
 }
 
 .desktop-icon:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(100, 181, 246, 0.4);
+    background: var(--glass-bg);
+    border: 2px solid var(--glass-border);
     box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 2px 8px var(--shadow),
+        inset 0 1px 0 var(--glass-border);
     transform: translateY(-2px);
 }
 
 .desktop-icon:active {
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(100, 181, 246, 0.6);
+    background: var(--glass-bg);
+    border: 2px solid var(--primary);
     transform: translateY(0);
     box-shadow: 
-        inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        0 1px 2px rgba(0, 0, 0, 0.1);
+        inset 0 2px 4px var(--shadow),
+        0 1px 2px var(--shadow);
 }
 
 .desktop-icon.selected {
@@ -451,10 +486,11 @@ body {
 
 .desktop-icon span {
     font-size: 0.75rem;
-    color: #ffffff;
+    color: var(--text-primary);
     text-align: center;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 3px var(--shadow);
     font-weight: 500;
+    transition: var(--theme-transition);
 }
 
 /* Recycle Bin Icon Styling - Windows 7 Style */
@@ -572,25 +608,22 @@ body {
 
 .window {
     position: absolute;
-    background: linear-gradient(to bottom,
-        rgba(248, 252, 255, 0.35) 0%,
-        rgba(240, 248, 255, 0.3) 50%,
-        rgba(232, 244, 255, 0.25) 100%);
+    background: var(--glass-bg);
     backdrop-filter: blur(12px) saturate(200%);
     -webkit-backdrop-filter: blur(12px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--glass-border);
     border-radius: 0;
     box-shadow: 
-        0 12px 48px rgba(0, 0, 0, 0.5),
-        0 4px 16px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.7),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+        0 12px 48px var(--shadow),
+        0 4px 16px var(--shadow),
+        inset 0 1px 0 var(--glass-border),
+        inset 0 -1px 0 var(--shadow),
         0 0 30px rgba(100, 181, 246, 0.2);
     overflow: hidden;
     display: flex;
     flex-direction: column;
     pointer-events: auto;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+    transition: var(--theme-transition), all 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
     min-width: 300px;
     min-height: 200px;
     max-width: 100vw;
@@ -932,22 +965,20 @@ body {
     left: 0;
     width: 100%;
     height: 40px;
-    background: linear-gradient(to top, 
-        rgba(30, 60, 100, 0.75) 0%,
-        rgba(40, 80, 140, 0.70) 50%,
-        rgba(50, 100, 180, 0.65) 100%);
+    background: var(--bg-secondary);
     backdrop-filter: blur(10px) saturate(140%);
     -webkit-backdrop-filter: blur(10px) saturate(140%);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid var(--glass-border);
     box-shadow: 
-        inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        0 -1px 0 rgba(0, 0, 0, 0.15),
-        0 -2px 6px rgba(0, 0, 0, 0.25);
+        inset 0 1px 0 var(--glass-border),
+        0 -1px 0 var(--shadow),
+        0 -2px 6px var(--shadow);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 2px;
     z-index: 1000;
+    transition: var(--theme-transition);
 }
 
 .taskbar-start, .taskbar-center, .taskbar-end {
@@ -2769,6 +2800,25 @@ body {
     margin: 0.5rem 0;
 }
 
+.ai-menu-item.active {
+    background: rgba(100, 255, 218, 0.15);
+    font-weight: 600;
+    color: #64ffda;
+}
+
+.ai-menu-section {
+    padding: 0.5rem 0;
+}
+
+.ai-menu-label {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
 /* Search functionality */
 .ai-search-btn {
     background: transparent;
@@ -3812,5 +3862,506 @@ body {
     color: #1a1a1a;
     font-weight: 500;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===================================
+   Testimonials Carousel
+   =================================== */
+
+.testimonials-carousel-container {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.testimonials-carousel {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 1rem 0;
+    scrollbar-width: thin;
+    scrollbar-color: #2171d6 #f0f0f0;
+}
+
+.testimonials-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.testimonials-carousel::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.testimonials-carousel::-webkit-scrollbar-thumb {
+    background: #2171d6;
+    border-radius: 4px;
+}
+
+.testimonials-carousel::-webkit-scrollbar-thumb:hover {
+    background: #1a5fb8;
+}
+
+.testimonial-card {
+    min-width: 350px;
+    max-width: 400px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.testimonials-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.testimonial-nav-btn {
+    padding: 0.75rem 1.5rem;
+    background: #2171d6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.testimonial-nav-btn:hover {
+    background: #1a5fb8;
+    transform: scale(1.05);
+}
+
+.testimonial-nav-btn:active {
+    transform: scale(0.95);
+}
+
+.testimonial-nav-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.testimonial-dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.testimonial-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.testimonial-dot:hover {
+    background: #999;
+    transform: scale(1.2);
+}
+
+.testimonial-dot.active {
+    background: #2171d6;
+    transform: scale(1.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .testimonial-card {
+        min-width: calc(100vw - 120px);
+        max-width: calc(100vw - 120px);
+    }
+    
+    .testimonials-nav {
+        flex-wrap: wrap;
+    }
+    
+    .testimonial-nav-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ===================================
+   Interactive Project Showcase
+   =================================== */
+
+.project-card {
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.project-filter-btn {
+    transition: all 0.2s ease;
+}
+
+.project-filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project-live-demo-btn:hover,
+.project-details-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.project-modal,
+.project-details-modal {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.close-project-modal:hover,
+.close-project-details-modal:hover {
+    background: #f0f0f0 !important;
+    color: #1a1a1a !important;
+}
+
+/* Project card transitions */
+.project-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ===================================
+   Blog & Articles
+   =================================== */
+
+.blog-post-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.blog-post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.blog-filter-btn {
+    transition: all 0.2s ease;
+}
+
+.blog-filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#blogSearchInput {
+    transition: all 0.2s ease;
+}
+
+#blogSearchInput:focus {
+    outline: none;
+    border-color: #2171d6;
+    box-shadow: 0 0 0 3px rgba(33, 113, 214, 0.1);
+}
+
+.read-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.blog-post-modal,
+.blog-post-modal > div {
+    animation: fadeIn 0.3s ease;
+}
+
+.close-blog-modal:hover {
+    background: #f0f0f0 !important;
+    color: #1a1a1a !important;
+}
+
+/* Blog post content styling */
+.blog-post-modal pre {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    border: 1px solid #e0e0e0;
+}
+
+.blog-post-modal code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+}
+
+.blog-post-modal ul,
+.blog-post-modal ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+    line-height: 1.8;
+}
+
+.blog-post-modal li {
+    margin-bottom: 0.5rem;
+}
+
+/* Blog Responsive */
+@media (max-width: 1024px) {
+    #blogPostsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Blog - Single column on mobile */
+    #blogPostsContainer {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem;
+    }
+    
+    /* Blog search and filters - Stack on mobile */
+    #blogSearchInput {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .blog-filter-btn {
+        flex: 1;
+        min-width: 0;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.75rem;
+    }
+    
+    /* Blog modal - Full width on mobile */
+    .blog-post-modal > div {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 1rem !important;
+        max-height: 85vh !important;
+    }
+    
+    .blog-post-modal h2 {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Blog - Even more compact on small phones */
+    #blogPostsContainer {
+        gap: 1rem;
+    }
+    
+    .blog-post-card {
+        padding: 1rem !important;
+    }
+    
+    .blog-post-card h3 {
+        font-size: 1.1rem !important;
+    }
+    
+    .blog-post-card p {
+        font-size: 0.85rem !important;
+    }
+    
+    /* Blog filters - Wrap on small phones */
+    .blog-filter-btn {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.6rem;
+    }
+    
+    /* Blog modal - Full screen on small phones */
+    .blog-post-modal > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        max-height: 100vh !important;
+    }
+    
+    .blog-post-modal {
+        padding: 0 !important;
+    }
+}
+
+/* ===================================
+   AI/ML Interactive Demos
+   =================================== */
+
+#ocrImagePreview img {
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#ocrResult {
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#ocrProgress {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.pipeline-step {
+    transition: all 0.3s ease;
+}
+
+.pipeline-step.active {
+    background: #e8f4f8 !important;
+    border-color: #2171d6 !important;
+    transform: scale(1.05);
+}
+
+#watermarkBefore,
+#watermarkAfter {
+    transition: all 0.3s ease;
+}
+
+#watermarkInfo {
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* AI Lab Responsive */
+@media (max-width: 768px) {
+    /* OCR Demo - Stack columns on mobile */
+    #ocrDemoContainer {
+        grid-template-columns: 1fr !important;
+    }
+    
+    #ocrImagePreview,
+    #ocrResult {
+        min-height: 150px;
+    }
+    
+    /* Pipeline - Smaller on mobile */
+    .pipeline-step {
+        padding: 0.75rem !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .pipeline-step div[style*="font-size: 2rem"] {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Watermark demo - Stack on mobile */
+    #watermarkDemoContainer {
+        grid-template-columns: 1fr !important;
+    }
+    
+    #watermarkBefore,
+    #watermarkAfter {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* OCR Demo - Full width on small phones */
+    #ocrDemoContainer {
+        gap: 1rem !important;
+    }
+    
+    #ocrImagePreview,
+    #ocrResult {
+        min-height: 120px;
+        font-size: 0.85rem;
+    }
+    
+    /* Pipeline - Even more compact */
+    .pipeline-step {
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .pipeline-step div[style*="font-size: 2rem"] {
+        font-size: 1.25rem !important;
+    }
+    
+    /* Watermark demo - Smaller on small phones */
+    #watermarkDemoContainer {
+        gap: 1rem !important;
+    }
+    
+    #watermarkBefore,
+    #watermarkAfter {
+        min-height: 150px;
+    }
+}
+
+/* GitHub Stats Responsive */
+@media (max-width: 768px) {
+    /* GitHub stats cards - Stack on mobile */
+    #githubStatsContainer [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    /* GitHub repo cards - Full width on mobile */
+    #githubReposContainer [style*="grid-template-columns"],
+    #githubReposContainer > div[style*="display: grid"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* GitHub activity - Compact on mobile */
+    #githubActivityContainer {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* GitHub stats - Even more compact on small phones */
+    #githubStatsContainer [style*="padding"] {
+        padding: 1rem !important;
+    }
+    
+    #githubStatsContainer [style*="font-size: 2rem"] {
+        font-size: 1.5rem !important;
+    }
+    
+    /* GitHub repos - Full width */
+    #githubReposContainer > div {
+        padding: 1rem !important;
+    }
 }
 

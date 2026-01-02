@@ -17,7 +17,7 @@ const apps = {
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
                     <div style="padding: 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #2171d6;"><span id="yearsExp">7</span>+</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #2171d6;"><span id="yearsExp">8</span>+</div>
                         <div style="font-size: 0.9rem; color: #1a1a1a;">Years Experience</div>
                     </div>
                     <div style="padding: 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
@@ -36,7 +36,7 @@ const apps = {
                 </p>
                 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
-                    With over <strong style="color: #2171d6;"><span id="yearsExp2">7</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
+                    With over <strong style="color: #2171d6;"><span id="yearsExp2">8</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
                     and leveraged AWS for cloud infrastructure. My approach combines strong technical hands-on expertise 
                     with strategic thinking to deliver results in Agile environments.
                 </p>
@@ -249,40 +249,77 @@ const apps = {
         title: 'Featured Projects',
         icon: '🚀',
         content: `
-            <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Showcase</h2>
+            <div style="max-width: 1200px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0;">Interactive Project Showcase</h2>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="project-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
+                        <button class="project-filter-btn" data-filter="react" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">React</button>
+                        <button class="project-filter-btn" data-filter="laravel" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Laravel</button>
+                        <button class="project-filter-btn" data-filter="node" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Node.js</button>
+                        <button class="project-filter-btn" data-filter="ai" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
+                    </div>
+                </div>
                 
-                <div style="display: grid; gap: 2rem;">
-                    ${createProjectCard(
+                <div id="projectsContainer" style="display: grid; gap: 2rem;">
+                    ${createEnhancedProjectCard(
                         '💳 Crypto Checkout Simulator',
-                        'Full-stack cryptocurrency payment processing simulation with real-time exchange rates and transaction tracking.',
+                        'Full-stack cryptocurrency payment processing simulation with real-time exchange rates and transaction tracking. Features secure wallet integration, multi-currency support, and live transaction monitoring.',
                         ['React', 'Node.js', 'Express', 'MongoDB', 'WebSocket'],
                         'https://github.com/ryanjamesindangan/crypto-checkout-simulator',
-                        'crypto-demo'
+                        'https://ryanjamesindangan.github.io/crypto-checkout-simulator',
+                        null,
+                        'react'
                     )}
                     
-                    ${createProjectCard(
+                    ${createEnhancedProjectCard(
                         '📦 Supplier Order Management',
-                        'Enterprise-grade order management system with inventory tracking, automated workflows, and comprehensive reporting.',
+                        'Enterprise-grade order management system with inventory tracking, automated workflows, and comprehensive reporting. Built for scalability with real-time updates and multi-user collaboration.',
                         ['Laravel', 'Vue.js', 'MySQL', 'Docker', 'AWS'],
                         'https://github.com/ryanjamesindangan/supplier-order-management-rjfi',
-                        'supplier-demo'
+                        null,
+                        null,
+                        'laravel'
                     )}
                     
-                    ${createProjectCard(
+                    ${createEnhancedProjectCard(
                         '🏢 GlobalX Digital Platform',
-                        'Complete platform redesign with enhanced database architecture, serving 10,000+ users with real-time features.',
+                        'Complete platform redesign with enhanced database architecture, serving 10,000+ users with real-time features. Includes advanced analytics, user management, and automated reporting systems.',
                         ['Laravel', 'React', 'PostgreSQL', 'Redis', 'AWS'],
                         null,
-                        null
+                        null,
+                        null,
+                        'laravel'
                     )}
                     
-                    ${createProjectCard(
+                    ${createEnhancedProjectCard(
                         '🤖 N8N Automation Hub',
-                        'Custom N8N workflows automating CI/CD processes, testing, and deployment across multiple environments.',
+                        'Custom N8N workflows automating CI/CD processes, testing, and deployment across multiple environments. Includes custom nodes, error handling, and monitoring dashboards.',
                         ['N8N', 'Docker', 'GitHub Actions', 'AWS Lambda', 'Node.js'],
                         null,
-                        null
+                        null,
+                        null,
+                        'node'
+                    )}
+                    
+                    ${createEnhancedProjectCard(
+                        '📄 Document Intelligence Pipeline',
+                        'End-to-end bank statement extraction with native PDF text and OCR fallback. Features ML-based watermark removal, validation framework, and LLM integration for structured summaries.',
+                        ['Python', 'FastAPI', 'OpenCV', 'Tesseract', 'Ollama', 'RandomForest'],
+                        null,
+                        null,
+                        null,
+                        'ai'
+                    )}
+                    
+                    ${createEnhancedProjectCard(
+                        '💧 Watermark Removal System',
+                        'ML-based watermark detection and removal using RandomForest classification. Automatically routes documents to appropriate removal strategies with quality scoring and validation.',
+                        ['Python', 'scikit-learn', 'OpenCV', 'RandomForest', 'PIL'],
+                        null,
+                        null,
+                        null,
+                        'ai'
                     )}
                 </div>
             </div>
@@ -496,7 +533,7 @@ const apps = {
                     <div style="color: #2d3748; line-height: 2.5; font-size: 1.05rem;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">📅</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Experience:</strong> <span style="color: #2171d6; font-weight: 600;" id="yearsExp3">7</span>+ years</div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Experience:</strong> <span style="color: #2171d6; font-weight: 600;" id="yearsExp3">8</span>+ years</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🎓</span>
@@ -600,10 +637,104 @@ const apps = {
         title: 'AI Lab',
         icon: '🤖',
         content: `
-            <div style="max-width: 1000px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Document Intelligence Lab</h2>
+            <div style="max-width: 1200px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Document Intelligence Lab</h2>
+                <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
+                    Interactive demos showcasing AI/ML capabilities in Document Intelligence, OCR, and Computer Vision.
+                </p>
                 
-                <div style="display: grid; gap: 2rem;">
+                <!-- Interactive Demos Section -->
+                <div style="display: grid; gap: 2rem; margin-bottom: 2rem;">
+                    <!-- OCR Demo -->
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #2171d6; border-radius: 12px;">
+                        <h3 style="color: #1a1a1a; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">🔍 Interactive OCR Demo</h3>
+                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                            Upload an image with text to see real-time OCR text extraction using Tesseract.js
+                        </p>
+                        <div id="ocrDemoContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">Upload Image</label>
+                                <input type="file" id="ocrImageInput" accept="image/*" style="display: none;">
+                                <button id="ocrUploadBtn" style="width: 100%; padding: 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                                    📤 Choose Image
+                                </button>
+                                <div id="ocrImagePreview" style="margin-top: 1rem; min-height: 200px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 3rem; margin-bottom: 0.5rem;">📷</div>
+                                        <div>Image preview will appear here</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label style="display: block; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">Extracted Text</label>
+                                <button id="ocrProcessBtn" style="width: 100%; padding: 1rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem;" disabled>
+                                    🔍 Process OCR
+                                </button>
+                                <div id="ocrProgress" style="display: none; margin-bottom: 1rem; padding: 0.75rem; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; color: #f57c00; font-size: 0.85rem;">
+                                    Processing... <span id="ocrProgressText">0%</span>
+                                </div>
+                                <div id="ocrResult" style="min-height: 200px; padding: 1rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #1a1a1a; white-space: pre-wrap; overflow-y: auto; max-height: 300px; word-wrap: break-word; overflow-wrap: break-word;">
+                                    Extracted text will appear here...
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 1rem; background: #e8f4f8; border-radius: 6px; font-size: 0.85rem; color: #2171d6;">
+                            <strong>💡 Tip:</strong> For best results, use clear images with high contrast text. The OCR engine works best with printed text.
+                        </div>
+                    </div>
+                    
+                    <!-- Pipeline Visualization -->
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #4caf50; border-radius: 12px;">
+                        <h3 style="color: #1a1a1a; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">📊 Document Intelligence Pipeline</h3>
+                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                            Interactive visualization of the end-to-end document processing pipeline
+                        </p>
+                        <div id="pipelineVisualization" style="padding: 1.5rem; background: #fff; border-radius: 8px; min-height: 400px;">
+                            ${createPipelineFlowchart()}
+                        </div>
+                        <button id="simulatePipelineBtn" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            ▶️ Simulate Pipeline
+                        </button>
+                    </div>
+                    
+                    <!-- Watermark Removal Comparison -->
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #7b1fa2; border-radius: 12px;">
+                        <h3 style="color: #1a1a1a; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">💧 Watermark Removal Demo</h3>
+                        <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                            Visual comparison of documents before and after ML-based watermark removal
+                        </p>
+                        <div id="watermarkDemoContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                            <div>
+                                <h4 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;">Before (With Watermark)</h4>
+                                <div id="watermarkBefore" style="min-height: 250px; background: #f0f0f0; border: 2px solid #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; position: relative;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                                        <div>Sample document with watermark</div>
+                                    </div>
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 3rem; color: rgba(0,0,0,0.1); font-weight: bold; pointer-events: none;">CONFIDENTIAL</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;">After (Watermark Removed)</h4>
+                                <div id="watermarkAfter" style="min-height: 250px; background: #f0f0f0; border: 2px solid #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
+                                        <div>Click "Process" to see result</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="processWatermarkBtn" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #7b1fa2; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            🔄 Process Watermark Removal
+                        </button>
+                        <div id="watermarkInfo" style="margin-top: 1rem; padding: 1rem; background: #f3e5f5; border-radius: 6px; font-size: 0.85rem; color: #7b1fa2; display: none;">
+                            <strong>ML Detection:</strong> <span id="watermarkType">-</span> | <strong>Confidence:</strong> <span id="watermarkConfidence">-</span>% | <strong>Processing Time:</strong> <span id="watermarkTime">-</span>ms
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Feature Cards -->
+                <div style="display: grid; gap: 2rem; margin-top: 2rem;">
                     ${createAIFeatureCard(
                         '📄 Document Extraction Pipeline',
                         'End-to-end bank statement extraction with native PDF text and OCR fallback',
@@ -614,18 +745,6 @@ const apps = {
                             'Validation-first framework for data integrity'
                         ],
                         ['Python', 'PyMuPDF', 'Tesseract', 'OpenCV']
-                    )}
-                    
-                    ${createAIFeatureCard(
-                        '💧 Watermark Removal System',
-                        'ML-based watermark detection and removal using RandomForest classification',
-                        [
-                            'Feature engineering for watermark detection',
-                            'RandomForest classifier for type identification',
-                            'Automated routing to removal strategies',
-                            'Quality scoring and validation'
-                        ],
-                        ['Python', 'scikit-learn', 'RandomForest', 'OpenCV']
                     )}
                     
                     ${createAIFeatureCard(
@@ -667,8 +786,347 @@ const apps = {
                 </div>
             </div>
         `
+    },
+
+    testimonials: {
+        title: 'Testimonials & Reviews',
+        icon: '⭐',
+        content: `
+            <div style="max-width: 1000px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Client Testimonials & Recommendations</h2>
+                <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
+                    Here's what clients and colleagues say about working with me. These testimonials showcase my commitment to quality, 
+                    technical expertise, and collaborative approach.
+                </p>
+                
+                <!-- Testimonials Carousel -->
+                <div class="testimonials-carousel-container" style="position: relative;">
+                    <div class="testimonials-carousel" id="testimonialsCarousel" style="display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding: 1rem 0; scrollbar-width: thin;">
+                        ${createTestimonialCard(
+                            'Client Review',
+                            'Project Manager',
+                            'GlobalX Digital Corporation',
+                            5,
+                            'Ryan delivered exceptional results on our database architecture redesign. His technical expertise, leadership skills, and ability to coordinate multiple teams were outstanding. He revived a stalled project and delivered a fully enhanced Version 2 within 2 months.',
+                            'LinkedIn',
+                            'https://www.linkedin.com/in/ryanjamesindangan'
+                        )}
+                        ${createTestimonialCard(
+                            'Upwork Client',
+                            'Startup Founder',
+                            'Tech Startup',
+                            5,
+                            'Ryan is an exceptional full-stack developer. He built our entire platform from scratch, integrating AI features that significantly improved our workflow. His code quality is excellent, and he always delivers on time. Highly recommended!',
+                            'Upwork',
+                            'https://www.upwork.com/freelancers/~01d452f9125d3dcdf1'
+                        )}
+                        ${createTestimonialCard(
+                            'Team Lead',
+                            'Senior Developer',
+                            'Previous Project',
+                            5,
+                            'Working with Ryan was a pleasure. His deep understanding of both frontend and backend technologies, combined with his AI/ML expertise, made him an invaluable team member. He consistently delivered high-quality solutions and was always willing to help teammates.',
+                            'LinkedIn',
+                            'https://www.linkedin.com/in/ryanjamesindangan'
+                        )}
+                        ${createTestimonialCard(
+                            'Client Feedback',
+                            'CTO',
+                            'Enterprise Client',
+                            5,
+                            'Ryan\'s work on our Document Intelligence pipeline was outstanding. He implemented complex OCR and watermark removal systems that significantly improved our processing accuracy. His attention to detail and problem-solving skills are top-notch.',
+                            'LinkedIn',
+                            'https://www.linkedin.com/in/ryanjamesindangan'
+                        )}
+                        ${createTestimonialCard(
+                            'Upwork Review',
+                            'Product Owner',
+                            'SaaS Company',
+                            5,
+                            'Ryan exceeded our expectations on multiple projects. His ability to understand complex requirements and translate them into clean, maintainable code is impressive. He\'s proactive, communicates well, and always finds the best technical solutions.',
+                            'Upwork',
+                            'https://www.upwork.com/freelancers/~01d452f9125d3dcdf1'
+                        )}
+                    </div>
+                    
+                    <!-- Carousel Navigation -->
+                    <div class="testimonials-nav" style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2rem;">
+                        <button class="testimonial-nav-btn testimonial-prev" style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">← Previous</button>
+                        <div class="testimonial-dots" style="display: flex; gap: 0.5rem;">
+                            <!-- Dots will be generated by JavaScript -->
+                        </div>
+                        <button class="testimonial-nav-btn testimonial-next" style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">Next →</button>
+                    </div>
+                </div>
+                
+                <!-- External Links -->
+                <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border-left: 4px solid #2171d6; border-radius: 8px;">
+                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">📊 View More Reviews</h3>
+                    <p style="color: #1a1a1a; margin-bottom: 1.5rem; line-height: 1.6;">
+                        Check out more testimonials and recommendations on my professional profiles:
+                    </p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="https://www.linkedin.com/in/ryanjamesindangan" target="_blank" rel="noopener noreferrer" 
+                           style="padding: 1rem 1.5rem; background: #0077b5; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                            💼 LinkedIn Recommendations
+                        </a>
+                        <a href="https://www.upwork.com/freelancers/~01d452f9125d3dcdf1" target="_blank" rel="noopener noreferrer" 
+                           style="padding: 1rem 1.5rem; background: #6fda44; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
+                            🎯 Upwork Reviews
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `
+    },
+
+    'github-stats': {
+        title: 'GitHub Stats & Activity',
+        icon: '📊',
+        content: `
+            <div style="max-width: 1000px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">GitHub Statistics & Activity</h2>
+                <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
+                    Real-time statistics from my GitHub profile, showcasing active development and community engagement.
+                </p>
+                
+                <!-- Loading State -->
+                <div id="githubStatsLoading" style="text-align: center; padding: 3rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>
+                    <p style="color: #666;">Loading GitHub statistics...</p>
+                </div>
+                
+                <!-- Error State -->
+                <div id="githubStatsError" style="display: none; text-align: center; padding: 3rem; background: #fee; border: 1px solid #fcc; border-radius: 8px; color: #c33;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                    <p style="margin-bottom: 1rem;">Failed to load GitHub statistics.</p>
+                    <button onclick="loadGitHubStats()" style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Retry</button>
+                </div>
+                
+                <!-- Stats Content -->
+                <div id="githubStatsContent" style="display: none;">
+                    <!-- User Stats -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #2171d6; margin-bottom: 0.5rem;" id="githubPublicRepos">-</div>
+                            <div style="color: #666; font-size: 0.9rem;">Public Repositories</div>
+                        </div>
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #2171d6; margin-bottom: 0.5rem;" id="githubFollowers">-</div>
+                            <div style="color: #666; font-size: 0.9rem;">Followers</div>
+                        </div>
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #2171d6; margin-bottom: 0.5rem;" id="githubFollowing">-</div>
+                            <div style="color: #666; font-size: 0.9rem;">Following</div>
+                        </div>
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #fff8e1, #fffde7); border: 1px solid #ffe082; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #f57c00; margin-bottom: 0.5rem;" id="githubTotalStars">-</div>
+                            <div style="color: #666; font-size: 0.9rem;">Total Stars</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Top Repositories -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">⭐ Top Repositories</h3>
+                        <div id="githubTopRepos" style="display: grid; gap: 1rem;">
+                            <!-- Repositories will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activity -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">🔄 Recent Activity</h3>
+                        <div id="githubRecentActivity" style="display: grid; gap: 0.75rem;">
+                            <!-- Activity will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- External Link -->
+                    <div style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border-left: 4px solid #2171d6; border-radius: 8px; text-align: center;">
+                        <a href="https://github.com/ryanjamesindangan" target="_blank" rel="noopener noreferrer" 
+                           style="padding: 1rem 2rem; background: #2171d6; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            🔗 View Full GitHub Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `
+    },
+
+    blog: {
+        title: 'Blog & Articles',
+        icon: '📝',
+        content: `
+            <div style="max-width: 1200px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0;">Technical Blog & Articles</h2>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <input type="text" id="blogSearchInput" placeholder="Search articles..." 
+                               style="padding: 0.5rem 1rem; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 0.9rem; min-width: 200px;">
+                        <button class="blog-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
+                        <button class="blog-filter-btn" data-filter="tutorial" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Tutorials</button>
+                        <button class="blog-filter-btn" data-filter="case-study" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Case Studies</button>
+                        <button class="blog-filter-btn" data-filter="ai-ml" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
+                        <button class="blog-filter-btn" data-filter="technical" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Technical</button>
+                    </div>
+                </div>
+                
+                <div id="blogPostsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem;">
+                    ${getBlogPosts().map(post => createBlogPostCard(post)).join('')}
+                </div>
+            </div>
+        `
     }
 };
+
+// ===========================
+// Blog Posts Data
+// ===========================
+function getBlogPosts() {
+    return [
+        {
+            id: 'document-intelligence-pipeline',
+            title: 'Building an End-to-End Document Intelligence Pipeline',
+            excerpt: 'Learn how to build a production-ready document extraction system combining native PDF parsing, OCR fallback, and ML-based watermark removal for financial document processing.',
+            category: 'case-study',
+            tags: ['AI/ML', 'Python', 'OCR', 'Document Intelligence', 'FastAPI'],
+            date: '2025-01-15',
+            readTime: '12 min read',
+            featured: true
+        },
+        {
+            id: 'ocr-preprocessing-techniques',
+            title: 'Advanced OCR Preprocessing Techniques for Better Accuracy',
+            excerpt: 'Deep dive into OpenCV and PIL techniques for improving OCR accuracy: denoising, adaptive thresholding, deskewing, and multi-angle scanning strategies.',
+            category: 'tutorial',
+            tags: ['OCR', 'OpenCV', 'Python', 'Computer Vision', 'Tutorial'],
+            date: '2025-01-10',
+            readTime: '8 min read',
+            featured: false
+        },
+        {
+            id: 'watermark-removal-ml',
+            title: 'ML-Based Watermark Removal Using RandomForest Classification',
+            excerpt: 'A comprehensive guide to building an automated watermark detection and removal system using feature engineering and RandomForest classification for document processing.',
+            category: 'ai-ml',
+            tags: ['Machine Learning', 'RandomForest', 'scikit-learn', 'Python', 'Document Processing'],
+            date: '2025-01-05',
+            readTime: '15 min read',
+            featured: true
+        },
+        {
+            id: 'ollama-llm-integration',
+            title: 'Integrating Local LLMs with Ollama for Production Workflows',
+            excerpt: 'Step-by-step guide to integrating Ollama for local LLM inference, token-efficient payloads, and structured output generation for underwriting summaries.',
+            category: 'tutorial',
+            tags: ['LLM', 'Ollama', 'Python', 'AI', 'Tutorial'],
+            date: '2024-12-28',
+            readTime: '10 min read',
+            featured: false
+        },
+        {
+            id: 'fastapi-sse-realtime',
+            title: 'Real-Time Processing with FastAPI Server-Sent Events',
+            excerpt: 'Implementing real-time progress updates and streaming results using FastAPI SSE for AI pipeline visibility and user feedback.',
+            category: 'technical',
+            tags: ['FastAPI', 'SSE', 'Python', 'Real-time', 'Backend'],
+            date: '2024-12-20',
+            readTime: '7 min read',
+            featured: false
+        },
+        {
+            id: 'secure-ai-gateway',
+            title: 'Building a Secure AI Gateway with JWT and RSA',
+            excerpt: 'Architecture and implementation of a production-ready Node.js gateway with JWT authentication, RSA key management, rate limiting, and CORS allowlists.',
+            category: 'technical',
+            tags: ['Node.js', 'JWT', 'Security', 'API Gateway', 'RSA'],
+            date: '2024-12-15',
+            readTime: '9 min read',
+            featured: false
+        },
+        {
+            id: 'bank-statement-extraction',
+            title: 'Bank Statement Extraction: Native PDF vs OCR Fallback',
+            excerpt: 'Case study on building a validation-first extraction framework for financial data integrity, combining native PDF text extraction with intelligent OCR fallback.',
+            category: 'case-study',
+            tags: ['Document Intelligence', 'PDF Processing', 'OCR', 'Financial Tech', 'Case Study'],
+            date: '2024-12-10',
+            readTime: '11 min read',
+            featured: true
+        },
+        {
+            id: 'validation-framework-design',
+            title: 'Designing a Validation-First Extraction Framework',
+            excerpt: 'Best practices for building extraction systems that enforce structural integrity invariants and auditability without mutating source financial text.',
+            category: 'technical',
+            tags: ['Architecture', 'Best Practices', 'Data Validation', 'System Design'],
+            date: '2024-12-05',
+            readTime: '6 min read',
+            featured: false
+        }
+    ];
+}
+
+// ===========================
+// Blog Post Card Component
+// ===========================
+function createBlogPostCard(post) {
+    const categoryColors = {
+        'tutorial': { bg: '#e8f4f8', border: '#d0e8f0', text: '#2171d6' },
+        'case-study': { bg: '#fff8e1', border: '#ffe082', text: '#f57c00' },
+        'ai-ml': { bg: '#f3e5f5', border: '#ce93d8', text: '#7b1fa2' },
+        'technical': { bg: '#e0f2f1', border: '#80cbc4', text: '#00695c' }
+    };
+    
+    const colors = categoryColors[post.category] || categoryColors.technical;
+    const categoryLabels = {
+        'tutorial': '📚 Tutorial',
+        'case-study': '📊 Case Study',
+        'ai-ml': '🤖 AI/ML',
+        'technical': '⚙️ Technical'
+    };
+    
+    return `
+        <div class="blog-post-card" data-category="${post.category}" data-post-id="${post.id}" 
+             style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
+            ${post.featured ? `
+                <div style="position: absolute; top: 1rem; right: 1rem; background: #ffb900; color: #fff; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; z-index: 1;">
+                    ⭐ Featured
+                </div>
+            ` : ''}
+            <div style="padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                    <span style="padding: 0.25rem 0.75rem; background: ${colors.bg}; border: 1px solid ${colors.border}; border-radius: 4px; color: ${colors.text}; font-size: 0.75rem; font-weight: 600;">
+                        ${categoryLabels[post.category] || '📝 Article'}
+                    </span>
+                    <span style="color: #999; font-size: 0.75rem;">${formatBlogDate(post.date)}</span>
+                    <span style="color: #999; font-size: 0.75rem;">•</span>
+                    <span style="color: #999; font-size: 0.75rem;">${post.readTime}</span>
+                </div>
+                <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">${post.title}</h3>
+                <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${post.excerpt}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                    ${post.tags.slice(0, 3).map(tag => `
+                        <span style="padding: 0.25rem 0.5rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 4px; color: #666; font-size: 0.75rem;">
+                            ${tag}
+                        </span>
+                    `).join('')}
+                    ${post.tags.length > 3 ? `<span style="color: #999; font-size: 0.75rem; padding: 0.25rem 0.5rem;">+${post.tags.length - 3} more</span>` : ''}
+                </div>
+                <button class="read-more-btn" data-post-id="${post.id}" 
+                        style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; font-size: 0.9rem;">
+                    Read Article →
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+// Helper function to format blog dates
+function formatBlogDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
 
 // Helper functions to create UI components
 function createSkillCategory(title, skills) {
@@ -733,6 +1191,56 @@ function createProjectCard(title, description, tech, link, demoApp) {
                 ` : !demoApp ? `
                     <span style="color: #666; font-size: 0.9rem; padding: 0.75rem;">🔒 Private Repository</span>
                 ` : ''}
+            </div>
+        </div>
+    `;
+}
+
+function createEnhancedProjectCard(title, description, tech, githubLink, liveDemoLink, screenshot, category) {
+    const techLower = tech.map(t => t.toLowerCase()).join(' ');
+    const categoryAttr = category || 'all';
+    
+    return `
+        <div class="project-card" data-category="${categoryAttr}" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
+            ${screenshot ? `
+                <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                    <img src="${screenshot}" alt="${title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
+                </div>
+            ` : `
+                <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); display: flex; align-items: center; justify-content: center; font-size: 4rem; opacity: 0.6;">
+                    ${title.split(' ')[0]}
+                </div>
+            `}
+            <div style="padding: 1.5rem;">
+                <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700;">${title}</h3>
+                <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${description}</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    ${tech.map(t => `
+                        <span class="tech-tag" style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
+                            ${t}
+                        </span>
+                    `).join('')}
+                </div>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    ${liveDemoLink ? `
+                        <button class="project-live-demo-btn" data-live-demo="${liveDemoLink}" 
+                           style="padding: 0.75rem 1.5rem; background: #4caf50; border: 1px solid #45a049; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                            🌐 View Live
+                        </button>
+                    ` : ''}
+                    ${githubLink ? `
+                        <a href="${githubLink}" target="_blank" rel="noopener noreferrer" 
+                           style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                            📂 View Code
+                        </a>
+                    ` : `
+                        <span style="color: #999; font-size: 0.85rem; padding: 0.75rem; display: inline-flex; align-items: center; gap: 0.5rem;">🔒 Private Repository</span>
+                    `}
+                    <button class="project-details-btn" data-title="${title}" data-description="${description}" data-tech="${tech.join(', ')}" data-github="${githubLink || ''}" data-live="${liveDemoLink || ''}"
+                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #1a1a1a; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                        ℹ️ Details
+                    </button>
+                </div>
             </div>
         </div>
     `;
@@ -813,6 +1321,90 @@ function createAIFeatureCard(title, description, features, tech) {
                         ${t}
                     </span>
                 `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function createTestimonialCard(name, role, company, rating, text, source, sourceLink, avatar = null) {
+    const stars = '⭐'.repeat(rating);
+    const sourceIcon = source === 'LinkedIn' ? '💼' : source === 'Upwork' ? '🎯' : '⭐';
+    
+    return `
+        <div class="testimonial-card" style="padding: 2rem; background: linear-gradient(135deg, #ffffff, #f8f9fa); border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-height: 280px; display: flex; flex-direction: column;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                ${avatar ? `<img src="${avatar}" alt="${name}" loading="lazy" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #2171d6;">` : `<div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #2171d6, #1a5fb8); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold;">${name.charAt(0)}</div>`}
+                <div style="flex: 1;">
+                    <h3 style="color: #1a1a1a; font-size: 1.1rem; margin-bottom: 0.25rem; font-weight: 700;">${name}</h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">${role}</p>
+                    <p style="color: #999; font-size: 0.85rem;">${company}</p>
+                </div>
+            </div>
+            <div style="margin-bottom: 1rem; font-size: 1.2rem; color: #ffa500;">${stars}</div>
+            <p style="color: #1a1a1a; line-height: 1.8; font-size: 0.95rem; flex: 1; font-style: italic; margin-bottom: 1rem;">"${text}"</p>
+            ${sourceLink ? `
+                <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                    <a href="${sourceLink}" target="_blank" rel="noopener noreferrer" 
+                       style="display: inline-flex; align-items: center; gap: 0.5rem; color: #2171d6; text-decoration: none; font-size: 0.85rem; font-weight: 600;">
+                        ${sourceIcon} View on ${source}
+                    </a>
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
+
+// ===========================
+// Pipeline Flowchart Component
+// ===========================
+function createPipelineFlowchart() {
+    return `
+        <div style="display: flex; flex-direction: column; gap: 1rem; position: relative;">
+            <!-- Step 1: Document Input -->
+            <div class="pipeline-step" data-step="1" style="padding: 1rem; background: #e8f4f8; border: 2px solid #2171d6; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                <div style="font-weight: 600; color: #2171d6; margin-bottom: 0.25rem;">Document Input</div>
+                <div style="font-size: 0.85rem; color: #666;">PDF/Image Upload</div>
+            </div>
+            
+            <!-- Arrow -->
+            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            
+            <!-- Step 2: Preprocessing -->
+            <div class="pipeline-step" data-step="2" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔧</div>
+                <div style="font-weight: 600; color: #666; margin-bottom: 0.25rem;">Preprocessing</div>
+                <div style="font-size: 0.85rem; color: #999;">Denoising, Thresholding, Deskewing</div>
+            </div>
+            
+            <!-- Arrow -->
+            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            
+            <!-- Step 3: Extraction -->
+            <div class="pipeline-step" data-step="3" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                <div style="font-weight: 600; color: #666; margin-bottom: 0.25rem;">Text Extraction</div>
+                <div style="font-size: 0.85rem; color: #999;">Native PDF → OCR Fallback</div>
+            </div>
+            
+            <!-- Arrow -->
+            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            
+            <!-- Step 4: Validation -->
+            <div class="pipeline-step" data-step="4" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">✅</div>
+                <div style="font-weight: 600; color: #666; margin-bottom: 0.25rem;">Validation</div>
+                <div style="font-size: 0.85rem; color: #999;">Structure & Data Integrity Check</div>
+            </div>
+            
+            <!-- Arrow -->
+            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            
+            <!-- Step 5: Output -->
+            <div class="pipeline-step" data-step="5" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                <div style="font-weight: 600; color: #666; margin-bottom: 0.25rem;">Structured Output</div>
+                <div style="font-size: 0.85rem; color: #999;">JSON/CSV Export</div>
             </div>
         </div>
     `;

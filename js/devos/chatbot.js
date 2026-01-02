@@ -11,6 +11,9 @@ class PortfolioChatbot {
             mentionedTopics: []
         };
         this.userName = this.getUserName();
+        this.conversationMode = this.getConversationMode(); // 'professional', 'casual', 'technical'
+        this.userPreferences = this.loadUserPreferences(); // Track user interests and behavior
+        this.learningData = this.loadLearningData(); // Track frequently asked questions, favorite topics
         this.loadHistory();
         this.init();
     }
@@ -48,6 +51,35 @@ class PortfolioChatbot {
 
     processMessage(userMessage) {
         const lowerMessage = userMessage.toLowerCase().trim();
+        
+        // Check for conversation mode change
+        if (this.matches(lowerMessage, ['switch to professional mode', 'professional mode', 'be professional'])) {
+            this.setConversationMode('professional');
+            return {
+                text: "Switched to **Professional Mode**. I'll provide formal, detailed responses. 💼",
+                suggestions: this.getSmartSuggestions()
+            };
+        }
+        
+        if (this.matches(lowerMessage, ['switch to casual mode', 'casual mode', 'be casual', 'be friendly'])) {
+            this.setConversationMode('casual');
+            return {
+                text: "Switched to **Casual Mode**. Let's chat more casually! 😊",
+                suggestions: this.getSmartSuggestions()
+            };
+        }
+        
+        if (this.matches(lowerMessage, ['switch to technical mode', 'technical mode', 'be technical'])) {
+            this.setConversationMode('technical');
+            return {
+                text: "Switched to **Technical Mode**. I'll provide detailed technical information. 🔧",
+                suggestions: this.getSmartSuggestions()
+            };
+        }
+        
+        // Detect intent and entities
+        const intent = this.detectIntent(userMessage);
+        const entities = this.extractEntities(userMessage);
         
         // Check for special commands FIRST (before name extraction)
         if (this.matches(lowerMessage, ['clear chat', 'clear messages', 'clear conversation'])) {
@@ -144,17 +176,29 @@ class PortfolioChatbot {
         }
 
         // Pattern matching for responses (now returns object with text and suggestions)
-        let response = this.generateResponse(lowerMessage, context);
+        let response = this.generateResponse(lowerMessage, {
+            ...context,
+            intent: intent,
+            entities: entities
+        });
         
         // Ensure response is an object
         if (typeof response === 'string') {
             response = { text: response, suggestions: [] };
         }
         
+        // Adjust response tone based on conversation mode
+        if (response.text) {
+            response.text = this.adjustResponseTone(response.text);
+        }
+        
         // Generate smart suggestions if not provided
         if (!response.suggestions || response.suggestions.length === 0) {
             response.suggestions = this.getSmartSuggestions();
         }
+        
+        // Track interaction for learning
+        this.trackInteraction(userMessage, response, response.action);
         
         // Store last response for multi-turn conversations
         this.conversationContext.lastResponse = response.text;
@@ -354,51 +398,79 @@ class PortfolioChatbot {
         const lastTopic = this.conversationContext.lastTopic;
         const activeApp = this.getActiveApp();
         
+        // Enhanced suggestions based on user preferences and learning data
+        const favoriteTopics = this.userPreferences.favoriteTopics || [];
+        const frequentlyAsked = Object.keys(this.learningData.questionFrequency || {})
+            .sort((a, b) => (this.learningData.questionFrequency[b] || 0) - (this.learningData.questionFrequency[a] || 0))
+            .slice(0, 3);
+        
         // Context-aware suggestions based on active app
         if (activeApp === 'ai-lab') {
-            return [
+            const suggestions = [
                 "Tell me about document intelligence",
                 "What is OCR?",
                 "Show me AI projects",
                 "What technologies do you use?"
             ];
+            // Add personalized suggestions based on user interests
+            if (favoriteTopics.includes('ai')) {
+                suggestions.unshift("Tell me more about watermark removal");
+            }
+            return suggestions;
         }
         
         if (activeApp === 'skills') {
-            return [
+            const suggestions = [
                 "Tell me about AI/ML",
                 "What frameworks?",
                 "Show me your projects",
                 "What's your experience?"
             ];
+            if (favoriteTopics.includes('backend')) {
+                suggestions.unshift("What backend technologies?");
+            }
+            return suggestions;
         }
         
         if (activeApp === 'experience') {
-            return [
+            const suggestions = [
                 "What technologies did you use?",
                 "Tell me about your projects",
                 "Show me your skills",
                 "What's your current role?"
             ];
+            if (favoriteTopics.includes('ai')) {
+                suggestions.unshift("Tell me about your AI work");
+            }
+            return suggestions;
         }
         
         if (activeApp === 'projects') {
-            return [
+            const suggestions = [
                 "Tell me about AI projects",
                 "What technologies?",
                 "Show me your skills",
                 "What's your experience?"
             ];
+            if (favoriteTopics.includes('ai')) {
+                suggestions.unshift("Show me document intelligence projects");
+            }
+            return suggestions;
         }
         
-        // Topic-based smart suggestions
+        // Topic-based smart suggestions with learning
         if (topics.includes('ai') && !topics.includes('projects')) {
-            return [
+            const suggestions = [
                 "Tell me about AI projects",
                 "What AI tools do you use?",
                 "Show me your experience",
                 "What is document intelligence?"
             ];
+            // Add based on frequently asked questions
+            if (frequentlyAsked.length > 0) {
+                suggestions.unshift(frequentlyAsked[0]);
+            }
+            return suggestions;
         }
         
         if (topics.includes('experience') && !topics.includes('skills')) {
@@ -759,8 +831,11 @@ class PortfolioChatbot {
 
         // About Ryan
         if (this.matches(message, ['who', 'about', 'tell me about', 'introduce'])) {
+            const startYear = 2018;
+            const currentYear = new Date().getFullYear();
+            const years = currentYear - startYear;
             return {
-                text: `**Ryan James Indangan** is a Full-Stack Developer & Certified CTO with **7+ years** of experience.\n\n🎯 **Current Focus**: AI/ML Engineering, Document Intelligence, and Automation\n\n📊 **Stats**:\n• 7+ Years Experience\n• 50+ Projects Delivered\n• 12 Team Members Led\n\nHe specializes in building intelligent systems for document processing, data extraction, and automation workflows.\n\n[Open About Me] to learn more!`,
+                text: `**Ryan James Indangan** is a Full-Stack Developer & Certified CTO with **${years}+ years** of experience.\n\n🎯 **Current Focus**: AI/ML Engineering, Document Intelligence, and Automation\n\n📊 **Stats**:\n• ${years}+ Years Experience\n• 50+ Projects Delivered\n• 12 Team Members Led\n\nHe specializes in building intelligent systems for document processing, data extraction, and automation workflows.\n\n[Open About Me] to learn more!`,
                 suggestions: [
                     "Tell me about your skills",
                     "Show me your experience",
@@ -932,6 +1007,254 @@ class PortfolioChatbot {
         return saved || null;
     }
     
+    getConversationMode() {
+        return localStorage.getItem('chatbotMode') || 'professional';
+    }
+    
+    setConversationMode(mode) {
+        this.conversationMode = mode;
+        localStorage.setItem('chatbotMode', mode);
+    }
+    
+    loadUserPreferences() {
+        const saved = localStorage.getItem('chatbotUserPreferences');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (e) {
+                return {
+                    favoriteTopics: [],
+                    frequentlyAsked: [],
+                    openedApps: [],
+                    interactionCount: 0
+                };
+            }
+        }
+        return {
+            favoriteTopics: [],
+            frequentlyAsked: [],
+            openedApps: [],
+            interactionCount: 0
+        };
+    }
+    
+    saveUserPreferences() {
+        localStorage.setItem('chatbotUserPreferences', JSON.stringify(this.userPreferences));
+    }
+    
+    loadLearningData() {
+        const saved = localStorage.getItem('chatbotLearningData');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (e) {
+                return {
+                    questionFrequency: {},
+                    topicFrequency: {},
+                    appOpenFrequency: {},
+                    responseFeedback: {}
+                };
+            }
+        }
+        return {
+            questionFrequency: {},
+            topicFrequency: {},
+            appOpenFrequency: {},
+            responseFeedback: {}
+        };
+    }
+    
+    saveLearningData() {
+        localStorage.setItem('chatbotLearningData', JSON.stringify(this.learningData));
+    }
+    
+    // Track user interaction for learning
+    trackInteraction(message, response, action = null) {
+        // Update interaction count
+        this.userPreferences.interactionCount++;
+        
+        // Track question frequency
+        const questionKey = message.toLowerCase().trim();
+        this.learningData.questionFrequency[questionKey] = 
+            (this.learningData.questionFrequency[questionKey] || 0) + 1;
+        
+        // Track topics mentioned
+        const topics = this.extractTopics();
+        topics.forEach(topic => {
+            this.learningData.topicFrequency[topic] = 
+                (this.learningData.topicFrequency[topic] || 0) + 1;
+            
+            if (!this.userPreferences.favoriteTopics.includes(topic)) {
+                this.userPreferences.favoriteTopics.push(topic);
+            }
+        });
+        
+        // Track app opens
+        if (action && action.type === 'openApp') {
+            const appId = action.appId;
+            this.learningData.appOpenFrequency[appId] = 
+                (this.learningData.appOpenFrequency[appId] || 0) + 1;
+            
+            if (!this.userPreferences.openedApps.includes(appId)) {
+                this.userPreferences.openedApps.push(appId);
+            }
+        }
+        
+        // Keep only top 10 favorite topics
+        if (this.userPreferences.favoriteTopics.length > 10) {
+            this.userPreferences.favoriteTopics = this.userPreferences.favoriteTopics.slice(0, 10);
+        }
+        
+        // Save preferences and learning data
+        this.saveUserPreferences();
+        this.saveLearningData();
+    }
+    
+    // Enhanced natural language understanding - Intent detection
+    detectIntent(message) {
+        const lowerMessage = message.toLowerCase().trim();
+        
+        // Greeting intent
+        if (this.matches(lowerMessage, ['hi', 'hello', 'hey', 'greetings', 'good morning', 'good afternoon', 'good evening'])) {
+            return { intent: 'greeting', confidence: 0.9 };
+        }
+        
+        // Question intent
+        if (this.matches(lowerMessage, ['what', 'how', 'why', 'when', 'where', 'who', 'which', 'tell me', 'explain', 'describe'])) {
+            return { intent: 'question', confidence: 0.85 };
+        }
+        
+        // Action intent
+        if (this.matches(lowerMessage, ['open', 'show', 'display', 'launch', 'start', 'go to'])) {
+            return { intent: 'action', confidence: 0.9 };
+        }
+        
+        // Information request intent
+        if (this.matches(lowerMessage, ['skills', 'experience', 'projects', 'about', 'contact', 'resume', 'certifications'])) {
+            return { intent: 'information', confidence: 0.8 };
+        }
+        
+        // Comparison intent
+        if (this.matches(lowerMessage, ['compare', 'difference', 'vs', 'versus', 'better', 'best'])) {
+            return { intent: 'comparison', confidence: 0.75 };
+        }
+        
+        // Help intent
+        if (this.matches(lowerMessage, ['help', 'assist', 'support', 'guide', 'how can you'])) {
+            return { intent: 'help', confidence: 0.9 };
+        }
+        
+        return { intent: 'general', confidence: 0.5 };
+    }
+    
+    // Extract entities from message (technologies, skills, projects, etc.)
+    extractEntities(message) {
+        const entities = {
+            technologies: [],
+            skills: [],
+            projects: [],
+            apps: []
+        };
+        
+        const lowerMessage = message.toLowerCase();
+        
+        // Technology keywords
+        const techKeywords = {
+            'react': 'React',
+            'vue': 'Vue.js',
+            'angular': 'Angular',
+            'node': 'Node.js',
+            'python': 'Python',
+            'javascript': 'JavaScript',
+            'typescript': 'TypeScript',
+            'php': 'PHP',
+            'fastapi': 'FastAPI',
+            'django': 'Django',
+            'laravel': 'Laravel',
+            'aws': 'AWS',
+            'docker': 'Docker',
+            'kubernetes': 'Kubernetes',
+            'ocr': 'OCR',
+            'tesseract': 'Tesseract',
+            'opencv': 'OpenCV',
+            'llm': 'LLM',
+            'ollama': 'Ollama',
+            'machine learning': 'Machine Learning',
+            'ai': 'AI',
+            'ml': 'Machine Learning'
+        };
+        
+        for (const [keyword, tech] of Object.entries(techKeywords)) {
+            if (lowerMessage.includes(keyword)) {
+                entities.technologies.push(tech);
+            }
+        }
+        
+        // App names
+        const appKeywords = {
+            'ai lab': 'ai-lab',
+            'ai-lab': 'ai-lab',
+            'skills': 'skills',
+            'experience': 'experience',
+            'projects': 'projects',
+            'about': 'about',
+            'contact': 'contact',
+            'blog': 'blog',
+            'github stats': 'github-stats',
+            'testimonials': 'testimonials'
+        };
+        
+        for (const [keyword, appId] of Object.entries(appKeywords)) {
+            if (lowerMessage.includes(keyword)) {
+                entities.apps.push(appId);
+            }
+        }
+        
+        return entities;
+    }
+    
+    // Get portfolio data for better integration
+    getPortfolioData(type) {
+        // Access apps data if available
+        if (typeof apps !== 'undefined') {
+            switch(type) {
+                case 'projects':
+                    return apps.projects?.content || null;
+                case 'skills':
+                    return apps.skills?.content || null;
+                case 'experience':
+                    return apps.experience?.content || null;
+                default:
+                    return null;
+            }
+        }
+        return null;
+    }
+    
+    // Generate response based on conversation mode
+    adjustResponseTone(text) {
+        if (this.conversationMode === 'casual') {
+            // Make responses more casual and friendly
+            text = text.replace(/I'm/g, "I am");
+            text = text.replace(/I'll/g, "I will");
+            text = text.replace(/can't/g, "cannot");
+            // Add casual phrases
+            if (!text.includes('😊') && !text.includes('👋')) {
+                text = text.replace(/\./g, (match, offset) => {
+                    return offset === text.length - 1 ? '! 😊' : match;
+                });
+            }
+        } else if (this.conversationMode === 'technical') {
+            // Make responses more technical and detailed
+            // Add technical details where appropriate
+            if (text.includes('AI') && !text.includes('Machine Learning')) {
+                text = text.replace(/AI/g, 'AI/Machine Learning');
+            }
+        }
+        // 'professional' mode uses default text
+        return text;
+    }
+    
     saveUserName(name) {
         if (name && name.trim()) {
             this.userName = name.trim();
@@ -1051,8 +1374,11 @@ class PortfolioChatbot {
         
         // About Ryan in Filipino
         if (this.matches(lowerMessage, ['sino si ryan', 'ano si ryan', 'sino ka', 'ano ka', 'tell me about ryan'])) {
+            const startYear = 2018;
+            const currentYear = new Date().getFullYear();
+            const years = currentYear - startYear;
             return {
-                text: `**Ryan James Indangan** is a Full-Stack Developer & Certified CTO with **7+ years** of experience.\n\n🎯 **Current Focus**: AI/ML Engineering, Document Intelligence, and Automation\n\n📊 **Stats**:\n• 7+ Years Experience\n• 50+ Projects Delivered\n• 12 Team Members Led\n\nHe specializes in building intelligent systems for document processing, data extraction, and automation workflows.\n\n[Open About Me] to learn more!`,
+                text: `**Ryan James Indangan** is a Full-Stack Developer & Certified CTO with **${years}+ years** of experience.\n\n🎯 **Current Focus**: AI/ML Engineering, Document Intelligence, and Automation\n\n📊 **Stats**:\n• ${years}+ Years Experience\n• 50+ Projects Delivered\n• 12 Team Members Led\n\nHe specializes in building intelligent systems for document processing, data extraction, and automation workflows.\n\n[Open About Me] to learn more!`,
                 suggestions: [
                     "Tell me about your skills",
                     "Show me your experience",
@@ -1187,7 +1513,12 @@ class PortfolioChatbot {
         const responses = {
             'skills': 'Ryan specializes in AI/ML, Full-Stack Development, DevOps, and Databases. [Open Technical Skills] to see more!',
             'technology': 'Ryan uses Python, JavaScript, React, FastAPI, AWS, Docker, and many more technologies. [Open Technical Skills] to see the full list!',
-            'experience': 'Ryan has 7+ years of experience, currently working as AI Developer/ML Engineer. [Open Work Experience] for details!',
+            'experience': (() => {
+                const startYear = 2018;
+                const currentYear = new Date().getFullYear();
+                const years = currentYear - startYear;
+                return `Ryan has ${years}+ years of experience, currently working as AI Developer/ML Engineer. [Open Work Experience] for details!`;
+            })(),
             'project': 'Ryan has delivered 50+ projects including AI/ML systems, web applications, and automation tools. [Open Projects] to explore!',
             'portfolio': 'This is Ryan\'s portfolio! You can explore his skills, experience, projects, and certifications. [Open Projects] to see his work!',
             'certificate': 'Ryan holds CTO certification and Hacker-X Ethical Hacking Course. [Open Certifications] to view certificates!'
