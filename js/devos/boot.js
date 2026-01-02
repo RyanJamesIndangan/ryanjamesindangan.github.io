@@ -51,6 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         bootScreen.style.display = 'none';
                         // Dispatch boot complete event
                         document.dispatchEvent(new CustomEvent('bootComplete'));
+                        // Re-initialize context menu in case it wasn't ready before
+                        if (typeof initializeContextMenu === 'function') {
+                            setTimeout(initializeContextMenu, 100);
+                        }
                     }, 800);
                 }, 800);
             }

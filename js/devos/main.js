@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Critical: Initialize immediately
     initializeClock();
     initializeStartMenu();
-    initializeContextMenu();
+    // Initialize context menu with a slight delay to ensure desktop is ready
+    setTimeout(initializeContextMenu, 100);
     initializeDesktopIcons();
     initializeSelectionBox();
     initializeAppTiles();
@@ -658,14 +659,27 @@ function initializeContextMenu() {
     const contextMenu = document.getElementById('contextMenu');
     const desktop = document.getElementById('desktop') || document.querySelector('.desktop');
     
-    if (!contextMenu || !desktop) {
-        console.warn('Context menu or desktop element not found');
+    if (!contextMenu) {
+        console.warn('Context menu element not found');
+        // Retry after a delay
+        setTimeout(initializeContextMenu, 500);
         return;
     }
     
-    // Add context menu event listener to desktop
-    // Use capture phase to ensure we catch the event before other handlers
-    desktop.addEventListener('contextmenu', (e) => {
+    if (!desktop) {
+        console.warn('Desktop element not found, retrying...');
+        // Retry after a delay
+        setTimeout(initializeContextMenu, 500);
+        return;
+    }
+    
+    // Remove any existing listener if it exists (by using a named function)
+    if (desktop._contextMenuHandler) {
+        desktop.removeEventListener('contextmenu', desktop._contextMenuHandler, true);
+    }
+    
+    // Create handler function
+    desktop._contextMenuHandler = (e) => {
         // Only show on desktop area, not on windows, icons, or other interactive elements
         const target = e.target;
         
@@ -690,7 +704,13 @@ function initializeContextMenu() {
         contextMenu.style.left = `${x}px`;
         contextMenu.style.top = `${y}px`;
         contextMenu.classList.add('active');
-    }, true); // Use capture phase
+        
+        console.log('Context menu shown at', x, y); // Debug log
+    };
+    
+    // Add context menu event listener to desktop
+    // Use capture phase to ensure we catch the event before other handlers
+    desktop.addEventListener('contextmenu', desktop._contextMenuHandler, true);
     
     // Close context menu on click outside
     document.addEventListener('click', (e) => {
@@ -1956,7 +1976,19 @@ function initializeAIAssistant() {
     // Phase 4: Voice Input - Use existing function
     const voiceBtn = document.getElementById('aiVoiceBtn');
     if (voiceBtn && chatInput) {
+        console.log('Initializing voice input...'); // Debug log
         initializeVoiceInput(voiceBtn, chatInput);
+    } else {
+        console.warn('Voice button or chat input not found:', { voiceBtn: !!voiceBtn, chatInput: !!chatInput });
+        // Retry after a short delay
+        setTimeout(() => {
+            const retryVoiceBtn = document.getElementById('aiVoiceBtn');
+            const retryChatInput = document.getElementById('aiChatInput');
+            if (retryVoiceBtn && retryChatInput) {
+                console.log('Retrying voice input initialization...');
+                initializeVoiceInput(retryVoiceBtn, retryChatInput);
+            }
+        }, 500);
     }
 }
 
@@ -2674,10 +2706,14 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     // Check browser support
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
+        console.warn('SpeechRecognition API not available');
         voiceBtn.style.opacity = '0.5';
         voiceBtn.title = 'Voice input not supported in this browser';
+        voiceBtn.disabled = true;
         return;
     }
+    
+    console.log('SpeechRecognition API available, initializing...');
     
     recognition = new SpeechRecognition();
     recognition.continuous = false;
@@ -2686,6 +2722,9 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     
     voiceBtn.addEventListener('click', (e) => {
         e.stopPropagation();
+        e.preventDefault();
+        
+        console.log('Voice button clicked, isRecording:', isRecording); // Debug log
         
         if (!isRecording) {
             startVoiceRecording();
