@@ -83,8 +83,14 @@ function initializeOCRDemo() {
             URL.revokeObjectURL(imageUrl);
         } catch (error) {
             console.error('OCR Error:', error);
-            resultDiv.textContent = `Error: ${error.message}`;
-            resultDiv.style.color = '#ef4444';
+            const errorMessage = error.message || 'Unknown error occurred';
+            resultDiv.innerHTML = `
+                <div style="color: #ef4444; padding: 1rem; background: #fee; border: 1px solid #fcc; border-radius: 4px;">
+                    <strong>Error:</strong> ${errorMessage}
+                    <br><br>
+                    <small style="color: #999;">Please ensure the image is clear and try again. Supported formats: JPG, PNG, GIF</small>
+                </div>
+            `;
             progressDiv.style.display = 'none';
             processBtn.disabled = false;
             showNotification('OCR processing failed. Please try again.', 'error');

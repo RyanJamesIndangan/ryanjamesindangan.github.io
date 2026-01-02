@@ -180,6 +180,24 @@ function initializeDesktopIcons() {
             selectIcon(icon);
         });
         
+        // Enter/Space key to open (accessibility)
+        icon.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const appId = icon.dataset.app;
+                if (appId) {
+                    const windowEl = window.windowManager?.windows.get(appId);
+                    if (windowEl && windowEl.classList.contains('minimized')) {
+                        window.windowManager.minimizeWindow(appId);
+                    } else {
+                        openApp(appId);
+                    }
+                } else if (icon.id === 'recycleBinIcon') {
+                    showRecycleBinDialog();
+                }
+            }
+        });
+        
         // Make draggable
         makeDraggable(icon);
     });
@@ -1211,6 +1229,20 @@ async function loadGitHubStats() {
         console.error('GitHub Stats Error:', error);
         loadingEl.style.display = 'none';
         errorEl.style.display = 'block';
+        
+        // Show user-friendly error message
+        const errorMessage = errorEl.querySelector('.error-message') || document.createElement('div');
+        errorMessage.className = 'error-message';
+        errorMessage.innerHTML = `
+            <p style="color: #ef4444; margin-bottom: 1rem;">Failed to load GitHub statistics.</p>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${error.message || 'Network error or API rate limit exceeded.'}</p>
+            <button onclick="loadGitHubStats()" style="padding: 0.5rem 1rem; background: #2171d6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                Retry
+            </button>
+        `;
+        if (!errorEl.querySelector('.error-message')) {
+            errorEl.appendChild(errorMessage);
+        }
     }
 }
 

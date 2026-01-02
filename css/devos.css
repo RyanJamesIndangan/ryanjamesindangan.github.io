@@ -78,6 +78,27 @@ body {
     transition: var(--theme-transition);
 }
 
+/* Skip to Content Link (Accessibility) */
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    z-index: 100000;
+    border-radius: 0 0 4px 0;
+    font-weight: 600;
+    transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
 /* ===================================
    Boot Screen
    =================================== */

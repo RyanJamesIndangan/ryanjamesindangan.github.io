@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Ryan James Indangan Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1d29 0%, #252837 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .error-container {
+            text-align: center;
+            max-width: 700px;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #64ffda 0%, #4ade80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: #b8c1db;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #64ffda 0%, #4ade80 100%);
+            color: #1a1a1a;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(100, 255, 218, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .quick-links {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quick-links h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #64ffda;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .link-card {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            border-color: #64ffda;
+        }
+        
+        .link-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .link-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <h1>Page Not Found</h1>
+        <p>
+            Oops! The page you're looking for doesn't exist. It might have been moved, 
+            deleted, or you may have entered the wrong URL.
+        </p>
+        
+        <div class="actions">
+            <a href="/" class="btn btn-primary">Go to Homepage</a>
+            <button onclick="window.history.back()" class="btn btn-secondary">Go Back</button>
+        </div>
+        
+        <div class="quick-links">
+            <h2>Quick Links</h2>
+            <div class="links-grid">
+                <a href="/#desktop" class="link-card">
+                    <span class="link-icon">👨‍💻</span>
+                    <span class="link-name">About Me</span>
+                </a>
+                <a href="/#desktop" class="link-card">
+                    <span class="link-icon">🛠️</span>
+                    <span class="link-name">Skills</span>
+                </a>
+                <a href="/#desktop" class="link-card">
+                    <span class="link-icon">💼</span>
+                    <span class="link-name">Experience</span>
+                </a>
+                <a href="/#desktop" class="link-card">
+                    <span class="link-icon">🚀</span>
+                    <span class="link-name">Projects</span>
+                </a>
+                <a href="/#desktop" class="link-card">
+                    <span class="link-icon">🤖</span>
+                    <span class="link-name">AI Lab</span>
+                </a>
+                <a href="/#desktop" class="link-card">
+                    <span class="link-icon">📧</span>
+                    <span class="link-name">Contact</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

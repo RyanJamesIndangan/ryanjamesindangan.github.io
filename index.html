@@ -198,8 +198,11 @@
     <meta http-equiv="Expires" content="31536000">
 </head>
 <body>
+    <!-- Skip to Main Content Link (Accessibility) -->
+    <a href="#desktop" class="skip-to-content" aria-label="Skip to main content">Skip to main content</a>
+    
     <!-- Boot Screen -->
-    <div id="bootScreen" class="boot-screen active">
+    <div id="bootScreen" class="boot-screen active" role="dialog" aria-label="Loading portfolio" aria-busy="true">
         <div class="boot-content">
             <div class="boot-logo">
                 <div class="logo-profile-pic">
@@ -221,74 +224,74 @@
     </div>
 
     <!-- Main Desktop Environment -->
-    <div id="desktop" class="desktop">
+    <main id="desktop" class="desktop" role="main" aria-label="Portfolio desktop environment">
         <!-- Wallpaper -->
         <div class="wallpaper" id="wallpaper"></div>
 
         <!-- Desktop Icons -->
         <div class="desktop-icons">
             <!-- Row 1 -->
-            <div class="desktop-icon" data-app="about" data-icon="portfolio">
-                <div class="icon">👨‍💻</div>
+            <button class="desktop-icon" data-app="about" data-icon="portfolio" aria-label="Open About Me application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">👨‍💻</div>
                 <span>About Me</span>
-            </div>
-            <div class="desktop-icon" data-app="contact" data-icon="contact">
-                <div class="icon">📧</div>
+            </button>
+            <button class="desktop-icon" data-app="contact" data-icon="contact" aria-label="Open Contact application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">📧</div>
                 <span>Contact</span>
-            </div>
+            </button>
             <!-- Row 2 -->
-            <div class="desktop-icon" data-app="skills" data-icon="skills">
-                <div class="icon">🛠️</div>
+            <button class="desktop-icon" data-app="skills" data-icon="skills" aria-label="Open Technical Skills application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">🛠️</div>
                 <span>Technical Skills</span>
-            </div>
-            <div class="desktop-icon" data-app="terminal" data-icon="terminal">
-                <div class="icon">⌨️</div>
+            </button>
+            <button class="desktop-icon" data-app="terminal" data-icon="terminal" aria-label="Open Terminal application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">⌨️</div>
                 <span>Terminal</span>
-            </div>
+            </button>
             <!-- Row 3 -->
-            <div class="desktop-icon" data-app="experience" data-icon="experience">
-                <div class="icon">💼</div>
+            <button class="desktop-icon" data-app="experience" data-icon="experience" aria-label="Open Work Experience application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">💼</div>
                 <span>Work Experience</span>
-            </div>
-            <div class="desktop-icon" data-app="resume" data-icon="resume">
-                <div class="icon">📄</div>
+            </button>
+            <button class="desktop-icon" data-app="resume" data-icon="resume" aria-label="Open Resume application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">📄</div>
                 <span>Resume</span>
-            </div>
+            </button>
             <!-- Row 4 -->
-            <div class="desktop-icon" data-app="certifications" data-icon="certifications">
-                <div class="icon">🎓</div>
+            <button class="desktop-icon" data-app="certifications" data-icon="certifications" aria-label="Open Certifications application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">🎓</div>
                 <span>Certifications</span>
-            </div>
-            <div class="desktop-icon" data-app="snake" data-icon="snake">
-                <div class="icon">🐍</div>
+            </button>
+            <button class="desktop-icon" data-app="snake" data-icon="snake" aria-label="Open Snake Game application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">🐍</div>
                 <span>Snake Game</span>
-            </div>
+            </button>
             <!-- Row 5 -->
-            <div class="desktop-icon" data-app="projects" data-icon="projects">
-                <div class="icon">🚀</div>
+            <button class="desktop-icon" data-app="projects" data-icon="projects" aria-label="Open Projects application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">🚀</div>
                 <span>Projects</span>
-            </div>
-            <div class="desktop-icon" data-app="ai-lab" data-icon="ai-lab">
-                <div class="icon">🤖</div>
+            </button>
+            <button class="desktop-icon" data-app="ai-lab" data-icon="ai-lab" aria-label="Open AI Lab application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">🤖</div>
                 <span>AI Lab</span>
-            </div>
+            </button>
             <!-- Row 6 -->
-            <div class="desktop-icon" data-app="testimonials" data-icon="testimonials">
-                <div class="icon">⭐</div>
+            <button class="desktop-icon" data-app="testimonials" data-icon="testimonials" aria-label="Open Testimonials application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">⭐</div>
                 <span>Testimonials</span>
-            </div>
-            <div class="desktop-icon" data-app="github-stats" data-icon="github-stats">
-                <div class="icon">📊</div>
+            </button>
+            <button class="desktop-icon" data-app="github-stats" data-icon="github-stats" aria-label="Open GitHub Stats application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">📊</div>
                 <span>GitHub Stats</span>
-            </div>
-            <div class="desktop-icon" data-app="blog" data-icon="blog">
-                <div class="icon">📝</div>
+            </button>
+            <button class="desktop-icon" data-app="blog" data-icon="blog" aria-label="Open Blog application" role="button" tabindex="0">
+                <div class="icon" aria-hidden="true">📝</div>
                 <span>Blog</span>
-            </div>
-            <div class="desktop-icon" data-icon="recycle" id="recycleBinIcon">
-                <div class="icon recycle-bin-icon">🗑️</div>
+            </button>
+            <button class="desktop-icon" data-icon="recycle" id="recycleBinIcon" aria-label="Open Recycle Bin" role="button" tabindex="0">
+                <div class="icon recycle-bin-icon" aria-hidden="true">🗑️</div>
                 <span>Recycle Bin</span>
-            </div>
+            </button>
         </div>
 
         <!-- Windows Container -->
@@ -297,63 +300,63 @@
         </div>
 
         <!-- AI Assistant Chatbot Widget -->
-        <div class="ai-assistant-widget" id="aiAssistantWidget">
+        <div class="ai-assistant-widget" id="aiAssistantWidget" role="dialog" aria-label="AI Assistant Chat" aria-modal="false">
             <div class="ai-assistant-widget-header">
                 <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                    <div class="ai-assistant-icon">🤖</div>
+                    <div class="ai-assistant-icon" aria-hidden="true">🤖</div>
                     <h3 class="ai-assistant-title">AI Assistant</h3>
-                    <span class="ai-status-indicator" id="aiStatusIndicator"></span>
+                    <span class="ai-status-indicator" id="aiStatusIndicator" aria-label="AI Assistant status: Online" role="status"></span>
                 </div>
                 <div class="ai-header-actions">
-                    <button class="ai-search-btn" id="aiSearchBtn" title="Search Conversation">🔍</button>
-                    <div class="ai-search-container" id="aiSearchContainer">
+                    <button class="ai-search-btn" id="aiSearchBtn" title="Search Conversation" aria-label="Search conversation history" aria-expanded="false" aria-controls="aiSearchContainer">🔍</button>
+                    <div class="ai-search-container" id="aiSearchContainer" role="search" aria-label="Search conversation">
                         <div class="ai-search-input-wrapper">
-                            <input type="text" class="ai-search-input" id="aiSearchInput" placeholder="Search conversation..." autocomplete="off">
-                            <button class="ai-search-close" id="aiSearchClose">×</button>
+                            <input type="text" class="ai-search-input" id="aiSearchInput" placeholder="Search conversation..." autocomplete="off" aria-label="Search conversation input">
+                            <button class="ai-search-close" id="aiSearchClose" aria-label="Close search">×</button>
                         </div>
                     </div>
-                    <button class="ai-menu-btn" id="aiMenuBtn" title="Menu">☰</button>
-                    <div class="ai-menu-dropdown" id="aiMenuDropdown">
-                        <div class="ai-menu-section">
+                    <button class="ai-menu-btn" id="aiMenuBtn" title="Menu" aria-label="Open AI Assistant menu" aria-expanded="false" aria-controls="aiMenuDropdown" aria-haspopup="true">☰</button>
+                    <div class="ai-menu-dropdown" id="aiMenuDropdown" role="menu" aria-label="AI Assistant menu">
+                        <div class="ai-menu-section" role="group" aria-label="Conversation Mode">
                             <div class="ai-menu-label">Conversation Mode</div>
-                            <button class="ai-menu-item mode-item" data-mode="professional" id="aiModeProfessional">💼 Professional</button>
-                            <button class="ai-menu-item mode-item" data-mode="casual" id="aiModeCasual">😊 Casual</button>
-                            <button class="ai-menu-item mode-item" data-mode="technical" id="aiModeTechnical">🔧 Technical</button>
+                            <button class="ai-menu-item mode-item" data-mode="professional" id="aiModeProfessional" role="menuitemradio" aria-checked="true">💼 Professional</button>
+                            <button class="ai-menu-item mode-item" data-mode="casual" id="aiModeCasual" role="menuitemradio" aria-checked="false">😊 Casual</button>
+                            <button class="ai-menu-item mode-item" data-mode="technical" id="aiModeTechnical" role="menuitemradio" aria-checked="false">🔧 Technical</button>
                         </div>
                         <div class="ai-menu-divider"></div>
-                        <button class="ai-menu-item" id="aiClearChatBtn">🗑️ Clear Chat</button>
-                        <button class="ai-menu-item" id="aiClearMemoryBtn">🧹 Clear Memory</button>
+                        <button class="ai-menu-item" id="aiClearChatBtn" role="menuitem" aria-label="Clear chat history">🗑️ Clear Chat</button>
+                        <button class="ai-menu-item" id="aiClearMemoryBtn" role="menuitem" aria-label="Clear AI memory and conversation history">🧹 Clear Memory</button>
                         <div class="ai-menu-divider"></div>
-                        <button class="ai-menu-item" id="aiExportChatBtn">📥 Export Chat</button>
-                        <button class="ai-menu-item" id="aiCopyChatBtn">📋 Copy Chat</button>
+                        <button class="ai-menu-item" id="aiExportChatBtn" role="menuitem" aria-label="Export conversation to file">📥 Export Chat</button>
+                        <button class="ai-menu-item" id="aiCopyChatBtn" role="menuitem" aria-label="Copy conversation to clipboard">📋 Copy Chat</button>
                         <div class="ai-menu-divider"></div>
-                        <button class="ai-menu-item" id="aiHelpBtn">❓ Help</button>
+                        <button class="ai-menu-item" id="aiHelpBtn" role="menuitem" aria-label="Show help information">❓ Help</button>
                     </div>
-                    <button class="ai-minimize-btn" id="aiMinimizeBtn" title="Minimize">−</button>
-                    <button class="ai-assistant-close" id="aiAssistantClose" title="Close">×</button>
+                    <button class="ai-minimize-btn" id="aiMinimizeBtn" title="Minimize" aria-label="Minimize AI Assistant">−</button>
+                    <button class="ai-assistant-close" id="aiAssistantClose" title="Close" aria-label="Close AI Assistant">×</button>
                 </div>
             </div>
-            <div class="ai-chat-container" id="aiChatContainer">
-                <div class="ai-chat-messages" id="aiChatMessages">
+            <div class="ai-chat-container" id="aiChatContainer" role="log" aria-live="polite" aria-label="Chat messages">
+                <div class="ai-chat-messages" id="aiChatMessages" role="log" aria-live="polite" aria-atomic="false">
                     <!-- Initial greeting will be added by JavaScript -->
                 </div>
-                <div class="ai-chat-input-container">
-                    <button class="ai-voice-btn" id="aiVoiceBtn" title="Voice Input (Click to start recording)">🎤</button>
-                    <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your message..." autocomplete="off">
-                    <button class="ai-send-btn" id="aiSendBtn" title="Send">➤</button>
+                <div class="ai-chat-input-container" role="form" aria-label="Chat input">
+                    <button class="ai-voice-btn" id="aiVoiceBtn" title="Voice Input (Click to start recording)" aria-label="Start voice input" type="button">🎤</button>
+                    <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your message..." autocomplete="off" aria-label="Type your message" aria-required="false">
+                    <button class="ai-send-btn" id="aiSendBtn" title="Send" aria-label="Send message" type="submit">➤</button>
                 </div>
             </div>
         </div>
 
         <!-- AI Assistant Toggle Button (shown when minimized/closed) -->
-        <button class="ai-assistant-toggle" id="aiAssistantToggle" title="Open AI Assistant">
-            <span class="ai-toggle-icon">🤖</span>
+        <button class="ai-assistant-toggle" id="aiAssistantToggle" title="Open AI Assistant" aria-label="Open AI Assistant chatbot" aria-expanded="false" aria-controls="aiAssistantWidget">
+            <span class="ai-toggle-icon" aria-hidden="true">🤖</span>
         </button>
 
         <!-- Taskbar -->
-        <div class="taskbar">
+        <nav class="taskbar" role="navigation" aria-label="Taskbar">
             <div class="taskbar-start">
-                <button class="start-button" id="startButton">
+                <button class="start-button" id="startButton" aria-label="Open Start Menu" aria-expanded="false" aria-controls="startMenu" aria-haspopup="true">
                     <svg class="windows-flag-start" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <!-- Top highlight gradient -->
@@ -422,13 +425,13 @@
             
             <div class="taskbar-end">
                 <div class="system-tray">
-                    <button class="tray-item tray-chevron" id="trayChevron" title="Show hidden icons">
-                        <span class="chevron-icon">▲</span>
+                    <button class="tray-item tray-chevron" id="trayChevron" title="Show hidden icons" aria-label="Show hidden system tray icons" aria-expanded="false" aria-controls="trayHiddenIcons">
+                        <span class="chevron-icon" aria-hidden="true">▲</span>
                     </button>
                     <div class="tray-hidden-icons" id="trayHiddenIcons">
                         <div class="tray-hidden-header">
                             <span>System Icons</span>
-                            <button class="tray-close-btn" id="trayCloseBtn">×</button>
+                            <button class="tray-close-btn" id="trayCloseBtn" aria-label="Close system tray menu">×</button>
                         </div>
                         <div class="tray-hidden-content">
                             <button class="tray-item" id="wifiIcon" title="Network">
@@ -445,7 +448,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="tray-clock" id="clock">
+                    <div class="tray-clock" id="clock" role="timer" aria-live="polite" aria-label="Current time">
                         <div class="time">12:00</div>
                         <div class="date">Jan 1</div>
                     </div>
@@ -469,48 +472,48 @@
                 </div>
                 <div class="start-menu-apps">
                     <div class="app-list">
-                        <button class="app-tile" data-app="about">
-                            <span class="app-icon">👨‍💻</span>
+                        <button class="app-tile" data-app="about" aria-label="Open About Me application">
+                            <span class="app-icon" aria-hidden="true">👨‍💻</span>
                             <span class="app-name">About Me</span>
                         </button>
-                        <button class="app-tile" data-app="skills">
-                            <span class="app-icon">🛠️</span>
+                        <button class="app-tile" data-app="skills" aria-label="Open Technical Skills application">
+                            <span class="app-icon" aria-hidden="true">🛠️</span>
                             <span class="app-name">Tech Stack & Expertise</span>
                         </button>
-                        <button class="app-tile" data-app="experience">
-                            <span class="app-icon">💼</span>
+                        <button class="app-tile" data-app="experience" aria-label="Open Work Experience application">
+                            <span class="app-icon" aria-hidden="true">💼</span>
                             <span class="app-name">Professional Journey</span>
                         </button>
-                        <button class="app-tile" data-app="projects">
-                            <span class="app-icon">🚀</span>
+                        <button class="app-tile" data-app="projects" aria-label="Open Projects application">
+                            <span class="app-icon" aria-hidden="true">🚀</span>
                             <span class="app-name">Featured Projects</span>
                         </button>
-                        <button class="app-tile" data-app="certifications">
-                            <span class="app-icon">🎓</span>
+                        <button class="app-tile" data-app="certifications" aria-label="Open Certifications application">
+                            <span class="app-icon" aria-hidden="true">🎓</span>
                             <span class="app-name">Certifications</span>
                         </button>
-                        <button class="app-tile" data-app="terminal">
-                            <span class="app-icon">⌨️</span>
+                        <button class="app-tile" data-app="terminal" aria-label="Open Terminal application">
+                            <span class="app-icon" aria-hidden="true">⌨️</span>
                             <span class="app-name">Terminal</span>
                         </button>
-                        <button class="app-tile" data-app="snake">
-                            <span class="app-icon">🐍</span>
+                        <button class="app-tile" data-app="snake" aria-label="Open Snake Game application">
+                            <span class="app-icon" aria-hidden="true">🐍</span>
                             <span class="app-name">Snake Game</span>
                         </button>
-                        <button class="app-tile" data-app="ai-lab">
-                            <span class="app-icon">🤖</span>
+                        <button class="app-tile" data-app="ai-lab" aria-label="Open AI Lab application">
+                            <span class="app-icon" aria-hidden="true">🤖</span>
                             <span class="app-name">AI Lab</span>
                         </button>
-                        <button class="app-tile" data-app="testimonials">
-                            <span class="app-icon">⭐</span>
+                        <button class="app-tile" data-app="testimonials" aria-label="Open Testimonials application">
+                            <span class="app-icon" aria-hidden="true">⭐</span>
                             <span class="app-name">Testimonials</span>
                         </button>
-                        <button class="app-tile" data-app="github-stats">
-                            <span class="app-icon">📊</span>
+                        <button class="app-tile" data-app="github-stats" aria-label="Open GitHub Stats application">
+                            <span class="app-icon" aria-hidden="true">📊</span>
                             <span class="app-name">GitHub Stats</span>
                         </button>
-                        <button class="app-tile" data-app="blog">
-                            <span class="app-icon">📝</span>
+                        <button class="app-tile" data-app="blog" aria-label="Open Blog application">
+                            <span class="app-icon" aria-hidden="true">📝</span>
                             <span class="app-name">Blog & Articles</span>
                         </button>
                     </div>
@@ -542,9 +545,9 @@
                     </a>
                 </div>
                 <div class="start-menu-footer">
-                    <button class="shutdown-btn">
+                    <button class="shutdown-btn" aria-label="Shut down portfolio (reload page)">
                         <span>Shut down</span>
-                        <span class="arrow">▶</span>
+                        <span class="arrow" aria-hidden="true">▶</span>
                     </button>
                 </div>
             </div>
