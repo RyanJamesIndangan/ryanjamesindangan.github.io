@@ -790,17 +790,23 @@ function initializeContextMenu() {
     window.closeContextMenu = () => {
         const menu = document.getElementById('contextMenu');
         if (menu) {
-            console.log('Closing context menu'); // Debug
-            // Remove active class
+            // Remove active class first
             menu.classList.remove('active');
-            // Clear all inline styles (including position)
-            menu.style.cssText = '';
-            // Force hide with important styles
+            
+            // Hide instantly without teleporting - keep position, just hide
             menu.style.setProperty('opacity', '0', 'important');
             menu.style.setProperty('visibility', 'hidden', 'important');
-            menu.style.setProperty('display', 'none', 'important');
             menu.style.setProperty('pointer-events', 'none', 'important');
             menu.style.setProperty('z-index', '-1', 'important');
+            
+            // After a brief moment, clean up positioning (but don't do it immediately to avoid teleport)
+            setTimeout(() => {
+                if (!menu.classList.contains('active')) {
+                    // Only clear position if menu is still closed
+                    menu.style.removeProperty('left');
+                    menu.style.removeProperty('top');
+                }
+            }, 200); // Wait for any transitions to complete
         }
     };
     

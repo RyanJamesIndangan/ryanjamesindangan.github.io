@@ -1829,6 +1829,12 @@ body {
     visibility: visible !important;
     transform: scale(1) !important;
     display: block !important; /* Force display */
+    pointer-events: auto !important;
+}
+
+/* Smooth close transition - hide in place */
+.context-menu:not(.active) {
+    transition: opacity 0.1s ease, visibility 0.1s ease, transform 0.1s ease;
 }
 
 .context-item {
