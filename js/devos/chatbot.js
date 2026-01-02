@@ -503,26 +503,88 @@ class PortfolioChatbot {
             };
         }
 
+        // Specific "What is" questions - MUST come before general patterns
+        if (this.matches(message, ['what is', 'what\'s', 'explain']) && this.matches(message, ['document intelligence'])) {
+            return {
+                text: `**Document Intelligence** is Ryan's expertise in building end-to-end systems that automatically extract, validate, and process data from documents (especially financial documents like bank statements).\n\n🔧 **How it works**:\n• **Native PDF Extraction**: First tries to extract text directly from PDFs\n• **OCR Fallback**: If text isn't available, uses OCR (Optical Character Recognition) with advanced preprocessing\n• **Multi-angle Scanning**: Rotates and scans documents at different angles for better accuracy\n• **Quality Scoring**: Evaluates OCR results to select the best extraction\n• **Validation Framework**: Ensures data integrity and structural correctness\n\n📊 **Results**:\n• 10K+ documents processed\n• 94% OCR accuracy\n• Automated underwriting workflows\n\n[Open AI Lab] to see more!`,
+                suggestions: [
+                    "Tell me about OCR",
+                    "What is watermark removal?",
+                    "Show me AI projects",
+                    "What technologies?"
+                ]
+            };
+        }
+
+        if (this.matches(message, ['what is', 'what\'s', 'explain']) && this.matches(message, ['ocr'])) {
+            return {
+                text: `**OCR (Optical Character Recognition)** converts images of text into machine-readable text. Ryan uses advanced OCR techniques:\n\n👁️ **Preprocessing**:\n• Denoising with OpenCV\n• Adaptive thresholding\n• Deskewing (straightening rotated text)\n• Multi-angle scanning\n\n📈 **Quality Scoring**:\n• Evaluates OCR confidence\n• Compares multiple scan angles\n• Selects best result automatically\n\n🔧 **Tools**: Tesseract OCR, OpenCV, PIL (Python Imaging Library)\n\nUsed as a fallback when PDFs don't have native text, ensuring 94%+ accuracy even on scanned documents.\n\n[Open AI Lab] to see more!`,
+                suggestions: [
+                    "What is document intelligence?",
+                    "What is watermark removal?",
+                    "Show me AI projects",
+                    "What technologies?"
+                ]
+            };
+        }
+
+        if (this.matches(message, ['what is', 'what\'s', 'explain']) && this.matches(message, ['watermark', 'watermark removal'])) {
+            return {
+                text: `**Watermark Removal** is an ML-based system that automatically detects and removes watermarks from documents.\n\n🤖 **How it works**:\n• **Feature Engineering**: Extracts visual features from document regions\n• **RandomForest Classification**: ML model identifies watermark types\n• **Smart Routing**: Routes documents to appropriate removal strategies based on watermark type\n• **Automated Processing**: Removes watermarks without manual intervention\n\n📊 **Benefits**:\n• Improves OCR accuracy\n• Enables automated document processing\n• Handles multiple watermark types\n\n🔧 **Tech Stack**: scikit-learn, RandomForest, OpenCV, feature engineering\n\n[Open AI Lab] to see more!`,
+                suggestions: [
+                    "What is document intelligence?",
+                    "What is OCR?",
+                    "Show me AI projects",
+                    "What technologies?"
+                ]
+            };
+        }
+
+        if (this.matches(message, ['what is', 'what\'s', 'explain']) && this.matches(message, ['llm', 'large language model'])) {
+            return {
+                text: `**LLM (Large Language Model) Integration** uses AI language models to process and summarize documents.\n\n🧠 **Ryan's Implementation**:\n• **Local LLM Workflows**: Uses Ollama for privacy and cost efficiency\n• **OpenAI-Compatible APIs**: Supports multiple LLM backends (Ollama, vLLM)\n• **Structured Summaries**: Generates structured underwriting summaries from documents\n• **Token-Efficient**: Optimized payloads to reduce costs\n• **Real-time Streaming**: FastAPI Server-Sent Events (SSE) for live updates\n\n📊 **Use Cases**:\n• Automated underwriting summaries\n• Document classification\n• Data extraction and validation\n• Intelligent document processing\n\n🔧 **Tech Stack**: Ollama, vLLM, FastAPI, SSE, OpenAI-compatible APIs\n\n[Open AI Lab] to see more!`,
+                suggestions: [
+                    "What is document intelligence?",
+                    "What is OCR?",
+                    "Show me AI projects",
+                    "What technologies?"
+                ]
+            };
+        }
+
         // Skills & Expertise
         if (this.matches(message, ['skill', 'expertise', 'technology', 'tech stack', 'what can', 'what do you know'])) {
             return {
                 text: `Ryan specializes in:\n\n🤖 **AI/ML**: Document Intelligence, OCR (Tesseract, OpenCV), PDF processing, Watermark Removal (RandomForest), LLM Integration (Ollama, vLLM)\n\n💻 **Full-Stack**: React, Next.js, Vue, Angular, Node.js, Python, FastAPI, PHP, Laravel\n\n☁️ **DevOps**: AWS (Lambda, EventBridge), Docker, Kubernetes, CI/CD\n\n💾 **Databases**: MySQL, PostgreSQL, MongoDB\n\nAsk me about specific technologies or [Open Technical Skills] to see more!`,
                 suggestions: [
                     "Tell me about AI/ML",
+                    "What is document intelligence?",
                     "What frameworks do you use?",
-                    "Show me your projects",
                     "Open Technical Skills"
                 ]
             };
         }
 
-        // AI/ML Focus
-        if (this.matches(message, ['ai', 'machine learning', 'ml', 'document intelligence', 'ocr', 'llm'])) {
+        // AI/ML Focus (general - only if not a specific "what is" question)
+        if (this.matches(message, ['ai', 'machine learning', 'ml']) && !this.matches(message, ['what is', 'what\'s', 'explain'])) {
             return {
                 text: `Ryan is an **AI Developer / Machine Learning Engineer** with deep expertise in:\n\n📄 **Document Intelligence**: End-to-end pipelines for bank statement extraction, validation, and data extraction\n\n👁️ **Computer Vision**: OCR preprocessing with OpenCV, multi-angle scanning, quality scoring\n\n💧 **Watermark Removal**: ML-based detection using RandomForest classification\n\n🧠 **LLM Integration**: Local LLM workflows (Ollama) for structured underwriting summaries\n\n🔒 **Secure AI Gateway**: Node.js gateway with JWT/RSA management and FastAPI SSE\n\n[Open AI Lab] to see more details!`,
                 suggestions: [
-                    "Tell me about OCR",
                     "What is document intelligence?",
+                    "Tell me about OCR",
+                    "Show me AI projects",
+                    "Open AI Lab"
+                ]
+            };
+        }
+
+        // Document Intelligence / OCR / LLM mentions (general - only if not a specific "what is" question)
+        if ((this.matches(message, ['document intelligence', 'ocr', 'llm']) && !this.matches(message, ['what is', 'what\'s', 'explain']))) {
+            return {
+                text: `Ryan specializes in **Document Intelligence** and AI/ML:\n\n📄 **Document Intelligence**: End-to-end pipelines for bank statement extraction\n👁️ **OCR**: Advanced preprocessing with OpenCV, multi-angle scanning\n💧 **Watermark Removal**: ML-based detection using RandomForest\n🧠 **LLM Integration**: Local LLM workflows (Ollama) for structured summaries\n\n[Open AI Lab] to see more details!`,
+                suggestions: [
+                    "What is document intelligence?",
+                    "What is OCR?",
                     "Show me AI projects",
                     "Open AI Lab"
                 ]
