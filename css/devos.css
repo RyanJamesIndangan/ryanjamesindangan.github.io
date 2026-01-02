@@ -2666,12 +2666,14 @@ body {
 }
 
 .ai-header-actions {
+    position: relative;
     display: flex;
     gap: 0.5rem;
 }
 
 .ai-assistant-close,
-.ai-minimize-btn {
+.ai-minimize-btn,
+.ai-menu-btn {
     background: transparent;
     border: none;
     color: rgba(255, 255, 255, 0.7);
@@ -2690,15 +2692,71 @@ body {
 }
 
 .ai-assistant-close:hover,
-.ai-minimize-btn:hover {
+.ai-minimize-btn:hover,
+.ai-menu-btn:hover {
     background: rgba(255, 255, 255, 0.1);
     color: #fff;
     transform: scale(1.1);
 }
 
 .ai-assistant-close:active,
-.ai-minimize-btn:active {
+.ai-minimize-btn:active,
+.ai-menu-btn:active {
     transform: scale(0.95);
+}
+
+.ai-menu-btn {
+    font-size: 1rem;
+}
+
+.ai-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background: rgba(20, 25, 35, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+}
+
+.ai-menu-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ai-menu-item {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ai-menu-item:hover {
+    background: rgba(100, 255, 218, 0.1);
+    color: #64ffda;
+}
+
+.ai-menu-item:active {
+    transform: scale(0.98);
 }
 
 .ai-assistant-icon {

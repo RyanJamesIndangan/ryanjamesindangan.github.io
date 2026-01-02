@@ -1335,8 +1335,13 @@ function initializeAIAssistant() {
         scrollChatToBottom();
     } else {
         // Show initial greeting with suggestions if no history
+        const userName = window.portfolioChatbot && window.portfolioChatbot.userName 
+            ? ` ${window.portfolioChatbot.userName}` 
+            : '';
         const initialGreeting = {
-            text: "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?",
+            text: userName 
+                ? `Hello${userName}! 👋 Welcome back! I'm Ryan's AI Assistant. How can I help you today?`
+                : "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?",
             suggestions: [
                 "What are your skills?",
                 "Tell me about your AI work",
@@ -1368,6 +1373,51 @@ function initializeAIAssistant() {
         toggleBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             showAIAssistant();
+        });
+    }
+    
+    // Menu button and dropdown
+    const menuBtn = document.getElementById('aiMenuBtn');
+    const menuDropdown = document.getElementById('aiMenuDropdown');
+    const clearChatBtn = document.getElementById('aiClearChatBtn');
+    const clearMemoryBtn = document.getElementById('aiClearMemoryBtn');
+    const helpBtn = document.getElementById('aiHelpBtn');
+    
+    if (menuBtn && menuDropdown) {
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('show');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+                menuDropdown.classList.remove('show');
+            }
+        });
+    }
+    
+    if (clearChatBtn) {
+        clearChatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clearChat();
+            if (menuDropdown) menuDropdown.classList.remove('show');
+        });
+    }
+    
+    if (clearMemoryBtn) {
+        clearMemoryBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clearChatbotMemory();
+            if (menuDropdown) menuDropdown.classList.remove('show');
+        });
+    }
+    
+    if (helpBtn) {
+        helpBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sendChatMessage('help');
+            if (menuDropdown) menuDropdown.classList.remove('show');
         });
     }
 
@@ -1423,6 +1473,15 @@ window.sendChatMessage = function(messageText = null) {
         
         // Hide typing indicator
         hideTypingIndicator();
+        
+        // Handle special actions
+        if (response.action) {
+            if (response.action.type === 'clearChat') {
+                clearChat();
+            } else if (response.action.type === 'clearMemory') {
+                clearChatbotMemory();
+            }
+        }
         
         // Add bot response with suggestions
         addChatMessage(response.text, 'assistant', response.suggestions || []);
@@ -1606,6 +1665,56 @@ function closeAIAssistant() {
 
 function minimizeAIAssistant() {
     closeAIAssistant();
+}
+
+function clearChat() {
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (!chatMessages) return;
+    
+    chatMessages.innerHTML = '';
+    
+    // Show initial greeting again
+    const initialGreeting = {
+        text: window.portfolioChatbot && window.portfolioChatbot.userName
+            ? `Hello ${window.portfolioChatbot.userName}! 👋 Chat cleared. How can I help you?`
+            : "Hello! 👋 Chat cleared. I'm Ryan's AI Assistant. What would you like to know?",
+        suggestions: [
+            "What are your skills?",
+            "Tell me about your AI work",
+            "Show me your experience",
+            "What projects have you built?"
+        ]
+    };
+    addChatMessage(initialGreeting.text, 'assistant', initialGreeting.suggestions);
+    scrollChatToBottom();
+}
+
+function clearChatbotMemory() {
+    if (!window.portfolioChatbot) return;
+    
+    // Clear everything
+    window.portfolioChatbot.clearHistory();
+    window.portfolioChatbot.userName = null;
+    localStorage.removeItem('chatbotUserName');
+    
+    // Clear chat UI
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (chatMessages) {
+        chatMessages.innerHTML = '';
+        
+        // Show fresh greeting
+        const initialGreeting = {
+            text: "Hello! 👋 I'm Ryan's AI Assistant. I've cleared my memory and forgotten our conversation. How can I help you?",
+            suggestions: [
+                "What are your skills?",
+                "Tell me about your AI work",
+                "Show me your experience",
+                "What projects have you built?"
+            ]
+        };
+        addChatMessage(initialGreeting.text, 'assistant', initialGreeting.suggestions);
+        scrollChatToBottom();
+    }
 }
 
 function showAIAssistant() {

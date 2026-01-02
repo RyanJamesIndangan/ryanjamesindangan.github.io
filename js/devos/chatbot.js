@@ -10,6 +10,7 @@ class PortfolioChatbot {
             lastResponse: null,
             mentionedTopics: []
         };
+        this.userName = this.getUserName();
         this.loadHistory();
         this.init();
     }
@@ -47,6 +48,65 @@ class PortfolioChatbot {
 
     processMessage(userMessage) {
         const lowerMessage = userMessage.toLowerCase().trim();
+        
+        // Check for special commands FIRST (before name extraction)
+        if (this.matches(lowerMessage, ['clear chat', 'clear messages', 'clear conversation'])) {
+            return {
+                text: "Chat cleared! 💬",
+                suggestions: [],
+                action: { type: 'clearChat' }
+            };
+        }
+        
+        if (this.matches(lowerMessage, ['clear memory', 'forget everything', 'reset memory', 'clear history'])) {
+            this.clearHistory();
+            this.userName = null;
+            localStorage.removeItem('chatbotUserName');
+            return {
+                text: "Memory cleared! I've forgotten our conversation and your name. Starting fresh! 🧹",
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "Help"
+                ],
+                action: { type: 'clearMemory' }
+            };
+        }
+        
+        // Check for name introduction patterns
+        const nameExtracted = this.extractAndSaveName(userMessage);
+        
+        // If name was extracted, acknowledge it immediately
+        if (nameExtracted) {
+            // Add user message to history
+            this.conversationHistory.push({
+                role: 'user',
+                message: userMessage,
+                timestamp: new Date().toISOString()
+            });
+            
+            const response = {
+                text: `Nice to meet you, ${nameExtracted}! 👋 I'll remember your name. How can I help you learn about Ryan's portfolio?`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "What projects have you built?"
+                ]
+            };
+            
+            // Add bot response to history
+            this.conversationHistory.push({
+                role: 'assistant',
+                message: response.text,
+                suggestions: response.suggestions || [],
+                timestamp: new Date().toISOString()
+            });
+            
+            this.saveHistory();
+            return response;
+        }
         
         // Add user message to history FIRST (so action commands are also tracked)
         this.conversationHistory.push({
@@ -496,8 +556,12 @@ class PortfolioChatbot {
         }
         // Greetings
         if (this.matches(message, ['hi', 'hello', 'hey', 'greetings'])) {
+            const greeting = this.userName 
+                ? `Hello ${this.userName}! 👋 Nice to see you again! I'm Ryan's AI Assistant. How can I help you today?`
+                : "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?";
+            
             return {
-                text: "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?",
+                text: greeting,
                 suggestions: [
                     "What are your skills?",
                     "Tell me about your AI work",
@@ -687,9 +751,10 @@ class PortfolioChatbot {
         }
 
         // Help
-        if (this.matches(message, ['help', 'what can you do', 'commands'])) {
+        if (this.matches(message, ['help', 'what can you do', 'commands', 'what can', 'how can'])) {
+            const userName = this.userName ? ` ${this.userName}` : '';
             return {
-                text: `I can help you with:\n\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Navigation Help\n✅ Contact Information\n\nJust ask me anything about Ryan's portfolio!`,
+                text: `Hi${userName}! I'm Ryan's AI Assistant. Here's what I can help you with:\n\n**📚 Information:**\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Contact Information\n\n**🎮 Commands:**\n• **"Open [App Name]"** - Open any app (e.g., "Open AI Lab")\n• **"Clear chat"** - Clear the chat window\n• **"Clear memory"** - Forget our conversation and your name\n• **"Help"** - Show this help message\n\n**💡 Tips:**\n• Click quick reply buttons for suggestions\n• I remember your name if you introduce yourself\n• Ask specific questions like "What is document intelligence?"\n\nJust ask me anything about Ryan's portfolio!`,
                 suggestions: [
                     "What are your skills?",
                     "Tell me about your AI work",
@@ -736,6 +801,47 @@ class PortfolioChatbot {
     clearHistory() {
         this.conversationHistory = [];
         localStorage.removeItem('chatbotHistory');
+    }
+    
+    getUserName() {
+        const saved = localStorage.getItem('chatbotUserName');
+        return saved || null;
+    }
+    
+    saveUserName(name) {
+        if (name && name.trim()) {
+            this.userName = name.trim();
+            localStorage.setItem('chatbotUserName', this.userName);
+            return true;
+        }
+        return false;
+    }
+    
+    extractAndSaveName(message) {
+        const lowerMessage = message.toLowerCase();
+        let extractedName = null;
+        
+        // Patterns: "my name is X", "I'm X", "I am X", "call me X", "name is X"
+        const patterns = [
+            /(?:my\s+name\s+is|i'?m|i\s+am|call\s+me|name\s+is)\s+([a-z]+(?:\s+[a-z]+)*)/i,
+            /(?:hi|hello|hey),?\s+(?:my\s+name\s+is|i'?m|i\s+am|call\s+me)\s+([a-z]+(?:\s+[a-z]+)*)/i,
+            /(?:hi|hello|hey),?\s+([a-z]+)(?:\s+here)?$/i
+        ];
+        
+        for (const pattern of patterns) {
+            const match = message.match(pattern);
+            if (match && match[1]) {
+                extractedName = match[1].trim();
+                // Filter out common words that aren't names
+                const notName = ['hi', 'hello', 'hey', 'there', 'here', 'this', 'that', 'the', 'a', 'an'];
+                if (!notName.includes(extractedName.toLowerCase()) && extractedName.length > 1) {
+                    this.saveUserName(extractedName);
+                    return extractedName;
+                }
+            }
+        }
+        
+        return null;
     }
 }
 
