@@ -85,16 +85,14 @@ function fallbackCopyCode(code, button) {
 }
 
 function runJavaScriptCode(code, container) {
-    const outputDiv = container.querySelector('.code-output');
+    let outputDiv = container.querySelector('.code-output');
     if (!outputDiv) {
         // Create output div if it doesn't exist
-        const newOutputDiv = document.createElement('div');
-        newOutputDiv.className = 'code-output';
-        newOutputDiv.style.cssText = 'margin-top: 1rem; padding: 1rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 6px; font-family: monospace; font-size: 0.9rem; max-height: 200px; overflow-y: auto;';
-        container.appendChild(newOutputDiv);
+        outputDiv = document.createElement('div');
+        outputDiv.className = 'code-output';
+        outputDiv.style.cssText = 'margin-top: 1rem; padding: 1rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 6px; font-family: monospace; font-size: 0.9rem; max-height: 200px; overflow-y: auto;';
+        container.appendChild(outputDiv);
     }
-    
-    const outputDiv = container.querySelector('.code-output');
     outputDiv.style.display = 'block';
     outputDiv.innerHTML = '<div style="color: #666;">Running...</div>';
     

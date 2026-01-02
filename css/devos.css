@@ -365,6 +365,8 @@ body {
     /* Performance: Optimize background rendering */
     will-change: transform;
     contain: layout style paint;
+    /* Allow clicks to pass through to desktop */
+    pointer-events: none;
 }
 
 .wallpaper::before {

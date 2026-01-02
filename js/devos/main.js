@@ -656,27 +656,64 @@ function initializeDemoButtons() {
 // ===========================
 function initializeContextMenu() {
     const contextMenu = document.getElementById('contextMenu');
-    const desktop = document.querySelector('.desktop');
+    const desktop = document.getElementById('desktop') || document.querySelector('.desktop');
     
+    if (!contextMenu || !desktop) {
+        console.warn('Context menu or desktop element not found');
+        return;
+    }
+    
+    // Add context menu event listener to desktop
+    // Use capture phase to ensure we catch the event before other handlers
     desktop.addEventListener('contextmenu', (e) => {
-        // Only show on desktop area, not on windows
-        if (e.target.closest('.window')) return;
+        // Only show on desktop area, not on windows, icons, or other interactive elements
+        const target = e.target;
         
+        // Check if clicking on interactive elements
+        if (target.closest('.window')) return;
+        if (target.closest('.desktop-icon')) return;
+        if (target.closest('.taskbar')) return;
+        if (target.closest('.ai-assistant-widget')) return;
+        if (target.closest('.context-menu')) return;
+        if (target.closest('.start-menu')) return;
+        if (target.closest('.notification')) return;
+        if (target.closest('.wallpaper-menu')) return;
+        
+        // Allow right-click on wallpaper or empty desktop area
         e.preventDefault();
+        e.stopPropagation();
         
-        contextMenu.style.left = `${e.clientX}px`;
-        contextMenu.style.top = `${e.clientY}px`;
+        // Position context menu
+        const x = Math.min(e.clientX, window.innerWidth - 220); // Prevent overflow
+        const y = Math.min(e.clientY, window.innerHeight - 300); // Prevent overflow
+        
+        contextMenu.style.left = `${x}px`;
+        contextMenu.style.top = `${y}px`;
         contextMenu.classList.add('active');
+    }, true); // Use capture phase
+    
+    // Close context menu on click outside
+    document.addEventListener('click', (e) => {
+        if (!contextMenu.contains(e.target)) {
+            contextMenu.classList.remove('active');
+        }
     });
     
-    document.addEventListener('click', () => {
-        contextMenu.classList.remove('active');
+    // Close context menu on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && contextMenu.classList.contains('active')) {
+            contextMenu.classList.remove('active');
+        }
     });
     
     // Context menu actions
     contextMenu.querySelectorAll('.context-item').forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
             const action = item.dataset.action;
+            
+            // Close menu first
+            contextMenu.classList.remove('active');
             
             switch(action) {
                 case 'refresh':
@@ -703,6 +740,8 @@ function initializeContextMenu() {
                 case 'change-wallpaper':
                     if (window.wallpaperSelector) {
                         window.wallpaperSelector.showWallpaperMenu();
+                    } else {
+                        showNotification('Wallpaper selector not available', 'error');
                     }
                     break;
                 case 'about-portfolio':
@@ -2630,6 +2669,7 @@ window.copyConversationToClipboard = copyConversationToClipboard;
 function initializeVoiceInput(voiceBtn, chatInput) {
     let recognition = null;
     let isRecording = false;
+    let capturedTranscript = ''; // Store transcript when manually stopped
     
     // Check browser support
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -2641,7 +2681,7 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     
     recognition = new SpeechRecognition();
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true; // Enable interim results to capture partial transcripts
     recognition.lang = 'en-US';
     
     voiceBtn.addEventListener('click', (e) => {
@@ -2656,6 +2696,7 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     
     function startVoiceRecording() {
         try {
+            capturedTranscript = ''; // Reset transcript
             recognition.start();
             isRecording = true;
             voiceBtn.classList.add('recording');
@@ -2664,32 +2705,86 @@ function initializeVoiceInput(voiceBtn, chatInput) {
         } catch (err) {
             console.error('Speech recognition error:', err);
             window.showNotification('Voice input error. Please try again.', 'error');
+            isRecording = false;
         }
     }
     
     function stopVoiceRecording() {
-        recognition.stop();
+        if (!isRecording) return; // Already stopped
+        
         isRecording = false;
         voiceBtn.classList.remove('recording');
         voiceBtn.title = 'Voice Input (Click to start recording)';
-    }
-    
-    recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript.trim();
-        if (chatInput && transcript) {
-            chatInput.value = transcript;
+        
+        // Stop recognition
+        try {
+            recognition.stop();
+        } catch (err) {
+            // Ignore errors when stopping (might already be stopped)
+        }
+        
+        // If we have a captured transcript, use it
+        if (capturedTranscript && chatInput) {
+            chatInput.value = capturedTranscript;
             chatInput.focus();
-            stopVoiceRecording();
             // Auto-send after a short delay to allow user to review
             setTimeout(() => {
                 if (window.sendChatMessage) {
                     window.sendChatMessage();
                 }
-            }, 800);
+            }, 500);
             window.showNotification('Voice transcribed! Sending... 🎤', 'info');
-        } else {
-            stopVoiceRecording();
+            capturedTranscript = ''; // Clear after using
+        } else if (!capturedTranscript) {
+            // No transcript captured - might be because user stopped too quickly
             window.showNotification('No speech detected. Please try again.', 'warning');
+        }
+    }
+    
+    recognition.onresult = (event) => {
+        // Process all results (including interim)
+        let finalTranscript = '';
+        let interimTranscript = '';
+        
+        for (let i = 0; i < event.results.length; i++) {
+            const result = event.results[i];
+            const transcript = result[0].transcript;
+            
+            if (result.isFinal) {
+                finalTranscript += transcript + ' ';
+            } else {
+                interimTranscript += transcript + ' ';
+            }
+        }
+        
+        // Use final transcript if available, otherwise use interim
+        const transcript = (finalTranscript || interimTranscript).trim();
+        
+        if (transcript) {
+            // Store transcript for use when manually stopped
+            capturedTranscript = transcript;
+            
+            // If we have final results, process immediately
+            if (finalTranscript) {
+                if (chatInput) {
+                    chatInput.value = transcript;
+                    chatInput.focus();
+                }
+                stopVoiceRecording();
+                // Auto-send after a short delay
+                setTimeout(() => {
+                    if (window.sendChatMessage) {
+                        window.sendChatMessage();
+                    }
+                }, 500);
+                window.showNotification('Voice transcribed! Sending... 🎤', 'info');
+                capturedTranscript = ''; // Clear after using
+            } else {
+                // Update input with interim results for preview
+                if (chatInput) {
+                    chatInput.value = transcript;
+                }
+            }
         }
     };
     
@@ -2716,12 +2811,28 @@ function initializeVoiceInput(voiceBtn, chatInput) {
     };
     
     recognition.onend = () => {
-        // Only stop if we were actually recording
-        // This prevents stopping when recognition ends naturally after getting results
+        // Reset recording state when recognition ends
+        // This handles cases where recognition ends naturally (after getting results)
+        // or when user manually stops it
         if (isRecording) {
-            // Check if we got results - if not, it was an error or timeout
-            // The onerror handler will show appropriate messages
-            stopVoiceRecording();
+            // If we're still recording when onend fires, it means recognition ended
+            // without results (timeout, error, or manual stop)
+            isRecording = false;
+            voiceBtn.classList.remove('recording');
+            voiceBtn.title = 'Voice Input (Click to start recording)';
+            
+            // Check if we have a captured transcript (might have been captured in onresult before onend fired)
+            if (capturedTranscript && chatInput) {
+                chatInput.value = capturedTranscript;
+                chatInput.focus();
+                setTimeout(() => {
+                    if (window.sendChatMessage) {
+                        window.sendChatMessage();
+                    }
+                }, 500);
+                window.showNotification('Voice transcribed! Sending... 🎤', 'info');
+                capturedTranscript = ''; // Clear after using
+            }
         }
     };
     
