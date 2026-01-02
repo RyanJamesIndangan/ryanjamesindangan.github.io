@@ -2789,16 +2789,21 @@ function performSearch(query) {
     }
     
     // Show search results count
-    if (matchCount > 0) {
-        const searchContainer = document.getElementById('aiSearchContainer');
-        if (searchContainer) {
-            let resultIndicator = searchContainer.querySelector('.search-results-count');
+    const searchContainer = document.getElementById('aiSearchContainer');
+    if (searchContainer) {
+        let resultIndicator = searchContainer.querySelector('.search-results-count');
+        if (matchCount > 0) {
             if (!resultIndicator) {
-                resultIndicator = document.createElement('span');
+                resultIndicator = document.createElement('div');
                 resultIndicator.className = 'search-results-count';
                 searchContainer.appendChild(resultIndicator);
             }
             resultIndicator.textContent = `${matchCount} result${matchCount !== 1 ? 's' : ''}`;
+            resultIndicator.style.display = 'block';
+        } else {
+            if (resultIndicator) {
+                resultIndicator.style.display = 'none';
+            }
         }
     }
 }
@@ -2827,7 +2832,7 @@ function clearSearchHighlights() {
     if (searchContainer) {
         const resultIndicator = searchContainer.querySelector('.search-results-count');
         if (resultIndicator) {
-            resultIndicator.remove();
+            resultIndicator.style.display = 'none';
         }
     }
 }
