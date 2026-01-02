@@ -809,20 +809,47 @@ class PortfolioChatbot {
             };
         }
 
-        // Default response - try to be more helpful
-        // Check if it's a question (contains what, how, when, where, why, tell me, show me)
-        const isQuestion = this.matches(message, ['what', 'how', 'when', 'where', 'why', 'tell me', 'show me', 'explain', 'describe']);
+        // Filipino/Tagalog language support
+        const filipinoResponse = this.handleFilipino(message);
+        if (filipinoResponse) {
+            return filipinoResponse;
+        }
+        
+        // Handle random/silly questions with friendly responses
+        const sillyResponse = this.handleSillyQuestions(message);
+        if (sillyResponse) {
+            return sillyResponse;
+        }
+        
+        // Try fuzzy matching for typos before giving up
+        const fuzzyResponse = this.tryFuzzyMatch(message, context);
+        if (fuzzyResponse) {
+            return fuzzyResponse;
+        }
+        
+        // Default response - try to be more helpful and conversational
+        const isQuestion = this.matches(message, ['what', 'how', 'when', 'where', 'why', 'tell me', 'show me', 'explain', 'describe', 'ano', 'paano', 'saan', 'kailan', 'bakit']);
+        
+        // More varied default responses
+        const defaultResponses = [
+            {
+                text: `I'm not sure I understand that question. 🤔\n\nTry asking me about:\n• Skills & Technologies\n• Work Experience\n• AI/ML Projects\n• Certifications\n• Or say "Help" for more options!`,
+                suggestions: ["What are your skills?", "What technologies?", "Tell me about your experience", "Help"]
+            },
+            {
+                text: `Hmm, I'm not quite sure what you mean by that. 😅\n\nI can help you learn about:\n• Ryan's technical skills\n• His work experience\n• AI/ML projects\n• Certifications\n\nWhat would you like to know?`,
+                suggestions: ["What are your skills?", "Tell me about AI work", "Show me projects", "Help"]
+            },
+            {
+                text: `I'm not familiar with that question, but I'd love to help! 💡\n\nYou can ask me about:\n• Skills & Technologies\n• Work Experience\n• Projects & Portfolio\n• Or type "Help" to see all options`,
+                suggestions: ["What technologies?", "Tell me about your experience", "Show me AI projects", "Help"]
+            }
+        ];
+        
+        const randomResponse = defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
         
         if (isQuestion) {
-            return {
-                text: `I'm not sure I understand that question. 🤔\n\nTry asking me about:\n• Skills & Technologies\n• Work Experience\n• AI/ML Projects\n• Certifications\n• Or say "Help" for more options!`,
-                suggestions: [
-                    "What are your skills?",
-                    "What technologies?",
-                    "Tell me about your experience",
-                    "Help"
-                ]
-            };
+            return randomResponse;
         }
         
         return {
@@ -838,6 +865,55 @@ class PortfolioChatbot {
 
     matches(message, keywords) {
         return keywords.some(keyword => message.includes(keyword));
+    }
+    
+    // Optimized fuzzy matching - only for short words to prevent lag
+    fuzzyMatch(message, keywords, threshold = 0.7) {
+        const words = message.split(/\s+/).filter(w => w.length <= 15); // Only check short words
+        for (const keyword of keywords) {
+            if (keyword.length > 15) continue; // Skip long keywords
+            for (const word of words) {
+                // Quick check: if words are similar length and share first letter
+                if (Math.abs(word.length - keyword.length) <= 2 && word[0] === keyword[0]) {
+                    const similarity = this.quickSimilarity(word, keyword);
+                    if (similarity >= threshold) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Fast similarity check (optimized for performance)
+    quickSimilarity(str1, str2) {
+        if (str1 === str2) return 1.0;
+        const longer = str1.length > str2.length ? str1 : str2;
+        const shorter = str1.length > str2.length ? str2 : str1;
+        if (longer.length === 0) return 1.0;
+        if (longer.length > 15) return 0; // Skip long strings for performance
+        
+        // Simple character overlap check (faster than Levenshtein)
+        let matches = 0;
+        const shorterChars = shorter.split('');
+        const longerChars = longer.split('');
+        for (const char of shorterChars) {
+            const index = longerChars.indexOf(char);
+            if (index !== -1) {
+                matches++;
+                longerChars.splice(index, 1); // Remove to avoid double counting
+            }
+        }
+        return matches / longer.length;
+    }
+    
+    // Normalize message for better matching (remove punctuation, normalize whitespace)
+    normalizeMessage(message) {
+        return message
+            .toLowerCase()
+            .replace(/[^\w\s]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
     }
 
     clearHistory() {
@@ -889,6 +965,228 @@ class PortfolioChatbot {
         }
         
         return null;
+    }
+    
+    // Handle Filipino/Tagalog language
+    handleFilipino(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        // Greetings in Filipino
+        if (this.matches(lowerMessage, ['kumusta', 'kamusta', 'musta', 'hello po', 'hi po', 'magandang araw', 'magandang umaga', 'magandang hapon', 'magandang gabi'])) {
+            const userName = this.userName ? ` ${this.userName}` : '';
+            const greetings = [
+                `Kumusta${userName}! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, and projects. Ano ang gusto mong malaman?`,
+                `Kamusta${userName}! 👋 I'm Ryan's AI Assistant. Paano kita matutulungan?`,
+                `Hello po${userName}! 👋 I'm Ryan's AI Assistant. What would you like to know about Ryan?`
+            ];
+            return {
+                text: greetings[Math.floor(Math.random() * greetings.length)],
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "What projects have you built?"
+                ]
+            };
+        }
+        
+        // Skills/Technology questions in Filipino
+        if (this.matches(lowerMessage, ['ano ang skills', 'ano ang teknolohiya', 'ano ang tech', 'ano ang kaya', 'ano ang alam', 'skills mo', 'teknolohiya mo', 'tech stack mo'])) {
+            return {
+                text: `Ryan specializes in:\n\n🤖 **AI/ML**: Document Intelligence, OCR, PDF processing, LLM Integration\n💻 **Full-Stack**: React, Next.js, Vue, Angular, Node.js, Python, FastAPI\n☁️ **DevOps**: AWS, Docker, Kubernetes, CI/CD\n💾 **Databases**: MySQL, PostgreSQL, MongoDB\n\n[Open Technical Skills] to see more!`,
+                suggestions: [
+                    "Tell me about AI/ML",
+                    "What is document intelligence?",
+                    "What frameworks?",
+                    "Open Technical Skills"
+                ]
+            };
+        }
+        
+        // Experience questions in Filipino
+        if (this.matches(lowerMessage, ['ano ang experience', 'ano ang trabaho', 'saan ka nagtatrabaho', 'ano ang work', 'experience mo', 'trabaho mo'])) {
+            return {
+                text: `Ryan currently works as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Present)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n\n[Open Work Experience] for full details!`,
+                suggestions: [
+                    "What technologies did you use?",
+                    "Tell me about your projects",
+                    "Show me your skills",
+                    "Open Work Experience"
+                ]
+            };
+        }
+        
+        // Projects questions in Filipino
+        if (this.matches(lowerMessage, ['ano ang projects', 'ano ang ginawa', 'ano ang portfolio', 'projects mo', 'ginawa mo', 'portfolio mo'])) {
+            return {
+                text: `Ryan has delivered **50+ projects** with expertise in:\n\n🏦 **Bank Statement Extraction**: Native PDF + OCR fallback pipeline\n💧 **Watermark Removal**: ML-based automated detection\n🧠 **LLM Underwriting**: Structured summaries using Ollama\n🔒 **Secure AI Gateway**: Real-time processing with FastAPI SSE\n\n[Open Projects] to explore more!`,
+                suggestions: [
+                    "Tell me about AI projects",
+                    "What technologies?",
+                    "Show me your skills",
+                    "Open Projects"
+                ]
+            };
+        }
+        
+        // Help in Filipino
+        if (this.matches(lowerMessage, ['tulong', 'help po', 'paano', 'ano ang pwede', 'ano ang kaya'])) {
+            const userName = this.userName ? ` ${this.userName}` : '';
+            return {
+                text: `Hi${userName}! I'm Ryan's AI Assistant. Here's what I can help you with:\n\n**📚 Information:**\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n\n**🎮 Commands:**\n• "Open [App Name]" - Open any app\n• "Clear chat" - Clear the chat\n• "Help" - Show this message\n\nJust ask me anything about Ryan's portfolio!`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "How do I navigate this?"
+                ]
+            };
+        }
+        
+        // About Ryan in Filipino
+        if (this.matches(lowerMessage, ['sino si ryan', 'ano si ryan', 'sino ka', 'ano ka', 'tell me about ryan'])) {
+            return {
+                text: `**Ryan James Indangan** is a Full-Stack Developer & Certified CTO with **7+ years** of experience.\n\n🎯 **Current Focus**: AI/ML Engineering, Document Intelligence, and Automation\n\n📊 **Stats**:\n• 7+ Years Experience\n• 50+ Projects Delivered\n• 12 Team Members Led\n\nHe specializes in building intelligent systems for document processing, data extraction, and automation workflows.\n\n[Open About Me] to learn more!`,
+                suggestions: [
+                    "Tell me about your skills",
+                    "Show me your experience",
+                    "What projects have you built?",
+                    "Open About Me"
+                ]
+            };
+        }
+        
+        return null;
+    }
+    
+    // Handle silly/random questions with friendly responses
+    handleSillyQuestions(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        // Weather questions
+        if (this.matches(lowerMessage, ['weather', 'ulan', 'maulan', 'init', 'lamig', 'temperature'])) {
+            return {
+                text: `I'm not a weather bot! 😄 But I can tell you about Ryan's skills and projects. What would you like to know?`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "Help"
+                ]
+            };
+        }
+        
+        // Time/Date questions
+        if (this.matches(lowerMessage, ['what time', 'ano ang oras', 'what date', 'ano ang petsa', 'kelan'])) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            return {
+                text: `It's ${timeStr} on ${dateStr}. ⏰\n\nBut I'm here to help you learn about Ryan's portfolio! What would you like to know?`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "Help"
+                ]
+            };
+        }
+        
+        // Compliments
+        if (this.matches(lowerMessage, ['good', 'great', 'awesome', 'amazing', 'galing', 'magaling', 'ang galing', 'impressive', 'nice', 'cool'])) {
+            return {
+                text: `Thank you! 😊 I'm glad you like it! Ryan put a lot of effort into building this portfolio. Would you like to learn more about his skills or projects?`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "What projects have you built?"
+                ]
+            };
+        }
+        
+        // How are you / How's it going
+        if (this.matches(lowerMessage, ['how are you', 'kamusta ka', 'musta ka', 'how\'s it going', 'how are things', 'kumusta ka'])) {
+            return {
+                text: `I'm doing great, thanks for asking! 😊 I'm here to help you learn about Ryan's portfolio. What would you like to know?`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "Help"
+                ]
+            };
+        }
+        
+        // Random questions about the chatbot itself
+        if (this.matches(lowerMessage, ['who are you', 'sino ka', 'what are you', 'ano ka', 'are you ai', 'ai ka ba'])) {
+            return {
+                text: `I'm Ryan's AI Assistant! 🤖 I'm a rule-based chatbot built with vanilla JavaScript. I use pattern matching to answer questions about Ryan's portfolio.\n\nI can help you learn about:\n• Skills & Technologies\n• Work Experience\n• Projects & Portfolio\n• AI/ML Capabilities\n\nWhat would you like to know?`,
+                suggestions: [
+                    "What are your skills?",
+                    "Tell me about your AI work",
+                    "Show me your experience",
+                    "Help"
+                ]
+            };
+        }
+        
+        return null;
+    }
+    
+    // Try fuzzy matching for typos
+    tryFuzzyMatch(message, context) {
+        const normalized = this.normalizeMessage(message);
+        
+        // Common typos and variations
+        const typoMap = {
+            'skils': 'skills',
+            'skil': 'skills',
+            'teknology': 'technology',
+            'teknologies': 'technologies',
+            'tech': 'technology',
+            'expirience': 'experience',
+            'experiance': 'experience',
+            'projec': 'project',
+            'projecs': 'projects',
+            'portfolo': 'portfolio',
+            'certificat': 'certificate',
+            'certificats': 'certificates'
+        };
+        
+        for (const [typo, correct] of Object.entries(typoMap)) {
+            if (normalized.includes(typo)) {
+                // Try to match with corrected version
+                const correctedMessage = normalized.replace(typo, correct);
+                // Check if corrected message would match known patterns
+                if (this.matches(correctedMessage, [correct, 'what', 'tell me', 'show me'])) {
+                    // Return a helpful response
+                    return {
+                        text: `I think you might be asking about "${correct}". Let me help you with that! 💡\n\n${this.getTopicResponse(correct)}`,
+                        suggestions: [
+                            "What are your skills?",
+                            "Tell me about your experience",
+                            "Show me projects",
+                            "Help"
+                        ]
+                    };
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    getTopicResponse(topic) {
+        const responses = {
+            'skills': 'Ryan specializes in AI/ML, Full-Stack Development, DevOps, and Databases. [Open Technical Skills] to see more!',
+            'technology': 'Ryan uses Python, JavaScript, React, FastAPI, AWS, Docker, and many more technologies. [Open Technical Skills] to see the full list!',
+            'experience': 'Ryan has 7+ years of experience, currently working as AI Developer/ML Engineer. [Open Work Experience] for details!',
+            'project': 'Ryan has delivered 50+ projects including AI/ML systems, web applications, and automation tools. [Open Projects] to explore!',
+            'portfolio': 'This is Ryan\'s portfolio! You can explore his skills, experience, projects, and certifications. [Open Projects] to see his work!',
+            'certificate': 'Ryan holds CTO certification and Hacker-X Ethical Hacking Course. [Open Certifications] to view certificates!'
+        };
+        return responses[topic] || 'I can help you learn about Ryan\'s portfolio. What would you like to know?';
     }
 }
 
