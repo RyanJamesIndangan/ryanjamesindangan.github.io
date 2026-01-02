@@ -1300,36 +1300,192 @@ function initializeCertificateModal() {
 }
 
 // ===========================
-// AI Assistant Widget
+// AI Assistant Chatbot
 // ===========================
 function initializeAIAssistant() {
     const widget = document.getElementById('aiAssistantWidget');
-    if (!widget) return;
+    const toggleBtn = document.getElementById('aiAssistantToggle');
+    const closeBtn = document.getElementById('aiAssistantClose');
+    const minimizeBtn = document.getElementById('aiMinimizeBtn');
+    const chatInput = document.getElementById('aiChatInput');
+    const sendBtn = document.getElementById('aiSendBtn');
+    const chatMessages = document.getElementById('aiChatMessages');
+    
+    if (!widget || !chatMessages) return;
     
     // Check if widget was previously closed
     const wasClosed = localStorage.getItem('aiAssistantClosed') === 'true';
     if (wasClosed) {
         widget.classList.add('hidden');
+        if (toggleBtn) toggleBtn.classList.add('visible');
+    } else {
+        if (toggleBtn) toggleBtn.classList.remove('visible');
+    }
+
+    // Load conversation history
+    if (window.portfolioChatbot && window.portfolioChatbot.conversationHistory.length > 0) {
+        chatMessages.innerHTML = '';
+        window.portfolioChatbot.conversationHistory.forEach(msg => {
+            addChatMessage(msg.message, msg.role);
+        });
+        scrollChatToBottom();
+    }
+
+    // Close button
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAIAssistant();
+        });
+    }
+
+    // Minimize button
+    if (minimizeBtn) {
+        minimizeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            minimizeAIAssistant();
+        });
+    }
+
+    // Toggle button
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showAIAssistant();
+        });
+    }
+
+    // Send message on Enter
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+
+        // Send button
+        if (sendBtn) {
+            sendBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sendChatMessage();
+            });
+        }
+    }
+}
+
+function sendChatMessage() {
+    const chatInput = document.getElementById('aiChatInput');
+    const chatMessages = document.getElementById('aiChatMessages');
+    const sendBtn = document.getElementById('aiSendBtn');
+    
+    if (!chatInput || !chatMessages || !window.portfolioChatbot) return;
+    
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    // Disable input while processing
+    chatInput.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
+
+    // Add user message
+    addChatMessage(message, 'user');
+    chatInput.value = '';
+    scrollChatToBottom();
+
+    // Simulate typing delay
+    setTimeout(() => {
+        // Get bot response
+        const response = window.portfolioChatbot.processMessage(message);
+        
+        // Add bot response
+        addChatMessage(response, 'assistant');
+        scrollChatToBottom();
+
+        // Re-enable input
+        chatInput.disabled = false;
+        if (sendBtn) sendBtn.disabled = false;
+        chatInput.focus();
+    }, 300);
+}
+
+function addChatMessage(message, role) {
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (!chatMessages) return;
+
+    const messageEl = document.createElement('div');
+    messageEl.className = `ai-message ai-message-${role}`;
+    
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    
+    messageEl.innerHTML = `
+        <div class="ai-message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
+        <div class="ai-message-content">
+            <div class="ai-message-text">${formatChatMessage(message)}</div>
+            <div class="ai-message-time">${timeStr}</div>
+        </div>
+    `;
+    
+    chatMessages.appendChild(messageEl);
+}
+
+function formatChatMessage(text) {
+    // Convert markdown-style formatting to HTML
+    return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace;">$1</code>')
+        .replace(/\n/g, '<br>');
+}
+
+function scrollChatToBottom() {
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 }
 
 function closeAIAssistant() {
     const widget = document.getElementById('aiAssistantWidget');
+    const toggleBtn = document.getElementById('aiAssistantToggle');
+    
     if (widget) {
         widget.classList.add('hidden');
         localStorage.setItem('aiAssistantClosed', 'true');
     }
+    
+    if (toggleBtn) {
+        toggleBtn.classList.add('visible');
+    }
+}
+
+function minimizeAIAssistant() {
+    closeAIAssistant();
 }
 
 function showAIAssistant() {
     const widget = document.getElementById('aiAssistantWidget');
+    const toggleBtn = document.getElementById('aiAssistantToggle');
+    const chatInput = document.getElementById('aiChatInput');
+    
     if (widget) {
         widget.classList.remove('hidden');
         localStorage.setItem('aiAssistantClosed', 'false');
+    }
+    
+    if (toggleBtn) {
+        toggleBtn.classList.remove('visible');
+    }
+
+    // Focus input
+    if (chatInput) {
+        setTimeout(() => chatInput.focus(), 100);
     }
 }
 
 // Make functions globally available
 window.closeAIAssistant = closeAIAssistant;
 window.showAIAssistant = showAIAssistant;
+window.minimizeAIAssistant = minimizeAIAssistant;
 

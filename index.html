@@ -146,29 +146,40 @@
             <!-- Windows will be dynamically created here -->
         </div>
 
-        <!-- AI Assistant Widget -->
+        <!-- AI Assistant Chatbot Widget -->
         <div class="ai-assistant-widget" id="aiAssistantWidget">
             <div class="ai-assistant-widget-header">
                 <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
                     <div class="ai-assistant-icon">🤖</div>
                     <h3 class="ai-assistant-title">AI Assistant</h3>
+                    <span class="ai-status-indicator" id="aiStatusIndicator"></span>
                 </div>
-                <button class="ai-assistant-close" id="aiAssistantClose" title="Close" onclick="event.stopPropagation(); closeAIAssistant();">×</button>
-            </div>
-            <div class="ai-assistant-stats">
-                <div class="ai-stat-item">
-                    <span class="ai-stat-number">10K+</span>
-                    <span class="ai-stat-label">Documents Processed</span>
-                </div>
-                <div class="ai-stat-item">
-                    <span class="ai-stat-number">94%</span>
-                    <span class="ai-stat-label">OCR Accuracy</span>
+                <div class="ai-header-actions">
+                    <button class="ai-minimize-btn" id="aiMinimizeBtn" title="Minimize">−</button>
+                    <button class="ai-assistant-close" id="aiAssistantClose" title="Close">×</button>
                 </div>
             </div>
-            <div class="ai-assistant-message" onclick="openApp('ai-lab')" style="cursor: pointer;">
-                Click to explore Document Intelligence capabilities and AI/ML projects
+            <div class="ai-chat-container" id="aiChatContainer">
+                <div class="ai-chat-messages" id="aiChatMessages">
+                    <div class="ai-message ai-message-bot">
+                        <div class="ai-message-avatar">🤖</div>
+                        <div class="ai-message-content">
+                            <div class="ai-message-text">Hello! 👋 I'm Ryan's AI Assistant. Ask me about his skills, experience, projects, or AI/ML expertise. How can I help you?</div>
+                            <div class="ai-message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-chat-input-container">
+                    <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your message..." autocomplete="off">
+                    <button class="ai-send-btn" id="aiSendBtn" title="Send">➤</button>
+                </div>
             </div>
         </div>
+
+        <!-- AI Assistant Toggle Button (shown when minimized/closed) -->
+        <button class="ai-assistant-toggle" id="aiAssistantToggle" title="Open AI Assistant">
+            <span class="ai-toggle-icon">🤖</span>
+        </button>
 
         <!-- Taskbar -->
         <div class="taskbar">
@@ -412,6 +423,7 @@
     <script src="js/devos/start-menu-search.js"></script>
     <script src="js/devos/desktop-enhancements.js"></script>
     <script src="js/devos/wallpaper-selector.js"></script>
+    <script src="js/devos/chatbot.js"></script>
     <script src="js/devos/snake-icon.js"></script>
     <script src="js/devos/snake-game.js"></script>
     <script src="js/devos/main.js"></script>
