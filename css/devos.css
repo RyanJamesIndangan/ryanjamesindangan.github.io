@@ -3606,6 +3606,9 @@ body {
     transition: all 0.2s ease;
     flex-shrink: 0;
     font-weight: bold;
+    line-height: 1;
+    padding: 0;
+    text-align: center;
 }
 
 .ai-send-btn:hover {
