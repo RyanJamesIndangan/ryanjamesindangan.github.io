@@ -802,12 +802,17 @@ function initializeContextMenu() {
     
     const closeContextMenu = window.closeContextMenu;
     
-    // Close context menu on click outside
+    // Close context menu on click outside (but exclude context items)
     document.addEventListener('click', (e) => {
-        if (!contextMenu.contains(e.target) && contextMenu.classList.contains('active')) {
+        // Don't close if clicking on context menu or its items
+        if (e.target.closest('.context-menu') || e.target.closest('.context-item')) {
+            return;
+        }
+        // Close if clicking outside the context menu
+        if (contextMenu.classList.contains('active')) {
             closeContextMenu();
         }
-    });
+    }, true); // Use capture phase
     
     // Close context menu on Escape key
     document.addEventListener('keydown', (e) => {
@@ -830,50 +835,51 @@ function initializeContextMenu() {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
+            e.stopImmediatePropagation(); // Prevent other handlers from running
+            
             const action = item.dataset.action;
             
-            // Close menu first
+            // Close menu immediately - no delay
             closeContextMenu();
             
-            // Small delay to ensure menu closes before other actions
-            setTimeout(() => {
+            // Small delay to ensure menu closes visually before action
+            requestAnimationFrame(() => {
+                // Execute action
                 switch(action) {
-                    case 'refresh':
-                        showNotification('Refreshing desktop...', 'info', 1000);
-                        setTimeout(() => location.reload(), 500);
-                        break;
-                    case 'view-code':
-                        window.open('https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', '_blank');
-                        showNotification('Opening GitHub repository...', 'success');
-                        break;
-                    case 'show-all-windows':
-                        // Restore all minimized windows
-                        window.windowManager?.windows.forEach((windowEl, appId) => {
-                            if (windowEl.classList.contains('minimized')) {
-                                window.windowManager.minimizeWindow(appId);
-                            }
-                        });
-                        showNotification('All windows restored', 'success');
-                        break;
-                    case 'minimize-all':
-                        window.keyboardShortcuts?.showDesktop();
-                        showNotification('All windows minimized', 'info');
-                        break;
-                    case 'change-wallpaper':
-                        if (window.wallpaperSelector) {
-                            // Close context menu before opening wallpaper menu
-                            closeContextMenu();
-                            window.wallpaperSelector.showWallpaperMenu();
-                        } else {
-                            showNotification('Wallpaper selector not available', 'error');
+                case 'refresh':
+                    showNotification('Refreshing desktop...', 'info', 1000);
+                    setTimeout(() => location.reload(), 500);
+                    break;
+                case 'view-code':
+                    window.open('https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', '_blank');
+                    showNotification('Opening GitHub repository...', 'success');
+                    break;
+                case 'show-all-windows':
+                    // Restore all minimized windows
+                    window.windowManager?.windows.forEach((windowEl, appId) => {
+                        if (windowEl.classList.contains('minimized')) {
+                            window.windowManager.minimizeWindow(appId);
                         }
-                        break;
-                    case 'about-portfolio':
-                        showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
-                        break;
+                    });
+                    showNotification('All windows restored', 'success');
+                    break;
+                case 'minimize-all':
+                    window.keyboardShortcuts?.showDesktop();
+                    showNotification('All windows minimized', 'info');
+                    break;
+                case 'change-wallpaper':
+                    if (window.wallpaperSelector) {
+                        window.wallpaperSelector.showWallpaperMenu();
+                    } else {
+                        showNotification('Wallpaper selector not available', 'error');
+                    }
+                    break;
+                case 'about-portfolio':
+                    showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
+                    break;
                 }
-            }, 50);
-        });
+            });
+        }, { once: true }); // Only handle once
     });
 }
 
