@@ -660,7 +660,7 @@ class PortfolioChatbot {
         }
 
         // Experience
-        if (this.matches(message, ['experience', 'work', 'job', 'role', 'position', 'current', 'where do you work'])) {
+        if (this.matches(message, ['experience', 'experiences', 'work', 'job', 'jobs', 'role', 'roles', 'position', 'positions', 'current', 'where do you work', 'employment', 'career'])) {
             return {
                 text: `Ryan currently works as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Present)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n• Built secure Node gateway with JWT/RSA\n\nPrevious role: Support Engineer at Bada LLC (Apr 2025 - Oct 2025)\n\n[Open Work Experience] for full details!`,
                 suggestions: [
@@ -673,7 +673,7 @@ class PortfolioChatbot {
         }
 
         // Projects
-        if (this.matches(message, ['project', 'what have you built', 'portfolio', 'showcase'])) {
+        if (this.matches(message, ['project', 'projects', 'what have you built', 'what have you done', 'portfolio', 'showcase', 'work samples'])) {
             return {
                 text: `Ryan has delivered **50+ projects** with expertise in:\n\n🏦 **Bank Statement Extraction**: Native PDF + OCR fallback pipeline\n💧 **Watermark Removal**: ML-based automated detection and removal\n🧠 **LLM Underwriting**: Structured summaries using Ollama\n🔒 **Secure AI Gateway**: Real-time processing with FastAPI SSE\n\nPlus full-stack web applications, APIs, and automation systems.\n\n[Open Projects] to explore more!`,
                 suggestions: [
@@ -699,7 +699,7 @@ class PortfolioChatbot {
         }
 
         // Certifications
-        if (this.matches(message, ['certificate', 'certification', 'credential', 'cto', 'hacker'])) {
+        if (this.matches(message, ['certificate', 'certificates', 'certification', 'certifications', 'credential', 'credentials', 'cto', 'hacker', 'cert'])) {
             return {
                 text: `Ryan holds:\n\n🎓 **Certified Chief Technology Officer** (IMTF, Jul 2023)\n\n🔐 **Hacker-X Ethical Hacking Course** (21 modules, Sep 2024 - Nov 2025)\n\n[Open Certifications] to view certificates!`,
                 suggestions: [
@@ -754,7 +754,7 @@ class PortfolioChatbot {
         if (this.matches(message, ['help', 'what can you do', 'commands', 'what can', 'how can'])) {
             const userName = this.userName ? ` ${this.userName}` : '';
             return {
-                text: `Hi${userName}! I'm Ryan's AI Assistant. Here's what I can help you with:\n\n**📚 Information:**\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Contact Information\n\n**🎮 Commands:**\n• **"Open [App Name]"** - Open any app (e.g., "Open AI Lab")\n• **"Clear chat"** - Clear the chat window\n• **"Clear memory"** - Forget our conversation and your name\n• **"Help"** - Show this help message\n\n**💡 Tips:**\n• Click quick reply buttons for suggestions\n• I remember your name if you introduce yourself\n• Ask specific questions like "What is document intelligence?"\n\nJust ask me anything about Ryan's portfolio!`,
+                text: `Hi${userName}! I'm Ryan's AI Assistant. Here's what I can help you with:\n\n**📚 Information:**\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Contact Information\n\n**🎮 Commands:**\n• **"Open [App Name]"** - Open any app (e.g., "Open AI Lab")\n• **"Clear chat"** - Clear the chat window\n• **"Clear memory"** - Forget our conversation and your name\n• **"Help"** - Show this help message\n\n**💡 Tips:**\n• Click quick reply buttons for suggestions\n• I remember your name if you introduce yourself\n• Ask specific questions like "What is document intelligence?"\n\n**🔧 Technical Note:**\nI'm a client-side, rule-based chatbot built with vanilla JavaScript. I use pattern matching and keyword detection to provide relevant responses. This demonstrates Ryan's ability to build interactive features without external APIs or backend services.\n\nJust ask me anything about Ryan's portfolio!`,
                 suggestions: [
                     "What are your skills?",
                     "Tell me about your AI work",

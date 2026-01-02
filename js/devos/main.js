@@ -1350,6 +1350,18 @@ function initializeAIAssistant() {
             ]
         };
         addChatMessage(initialGreeting.text, 'assistant', initialGreeting.suggestions);
+        
+        // Add a subtle disclaimer after a short delay (only on first load, if user hasn't interacted)
+        setTimeout(() => {
+            const chatMessages = document.getElementById('aiChatMessages');
+            if (chatMessages && chatMessages.children.length <= 1 && !window.portfolioChatbot.conversationHistory.length) {
+                const disclaimer = {
+                    text: `💡 **Note**: I'm a rule-based chatbot built with vanilla JavaScript. I use pattern matching to answer questions about Ryan's portfolio. This demonstrates client-side interactivity without external APIs.`,
+                    suggestions: []
+                };
+                addChatMessage(disclaimer.text, 'assistant', disclaimer.suggestions);
+            }
+        }, 3000);
     }
 
     // Close button
