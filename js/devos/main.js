@@ -1586,8 +1586,12 @@ window.sendChatMessage = function(messageText = null) {
     
     if (!chatInput || !chatMessages || !window.portfolioChatbot) return;
     
-    const message = messageText || chatInput.value.trim();
+    let message = messageText || chatInput.value.trim();
     if (!message) return;
+    
+    // XSS Prevention: Sanitize user input before processing
+    message = sanitizeUserInput(message);
+    if (!message) return; // If sanitization removed everything, don't send
 
     // Disable input while processing
     chatInput.disabled = true;
@@ -1676,15 +1680,11 @@ function addChatMessage(message, role, suggestions = [], messageId = null) {
         suggestionsHTML = `
             <div class="ai-quick-replies">
                 ${suggestions.map(suggestion => {
-                    // Escape quotes and HTML to prevent XSS and syntax errors
-                    const escapedSuggestion = suggestion
-                        .replace(/\\/g, '\\\\')
-                        .replace(/'/g, "\\'")
-                        .replace(/"/g, '&quot;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;');
-                    return `<button class="ai-quick-reply-btn" onclick="sendChatMessage('${escapedSuggestion}')">
-                        ${suggestion.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+                    // Escape HTML to prevent XSS
+                    const safeSuggestion = escapeHtml(suggestion);
+                    // Use data attribute instead of onclick for security
+                    return `<button class="ai-quick-reply-btn" data-suggestion="${escapeHtml(suggestion)}">
+                        ${safeSuggestion}
                     </button>`;
                 }).join('')}
             </div>
@@ -1703,13 +1703,19 @@ function addChatMessage(message, role, suggestions = [], messageId = null) {
         `;
     }
     
+    // Determine if this is a user message for proper sanitization
+    const isUserMessage = role === 'user';
+    
+    // Format message with proper XSS protection
+    const formattedMessage = formatChatMessage(message, isUserMessage);
+    
     messageEl.innerHTML = `
         <div class="ai-message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
         <div class="ai-message-content">
-            <div class="ai-message-text">${formatChatMessage(message)}</div>
+            <div class="ai-message-text">${formattedMessage}</div>
             ${suggestionsHTML}
             ${reactionsHTML}
-            <div class="ai-message-time">${timeStr}</div>
+            <div class="ai-message-time">${escapeHtml(timeStr)}</div>
         </div>
     `;
     
@@ -1724,32 +1730,152 @@ function addChatMessage(message, role, suggestions = [], messageId = null) {
     // Attach event listeners for action buttons (Open App, etc.)
     attachChatActionListeners(messageEl);
     
+    // Attach quick reply button listeners (secure - no onclick)
+    attachQuickReplyListeners(messageEl);
+    
     // Attach reaction button listeners
     if (role === 'assistant') {
         attachReactionListeners(messageEl);
     }
 }
 
-function formatChatMessage(text) {
+// XSS Prevention: Sanitize user input before processing
+function sanitizeUserInput(input) {
+    if (!input) return '';
+    
+    // Remove/nullify dangerous patterns
+    let sanitized = input
+        // Remove script tags and content
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+        // Remove event handlers (onclick, onerror, etc.)
+        .replace(/on\w+\s*=\s*["'][^"']*["']/gi, '')
+        .replace(/on\w+\s*=\s*[^\s>]*/gi, '')
+        // Remove javascript: protocol
+        .replace(/javascript:/gi, '')
+        // Remove data: protocol (can contain scripts)
+        .replace(/data:text\/html/gi, '')
+        // Remove vbscript: protocol
+        .replace(/vbscript:/gi, '')
+        // Remove iframe tags
+        .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+        // Remove object/embed tags
+        .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+        .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '')
+        // Remove style tags that could contain scripts
+        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+        // Remove link tags with javascript
+        .replace(/<link[^>]*href\s*=\s*["']?javascript:/gi, '')
+        // Remove meta refresh redirects
+        .replace(/<meta[^>]*http-equiv\s*=\s*["']?refresh["']?[^>]*>/gi, '');
+    
+    return sanitized.trim();
+}
+
+// XSS Prevention: HTML Entity Escaping
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// XSS Prevention: Sanitize URL to prevent javascript: and data: protocols
+function sanitizeUrl(url) {
+    if (!url) return '';
+    const trimmed = url.trim();
+    const lower = trimmed.toLowerCase();
+    
+    // Block dangerous protocols
+    if (lower.startsWith('javascript:') || 
+        lower.startsWith('data:') || 
+        lower.startsWith('vbscript:') ||
+        lower.startsWith('file:') ||
+        lower.startsWith('about:')) {
+        return '#';
+    }
+    
+    // Only allow http, https, and mailto
+    if (lower.startsWith('http://') || 
+        lower.startsWith('https://') || 
+        lower.startsWith('mailto:')) {
+        return trimmed;
+    }
+    
+    // If no protocol, assume it's not a valid URL
+    return '#';
+}
+
+// XSS Prevention: Sanitize app name to prevent injection
+function sanitizeAppName(appName) {
+    if (!appName) return '';
+    // Remove any HTML tags and dangerous characters
+    return appName
+        .replace(/<[^>]*>/g, '') // Remove HTML tags
+        .replace(/[<>'"&]/g, '') // Remove dangerous characters
+        .trim()
+        .substring(0, 50); // Limit length
+}
+
+function formatChatMessage(text, isUserMessage = false) {
     if (!text) return '';
     
-    // Convert [Open AppName] to clickable action buttons
+    // For user messages, escape ALL HTML first to prevent XSS
+    if (isUserMessage) {
+        // Escape HTML entities
+        text = escapeHtml(text);
+        
+        // Then allow safe formatting (markdown that doesn't create script tags)
+        // Convert markdown-style formatting to HTML (safe because text is already escaped)
+        text = text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`(.*?)`/g, '<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">$1</code>')
+            .replace(/\n/g, '<br>');
+        
+        // Convert URLs to clickable links (with sanitization)
+        text = text.replace(/(https?:\/\/[^\s<>"']+)/g, (match) => {
+            const sanitized = sanitizeUrl(match);
+            if (sanitized === '#') {
+                return escapeHtml(match); // Show as plain text if dangerous
+            }
+            const escapedUrl = escapeHtml(match);
+            return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: underline;">${escapedUrl}</a>`;
+        });
+        
+        return text;
+    }
+    
+    // For assistant messages (trusted), allow more formatting
+    // But still sanitize dangerous elements
+    
+    // Convert [Open AppName] to clickable action buttons (with sanitization)
     text = text.replace(/\[Open (.+?)\]/g, (match, appName) => {
-        const appId = mapAppNameToId(appName);
+        const sanitizedAppName = sanitizeAppName(appName);
+        const appId = mapAppNameToId(sanitizedAppName);
         if (appId) {
-            return `<button class="chat-action-btn" data-app-id="${appId}" onclick="openApp('${appId}'); this.style.opacity='0.6';">📂 Open ${appName}</button>`;
+            const escapedAppName = escapeHtml(sanitizedAppName);
+            // Use data attributes and event listeners instead of onclick for security
+            return `<button class="chat-action-btn" data-app-id="${escapeHtml(appId)}" data-action="open-app">📂 Open ${escapedAppName}</button>`;
         }
-        return match;
+        return escapeHtml(match); // Escape if not a valid app
     });
     
-    // Convert URLs to clickable links
-    text = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: underline;">$1</a>');
+    // Convert URLs to clickable links (with sanitization)
+    text = text.replace(/(https?:\/\/[^\s<>"']+)/g, (match) => {
+        const sanitized = sanitizeUrl(match);
+        if (sanitized === '#') {
+            return escapeHtml(match); // Show as plain text if dangerous
+        }
+        const escapedUrl = escapeHtml(match);
+        return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: underline;">${escapedUrl}</a>`;
+    });
     
     // Convert markdown-style formatting to HTML
+    // Escape content inside markdown to prevent XSS
     text = text
-        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-        .replace(/`(.*?)`/g, '<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">$1</code>')
+        .replace(/\*\*(.*?)\*\*/g, (match, content) => `<strong>${escapeHtml(content)}</strong>`)
+        .replace(/\*(.*?)\*/g, (match, content) => `<em>${escapeHtml(content)}</em>`)
+        .replace(/`(.*?)`/g, (match, content) => `<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">${escapeHtml(content)}</code>`)
         .replace(/\n/g, '<br>');
     
     return text;
@@ -1821,15 +1947,39 @@ function handleMessageReaction(messageId, reaction, btn) {
     }
 }
 
+function attachQuickReplyListeners(messageEl) {
+    // Handle quick reply buttons (secure - uses data attributes instead of onclick)
+    const quickReplyBtns = messageEl.querySelectorAll('.ai-quick-reply-btn[data-suggestion]');
+    quickReplyBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const suggestion = btn.dataset.suggestion;
+            if (suggestion && typeof window.sendChatMessage === 'function') {
+                // Sanitize before sending
+                const sanitized = sanitizeUserInput(suggestion);
+                if (sanitized) {
+                    window.sendChatMessage(sanitized);
+                }
+            }
+        });
+    });
+}
+
 function attachChatActionListeners(messageEl) {
     // Handle action buttons (Open App buttons)
-    const actionButtons = messageEl.querySelectorAll('.chat-action-btn');
+    // Use data-action instead of onclick for security
+    const actionButtons = messageEl.querySelectorAll('.chat-action-btn[data-action="open-app"]');
     actionButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             const appId = btn.dataset.appId;
-            if (appId) {
-                openApp(appId);
+            // Validate appId to prevent injection
+            if (appId && /^[a-z0-9-]+$/.test(appId)) {
+                if (typeof openApp === 'function') {
+                    openApp(appId);
+                }
             }
         });
     });
