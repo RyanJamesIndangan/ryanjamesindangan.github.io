@@ -3119,8 +3119,8 @@ body {
    =================================== */
 
 .clippy-container {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3130,8 +3130,8 @@ body {
 }
 
 .clippy-character {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     position: relative;
     transition: transform 0.3s ease;
 }
@@ -3152,15 +3152,33 @@ body {
     50% { transform: translateY(-2px) rotate(1deg); }
 }
 
+.clippy-paper {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
 .clippy-body {
+    fill: #8B7D9B;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
     transition: all 0.3s ease;
 }
 
-.clippy-eye {
+.clippy-eye-white {
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+    transition: all 0.2s ease;
+}
+
+.clippy-eye-pupil {
+    fill: #000000;
+    transition: transform 0.2s ease;
+}
+
+.clippy-eyebrow {
+    stroke: #000000;
     transition: all 0.2s ease;
 }
 
 .clippy-mouth {
+    stroke: #000;
     transition: all 0.2s ease;
 }
 
@@ -3187,15 +3205,15 @@ body {
     75% { transform: rotate(-10deg) translateY(-3px); }
 }
 
-.clippy-look-around .clippy-eye {
+.clippy-look-around .clippy-eye-pupil {
     animation: clippyLookAround 2s ease-in-out infinite;
 }
 
 @keyframes clippyLookAround {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(3px); }
-    50% { transform: translateX(-3px); }
-    75% { transform: translateX(2px); }
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(1.5px, -1px); }
+    50% { transform: translate(0, -1.5px); }
+    75% { transform: translate(-1.5px, -1px); }
 }
 
 .clippy-excited {
@@ -3220,7 +3238,7 @@ body {
     75% { transform: translateY(-3px) rotate(-1deg); }
 }
 
-.clippy-thinking .clippy-eye {
+.clippy-thinking .clippy-eye-pupil {
     animation: clippyBlink 0.3s ease-in-out infinite;
 }
 
@@ -3263,17 +3281,22 @@ body {
 }
 
 /* Light mode Clippy */
+/* Light mode Clippy - Keep same colors */
 [data-theme="light"] .clippy-body {
-    fill: #FFD700;
-    stroke: #FFA500;
+    fill: #8B7D9B;
+    stroke: #6B5D7B;
 }
 
-[data-theme="light"] .clippy-eye {
+[data-theme="light"] .clippy-eye-pupil {
     fill: #000;
 }
 
-[data-theme="light"] .clippy-mouth {
+[data-theme="light"] .clippy-eyebrow {
     stroke: #000;
+}
+
+[data-theme="light"] .clippy-paper {
+    fill: #FFF9C4;
 }
 
 .ai-assistant-title {

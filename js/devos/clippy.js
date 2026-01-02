@@ -58,16 +58,45 @@ class Clippy {
     getClippySVG() {
         return `
             <div class="clippy-character" title="It looks like you're trying to chat! Would you like help?">
-                <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Clippy Paperclip Body -->
-                    <path class="clippy-body" d="M 30 20 Q 20 20 20 30 L 20 50 Q 20 60 30 60 L 50 60 Q 60 60 60 50 L 60 30 Q 60 20 50 20 L 30 20 Z" 
-                          fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
-                    <!-- Clippy Eye 1 -->
-                    <circle class="clippy-eye" cx="35" cy="35" r="4" fill="#000"/>
-                    <!-- Clippy Eye 2 -->
-                    <circle class="clippy-eye" cx="55" cy="35" r="4" fill="#000"/>
-                    <!-- Clippy Smile -->
-                    <path class="clippy-mouth" d="M 35 50 Q 45 55 55 50" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <svg width="80" height="80" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Yellow Lined Paper Background -->
+                    <rect class="clippy-paper" x="25" y="30" width="70" height="85" rx="2" fill="#FFF9C4" stroke="#E0E0E0" stroke-width="1"/>
+                    <!-- Paper Lines -->
+                    <line x1="30" y1="45" x2="90" y2="45" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="30" y1="55" x2="90" y2="55" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="30" y1="65" x2="90" y2="65" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="30" y1="75" x2="90" y2="75" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="30" y1="85" x2="90" y2="85" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="30" y1="95" x2="90" y2="95" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="30" y1="105" x2="90" y2="105" stroke="#8B9A46" stroke-width="0.5" opacity="0.6"/>
+                    <!-- Red Margin Line -->
+                    <line x1="32" y1="30" x2="32" y2="115" stroke="#C62828" stroke-width="1.5" opacity="0.8"/>
+                    
+                    <!-- Clippy Paperclip - Purple-Grey Metal -->
+                    <!-- Top Loop (Head) -->
+                    <path class="clippy-body" d="M 50 25 Q 40 25 40 35 L 40 45 Q 40 50 45 50 L 55 50 Q 60 50 60 45 L 60 35 Q 60 25 50 25 Z" 
+                          fill="#8B7D9B" stroke="#6B5D7B" stroke-width="1.5"/>
+                    <!-- Middle Loop -->
+                    <path class="clippy-body" d="M 45 50 Q 40 50 40 60 L 40 70 Q 40 75 45 75 L 55 75 Q 60 75 60 70 L 60 60 Q 60 50 55 50" 
+                          fill="#8B7D9B" stroke="#6B5D7B" stroke-width="1.5"/>
+                    <!-- Bottom Loop -->
+                    <path class="clippy-body" d="M 45 75 Q 40 75 40 85 L 40 95 Q 40 100 45 100 L 55 100 Q 60 100 60 95 L 60 85 Q 60 75 55 75" 
+                          fill="#8B7D9B" stroke="#6B5D7B" stroke-width="1.5"/>
+                    
+                    <!-- Paperclip Shadow on Paper -->
+                    <ellipse cx="50" cy="105" rx="8" ry="3" fill="#000000" opacity="0.15"/>
+                    
+                    <!-- Googly Eyes (White with Black Pupils) -->
+                    <!-- Left Eye -->
+                    <circle class="clippy-eye-white" cx="47" cy="38" r="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="0.5"/>
+                    <circle class="clippy-eye-pupil" cx="47" cy="38" r="3.5" fill="#000000"/>
+                    <!-- Right Eye -->
+                    <circle class="clippy-eye-white" cx="53" cy="38" r="6" fill="#FFFFFF" stroke="#CCCCCC" stroke-width="0.5"/>
+                    <circle class="clippy-eye-pupil" cx="53" cy="38" r="3.5" fill="#000000"/>
+                    
+                    <!-- Arched Eyebrows -->
+                    <path class="clippy-eyebrow" d="M 42 32 Q 47 30 47 32" stroke="#000000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    <path class="clippy-eyebrow" d="M 53 32 Q 58 30 58 32" stroke="#000000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
                 </svg>
             </div>
         `;
