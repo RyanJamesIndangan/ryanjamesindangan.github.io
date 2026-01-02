@@ -414,8 +414,12 @@ class PortfolioChatbot {
         const lastTopic = context.lastTopic;
         
         // Context-aware responses (only if message is generic/asking for help)
-        const isGenericQuestion = this.matches(message, ['help', 'what', 'tell me', 'explain', 'describe']) && 
-                                 !this.matches(message, ['skill', 'experience', 'project', 'ai', 'certificate', 'contact', 'about']);
+        // Exclude specific "what is" questions from context-aware responses
+        const isSpecificWhatIs = (this.matches(message, ['what is', 'what\'s', 'explain']) && 
+                                  (this.matches(message, ['document intelligence', 'ocr', 'watermark', 'llm', 'large language model'])));
+        const isGenericQuestion = !isSpecificWhatIs && 
+                                 this.matches(message, ['help', 'what', 'tell me', 'explain', 'describe']) && 
+                                 !this.matches(message, ['skill', 'experience', 'project', 'certificate', 'contact', 'about']);
         
         if (activeApp === 'ai-lab' && isGenericQuestion) {
             return {

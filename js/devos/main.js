@@ -1390,7 +1390,7 @@ function initializeAIAssistant() {
     }
 }
 
-function sendChatMessage(messageText = null) {
+window.sendChatMessage = function(messageText = null) {
     const chatInput = document.getElementById('aiChatInput');
     const chatMessages = document.getElementById('aiChatMessages');
     const sendBtn = document.getElementById('aiSendBtn');
