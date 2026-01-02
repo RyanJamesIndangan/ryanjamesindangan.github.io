@@ -1733,7 +1733,7 @@ function createPipelineFlowchart() {
             </div>
         </div>
     `;
-}
+},
 
     'easter-eggs': {
         title: 'Easter Eggs & Hidden Features',
@@ -1903,4 +1903,9 @@ function createPipelineFlowchart() {
         `
     }
 };
+
+// Make apps globally available
+if (typeof window !== 'undefined') {
+    window.apps = apps;
+}
 
