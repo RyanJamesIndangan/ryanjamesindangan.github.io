@@ -551,6 +551,18 @@ class PortfolioChatbot {
         const activeApp = context.activeApp;
         const lastTopic = context.lastTopic;
         
+        // Math/Calculation questions - Check FIRST before other patterns
+        const mathResult = this.handleMathQuestion(message);
+        if (mathResult) {
+            return mathResult;
+        }
+        
+        // General knowledge questions
+        const knowledgeResult = this.handleGeneralKnowledge(message);
+        if (knowledgeResult) {
+            return knowledgeResult;
+        }
+        
         // Context-aware responses (only if message is generic/asking for help)
         // Exclude specific "what is" questions from context-aware responses
         const isSpecificWhatIs = (this.matches(message, ['what is', 'what\'s', 'explain']) && 
@@ -1524,6 +1536,164 @@ class PortfolioChatbot {
             'certificate': 'Ryan holds CTO certification and Hacker-X Ethical Hacking Course. [Open Certifications] to view certificates!'
         };
         return responses[topic] || 'I can help you learn about Ryan\'s portfolio. What would you like to know?';
+    }
+    
+    // Handle math/calculation questions
+    handleMathQuestion(message) {
+        // Pattern: "1+1", "2*3", "10/2", "5-3", "what is 1+1", "calculate 2*5", etc.
+        // Replace words with operators
+        let expression = message.trim();
+        expression = expression.replace(/\bplus\b/gi, '+');
+        expression = expression.replace(/\bminus\b/gi, '-');
+        expression = expression.replace(/\btimes\b|\bmultiplied\s+by\b/gi, '*');
+        expression = expression.replace(/\bdivided\s+by\b|\bdivide\b/gi, '/');
+        expression = expression.replace(/\bwhat\s+is\b|\bwhat's\b|\bcalculate\b|\bcompute\b|\bsolve\b|\bevaluate\b/gi, '');
+        expression = expression.replace(/\?/g, '');
+        expression = expression.trim();
+        
+        // Check if it looks like a math expression (numbers, operators, parentheses, spaces)
+        const mathRegex = /^[\d+\-*/().\s^]+$/;
+        if (!mathRegex.test(expression)) {
+            return null;
+        }
+        
+        // Try to evaluate using expr-eval library (if available) or safe eval
+        try {
+            let result;
+            
+            // Use expr-eval if available (safer)
+            if (typeof Parser !== 'undefined') {
+                const parser = new Parser();
+                // Replace ^ with ** for power
+                expression = expression.replace(/\^/g, '**');
+                result = parser.evaluate(expression);
+            } else {
+                // Fallback: Safe evaluation for simple expressions only
+                // Only allow numbers, operators, and parentheses
+                const safeExpression = expression.replace(/[^0-9+\-*/().\s]/g, '');
+                if (safeExpression !== expression.replace(/\s/g, '')) {
+                    return null; // Contains unsafe characters
+                }
+                // Use Function constructor (safer than eval)
+                result = Function('"use strict"; return (' + safeExpression + ')')();
+            }
+            
+            // Format result
+            const formattedResult = Number.isInteger(result) ? result : parseFloat(result.toFixed(10));
+            
+            return {
+                text: `**${expression}** = **${formattedResult}** 🧮\n\nI can help with:\n• Basic arithmetic (+, -, *, /)\n• Complex expressions\n• Powers (^ or **)\n\nTry asking: "What is 15 * 23?" or "Calculate 100 / 4"`,
+                suggestions: [
+                    "What is 2+2?",
+                    "Calculate 10*5",
+                    "What are your skills?",
+                    "Tell me about your AI work"
+                ]
+            };
+        } catch (error) {
+            // If evaluation fails, it's probably not a math question
+            return null;
+        }
+    }
+    
+    // Handle general knowledge questions
+    handleGeneralKnowledge(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        // Simple Q&A pairs
+        const knowledgeBase = {
+            // Math basics
+            'what is 1+1': '1 + 1 = **2** 🧮',
+            'what is 2+2': '2 + 2 = **4** 🧮',
+            'what is 1+1+1': '1 + 1 + 1 = **3** 🧮',
+            
+            // General knowledge
+            'what is the capital of': (msg) => {
+                const country = msg.replace(/what is the capital of/i, '').trim();
+                if (country) {
+                    const capitals = {
+                        'philippines': 'Manila',
+                        'usa': 'Washington D.C.',
+                        'united states': 'Washington D.C.',
+                        'japan': 'Tokyo',
+                        'china': 'Beijing',
+                        'uk': 'London',
+                        'united kingdom': 'London',
+                        'france': 'Paris',
+                        'germany': 'Berlin',
+                        'australia': 'Canberra',
+                        'canada': 'Ottawa'
+                    };
+                    const capital = capitals[country.toLowerCase()];
+                    return capital ? `The capital of ${country} is **${capital}** 🌍` : null;
+                }
+                return null;
+            },
+            
+            // Time/Date
+            'what time is it': () => {
+                const now = new Date();
+                return `It's **${now.toLocaleTimeString()}** 🕐`;
+            },
+            'what date is it': () => {
+                const now = new Date();
+                return `Today is **${now.toLocaleDateString()}** 📅`;
+            },
+            'what day is it': () => {
+                const now = new Date();
+                return `Today is **${now.toLocaleDateString('en-US', { weekday: 'long' })}** 📅`;
+            },
+            
+            // Simple facts
+            'how many days in a week': 'There are **7 days** in a week 📅',
+            'how many hours in a day': 'There are **24 hours** in a day ⏰',
+            'how many minutes in an hour': 'There are **60 minutes** in an hour ⏰',
+            'how many seconds in a minute': 'There are **60 seconds** in a minute ⏰',
+            
+            // Programming basics
+            'what is javascript': '**JavaScript** is a programming language used for web development. It runs in browsers and can also be used on servers (Node.js). Ryan uses JavaScript/TypeScript for full-stack development! 💻',
+            'what is python': '**Python** is a high-level programming language known for its simplicity. Ryan uses Python for AI/ML, data processing, and backend development! 🐍',
+            'what is html': '**HTML** (HyperText Markup Language) is the standard markup language for creating web pages. It structures content on the web! 🌐',
+            'what is css': '**CSS** (Cascading Style Sheets) is used to style and layout web pages. It makes websites look beautiful! 🎨',
+        };
+        
+        // Check exact matches first
+        if (knowledgeBase[lowerMessage]) {
+            const answer = typeof knowledgeBase[lowerMessage] === 'function' 
+                ? knowledgeBase[lowerMessage](message)
+                : knowledgeBase[lowerMessage];
+            if (answer) {
+                return {
+                    text: answer,
+                    suggestions: [
+                        "What are your skills?",
+                        "Tell me about your AI work",
+                        "What is 2+2?",
+                        "Help"
+                    ]
+                };
+            }
+        }
+        
+        // Check pattern matches
+        for (const [pattern, handler] of Object.entries(knowledgeBase)) {
+            if (typeof handler === 'function' && lowerMessage.includes(pattern)) {
+                const answer = handler(message);
+                if (answer) {
+                    return {
+                        text: answer,
+                        suggestions: [
+                            "What are your skills?",
+                            "Tell me about your AI work",
+                            "What is 2+2?",
+                            "Help"
+                        ]
+                    };
+                }
+            }
+        }
+        
+        return null;
     }
 }
 
