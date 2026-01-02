@@ -48,13 +48,7 @@ class PortfolioChatbot {
     processMessage(userMessage) {
         const lowerMessage = userMessage.toLowerCase().trim();
         
-        // Check for action commands first (e.g., "open ai lab", "show skills")
-        const actionResult = this.executeAction(lowerMessage);
-        if (actionResult) {
-            return actionResult;
-        }
-        
-        // Add user message to history
+        // Add user message to history FIRST (so action commands are also tracked)
         this.conversationHistory.push({
             role: 'user',
             message: userMessage,
@@ -66,6 +60,24 @@ class PortfolioChatbot {
         
         // Update conversation context
         this.updateConversationContext(lowerMessage);
+        
+        // Check for action commands (e.g., "open ai lab", "show skills")
+        const actionResult = this.executeAction(lowerMessage);
+        if (actionResult) {
+            // Store last response for multi-turn conversations
+            this.conversationContext.lastResponse = actionResult.text;
+            
+            // Add bot response to history
+            this.conversationHistory.push({
+                role: 'assistant',
+                message: actionResult.text,
+                suggestions: actionResult.suggestions || [],
+                timestamp: new Date().toISOString()
+            });
+            
+            this.saveHistory();
+            return actionResult;
+        }
 
         // Pattern matching for responses (now returns object with text and suggestions)
         let response = this.generateResponse(lowerMessage, context);
@@ -150,19 +162,23 @@ class PortfolioChatbot {
     executeAction(message) {
         // Action commands: "open", "show", "launch", "go to"
         if (this.matches(message, ['open', 'show', 'launch', 'go to', 'display'])) {
-            // Try to extract app name
+            // Try to extract app name - more flexible patterns
             const appPatterns = [
                 /(?:open|show|launch|go to|display)\s+(?:the\s+)?(.+?)(?:\s+app|\s+window)?$/i,
-                /(?:open|show|launch|go to|display)\s+(.+)/i
+                /(?:open|show|launch|go to|display)\s+(.+)/i,
+                /(?:open|show|launch|go to|display)\s+(.+?)(?:\s|$)/i
             ];
             
             for (const pattern of appPatterns) {
                 const match = message.match(pattern);
-                if (match) {
+                if (match && match[1]) {
                     const appName = match[1].trim();
                     const appId = this.mapAppNameToId(appName);
                     
                     if (appId) {
+                        // Update context to track this action
+                        this.conversationContext.lastTopic = appId;
+                        
                         // Execute action
                         setTimeout(() => {
                             if (window.openApp) {
@@ -185,7 +201,7 @@ class PortfolioChatbot {
         }
         
         // Download resume command
-        if (this.matches(message, ['download', 'get', 'show']) && this.matches(message, ['resume', 'cv'])) {
+        if (this.matches(message, ['download', 'get']) && this.matches(message, ['resume', 'cv'])) {
             // Trigger resume download (if implemented)
             return {
                 text: "You can download Ryan's resume from the [Open Resume] app! 📄",
@@ -201,23 +217,30 @@ class PortfolioChatbot {
     }
 
     mapAppNameToId(appName) {
+        if (!appName) return null;
+        
+        const normalizedName = appName.toLowerCase().trim();
         const appMap = {
             'about me': 'about',
             'about': 'about',
             'technical skills': 'skills',
             'tech stack': 'skills',
             'skills': 'skills',
+            'skill': 'skills',
             'expertise': 'skills',
             'work experience': 'experience',
             'experience': 'experience',
             'professional journey': 'experience',
+            'journey': 'experience',
             'projects': 'projects',
             'project': 'projects',
             'showcase': 'projects',
             'portfolio': 'projects',
             'certifications': 'certifications',
+            'certification': 'certifications',
             'certificate': 'certifications',
             'credentials': 'certifications',
+            'credential': 'certifications',
             'ai lab': 'ai-lab',
             'ai': 'ai-lab',
             'contact': 'contact',
@@ -228,7 +251,19 @@ class PortfolioChatbot {
             'snake game': 'snake'
         };
         
-        return appMap[appName.toLowerCase()] || null;
+        // Try exact match first
+        if (appMap[normalizedName]) {
+            return appMap[normalizedName];
+        }
+        
+        // Try partial match (e.g., "ai lab" in "open ai lab")
+        for (const [key, value] of Object.entries(appMap)) {
+            if (normalizedName.includes(key) || key.includes(normalizedName)) {
+                return value;
+            }
+        }
+        
+        return null;
     }
 
     getAppDisplayName(appId) {
@@ -378,8 +413,11 @@ class PortfolioChatbot {
         const activeApp = context.activeApp;
         const lastTopic = context.lastTopic;
         
-        // Context-aware responses
-        if (activeApp === 'ai-lab' && this.matches(message, ['help', 'what', 'tell me'])) {
+        // Context-aware responses (only if message is generic/asking for help)
+        const isGenericQuestion = this.matches(message, ['help', 'what', 'tell me', 'explain', 'describe']) && 
+                                 !this.matches(message, ['skill', 'experience', 'project', 'ai', 'certificate', 'contact', 'about']);
+        
+        if (activeApp === 'ai-lab' && isGenericQuestion) {
             return {
                 text: `Since you're viewing **AI Lab**, I can tell you about:\n\n📄 **Document Intelligence**: End-to-end pipelines for bank statement extraction\n👁️ **OCR Processing**: Advanced preprocessing with OpenCV\n💧 **Watermark Removal**: ML-based detection using RandomForest\n🧠 **LLM Integration**: Local LLM workflows with Ollama\n\n[Open AI Lab] to explore more!`,
                 suggestions: [
@@ -391,7 +429,7 @@ class PortfolioChatbot {
             };
         }
         
-        if (activeApp === 'skills' && this.matches(message, ['help', 'what', 'tell me'])) {
+        if (activeApp === 'skills' && isGenericQuestion) {
             return {
                 text: `You're viewing **Technical Skills**! Ryan specializes in:\n\n🤖 **AI/ML**: Document Intelligence, OCR, PDF processing, LLM Integration\n💻 **Full-Stack**: React, Next.js, Vue, Angular, Node.js, Python, FastAPI\n☁️ **DevOps**: AWS, Docker, Kubernetes, CI/CD\n\n[Open Technical Skills] to see the full list!`,
                 suggestions: [
@@ -602,7 +640,15 @@ class PortfolioChatbot {
                 "I'm not a real AI, but I play one in this portfolio! 😄",
                 "Did you know? Ryan has processed 10K+ documents with 94% OCR accuracy! That's impressive! 📄✨"
             ];
-            return jokes[Math.floor(Math.random() * jokes.length)];
+            return {
+                text: jokes[Math.floor(Math.random() * jokes.length)],
+                suggestions: [
+                    "Tell me more jokes",
+                    "What else can you do?",
+                    "Show me your skills",
+                    "Help"
+                ]
+            };
         }
 
         // Default response

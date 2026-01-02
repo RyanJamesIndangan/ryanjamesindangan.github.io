@@ -1450,11 +1450,18 @@ function addChatMessage(message, role, suggestions = []) {
     if (role === 'assistant' && suggestions && suggestions.length > 0) {
         suggestionsHTML = `
             <div class="ai-quick-replies">
-                ${suggestions.map(suggestion => `
-                    <button class="ai-quick-reply-btn" onclick="sendChatMessage('${suggestion.replace(/'/g, "\\'")}')">
-                        ${suggestion}
-                    </button>
-                `).join('')}
+                ${suggestions.map(suggestion => {
+                    // Escape quotes and HTML to prevent XSS and syntax errors
+                    const escapedSuggestion = suggestion
+                        .replace(/\\/g, '\\\\')
+                        .replace(/'/g, "\\'")
+                        .replace(/"/g, '&quot;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;');
+                    return `<button class="ai-quick-reply-btn" onclick="sendChatMessage('${escapedSuggestion}')">
+                        ${suggestion.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+                    </button>`;
+                }).join('')}
             </div>
         `;
     }
