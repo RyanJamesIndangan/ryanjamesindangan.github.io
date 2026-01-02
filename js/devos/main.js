@@ -1625,4 +1625,5 @@ function showAIAssistant() {
 window.closeAIAssistant = closeAIAssistant;
 window.showAIAssistant = showAIAssistant;
 window.minimizeAIAssistant = minimizeAIAssistant;
+window.openApp = openApp; // Make openApp globally available for chatbot actions
 
