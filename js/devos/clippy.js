@@ -56,25 +56,20 @@ class Clippy {
     }
     
     getClippySVG(pose = 'standard') {
-        // Map pose names to image files
+        // Only use poses that actually exist
+        // All other poses will fallback to clippy.png
         const poseMap = {
-            'standard': 'clippy-standard.png',
-            'sleeping': 'clippy-sleeping.png',
-            'atomic': 'clippy-atomic.png',
-            'number4': 'clippy-number4.png',
-            'headphones': 'clippy-headphones.png',
-            'checkmark': 'clippy-checkmark.png',
-            'surprised': 'clippy-surprised.png',
-            'box': 'clippy-box.png',
-            'squiggly': 'clippy-squiggly.png'
+            'standard': 'clippy.png'
+            // Note: Other poses (sleeping, atomic, etc.) don't exist as PNG files
+            // They will fallback to clippy.png via the || 'clippy.png' below
         };
         
-        const imageFile = poseMap[pose] || 'clippy-standard.png';
+        const imageFile = poseMap[pose] || 'clippy.png';
         const imagePath = `assets/clippy/${imageFile}`;
         
         return `
             <div class="clippy-character" title="It looks like you're trying to chat! Would you like help?">
-                <img src="${imagePath}" alt="Clippy" class="clippy-image" onerror="this.src='assets/clippy.png'" />
+                <img src="${imagePath}" alt="Clippy" class="clippy-image" onerror="this.src='assets/clippy/clippy.png'" />
             </div>
         `;
     }

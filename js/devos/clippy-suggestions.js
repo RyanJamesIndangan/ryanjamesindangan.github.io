@@ -346,7 +346,7 @@ class ClippySuggestions {
         
         container.innerHTML = `
             <div class="clippy-suggestion-clippy">
-                <img src="assets/clippy/clippy-standard.png" alt="Clippy" class="clippy-suggestion-image" onerror="this.src='assets/clippy.png'">
+                <img src="assets/clippy/clippy.png" alt="Clippy" class="clippy-suggestion-image" onerror="this.src='assets/clippy/clippy.png'">
             </div>
             <div class="clippy-suggestion-bubble">
                 <div class="clippy-suggestion-pointer"></div>

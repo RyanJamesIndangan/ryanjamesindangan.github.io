@@ -260,6 +260,10 @@ function showShutdownMenu(e) {
             
             switch(action) {
                 case 'shutdown':
+                    // Trigger Clippy animation
+                    if (window.desktopClippy && window.desktopClippy.trigger) {
+                        window.desktopClippy.trigger('shutdown');
+                    }
                     showShutdownAnimation(() => {
                         showNotification('Portfolio shutting down...', 'info', 2000);
                         setTimeout(() => {
@@ -273,9 +277,17 @@ function showShutdownMenu(e) {
                     setTimeout(() => location.reload(), 1500);
                     break;
                 case 'sleep':
+                    // Trigger Clippy animation
+                    if (window.desktopClippy && window.desktopClippy.trigger) {
+                        window.desktopClippy.trigger('sleep');
+                    }
                     showSleepMode();
                     break;
                 case 'lock':
+                    // Trigger Clippy animation
+                    if (window.desktopClippy && window.desktopClippy.trigger) {
+                        window.desktopClippy.trigger('lock');
+                    }
                     showLockScreen();
                     break;
                 case 'signout':
@@ -828,6 +840,19 @@ function openApp(appId, position = null) {
         );
     } else {
         console.error('WindowManager not initialized');
+    }
+    
+    // Trigger Clippy animation for specific app opens
+    if (window.desktopClippy && window.desktopClippy.trigger) {
+        const appEventMap = {
+            'ai-lab': 'app-open-ai-lab',
+            'projects': 'app-open-projects',
+            'terminal': 'app-open-terminal'
+        };
+        const event = appEventMap[appId];
+        if (event) {
+            window.desktopClippy.trigger(event);
+        }
     }
     
     // Initialize terminal if opened
@@ -2453,6 +2478,15 @@ window.sendChatMessage = function(messageText = null) {
     // Add user message
     addChatMessage(message, 'user');
     scrollChatToBottom();
+    
+    // Trigger deterministic animation for message sent (if desktop clippy exists)
+    if (role === 'user' && window.desktopClippy && window.desktopClippy.trigger) {
+        window.desktopClippy.trigger('message-sent');
+    }
+    // Trigger deterministic animation for assistant message
+    if (role === 'assistant' && window.desktopClippy && window.desktopClippy.trigger) {
+        window.desktopClippy.trigger('assistant-response');
+    }
 
     // Show typing indicator
     showTypingIndicator();
@@ -2854,7 +2888,7 @@ function showTypingIndicator() {
     const typingEl = document.createElement('div');
     typingEl.className = 'ai-message ai-message-assistant ai-typing-indicator';
     typingEl.innerHTML = `
-        <div class="ai-message-avatar"><img src="assets/clippy.png" alt="Clippy" class="clippy-avatar"></div>
+        <div class="ai-message-avatar"><img src="assets/clippy/clippy.png" alt="Clippy" class="clippy-avatar"></div>
         <div class="ai-message-content">
             <div class="ai-message-text ai-typing-text">
                 <span class="ai-typing-dot"></span>
@@ -2871,6 +2905,11 @@ function showTypingIndicator() {
 function hideTypingIndicator() {
     const chatMessages = document.getElementById('aiChatMessages');
     if (!chatMessages) return;
+    
+    // Trigger Clippy deterministic animation for typing end
+    if (window.desktopClippy && window.desktopClippy.trigger) {
+        window.desktopClippy.trigger('typing-ends');
+    }
     
     const typingEl = chatMessages.querySelector('.ai-typing-indicator');
     if (typingEl) {
@@ -2964,6 +3003,11 @@ function showAIAssistant() {
     // Focus input
     if (chatInput) {
         setTimeout(() => chatInput.focus(), 100);
+    }
+    
+    // Trigger deterministic animation for chat opening
+    if (window.desktopClippy && window.desktopClippy.trigger) {
+        window.desktopClippy.trigger('chat-opens');
     }
 }
 

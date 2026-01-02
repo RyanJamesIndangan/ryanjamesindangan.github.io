@@ -3310,6 +3310,140 @@ body {
 /* Light mode Clippy - Keep same colors */
 
 /* ===================================
+   Desktop Clippy (Roaming)
+   =================================== */
+
+.desktop-clippy {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    z-index: 50; /* Above desktop icons but below windows */
+    pointer-events: none;
+    user-select: none;
+    will-change: transform, left, top;
+    transition: left 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                top 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.desktop-clippy-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.desktop-clippy-image,
+.desktop-clippy-gif {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    transition: opacity 0.3s ease;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.desktop-clippy-gif {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Paper overlay for wrap/unwrap transitions */
+.desktop-clippy-paper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background: #fffef0;
+    border: 2px solid #f0e68c;
+    border-radius: 8px;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: none;
+}
+
+/* Wrap animation */
+.desktop-clippy-inner.clippy-wrap .desktop-clippy-paper {
+    animation: clippyWrap 0.4s ease-out forwards;
+}
+
+@keyframes clippyWrap {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1) rotate(5deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+/* Unwrap animation */
+.desktop-clippy-inner.clippy-unwrap .desktop-clippy-paper {
+    animation: clippyUnwrap 0.4s ease-out forwards;
+}
+
+@keyframes clippyUnwrap {
+    0% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1) rotate(-5deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+}
+
+/* Hop animation for movement */
+.desktop-clippy.clippy-hop {
+    animation: clippyHop 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes clippyHop {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(3deg);
+    }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .desktop-clippy {
+        animation: none !important;
+    }
+    
+    .desktop-clippy-inner.clippy-wrap .desktop-clippy-paper,
+    .desktop-clippy-inner.clippy-unwrap .desktop-clippy-paper {
+        animation: none !important;
+        display: none !important;
+    }
+    
+    .desktop-clippy.clippy-hop {
+        animation: none !important;
+    }
+}
+
+/* ===================================
    Clippy Suggestions System
    =================================== */
 
