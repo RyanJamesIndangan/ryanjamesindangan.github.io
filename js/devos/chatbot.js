@@ -505,6 +505,33 @@ class PortfolioChatbot {
             };
         }
         
+        // Check for name-related questions (before other "what is" patterns)
+        // Use regex to match "what is my name" / "what's my name" / "do you know my name" etc.
+        const nameQuestionPattern = /(?:what\s+(?:is|'s)\s+my\s+name|what\s+my\s+name|do\s+you\s+know\s+my\s+name|remember\s+my\s+name|what\s+did\s+i\s+say\s+my\s+name|what\s+name\s+did\s+i\s+give)/i;
+        if (nameQuestionPattern.test(message)) {
+            if (this.userName) {
+                return {
+                    text: `Your name is **${this.userName}**! 👋 I remember you from when you introduced yourself. How can I help you today?`,
+                    suggestions: [
+                        "What are your skills?",
+                        "Tell me about your AI work",
+                        "Show me your experience",
+                        "What projects have you built?"
+                    ]
+                };
+            } else {
+                return {
+                    text: `I don't think you've told me your name yet! 😊\n\nYou can introduce yourself by saying:\n• "My name is [Your Name]"\n• "I'm [Your Name]"\n• "Call me [Your Name]"\n\nOnce you tell me, I'll remember it!`,
+                    suggestions: [
+                        "My name is...",
+                        "What are your skills?",
+                        "Tell me about your AI work",
+                        "Help"
+                    ]
+                };
+            }
+        }
+        
         // Multi-turn conversation handling
         if (this.matches(message, ['tell me more', 'more', 'expand', 'details', 'and', 'what else'])) {
             if (lastTopic === 'ai') {
@@ -833,14 +860,14 @@ class PortfolioChatbot {
     }
     
     extractAndSaveName(message) {
-        const lowerMessage = message.toLowerCase();
         let extractedName = null;
         
         // Patterns: "my name is X", "I'm X", "I am X", "call me X", "name is X"
+        // Use [a-zA-Z] to explicitly match both cases, or use \w for word characters
         const patterns = [
-            /(?:my\s+name\s+is|i'?m|i\s+am|call\s+me|name\s+is)\s+([a-z]+(?:\s+[a-z]+)*)/i,
-            /(?:hi|hello|hey),?\s+(?:my\s+name\s+is|i'?m|i\s+am|call\s+me)\s+([a-z]+(?:\s+[a-z]+)*)/i,
-            /(?:hi|hello|hey),?\s+([a-z]+)(?:\s+here)?$/i
+            /(?:my\s+name\s+is|i'?m|i\s+am|call\s+me|name\s+is)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)/i,
+            /(?:hi|hello|hey),?\s+(?:my\s+name\s+is|i'?m|i\s+am|call\s+me)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)/i,
+            /(?:hi|hello|hey),?\s+([a-zA-Z]+)(?:\s+here)?$/i
         ];
         
         for (const pattern of patterns) {
@@ -848,10 +875,15 @@ class PortfolioChatbot {
             if (match && match[1]) {
                 extractedName = match[1].trim();
                 // Filter out common words that aren't names
-                const notName = ['hi', 'hello', 'hey', 'there', 'here', 'this', 'that', 'the', 'a', 'an'];
-                if (!notName.includes(extractedName.toLowerCase()) && extractedName.length > 1) {
-                    this.saveUserName(extractedName);
-                    return extractedName;
+                const notName = ['hi', 'hello', 'hey', 'there', 'here', 'this', 'that', 'the', 'a', 'an', 'is', 'am', 'are'];
+                const lowerName = extractedName.toLowerCase();
+                if (!notName.includes(lowerName) && extractedName.length > 1) {
+                    // Capitalize first letter of each word
+                    const capitalizedName = extractedName.split(' ').map(word => 
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ');
+                    this.saveUserName(capitalizedName);
+                    return capitalizedName;
                 }
             }
         }
