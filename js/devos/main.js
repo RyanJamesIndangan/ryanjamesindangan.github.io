@@ -790,29 +790,38 @@ function initializeContextMenu() {
     window.closeContextMenu = () => {
         const menu = document.getElementById('contextMenu');
         if (menu) {
+            console.log('Closing context menu'); // Debug
+            // Remove active class
             menu.classList.remove('active');
-            // Reset inline styles
+            // Clear all inline styles (including position)
             menu.style.cssText = '';
-            // Re-apply base styles
-            menu.style.position = 'fixed';
-            menu.style.opacity = '0';
-            menu.style.visibility = 'hidden';
+            // Force hide with important styles
+            menu.style.setProperty('opacity', '0', 'important');
+            menu.style.setProperty('visibility', 'hidden', 'important');
+            menu.style.setProperty('display', 'none', 'important');
+            menu.style.setProperty('pointer-events', 'none', 'important');
+            menu.style.setProperty('z-index', '-1', 'important');
         }
     };
     
     const closeContextMenu = window.closeContextMenu;
     
-    // Close context menu on click outside (but exclude context items)
-    document.addEventListener('click', (e) => {
-        // Don't close if clicking on context menu or its items
-        if (e.target.closest('.context-menu') || e.target.closest('.context-item')) {
-            return;
+    // Close context menu on click outside
+    let clickHandler = (e) => {
+        // Check if click is outside context menu
+        if (!contextMenu.contains(e.target) && !e.target.closest('.context-menu')) {
+            // Only close if menu is active
+            if (contextMenu.classList.contains('active') || 
+                window.getComputedStyle(contextMenu).visibility === 'visible' ||
+                window.getComputedStyle(contextMenu).opacity !== '0') {
+                console.log('Click outside detected, closing menu');
+                closeContextMenu();
+            }
         }
-        // Close if clicking outside the context menu
-        if (contextMenu.classList.contains('active')) {
-            closeContextMenu();
-        }
-    }, true); // Use capture phase
+    };
+    
+    // Use capture phase and make sure it runs
+    document.addEventListener('click', clickHandler, true);
     
     // Close context menu on Escape key
     document.addEventListener('keydown', (e) => {
@@ -835,16 +844,15 @@ function initializeContextMenu() {
         item.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
-            e.stopImmediatePropagation(); // Prevent other handlers from running
             
             const action = item.dataset.action;
             
-            // Close menu immediately - no delay
+            // Close menu FIRST, immediately
+            console.log('Context item clicked:', action);
             closeContextMenu();
             
-            // Small delay to ensure menu closes visually before action
-            requestAnimationFrame(() => {
-                // Execute action
+            // Execute action after menu closes
+            setTimeout(() => {
                 switch(action) {
                 case 'refresh':
                     showNotification('Refreshing desktop...', 'info', 1000);
@@ -878,8 +886,8 @@ function initializeContextMenu() {
                     showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
                     break;
                 }
-            });
-        }, { once: true }); // Only handle once
+            }, 10); // Small delay to ensure menu closes
+        });
     });
 }
 
