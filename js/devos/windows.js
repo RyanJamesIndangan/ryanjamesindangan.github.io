@@ -69,10 +69,11 @@ class WindowManager {
                 const useTwoColumnLayout = isSmallLaptop || isLaptop;
                 
                 // Mixed layout: Left column split (About Me top, Skills bottom), 
-                // Center and Right columns full height (Experience, Certifications)
-                const fullHeightApps = ['experience', 'certifications'];
+                // Center column split (Experience top, Projects bottom),
+                // Right column full height (Certifications)
+                const fullHeightApps = ['certifications'];
                 const isFullHeight = fullHeightApps.includes(appId);
-                const isMixedLayout = isFullHeight || appId === 'about' || appId === 'skills';
+                const isMixedLayout = isFullHeight || appId === 'about' || appId === 'skills' || appId === 'experience' || appId === 'projects';
                 
                 if (isMixedLayout && !useTwoColumnLayout) {
                     // 3-column layout for large screens (original behavior)
@@ -80,10 +81,14 @@ class WindowManager {
                     const centerColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
                     const rightColumnWidth = (desktopWidth / 3) - (gap * 4 / 3);
                     const fullHeight = desktopHeight - (gap * 2);
-                    // About Me takes 35% of height, Skills takes the rest to align bottom with center column
+                    // About Me takes 35% of height, Skills takes the rest
                     const aboutMeHeight = desktopHeight * 0.35 - gap;
                     const skillsTop = desktopHeight * 0.35 + gap;
-                    const skillsHeight = (desktopHeight - gap) - skillsTop; // Aligns bottom with center column
+                    const skillsHeight = (desktopHeight - gap) - skillsTop;
+                    // Experience takes 50% of height, Projects takes the rest
+                    const experienceHeight = desktopHeight * 0.5 - gap;
+                    const projectsTop = desktopHeight * 0.5 + gap;
+                    const projectsHeight = (desktopHeight - gap) - projectsTop;
                     
                     switch(position) {
                         case 'top-left':
@@ -95,7 +100,7 @@ class WindowManager {
                             windowEl.dataset.position = position;
                             break;
                         case 'bottom-left':
-                            // Skills - fills remaining height, bottom aligned with center column
+                            // Skills - fills remaining height in left column
                             windowEl.style.left = `${leftOffset + gap}px`;
                             windowEl.style.top = `${skillsTop}px`;
                             windowEl.style.width = `${leftColumnWidth}px`;
@@ -103,11 +108,19 @@ class WindowManager {
                             windowEl.dataset.position = position;
                             break;
                         case 'top-center':
-                            // Experience - full height in center column
+                            // Experience - 50% height in center column
                             windowEl.style.left = `${leftOffset + desktopWidth / 3 + gap}px`;
                             windowEl.style.top = `${gap}px`;
                             windowEl.style.width = `${centerColumnWidth}px`;
-                            windowEl.style.height = `${fullHeight}px`;
+                            windowEl.style.height = `${experienceHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'bottom-center':
+                            // Projects - fills remaining height in center column
+                            windowEl.style.left = `${leftOffset + desktopWidth / 3 + gap}px`;
+                            windowEl.style.top = `${projectsTop}px`;
+                            windowEl.style.width = `${centerColumnWidth}px`;
+                            windowEl.style.height = `${projectsHeight}px`;
                             windowEl.dataset.position = position;
                             break;
                         case 'top-right':
@@ -151,12 +164,21 @@ class WindowManager {
                             windowEl.style.height = `${halfHeight}px`;
                             windowEl.dataset.position = position;
                             break;
-                        case 'top-right':
-                            // Certifications - bottom half of right column
+                        case 'bottom-center':
+                            // Projects - bottom half of right column (in 2-column layout)
                             windowEl.style.left = `${leftOffset + desktopWidth / 2 + gap}px`;
                             windowEl.style.top = `${halfHeight + gap * 2}px`;
                             windowEl.style.width = `${rightColumnWidth}px`;
                             windowEl.style.height = `${halfHeight}px`;
+                            windowEl.dataset.position = position;
+                            break;
+                        case 'top-right':
+                            // Certifications - full height in separate position for 2-column
+                            // For 2-column, we'll stack it differently or use a different approach
+                            windowEl.style.left = `${leftOffset + gap}px`;
+                            windowEl.style.top = `${gap}px`;
+                            windowEl.style.width = `${leftColumnWidth}px`;
+                            windowEl.style.height = `${fullHeight}px`;
                             windowEl.dataset.position = position;
                             break;
                     }
