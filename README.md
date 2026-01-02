@@ -3,7 +3,7 @@
 [![Live Site](https://img.shields.io/badge/Live-Site-success)](https://ryanjamesindangan.github.io)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-An interactive **Windows 7-inspired portfolio website** showcasing my work as a Full-Stack Developer with 7+ years of experience in web development, cloud architecture, and team leadership. Experience a nostalgic desktop environment with authentic Windows 7 Aero Glass effects, functional windows, taskbar, and desktop icons.
+An interactive **Windows 7-inspired portfolio website** showcasing my work as a Full-Stack Developer with 8+ years of experience in web development, cloud architecture, and team leadership. Experience a nostalgic desktop environment with authentic Windows 7 Aero Glass effects, functional windows, taskbar, and desktop icons.
 
 ## 🌐 Live Demo
 
