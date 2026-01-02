@@ -40,15 +40,9 @@ class MobileEnhancements {
         // Populate drawer with apps
         this.populateMobileDrawer();
 
-        // Open drawer when start button is clicked on mobile
-        const startButton = document.getElementById('startButton');
-        if (startButton) {
-            startButton.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    this.openMobileDrawer();
-                }
-            });
-        }
+        // Don't intercept start button - let the normal start menu work
+        // The mobile drawer can be opened via a different method if needed
+        // For now, we'll use the normal start menu on mobile too
 
         // Close button
         document.getElementById('mobileDrawerClose')?.addEventListener('click', () => {

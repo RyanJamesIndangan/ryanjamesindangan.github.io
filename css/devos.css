@@ -1970,6 +1970,27 @@ body {
         width: 100% !important;
         height: calc(100vh - var(--taskbar-height)) !important;
         border-radius: 0;
+        max-width: 100% !important;
+        max-height: calc(100vh - var(--taskbar-height)) !important;
+    }
+
+    .window-title-bar {
+        padding: 12px 16px;
+        font-size: 1rem;
+    }
+
+    .window-title {
+        font-size: 1rem;
+    }
+
+    .window-buttons {
+        gap: 8px;
+    }
+
+    .window-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
     }
 
     /* Larger window content padding */
@@ -2016,12 +2037,24 @@ body {
         left: 0;
         right: 0;
         width: 100%;
-        max-height: 75vh;
+        max-height: 85vh;
         border-radius: 16px 16px 0 0;
+        bottom: calc(var(--taskbar-height) + 2px);
+        display: flex;
+        flex-direction: row;
+    }
+
+    .start-menu-left {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .start-menu-right {
+        display: none; /* Hide right panel on mobile for simplicity */
     }
 
     .start-menu-header {
-        padding: 24px;
+        padding: 20px;
     }
 
     .user-avatar {
@@ -2847,21 +2880,22 @@ body {
 /* AI Assistant Toggle Button */
 .ai-assistant-toggle {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px;
     right: 20px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
     background: linear-gradient(135deg, #64ffda 0%, #4ade80 100%);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(100, 255, 218, 0.3);
+        0 4px 16px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(100, 255, 218, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     cursor: pointer;
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 499;
+    z-index: 501;
     transition: all 0.3s ease;
     animation: pulse 2s ease-in-out infinite;
 }

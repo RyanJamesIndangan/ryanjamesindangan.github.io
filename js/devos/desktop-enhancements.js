@@ -101,7 +101,9 @@ class DesktopEnhancements {
     }
 
     initWallpaperEffects() {
-        // Add subtle parallax effect to wallpaper
+        // Disable parallax effect - it was too distracting
+        // If you want a subtle effect, uncomment and reduce the multiplier (e.g., * 2 instead of * 20)
+        /*
         const wallpaper = document.querySelector('.wallpaper');
         if (!wallpaper || window.innerWidth <= 768) return;
 
@@ -111,8 +113,8 @@ class DesktopEnhancements {
         let targetY = 0;
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
-            mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2; // Reduced from 20 to 2
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2; // Reduced from 20 to 2
         });
 
         const animate = () => {
@@ -124,6 +126,7 @@ class DesktopEnhancements {
         };
         
         animate();
+        */
     }
 }
 
