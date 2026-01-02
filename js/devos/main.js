@@ -593,13 +593,33 @@ function initializeContextMenu() {
             
             switch(action) {
                 case 'refresh':
-                    location.reload();
+                    showNotification('Refreshing desktop...', 'info', 1000);
+                    setTimeout(() => location.reload(), 500);
                     break;
                 case 'view-code':
                     window.open('https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', '_blank');
+                    showNotification('Opening GitHub repository...', 'success');
+                    break;
+                case 'show-all-windows':
+                    // Restore all minimized windows
+                    window.windowManager?.windows.forEach((windowEl, appId) => {
+                        if (windowEl.classList.contains('minimized')) {
+                            window.windowManager.minimizeWindow(appId);
+                        }
+                    });
+                    showNotification('All windows restored', 'success');
+                    break;
+                case 'minimize-all':
+                    window.keyboardShortcuts?.showDesktop();
+                    showNotification('All windows minimized', 'info');
+                    break;
+                case 'change-wallpaper':
+                    if (window.wallpaperSelector) {
+                        window.wallpaperSelector.showWallpaperMenu();
+                    }
                     break;
                 case 'about-portfolio':
-                    alert('Interactive Portfolio v2.0.0\n\nBuilt by Ryan James Indangan\nFull-Stack Developer & Certified CTO\n\nA unique OS-style portfolio experience');
+                    showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
                     break;
             }
         });
@@ -952,63 +972,72 @@ function initializeGitHubStats() {
     const githubStats = document.getElementById('githubStats');
     
     githubStats.addEventListener('click', () => {
-        showNotification('GitHub: 50+ projects | Top Rated on Upwork');
+        showNotification('GitHub: 50+ projects | Top Rated on Upwork', 'success');
     });
 }
 
 // ===========================
-// Notification System
+// Enhanced Notification System
 // ===========================
-function showNotification(message) {
+function showNotification(message, type = 'info', duration = 3000) {
+    // Remove existing notifications
+    document.querySelectorAll('.notification-toast').forEach(n => n.remove());
+    
     const notification = document.createElement('div');
+    notification.className = 'notification-toast';
+    
+    const icons = {
+        info: 'ℹ️',
+        success: '✓',
+        warning: '⚠️',
+        error: '✕'
+    };
+    
+    const colors = {
+        info: '#64ffda',
+        success: '#4caf50',
+        warning: '#ffb900',
+        error: '#ef4444'
+    };
+    
+    notification.innerHTML = `
+        <div class="notification-icon">${icons[type] || icons.info}</div>
+        <div class="notification-message">${message}</div>
+        <button class="notification-close" onclick="this.parentElement.remove()">×</button>
+    `;
+    
     notification.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
         padding: 1rem 1.5rem;
-        background: rgba(30, 36, 66, 0.95);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(100, 255, 218, 0.3);
+        background: rgba(30, 36, 66, 0.98);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid ${colors[type] || colors.info}40;
+        border-left: 3px solid ${colors[type] || colors.info};
         border-radius: 8px;
-        color: #64ffda;
+        color: ${colors[type] || colors.info};
         z-index: 10000;
-        animation: slideIn 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 300px;
+        max-width: 400px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px ${colors[type] || colors.info}20;
+        animation: notificationSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     `;
-    notification.textContent = message;
     
     document.body.appendChild(notification);
     
+    // Auto-remove after duration
     setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
+        notification.style.animation = 'notificationSlideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    }, duration);
 }
 
-// Add CSS animations for notifications
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
+// Enhanced notification styles (CSS is in devos.css)
 
 // ===========================
 // Keyboard Shortcuts
@@ -1143,7 +1172,7 @@ function autoOpenApps() {
     
     if (isMobile) {
         // On mobile, just show a welcome notification
-        showNotification('👋 Welcome! Tap Menu to explore');
+        showNotification('👋 Welcome! Tap Menu to explore', 'info');
         return;
     }
     
@@ -1170,7 +1199,7 @@ function autoOpenApps() {
     
     // Show welcome notification
     setTimeout(() => {
-        showNotification('✨ Portfolio ready! Explore each section');
+        showNotification('✨ Portfolio ready! Explore each section', 'success');
     }, 1200);
 }
 

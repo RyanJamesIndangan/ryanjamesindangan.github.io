@@ -246,6 +246,11 @@ class WindowManager {
         document.getElementById('windowsContainer').appendChild(windowEl);
         this.windows.set(appId, windowEl);
 
+        // Initial state for animation
+        windowEl.style.opacity = '0';
+        windowEl.style.transform = 'scale(0.9) translateY(20px)';
+        windowEl.style.transition = 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+
         // Add event listeners
         this.attachWindowEvents(windowEl, appId);
         
@@ -262,10 +267,16 @@ class WindowManager {
             }, 100);
         }
 
-        // Animate window in
-        setTimeout(() => {
-            windowEl.style.opacity = '1';
-        }, 10);
+        // Animate window in with smooth entrance
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                windowEl.style.opacity = '1';
+                windowEl.style.transform = 'scale(1) translateY(0)';
+                setTimeout(() => {
+                    windowEl.style.transition = '';
+                }, 300);
+            });
+        });
     }
 
     attachWindowEvents(windowEl, appId) {
@@ -399,6 +410,12 @@ class WindowManager {
         windowEl.style.zIndex = ++this.zIndex;
         this.activeWindow = windowEl;
         
+        // Add focus animation
+        windowEl.classList.add('focus-animate');
+        setTimeout(() => {
+            windowEl.classList.remove('focus-animate');
+        }, 300);
+        
         // Update taskbar - remove active from all, add to current
         document.querySelectorAll('.taskbar-app').forEach(btn => {
             btn.classList.remove('active');
@@ -413,8 +430,10 @@ class WindowManager {
         const windowEl = this.windows.get(appId);
         if (!windowEl) return;
 
+        // Smooth close animation
+        windowEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
         windowEl.style.opacity = '0';
-        windowEl.style.transform = 'scale(0.9)';
+        windowEl.style.transform = 'scale(0.95) translateY(10px)';
         
         setTimeout(() => {
             windowEl.remove();
@@ -584,6 +603,21 @@ class WindowManager {
             <span class="app-name">${title.length > 20 ? title.substring(0, 18) + '...' : title}</span>
         `;
         
+        // Add hover preview functionality
+        let previewTimeout;
+        button.addEventListener('mouseenter', () => {
+            if (window.innerWidth > 768) {
+                previewTimeout = setTimeout(() => {
+                    this.showWindowPreview(appId, button);
+                }, 500);
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            clearTimeout(previewTimeout);
+            this.hideWindowPreview();
+        });
+        
         button.addEventListener('click', () => {
             const windowEl = this.windows.get(appId);
             if (!windowEl) return;
@@ -605,6 +639,56 @@ class WindowManager {
         });
         
         taskbarApps.appendChild(button);
+    }
+
+    showWindowPreview(appId, button) {
+        const windowEl = this.windows.get(appId);
+        if (!windowEl || windowEl.classList.contains('minimized')) return;
+
+        // Remove existing preview
+        this.hideWindowPreview();
+
+        // Create preview element
+        const preview = document.createElement('div');
+        preview.className = 'window-preview';
+        preview.id = 'windowPreview';
+        
+        const buttonRect = button.getBoundingClientRect();
+        const previewWidth = 300;
+        const previewHeight = 200;
+        
+        preview.style.left = `${buttonRect.left + (buttonRect.width / 2) - (previewWidth / 2)}px`;
+        preview.style.bottom = `${window.innerHeight - buttonRect.top + 8}px`;
+        preview.style.width = `${previewWidth}px`;
+        preview.style.height = `${previewHeight}px`;
+        
+        // Capture window content (simplified preview)
+        const windowTitle = windowEl.querySelector('.window-title')?.textContent || '';
+        const windowContent = windowEl.querySelector('.window-content');
+        
+        preview.innerHTML = `
+            <div class="window-preview-header">${windowTitle}</div>
+            <div class="window-preview-content">
+                <div class="window-preview-placeholder">${windowEl.querySelector('.window-title-icon')?.textContent || '📄'}</div>
+            </div>
+        `;
+        
+        document.body.appendChild(preview);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            preview.style.opacity = '1';
+            preview.style.transform = 'translateY(0) scale(1)';
+        });
+    }
+
+    hideWindowPreview() {
+        const preview = document.getElementById('windowPreview');
+        if (preview) {
+            preview.style.opacity = '0';
+            preview.style.transform = 'translateY(10px) scale(0.95)';
+            setTimeout(() => preview.remove(), 200);
+        }
     }
 
     updateWindowDrag() {
