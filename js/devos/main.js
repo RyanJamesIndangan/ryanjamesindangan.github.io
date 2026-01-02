@@ -144,6 +144,7 @@ function initializeSystemTray() {
 function initializeStartMenu() {
     const startButton = document.getElementById('startButton');
     const startMenu = document.getElementById('startMenu');
+    const shutdownBtn = document.querySelector('.shutdown-btn');
     
     startButton.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -158,6 +159,246 @@ function initializeStartMenu() {
             startButton.classList.remove('active');
         }
     });
+    
+    // Shutdown button - show menu
+    if (shutdownBtn) {
+        shutdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            showShutdownMenu(e);
+        });
+    }
+}
+
+// Shutdown Menu
+function showShutdownMenu(e) {
+    // Remove existing menu if any
+    const existingMenu = document.querySelector('.shutdown-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+    
+    const menu = document.createElement('div');
+    menu.className = 'shutdown-menu';
+    menu.innerHTML = `
+        <div class="shutdown-menu-item" data-action="shutdown">
+            <span class="shutdown-icon">⏻</span>
+            <div>
+                <div class="shutdown-title">Shut down</div>
+                <div class="shutdown-desc">Close the portfolio</div>
+            </div>
+        </div>
+        <div class="shutdown-menu-item" data-action="restart">
+            <span class="shutdown-icon">↻</span>
+            <div>
+                <div class="shutdown-title">Restart</div>
+                <div class="shutdown-desc">Reload the page</div>
+            </div>
+        </div>
+        <div class="shutdown-menu-item" data-action="sleep">
+            <span class="shutdown-icon">🌙</span>
+            <div>
+                <div class="shutdown-title">Sleep</div>
+                <div class="shutdown-desc">Dim the screen</div>
+            </div>
+        </div>
+        <div class="shutdown-menu-item" data-action="lock">
+            <span class="shutdown-icon">🔒</span>
+            <div>
+                <div class="shutdown-title">Lock</div>
+                <div class="shutdown-desc">Show lock screen</div>
+            </div>
+        </div>
+        <div class="shutdown-menu-item" data-action="signout">
+            <span class="shutdown-icon">👤</span>
+            <div>
+                <div class="shutdown-title">Sign out</div>
+                <div class="shutdown-desc">Clear session data</div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(menu);
+    
+    // Position menu above shutdown button
+    const rect = e.target.closest('.shutdown-btn')?.getBoundingClientRect();
+    if (rect) {
+        const menuWidth = 220;
+        const menuHeight = 280;
+        let left = rect.left - menuWidth;
+        let top = rect.top - menuHeight;
+        
+        // Ensure menu doesn't go off-screen
+        if (left < 10) left = 10;
+        if (top < 10) top = rect.bottom + 10;
+        if (left + menuWidth > window.innerWidth - 10) {
+            left = window.innerWidth - menuWidth - 10;
+        }
+        
+        menu.style.left = `${left}px`;
+        menu.style.top = `${top}px`;
+    } else {
+        // Fallback positioning
+        menu.style.right = '20px';
+        menu.style.bottom = '60px';
+    }
+    
+    // Animate in
+    setTimeout(() => menu.classList.add('active'), 10);
+    
+    // Handle menu item clicks
+    menu.querySelectorAll('.shutdown-menu-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const action = item.dataset.action;
+            menu.remove();
+            
+            switch(action) {
+                case 'shutdown':
+                    showShutdownAnimation(() => {
+                        showNotification('Portfolio shutting down...', 'info', 2000);
+                        setTimeout(() => {
+                            document.body.style.opacity = '0';
+                            setTimeout(() => location.reload(), 500);
+                        }, 2000);
+                    });
+                    break;
+                case 'restart':
+                    showNotification('Restarting portfolio...', 'info', 1500);
+                    setTimeout(() => location.reload(), 1500);
+                    break;
+                case 'sleep':
+                    showSleepMode();
+                    break;
+                case 'lock':
+                    showLockScreen();
+                    break;
+                case 'signout':
+                    clearAllSessionData();
+                    showNotification('Signed out. Session cleared.', 'info', 2000);
+                    setTimeout(() => location.reload(), 2000);
+                    break;
+            }
+        });
+    });
+    
+    // Close on outside click
+    const closeOnOutsideClick = (e) => {
+        if (!menu.contains(e.target) && !e.target.closest('.shutdown-btn')) {
+            menu.remove();
+            document.removeEventListener('click', closeOnOutsideClick);
+        }
+    };
+    setTimeout(() => {
+        document.addEventListener('click', closeOnOutsideClick);
+    }, 100);
+    
+    // Close on Escape
+    const closeOnEscape = (e) => {
+        if (e.key === 'Escape') {
+            menu.remove();
+            document.removeEventListener('keydown', closeOnEscape);
+        }
+    };
+    document.addEventListener('keydown', closeOnEscape);
+}
+
+function showShutdownAnimation(callback) {
+    const overlay = document.createElement('div');
+    overlay.className = 'shutdown-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #fff;
+        font-family: 'Segoe UI', sans-serif;
+    `;
+    overlay.innerHTML = `
+        <div style="font-size: 3rem; margin-bottom: 1rem;">⏻</div>
+        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">Shutting down...</div>
+        <div style="font-size: 0.9rem; opacity: 0.7;">Please wait</div>
+    `;
+    document.body.appendChild(overlay);
+    
+    setTimeout(() => {
+        if (callback) callback();
+    }, 1000);
+}
+
+function showSleepMode() {
+    const overlay = document.createElement('div');
+    overlay.className = 'sleep-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 999998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.9;
+    `;
+    document.body.appendChild(overlay);
+    
+    showNotification('Sleep mode activated. Click anywhere to wake up.', 'info', 3000);
+    
+    overlay.addEventListener('click', () => {
+        overlay.style.transition = 'opacity 0.5s';
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 500);
+    });
+}
+
+function showLockScreen() {
+    const overlay = document.createElement('div');
+    overlay.className = 'lock-overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        z-index: 999997;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #fff;
+        font-family: 'Segoe UI', sans-serif;
+    `;
+    overlay.innerHTML = `
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
+        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">Portfolio Locked</div>
+        <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 2rem;">Click anywhere to unlock</div>
+        <div style="font-size: 2rem; animation: pulse 2s infinite;">👆</div>
+    `;
+    document.body.appendChild(overlay);
+    
+    overlay.addEventListener('click', () => {
+        overlay.style.transition = 'opacity 0.5s, transform 0.5s';
+        overlay.style.opacity = '0';
+        overlay.style.transform = 'scale(0.95)';
+        setTimeout(() => overlay.remove(), 500);
+        showNotification('Portfolio unlocked', 'success', 2000);
+    });
+}
+
+function clearAllSessionData() {
+    // Clear all localStorage data
+    localStorage.clear();
+    showNotification('All session data cleared', 'info', 2000);
 }
 
 // ===========================
@@ -637,6 +878,39 @@ function openApp(appId, position = null) {
             updateExperienceYears();
         }, 200);
     }
+    
+    // Initialize easter eggs app if opened
+    if (appId === 'easter-eggs') {
+        setTimeout(() => {
+            initializeEasterEggsApp();
+        }, 100);
+    }
+}
+
+// Initialize Easter Eggs App
+function initializeEasterEggsApp() {
+    // Try Konami Code button
+    const tryKonamiBtn = document.querySelector('.try-konami-btn');
+    if (tryKonamiBtn) {
+        tryKonamiBtn.addEventListener('click', () => {
+            if (window.easterEggs) {
+                window.easterEggs.activateKonamiCode();
+                showNotification('🎉 Konami Code activated!', 'success', 3000);
+            }
+        });
+    }
+    
+    // Console hint button
+    const consoleHintBtn = document.querySelector('.open-console-hint-btn');
+    if (consoleHintBtn) {
+        consoleHintBtn.addEventListener('click', () => {
+            showNotification('💡 Open browser console (F12) to see the hint!', 'info', 4000);
+            // Also log it to console if available
+            if (console && console.log) {
+                console.log('%cTry the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', 'font-size: 12px; color: #fbbf24;');
+            }
+        });
+    }
 }
 
 // ===========================
@@ -859,7 +1133,7 @@ function initializeContextMenu() {
             
             // Execute action after menu closes
             setTimeout(() => {
-                switch(action) {
+            switch(action) {
                 case 'refresh':
                     showNotification('Refreshing desktop...', 'info', 1000);
                     setTimeout(() => location.reload(), 500);
@@ -891,7 +1165,7 @@ function initializeContextMenu() {
                 case 'about-portfolio':
                     showNotification('Portfolio OS v3.0 | Built by Ryan James Indangan | AI/ML Focus', 'info', 4000);
                     break;
-                }
+            }
             }, 10); // Small delay to ensure menu closes
         });
     });
@@ -916,15 +1190,15 @@ function initializeTerminal() {
         help: () => `
 Available commands:
   General:
-    about       - Display information about me
-    skills      - List technical skills
-    experience  - Show work experience
-    projects    - Display featured projects
-    contact     - Show contact information
-    clear       - Clear terminal screen
-    github      - Open GitHub profile
-    linkedin    - Open LinkedIn profile
-    help        - Show this help message
+  about       - Display information about me
+  skills      - List technical skills
+  experience  - Show work experience
+  projects    - Display featured projects
+  contact     - Show contact information
+  clear       - Clear terminal screen
+  github      - Open GitHub profile
+  linkedin    - Open LinkedIn profile
+  help        - Show this help message
     
   AI/ML Commands:
     ai-about    - AI-focused professional summary

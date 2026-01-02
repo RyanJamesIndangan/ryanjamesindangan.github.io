@@ -600,8 +600,13 @@ class PortfolioChatbot {
         const nameQuestionPattern = /(?:what\s+(?:is|'s)\s+my\s+name|what\s+my\s+name|do\s+you\s+know\s+my\s+name|remember\s+my\s+name|what\s+did\s+i\s+say\s+my\s+name|what\s+name\s+did\s+i\s+give)/i;
         if (nameQuestionPattern.test(message)) {
             if (this.userName) {
+                const modeResponses = {
+                    casual: `Your name is ${this.userName}! 😊 I remember you from when you introduced yourself. What can I help you with?`,
+                    technical: `Your name is ${this.userName}. I have stored this information in localStorage and can recall it across sessions. How may I assist you?`,
+                    professional: `Your name is **${this.userName}**. I remember you from when you introduced yourself. How may I assist you today?`
+                };
                 return {
-                    text: `Your name is **${this.userName}**! 👋 I remember you from when you introduced yourself. How can I help you today?`,
+                    text: modeResponses[this.conversationMode] || modeResponses.professional,
                     suggestions: [
                         "What are your skills?",
                         "Tell me about your AI work",
@@ -610,8 +615,13 @@ class PortfolioChatbot {
                     ]
                 };
             } else {
+                const modeResponses = {
+                    casual: `I don't think you've told me your name yet! 😊\n\nYou can introduce yourself by saying:\n• "My name is [Your Name]"\n• "I'm [Your Name]"\n• "Call me [Your Name]"\n\nOnce you tell me, I'll remember it!`,
+                    technical: `You have not yet provided your name. You can introduce yourself using the following patterns:\n• "My name is [Your Name]"\n• "I am [Your Name]"\n• "Call me [Your Name]"\n\nThis information will be stored in localStorage for future sessions.`,
+                    professional: `You have not yet introduced yourself. You may introduce yourself by saying:\n• "My name is [Your Name]"\n• "I am [Your Name]"\n• "Call me [Your Name]"\n\nI will remember your name once you provide it.`
+                };
                 return {
-                    text: `I don't think you've told me your name yet! 😊\n\nYou can introduce yourself by saying:\n• "My name is [Your Name]"\n• "I'm [Your Name]"\n• "Call me [Your Name]"\n\nOnce you tell me, I'll remember it!`,
+                    text: modeResponses[this.conversationMode] || modeResponses.professional,
                     suggestions: [
                         "My name is...",
                         "What are your skills?",
@@ -873,8 +883,9 @@ class PortfolioChatbot {
         // Help
         if (this.matches(message, ['help', 'what can you do', 'commands', 'what can', 'how can'])) {
             const userName = this.userName ? ` ${this.userName}` : '';
+            const greeting = this.getModeSpecificGreeting(userName);
             return {
-                text: `Hi${userName}! I'm Ryan's AI Assistant. Here's what I can help you with:\n\n**📚 Information:**\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Contact Information\n\n**🎮 Commands:**\n• **"Open [App Name]"** - Open any app (e.g., "Open AI Lab")\n• **"Clear chat"** - Clear the chat window\n• **"Clear memory"** - Forget our conversation and your name\n• **"Help"** - Show this help message\n\n**💡 Tips:**\n• Click quick reply buttons for suggestions\n• I remember your name if you introduce yourself\n• Ask specific questions like "What is document intelligence?"\n\n**🔧 Technical Note:**\nI'm a client-side, rule-based chatbot built with vanilla JavaScript. I use pattern matching and keyword detection to provide relevant responses. This demonstrates Ryan's ability to build interactive features without external APIs or backend services.\n\nJust ask me anything about Ryan's portfolio!`,
+                text: `${greeting} Here's what I can help you with:\n\n**📚 Information:**\n✅ Skills & Expertise\n✅ Work Experience\n✅ Projects & Portfolio\n✅ AI/ML Capabilities\n✅ Certifications\n✅ Contact Information\n\n**🎮 Commands:**\n• **"Open [App Name]"** - Open any app (e.g., "Open AI Lab")\n• **"Clear chat"** - Clear the chat window\n• **"Clear memory"** - Forget our conversation and your name\n• **"Help"** - Show this help message\n\n**💡 Tips:**\n• Click quick reply buttons for suggestions\n• I remember your name if you introduce yourself\n• Ask specific questions like "What is document intelligence?"\n\n**🔧 Technical Note:**\nI'm a client-side, rule-based chatbot built with vanilla JavaScript. I use pattern matching and keyword detection to provide relevant responses. This demonstrates Ryan's ability to build interactive features without external APIs or backend services.\n\nJust ask me anything about Ryan's portfolio!`,
                 suggestions: [
                     "What are your skills?",
                     "Tell me about your AI work",
@@ -1026,6 +1037,19 @@ class PortfolioChatbot {
     setConversationMode(mode) {
         this.conversationMode = mode;
         localStorage.setItem('chatbotMode', mode);
+    }
+    
+    getModeSpecificGreeting(userName) {
+        const namePart = userName ? `, ${userName}` : '';
+        
+        if (this.conversationMode === 'casual') {
+            return `Hey${namePart}! 😊 I'm Ryan's AI Assistant.`;
+        } else if (this.conversationMode === 'technical') {
+            return `Hello${namePart}. I am Ryan's AI Assistant, a client-side rule-based chatbot implementation.`;
+        } else {
+            // Professional
+            return `Hello${namePart}. I am Ryan's AI Assistant.`;
+        }
     }
     
     loadUserPreferences() {
@@ -1247,23 +1271,134 @@ class PortfolioChatbot {
     adjustResponseTone(text) {
         if (this.conversationMode === 'casual') {
             // Make responses more casual and friendly
+            // Replace formal phrases with casual ones
+            text = text.replace(/\*\*([^*]+)\*\*/g, '$1'); // Remove bold formatting for casual
+            text = text.replace(/I am/g, "I'm");
+            text = text.replace(/I will/g, "I'll");
+            text = text.replace(/cannot/g, "can't");
+            text = text.replace(/do not/g, "don't");
+            text = text.replace(/does not/g, "doesn't");
+            text = text.replace(/is not/g, "isn't");
+            text = text.replace(/are not/g, "aren't");
+            text = text.replace(/will not/g, "won't");
+            text = text.replace(/You're/g, "You're");
+            text = text.replace(/you can/g, "you can");
+            text = text.replace(/Ryan specializes/g, "Ryan's really good at");
+            text = text.replace(/Ryan's expertise/g, "what Ryan's great at");
+            text = text.replace(/expertise/g, "skills");
+            text = text.replace(/specializes/g, "is great at");
+            text = text.replace(/utilizes/g, "uses");
+            text = text.replace(/implements/g, "builds");
+            text = text.replace(/demonstrates/g, "shows");
+            text = text.replace(/facilitates/g, "helps with");
+            
+            // Add casual greetings and closings
+            if (!text.match(/^(Hey|Hi|Hello|Yo|What's up)/i)) {
+                const casualGreetings = ["Hey there! ", "Hi! ", "So, ", ""];
+                const greeting = casualGreetings[Math.floor(Math.random() * casualGreetings.length)];
+                if (greeting && text.length > 50) {
+                    text = greeting + text;
+                }
+            }
+            
+            // Add casual emojis if not present
+            if (!text.match(/[😊😄😎👍👋💪🎉]/)) {
+                const casualEmojis = [" 😊", " 😄", " 👍", ""];
+                const emoji = casualEmojis[Math.floor(Math.random() * casualEmojis.length)];
+                if (emoji && !text.endsWith('!') && !text.endsWith('?')) {
+                    text = text + emoji;
+                }
+            }
+            
+            // Make sentences shorter and more conversational
+            text = text.replace(/\. /g, (match, offset, string) => {
+                const before = string.substring(Math.max(0, offset - 20), offset);
+                const after = string.substring(offset + 2, Math.min(string.length, offset + 25));
+                // Don't break if it's in a list or code block
+                if (before.includes('\n•') || before.includes('```') || after.includes('```')) {
+                    return match;
+                }
+                // Randomly make some sentences end with ! for casual tone
+                if (Math.random() > 0.7 && !before.includes('!') && !before.includes('?')) {
+                    return '! ';
+                }
+                return match;
+            });
+            
+        } else if (this.conversationMode === 'technical') {
+            // Make responses more technical and detailed
+            // Expand abbreviations and add technical context
+            text = text.replace(/AI\b/g, 'AI (Artificial Intelligence)');
+            text = text.replace(/OCR\b/g, 'OCR (Optical Character Recognition)');
+            text = text.replace(/LLM\b/g, 'LLM (Large Language Model)');
+            text = text.replace(/API\b/g, 'API (Application Programming Interface)');
+            text = text.replace(/SSE\b/g, 'SSE (Server-Sent Events)');
+            text = text.replace(/JWT\b/g, 'JWT (JSON Web Token)');
+            text = text.replace(/RSA\b/g, 'RSA (Rivest-Shamir-Adleman encryption)');
+            text = text.replace(/AWS\b/g, 'AWS (Amazon Web Services)');
+            text = text.replace(/CI\/CD\b/g, 'CI/CD (Continuous Integration/Continuous Deployment)');
+            text = text.replace(/ML\b/g, 'ML (Machine Learning)');
+            
+            // Add technical specifications
+            text = text.replace(/uses OpenCV/g, 'utilizes OpenCV (Open Source Computer Vision Library)');
+            text = text.replace(/uses Tesseract/g, 'implements Tesseract OCR engine');
+            text = text.replace(/uses FastAPI/g, 'leverages FastAPI (high-performance Python web framework)');
+            text = text.replace(/uses Docker/g, 'employs Docker containerization');
+            text = text.replace(/uses Kubernetes/g, 'orchestrates with Kubernetes (container orchestration platform)');
+            
+            // Add technical details
+            text = text.replace(/document processing/g, 'document processing pipeline');
+            text = text.replace(/data extraction/g, 'structured data extraction');
+            text = text.replace(/watermark removal/g, 'ML-based watermark detection and removal');
+            text = text.replace(/PDF processing/g, 'PDF document parsing and text extraction');
+            
+            // Make language more precise
+            text = text.replace(/good at/g, 'proficient in');
+            text = text.replace(/great at/g, 'expert in');
+            text = text.replace(/uses/g, 'implements');
+            text = text.replace(/builds/g, 'architects and implements');
+            text = text.replace(/makes/g, 'develops');
+            text = text.replace(/helps/g, 'facilitates');
+            
+            // Add technical context where appropriate
+            if (text.includes('RandomForest') && !text.includes('classification')) {
+                text = text.replace(/RandomForest/g, 'RandomForest classification algorithm');
+            }
+            if (text.includes('Ollama') && !text.includes('local LLM')) {
+                text = text.replace(/Ollama/g, 'Ollama (local LLM runtime)');
+            }
+            
+        } else {
+            // Professional mode - ensure formal, structured language
             text = text.replace(/I'm/g, "I am");
             text = text.replace(/I'll/g, "I will");
             text = text.replace(/can't/g, "cannot");
-            // Add casual phrases
-            if (!text.includes('😊') && !text.includes('👋')) {
-                text = text.replace(/\./g, (match, offset) => {
-                    return offset === text.length - 1 ? '! 😊' : match;
-                });
-            }
-        } else if (this.conversationMode === 'technical') {
-            // Make responses more technical and detailed
-            // Add technical details where appropriate
-            if (text.includes('AI') && !text.includes('Machine Learning')) {
-                text = text.replace(/AI/g, 'AI/Machine Learning');
+            text = text.replace(/don't/g, "do not");
+            text = text.replace(/doesn't/g, "does not");
+            text = text.replace(/isn't/g, "is not");
+            text = text.replace(/aren't/g, "are not");
+            text = text.replace(/won't/g, "will not");
+            text = text.replace(/you're/g, "you are");
+            text = text.replace(/it's/g, "it is");
+            text = text.replace(/that's/g, "that is");
+            text = text.replace(/what's/g, "what is");
+            text = text.replace(/here's/g, "here is");
+            
+            // Ensure professional terminology
+            text = text.replace(/really good at/g, "specializes in");
+            text = text.replace(/great at/g, "expert in");
+            text = text.replace(/uses/g, "utilizes");
+            text = text.replace(/builds/g, "develops");
+            text = text.replace(/makes/g, "creates");
+            text = text.replace(/helps/g, "facilitates");
+            
+            // Remove excessive emojis (keep only 1-2 max)
+            const emojiCount = (text.match(/[😊😄😎👍👋💪🎉🤖💻☁️💾📊🔧]/g) || []).length;
+            if (emojiCount > 2) {
+                text = text.replace(/[😊😄😎👍💪🎉]/g, '');
             }
         }
-        // 'professional' mode uses default text
+        
         return text;
     }
     

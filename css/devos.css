@@ -1882,6 +1882,98 @@ body {
     color: #808080;
 }
 
+/* ===================================
+   Shutdown Menu
+   =================================== */
+
+.shutdown-menu {
+    position: fixed;
+    background: linear-gradient(to bottom, #ffffff 0%, #f8f8f8 100%);
+    border: 1px solid #b0b0b0;
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 220px;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    z-index: 100002;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95) translateY(-10px);
+    transition: all 0.2s ease;
+}
+
+.shutdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+.shutdown-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    color: #1a1a1a;
+}
+
+.shutdown-menu-item:hover {
+    background: #316ac5;
+    color: #fff;
+}
+
+.shutdown-icon {
+    font-size: 1.5rem;
+    width: 32px;
+    text-align: center;
+}
+
+.shutdown-title {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.shutdown-desc {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.shutdown-menu-item:hover .shutdown-desc {
+    opacity: 0.9;
+}
+
+/* Shutdown Overlays */
+.shutdown-overlay,
+.sleep-overlay,
+.lock-overlay {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .context-divider {
     height: 1px;
     background: linear-gradient(to right, transparent, #d0d0d0 10%, #d0d0d0 90%, transparent);
