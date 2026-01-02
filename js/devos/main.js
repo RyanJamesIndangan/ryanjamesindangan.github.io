@@ -1386,20 +1386,37 @@ function initializeAIAssistant() {
     if (menuBtn && menuDropdown) {
         menuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            menuDropdown.classList.toggle('show');
+            e.preventDefault();
+            const isShowing = menuDropdown.classList.contains('show');
+            // Close all other dropdowns first
+            document.querySelectorAll('.ai-menu-dropdown.show').forEach(dd => {
+                if (dd !== menuDropdown) dd.classList.remove('show');
+            });
+            // Toggle this dropdown
+            if (isShowing) {
+                menuDropdown.classList.remove('show');
+            } else {
+                menuDropdown.classList.add('show');
+            }
         });
         
         // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
-                menuDropdown.classList.remove('show');
+        const closeDropdown = (e) => {
+            if (menuDropdown && menuDropdown.classList.contains('show')) {
+                if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+                    menuDropdown.classList.remove('show');
+                }
             }
-        });
+        };
+        
+        // Use capture phase to ensure it fires before other click handlers
+        document.addEventListener('click', closeDropdown, true);
     }
     
     if (clearChatBtn) {
         clearChatBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             clearChat();
             if (menuDropdown) menuDropdown.classList.remove('show');
         });
@@ -1408,6 +1425,7 @@ function initializeAIAssistant() {
     if (clearMemoryBtn) {
         clearMemoryBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             clearChatbotMemory();
             if (menuDropdown) menuDropdown.classList.remove('show');
         });
@@ -1416,7 +1434,10 @@ function initializeAIAssistant() {
     if (helpBtn) {
         helpBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            sendChatMessage('help');
+            e.preventDefault();
+            if (window.sendChatMessage) {
+                window.sendChatMessage('help');
+            }
             if (menuDropdown) menuDropdown.classList.remove('show');
         });
     }
