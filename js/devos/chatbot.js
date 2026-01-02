@@ -97,11 +97,13 @@ class PortfolioChatbot {
             };
             
             // Add bot response to history
+            const nameResponseMessageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
             this.conversationHistory.push({
                 role: 'assistant',
                 message: response.text,
                 suggestions: response.suggestions || [],
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                messageId: nameResponseMessageId
             });
             
             this.saveHistory();
@@ -128,11 +130,13 @@ class PortfolioChatbot {
             this.conversationContext.lastResponse = actionResult.text;
             
             // Add bot response to history
+            const actionMessageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
             this.conversationHistory.push({
                 role: 'assistant',
                 message: actionResult.text,
                 suggestions: actionResult.suggestions || [],
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                messageId: actionMessageId
             });
             
             this.saveHistory();
@@ -156,11 +160,13 @@ class PortfolioChatbot {
         this.conversationContext.lastResponse = response.text;
         
         // Add bot response to history
+        const messageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
         this.conversationHistory.push({
             role: 'assistant',
             message: response.text,
             suggestions: response.suggestions || [],
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            messageId: messageId
         });
 
         this.saveHistory();

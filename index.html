@@ -155,10 +155,19 @@
                     <span class="ai-status-indicator" id="aiStatusIndicator"></span>
                 </div>
                 <div class="ai-header-actions">
+                    <button class="ai-search-btn" id="aiSearchBtn" title="Search Conversation">🔍</button>
+                    <div class="ai-search-container" id="aiSearchContainer">
+                        <input type="text" class="ai-search-input" id="aiSearchInput" placeholder="Search conversation..." autocomplete="off">
+                        <button class="ai-search-close" id="aiSearchClose">×</button>
+                    </div>
                     <button class="ai-menu-btn" id="aiMenuBtn" title="Menu">☰</button>
                     <div class="ai-menu-dropdown" id="aiMenuDropdown">
                         <button class="ai-menu-item" id="aiClearChatBtn">🗑️ Clear Chat</button>
                         <button class="ai-menu-item" id="aiClearMemoryBtn">🧹 Clear Memory</button>
+                        <div class="ai-menu-divider"></div>
+                        <button class="ai-menu-item" id="aiExportChatBtn">📥 Export Chat</button>
+                        <button class="ai-menu-item" id="aiCopyChatBtn">📋 Copy Chat</button>
+                        <div class="ai-menu-divider"></div>
                         <button class="ai-menu-item" id="aiHelpBtn">❓ Help</button>
                     </div>
                     <button class="ai-minimize-btn" id="aiMinimizeBtn" title="Minimize">−</button>
@@ -170,6 +179,7 @@
                     <!-- Initial greeting will be added by JavaScript -->
                 </div>
                 <div class="ai-chat-input-container">
+                    <button class="ai-voice-btn" id="aiVoiceBtn" title="Voice Input (Click to start recording)">🎤</button>
                     <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Type your message..." autocomplete="off">
                     <button class="ai-send-btn" id="aiSendBtn" title="Send">➤</button>
                 </div>

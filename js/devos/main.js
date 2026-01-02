@@ -1329,8 +1329,24 @@ function initializeAIAssistant() {
     // Load conversation history or show initial greeting
     if (window.portfolioChatbot && window.portfolioChatbot.conversationHistory.length > 0) {
         chatMessages.innerHTML = '';
-        window.portfolioChatbot.conversationHistory.forEach(msg => {
-            addChatMessage(msg.message, msg.role, msg.suggestions || []);
+        window.portfolioChatbot.conversationHistory.forEach((msg, index) => {
+            // Generate message ID for reactions
+            const messageId = msg.messageId || `msg-${Date.now()}-${index}`;
+            addChatMessage(msg.message, msg.role, msg.suggestions || [], messageId);
+            
+            // Restore reactions if any (after DOM is ready)
+            requestAnimationFrame(() => {
+                const reactions = JSON.parse(localStorage.getItem('chatbotReactions') || '{}');
+                if (reactions[messageId]) {
+                    const messageEl = chatMessages.querySelector(`[data-message-id="${messageId}"]`);
+                    if (messageEl) {
+                        const reactionBtn = messageEl.querySelector(`[data-reaction="${reactions[messageId]}"]`);
+                        if (reactionBtn) {
+                            reactionBtn.classList.add('active');
+                        }
+                    }
+                }
+            });
         });
         scrollChatToBottom();
     } else {
@@ -1393,6 +1409,8 @@ function initializeAIAssistant() {
     const menuDropdown = document.getElementById('aiMenuDropdown');
     const clearChatBtn = document.getElementById('aiClearChatBtn');
     const clearMemoryBtn = document.getElementById('aiClearMemoryBtn');
+    const exportChatBtn = document.getElementById('aiExportChatBtn');
+    const copyChatBtn = document.getElementById('aiCopyChatBtn');
     const helpBtn = document.getElementById('aiHelpBtn');
     
     if (menuBtn && menuDropdown) {
@@ -1443,6 +1461,24 @@ function initializeAIAssistant() {
         });
     }
     
+    if (exportChatBtn) {
+        exportChatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            exportConversation();
+            if (menuDropdown) menuDropdown.classList.remove('show');
+        });
+    }
+    
+    if (copyChatBtn) {
+        copyChatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            copyConversationToClipboard();
+            if (menuDropdown) menuDropdown.classList.remove('show');
+        });
+    }
+    
     if (helpBtn) {
         helpBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -1470,6 +1506,76 @@ function initializeAIAssistant() {
                 sendChatMessage();
             });
         }
+    }
+    
+    // Phase 4: Conversation Search
+    const searchBtn = document.getElementById('aiSearchBtn');
+    const searchContainer = document.getElementById('aiSearchContainer');
+    const searchInput = document.getElementById('aiSearchInput');
+    const searchClose = document.getElementById('aiSearchClose');
+    
+    if (searchBtn && searchContainer && searchInput) {
+        // Toggle search container
+        searchBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            const isVisible = searchContainer.classList.contains('show');
+            if (isVisible) {
+                closeSearch();
+            } else {
+                openSearch();
+            }
+        });
+        
+        // Close search
+        if (searchClose) {
+            searchClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                closeSearch();
+            });
+        }
+        
+        // Search on input
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+            
+            if (query.length === 0) {
+                clearSearchHighlights();
+                return;
+            }
+            
+            // Debounce search
+            searchTimeout = setTimeout(() => {
+                performSearch(query);
+            }, 300);
+        });
+        
+        // Search on Enter
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        });
+        
+        // Close search on Escape
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSearch();
+            }
+        });
+    }
+    
+    // Phase 4: Voice Input - Use existing function
+    const voiceBtn = document.getElementById('aiVoiceBtn');
+    if (voiceBtn && chatInput) {
+        initializeVoiceInput(voiceBtn, chatInput);
     }
 }
 
@@ -1517,7 +1623,28 @@ window.sendChatMessage = function(messageText = null) {
         }
         
         // Add bot response with suggestions
-        addChatMessage(response.text, 'assistant', response.suggestions || []);
+        // Get messageId from the last conversation history entry
+        const lastMessage = window.portfolioChatbot.conversationHistory[window.portfolioChatbot.conversationHistory.length - 1];
+        const messageId = lastMessage && lastMessage.messageId ? lastMessage.messageId : null;
+        addChatMessage(response.text, 'assistant', response.suggestions || [], messageId);
+        
+        // Restore reaction if exists (after DOM is ready)
+        if (messageId) {
+            // Use requestAnimationFrame for better timing
+            requestAnimationFrame(() => {
+                const reactions = JSON.parse(localStorage.getItem('chatbotReactions') || '{}');
+                if (reactions[messageId]) {
+                    const messageEl = document.querySelector(`[data-message-id="${messageId}"]`);
+                    if (messageEl) {
+                        const reactionBtn = messageEl.querySelector(`[data-reaction="${reactions[messageId]}"]`);
+                        if (reactionBtn) {
+                            reactionBtn.classList.add('active');
+                        }
+                    }
+                }
+            });
+        }
+        
         scrollChatToBottom();
 
         // Re-enable input
@@ -1527,12 +1654,18 @@ window.sendChatMessage = function(messageText = null) {
     }, 500 + Math.random() * 500); // Random delay between 500-1000ms for more natural feel
 }
 
-function addChatMessage(message, role, suggestions = []) {
+function addChatMessage(message, role, suggestions = [], messageId = null) {
     const chatMessages = document.getElementById('aiChatMessages');
     if (!chatMessages) return;
 
     const messageEl = document.createElement('div');
     messageEl.className = `ai-message ai-message-${role}`;
+    
+    // Generate unique ID for message if not provided
+    if (!messageId) {
+        messageId = `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
+    messageEl.dataset.messageId = messageId;
     
     const now = new Date();
     const timeStr = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
@@ -1558,19 +1691,43 @@ function addChatMessage(message, role, suggestions = []) {
         `;
     }
     
+    // Add reaction buttons for assistant messages
+    let reactionsHTML = '';
+    if (role === 'assistant') {
+        reactionsHTML = `
+            <div class="ai-message-reactions">
+                <button class="ai-reaction-btn" data-reaction="👍" data-message-id="${messageId}" title="Like">👍</button>
+                <button class="ai-reaction-btn" data-reaction="❤️" data-message-id="${messageId}" title="Love">❤️</button>
+                <button class="ai-reaction-btn" data-reaction="👎" data-message-id="${messageId}" title="Dislike">👎</button>
+            </div>
+        `;
+    }
+    
     messageEl.innerHTML = `
         <div class="ai-message-avatar">${role === 'user' ? '👤' : '🤖'}</div>
         <div class="ai-message-content">
             <div class="ai-message-text">${formatChatMessage(message)}</div>
             ${suggestionsHTML}
+            ${reactionsHTML}
             <div class="ai-message-time">${timeStr}</div>
         </div>
     `;
     
     chatMessages.appendChild(messageEl);
     
+    // Store original HTML for search functionality (after DOM is created and listeners attached)
+    const textEl = messageEl.querySelector('.ai-message-text');
+    if (textEl && !textEl.hasAttribute('data-original-html')) {
+        textEl.setAttribute('data-original-html', textEl.innerHTML);
+    }
+    
     // Attach event listeners for action buttons (Open App, etc.)
     attachChatActionListeners(messageEl);
+    
+    // Attach reaction button listeners
+    if (role === 'assistant') {
+        attachReactionListeners(messageEl);
+    }
 }
 
 function formatChatMessage(text) {
@@ -1620,6 +1777,48 @@ function mapAppNameToId(appName) {
     };
     
     return appMap[appName.toLowerCase()] || null;
+}
+
+function attachReactionListeners(messageEl) {
+    const reactionBtns = messageEl.querySelectorAll('.ai-reaction-btn');
+    reactionBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const reaction = btn.dataset.reaction;
+            const messageId = btn.dataset.messageId;
+            handleMessageReaction(messageId, reaction, btn);
+        });
+    });
+}
+
+function handleMessageReaction(messageId, reaction, btn) {
+    // Toggle reaction
+    const isActive = btn.classList.contains('active');
+    const reactionsContainer = btn.closest('.ai-message-reactions');
+    
+    // Remove active state from all buttons
+    reactionsContainer.querySelectorAll('.ai-reaction-btn').forEach(b => {
+        b.classList.remove('active');
+    });
+    
+    if (!isActive) {
+        btn.classList.add('active');
+        // Store reaction in localStorage
+        const reactions = JSON.parse(localStorage.getItem('chatbotReactions') || '{}');
+        reactions[messageId] = reaction;
+        localStorage.setItem('chatbotReactions', JSON.stringify(reactions));
+        
+        // Show brief animation
+        btn.style.transform = 'scale(1.3)';
+        setTimeout(() => {
+            btn.style.transform = 'scale(1)';
+        }, 200);
+    } else {
+        // Remove reaction
+        const reactions = JSON.parse(localStorage.getItem('chatbotReactions') || '{}');
+        delete reactions[messageId];
+        localStorage.setItem('chatbotReactions', JSON.stringify(reactions));
+    }
 }
 
 function attachChatActionListeners(messageEl) {
@@ -1770,9 +1969,422 @@ function showAIAssistant() {
     }
 }
 
+function exportConversation() {
+    if (!window.portfolioChatbot) return;
+    
+    const history = window.portfolioChatbot.conversationHistory;
+    if (history.length === 0) {
+        window.showNotification('No conversation to export', 'warning');
+        return;
+    }
+    
+    // Format conversation as readable text
+    const lines = [
+        '='.repeat(60),
+        'Ryan James Indangan - Portfolio Chat Conversation',
+        '='.repeat(60),
+        `Exported: ${new Date().toLocaleString()}`,
+        '',
+    ];
+    
+    history.forEach((msg, index) => {
+        const timestamp = new Date(msg.timestamp).toLocaleString();
+        const role = msg.role === 'user' ? 'You' : 'AI Assistant';
+        
+        // Clean message text - remove HTML tags and markdown
+        let message = msg.message || '';
+        // Remove HTML tags
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = message;
+        message = tempDiv.textContent || tempDiv.innerText || message;
+        
+        // Remove markdown formatting
+        message = message.replace(/\*\*(.*?)\*\*/g, '$1') // Remove markdown bold
+                        .replace(/\*(.*?)\*/g, '$1') // Remove markdown italic
+                        .replace(/`(.*?)`/g, '$1') // Remove markdown code
+                        .replace(/\[Open (.+?)\]/g, '$1') // Remove app links
+                        .replace(/<[^>]*>/g, '') // Remove any remaining HTML tags
+                        .trim();
+        
+        lines.push(`[${index + 1}] ${role} (${timestamp})`);
+        lines.push('-'.repeat(60));
+        lines.push(message);
+        if (msg.suggestions && msg.suggestions.length > 0) {
+            lines.push(`\nSuggested: ${msg.suggestions.join(', ')}`);
+        }
+        lines.push('');
+    });
+    
+    lines.push('='.repeat(60));
+    lines.push('End of Conversation');
+    lines.push('='.repeat(60));
+    
+    const text = lines.join('\n');
+    
+    // Create and download file
+    try {
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const dateStr = new Date().toISOString().split('T')[0];
+        const timeStr = new Date().toTimeString().split(' ')[0].replace(/:/g, '-');
+        a.download = `ryan-portfolio-chat-${dateStr}-${timeStr}.txt`;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }, 100);
+        
+        window.showNotification('Conversation exported! 📥', 'success');
+    } catch (error) {
+        console.error('Export error:', error);
+        window.showNotification('Failed to export conversation. Please try copying instead.', 'error');
+    }
+}
+
+function copyConversationToClipboard() {
+    if (!window.portfolioChatbot) return;
+    
+    const history = window.portfolioChatbot.conversationHistory;
+    if (history.length === 0) {
+        window.showNotification('No conversation to copy', 'warning');
+        return;
+    }
+    
+    // Format conversation for clipboard
+    const lines = [
+        'Ryan James Indangan - Portfolio Chat Conversation',
+        `Exported: ${new Date().toLocaleString()}`,
+        '',
+    ];
+    
+    history.forEach((msg) => {
+        const timestamp = new Date(msg.timestamp).toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit' 
+        });
+        const role = msg.role === 'user' ? 'You' : 'AI Assistant';
+        
+        // Clean message text - remove HTML tags and markdown
+        let message = msg.message || '';
+        // Remove HTML tags
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = message;
+        message = tempDiv.textContent || tempDiv.innerText || message;
+        
+        // Remove markdown formatting
+        message = message.replace(/\*\*(.*?)\*\*/g, '$1') // Remove markdown bold
+                        .replace(/\*(.*?)\*/g, '$1') // Remove markdown italic
+                        .replace(/`(.*?)`/g, '$1') // Remove markdown code
+                        .replace(/\[Open (.+?)\]/g, '$1') // Remove app links
+                        .replace(/<[^>]*>/g, '') // Remove any remaining HTML tags
+                        .trim();
+        
+        lines.push(`${role} (${timestamp}): ${message}`);
+    });
+    
+    const text = lines.join('\n');
+    
+    // Copy to clipboard
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            window.showNotification('Conversation copied to clipboard! 📋', 'success');
+        }).catch(() => {
+            // Fallback for older browsers
+            fallbackCopyToClipboard(text);
+        });
+    } else {
+        // Fallback for older browsers
+        fallbackCopyToClipboard(text);
+    }
+}
+
+function fallbackCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            window.showNotification('Conversation copied to clipboard! 📋', 'success');
+        } else {
+            window.showNotification('Failed to copy. Please try exporting instead.', 'error');
+        }
+    } catch (err) {
+        window.showNotification('Failed to copy. Please try exporting instead.', 'error');
+    }
+    
+    document.body.removeChild(textArea);
+}
+
 // Make functions globally available
 window.closeAIAssistant = closeAIAssistant;
 window.showAIAssistant = showAIAssistant;
 window.minimizeAIAssistant = minimizeAIAssistant;
 window.openApp = openApp; // Make openApp globally available for chatbot actions
+window.exportConversation = exportConversation;
+window.copyConversationToClipboard = copyConversationToClipboard;
+
+// Voice Input (Speech-to-Text)
+function initializeVoiceInput(voiceBtn, chatInput) {
+    let recognition = null;
+    let isRecording = false;
+    
+    // Check browser support
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        voiceBtn.style.opacity = '0.5';
+        voiceBtn.title = 'Voice input not supported in this browser';
+        return;
+    }
+    
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+    
+    voiceBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        if (!isRecording) {
+            startVoiceRecording();
+        } else {
+            stopVoiceRecording();
+        }
+    });
+    
+    function startVoiceRecording() {
+        try {
+            recognition.start();
+            isRecording = true;
+            voiceBtn.classList.add('recording');
+            voiceBtn.title = 'Recording... Click to stop';
+            window.showNotification('🎤 Listening...', 'info');
+        } catch (err) {
+            console.error('Speech recognition error:', err);
+            window.showNotification('Voice input error. Please try again.', 'error');
+        }
+    }
+    
+    function stopVoiceRecording() {
+        recognition.stop();
+        isRecording = false;
+        voiceBtn.classList.remove('recording');
+        voiceBtn.title = 'Voice Input (Click to start recording)';
+    }
+    
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.trim();
+        if (chatInput && transcript) {
+            chatInput.value = transcript;
+            chatInput.focus();
+            stopVoiceRecording();
+            // Auto-send after a short delay to allow user to review
+            setTimeout(() => {
+                if (window.sendChatMessage) {
+                    window.sendChatMessage();
+                }
+            }, 800);
+            window.showNotification('Voice transcribed! Sending... 🎤', 'info');
+        } else {
+            stopVoiceRecording();
+            window.showNotification('No speech detected. Please try again.', 'warning');
+        }
+    };
+    
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        stopVoiceRecording();
+        
+        let errorMsg = 'Voice input error. ';
+        if (event.error === 'no-speech') {
+            errorMsg = 'No speech detected. Please try again.';
+        } else if (event.error === 'not-allowed') {
+            errorMsg = 'Microphone permission denied. Please enable it in browser settings.';
+        } else if (event.error === 'audio-capture') {
+            errorMsg = 'No microphone found. Please check your device.';
+        } else if (event.error === 'network') {
+            errorMsg = 'Network error. Please check your connection.';
+        } else if (event.error === 'aborted') {
+            // User stopped recording, don't show error
+            return;
+        } else {
+            errorMsg = `Voice input error: ${event.error}. Please try again.`;
+        }
+        window.showNotification(errorMsg, 'error');
+    };
+    
+    recognition.onend = () => {
+        // Only stop if we were actually recording
+        // This prevents stopping when recognition ends naturally after getting results
+        if (isRecording) {
+            // Check if we got results - if not, it was an error or timeout
+            // The onerror handler will show appropriate messages
+            stopVoiceRecording();
+        }
+    };
+    
+    // Make recognition available for testing
+    window.voiceRecognition = recognition;
+}
+
+// Phase 4: Conversation Search Functions
+function openSearch() {
+    const searchContainer = document.getElementById('aiSearchContainer');
+    const searchInput = document.getElementById('aiSearchInput');
+    if (searchContainer && searchInput) {
+        searchContainer.classList.add('show');
+        setTimeout(() => searchInput.focus(), 100);
+    }
+}
+
+function closeSearch() {
+    const searchContainer = document.getElementById('aiSearchContainer');
+    const searchInput = document.getElementById('aiSearchInput');
+    if (searchContainer && searchInput) {
+        searchContainer.classList.remove('show');
+        searchInput.value = '';
+        clearSearchHighlights();
+    }
+}
+
+function performSearch(query) {
+    if (!query.trim()) {
+        clearSearchHighlights();
+        return;
+    }
+    
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (!chatMessages) return;
+    
+    const messages = chatMessages.querySelectorAll('.ai-message');
+    const lowerQuery = query.toLowerCase();
+    let matchCount = 0;
+    let firstMatch = null;
+    
+    messages.forEach(msg => {
+        const textEl = msg.querySelector('.ai-message-text');
+        if (!textEl) return;
+        
+        // Get plain text for searching
+        const text = textEl.textContent || textEl.innerText;
+        const lowerText = text.toLowerCase();
+        
+        // Store original HTML if not already stored (before any highlighting)
+        if (!textEl.hasAttribute('data-original-html')) {
+            // Remove any existing highlights first, then store
+            const cleanHTML = textEl.innerHTML.replace(/<mark class="search-highlight">(.*?)<\/mark>/gi, '$1');
+            textEl.setAttribute('data-original-html', cleanHTML);
+        }
+        
+        // Restore original HTML (remove previous highlights)
+        const originalHTML = textEl.getAttribute('data-original-html');
+        textEl.innerHTML = originalHTML;
+        
+        if (lowerText.includes(lowerQuery)) {
+            matchCount++;
+            msg.classList.add('search-match');
+            
+            // Highlight matching text while preserving HTML structure
+            // We need to highlight in the text content, not the HTML
+            // So we'll wrap text nodes that match
+            const walker = document.createTreeWalker(
+                textEl,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                if (node.textContent.toLowerCase().includes(lowerQuery)) {
+                    textNodes.push(node);
+                }
+            }
+            
+            // Highlight matching text nodes
+            textNodes.forEach(textNode => {
+                const parent = textNode.parentNode;
+                const text = textNode.textContent;
+                const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                
+                if (regex.test(text)) {
+                    const highlighted = text.replace(regex, '<mark class="search-highlight">$1</mark>');
+                    const wrapper = document.createElement('span');
+                    wrapper.innerHTML = highlighted;
+                    
+                    // Replace text node with highlighted version
+                    while (wrapper.firstChild) {
+                        parent.insertBefore(wrapper.firstChild, textNode);
+                    }
+                    parent.removeChild(textNode);
+                }
+            });
+            
+            if (!firstMatch) {
+                firstMatch = msg;
+            }
+        } else {
+            msg.classList.remove('search-match');
+        }
+    });
+    
+    // Scroll to first match
+    if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Show search results count
+    if (matchCount > 0) {
+        const searchContainer = document.getElementById('aiSearchContainer');
+        if (searchContainer) {
+            let resultIndicator = searchContainer.querySelector('.search-results-count');
+            if (!resultIndicator) {
+                resultIndicator = document.createElement('span');
+                resultIndicator.className = 'search-results-count';
+                searchContainer.appendChild(resultIndicator);
+            }
+            resultIndicator.textContent = `${matchCount} result${matchCount !== 1 ? 's' : ''}`;
+        }
+    }
+}
+
+function clearSearchHighlights() {
+    const chatMessages = document.getElementById('aiChatMessages');
+    if (!chatMessages) return;
+    
+    const messages = chatMessages.querySelectorAll('.ai-message');
+    messages.forEach(msg => {
+        msg.classList.remove('search-match');
+        const textEl = msg.querySelector('.ai-message-text');
+        if (textEl) {
+            // Restore original HTML if available
+            const originalHTML = textEl.getAttribute('data-original-html');
+            if (originalHTML) {
+                textEl.innerHTML = originalHTML;
+            } else {
+                // Fallback: just remove highlights
+                textEl.innerHTML = textEl.innerHTML.replace(/<mark class="search-highlight">(.*?)<\/mark>/gi, '$1');
+            }
+        }
+    });
+    
+    const searchContainer = document.getElementById('aiSearchContainer');
+    if (searchContainer) {
+        const resultIndicator = searchContainer.querySelector('.search-results-count');
+        if (resultIndicator) {
+            resultIndicator.remove();
+        }
+    }
+}
 
