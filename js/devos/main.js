@@ -220,28 +220,33 @@ function showShutdownMenu(e) {
     
     document.body.appendChild(menu);
     
-    // Position menu above shutdown button
-    const rect = e.target.closest('.shutdown-btn')?.getBoundingClientRect();
-    if (rect) {
-        const menuWidth = 220;
-        const menuHeight = 280;
-        let left = rect.left - menuWidth;
-        let top = rect.top - menuHeight;
-        
-        // Ensure menu doesn't go off-screen
-        if (left < 10) left = 10;
-        if (top < 10) top = rect.bottom + 10;
-        if (left + menuWidth > window.innerWidth - 10) {
-            left = window.innerWidth - menuWidth - 10;
-        }
-        
-        menu.style.left = `${left}px`;
-        menu.style.top = `${top}px`;
-    } else {
-        // Fallback positioning
-        menu.style.right = '20px';
-        menu.style.bottom = '60px';
+    // Position menu in the red square area (right side of desktop)
+    const menuWidth = 220;
+    const menuHeight = 280;
+    
+    // Position in the right side of desktop, vertically centered
+    // This matches the red square area shown in the screenshot
+    const rightMargin = 50; // Distance from right edge
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
+    const taskbarHeight = 60; // Approximate taskbar height
+    
+    // Calculate vertical center position (excluding taskbar)
+    const availableHeight = viewportHeight - taskbarHeight;
+    const centerTop = (availableHeight / 2) - (menuHeight / 2);
+    
+    // Ensure menu doesn't go off-screen
+    let finalTop = Math.max(80, Math.min(centerTop, viewportHeight - menuHeight - 80));
+    let finalRight = rightMargin;
+    
+    // Ensure it doesn't go off the right edge
+    if (finalRight + menuWidth > viewportWidth - 20) {
+        finalRight = viewportWidth - menuWidth - 20;
     }
+    
+    menu.style.right = `${finalRight}px`;
+    menu.style.top = `${finalTop}px`;
+    menu.style.left = 'auto'; // Clear left positioning
     
     // Animate in
     setTimeout(() => menu.classList.add('active'), 10);

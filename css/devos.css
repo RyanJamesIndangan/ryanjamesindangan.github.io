@@ -1917,6 +1917,7 @@ body {
     visibility: hidden;
     transform: scale(0.95) translateY(-10px);
     transition: all 0.2s ease;
+    left: auto; /* Ensure left is auto so right positioning works */
 }
 
 .shutdown-menu.active {
@@ -3307,6 +3308,265 @@ body {
 
 /* Light mode Clippy */
 /* Light mode Clippy - Keep same colors */
+
+/* ===================================
+   Clippy Suggestions System
+   =================================== */
+
+.clippy-suggestion-container {
+    position: fixed;
+    z-index: 10002;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.clippy-suggestion-container.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.clippy-suggestion-clippy {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    z-index: 10003;
+    animation: clippySuggestionAppear 0.5s ease-out;
+}
+
+.clippy-suggestion-clippy .clippy-suggestion-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    animation: clippyBounce 2s ease-in-out infinite;
+}
+
+@keyframes clippySuggestionAppear {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.clippy-suggestion-bubble {
+    position: fixed;
+    background: #fffef0;
+    border: 2px solid #000;
+    border-radius: 12px;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    min-width: 300px;
+    max-width: 350px;
+    z-index: 10002;
+    animation: bubbleAppear 0.4s ease-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes bubbleAppear {
+    0% {
+        transform: scale(0.8) translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.clippy-suggestion-pointer {
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #000;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.clippy-suggestion-pointer::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fffef0;
+}
+
+.clippy-suggestion-content {
+    padding: 1.25rem;
+}
+
+.clippy-suggestion-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.4;
+}
+
+.clippy-suggestion-message {
+    font-size: 0.95rem;
+    color: #333;
+    margin: 0 0 1rem 0;
+    line-height: 1.4;
+}
+
+.clippy-suggestion-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.clippy-radio-option,
+.clippy-checkbox-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #000;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.clippy-radio-option:hover,
+.clippy-checkbox-option:hover {
+    color: #2171d6;
+}
+
+.clippy-radio-option input[type="radio"],
+.clippy-checkbox-option input[type="checkbox"] {
+    margin: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    accent-color: #2171d6;
+}
+
+.clippy-radio-option span,
+.clippy-checkbox-option span {
+    flex: 1;
+}
+
+.clippy-suggestion-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.clippy-suggestion-ok {
+    padding: 0.5rem 1.5rem;
+    background: #2171d6;
+    color: #fff;
+    border: 1px solid #1a5fb8;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.clippy-suggestion-ok:hover {
+    background: #1a5fb8;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(33, 113, 214, 0.3);
+}
+
+.clippy-suggestion-ok:active {
+    transform: translateY(0);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .clippy-suggestion-bubble {
+        min-width: 280px;
+        max-width: calc(100vw - 40px);
+        left: 20px !important;
+        right: 20px;
+    }
+    
+    .clippy-suggestion-clippy {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .clippy-suggestion-pointer {
+        display: none;
+    }
+    
+    .clippy-suggestion-content {
+        padding: 1rem;
+    }
+    
+    .clippy-suggestion-title {
+        font-size: 0.95rem;
+    }
+    
+    .clippy-suggestion-message {
+        font-size: 0.9rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .clippy-suggestion-bubble {
+        background: #2d2d2d;
+        border-color: #fff;
+        color: #fff;
+    }
+    
+    .clippy-suggestion-title {
+        color: #fff;
+    }
+    
+    .clippy-suggestion-message {
+        color: #e0e0e0;
+    }
+    
+    .clippy-radio-option,
+    .clippy-checkbox-option {
+        color: #fff;
+    }
+    
+    .clippy-radio-option:hover,
+    .clippy-checkbox-option:hover {
+        color: #64ffda;
+    }
+    
+    .clippy-suggestion-pointer {
+        border-top-color: #fff;
+    }
+    
+    .clippy-suggestion-pointer::after {
+        border-top-color: #2d2d2d;
+    }
+    
+    .clippy-suggestion-actions {
+        border-top-color: rgba(255, 255, 255, 0.2);
+    }
+}
 [data-theme="light"] .clippy-body {
     fill: #8B7D9B;
     stroke: #6B5D7B;

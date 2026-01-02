@@ -55,10 +55,26 @@ class Clippy {
         this.observeNewMessages();
     }
     
-    getClippySVG() {
+    getClippySVG(pose = 'standard') {
+        // Map pose names to image files
+        const poseMap = {
+            'standard': 'clippy-standard.png',
+            'sleeping': 'clippy-sleeping.png',
+            'atomic': 'clippy-atomic.png',
+            'number4': 'clippy-number4.png',
+            'headphones': 'clippy-headphones.png',
+            'checkmark': 'clippy-checkmark.png',
+            'surprised': 'clippy-surprised.png',
+            'box': 'clippy-box.png',
+            'squiggly': 'clippy-squiggly.png'
+        };
+        
+        const imageFile = poseMap[pose] || 'clippy-standard.png';
+        const imagePath = `assets/clippy/${imageFile}`;
+        
         return `
             <div class="clippy-character" title="It looks like you're trying to chat! Would you like help?">
-                <img src="assets/clippy.png" alt="Clippy" class="clippy-image" />
+                <img src="${imagePath}" alt="Clippy" class="clippy-image" onerror="this.src='assets/clippy.png'" />
             </div>
         `;
     }
