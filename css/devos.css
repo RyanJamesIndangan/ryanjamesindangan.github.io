@@ -2606,9 +2606,15 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     z-index: 500;
-    cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     animation: slideInUp 0.5s ease-out;
+}
+
+.ai-assistant-widget.hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    pointer-events: none;
+    visibility: hidden;
 }
 
 .ai-assistant-widget:hover {
@@ -2623,8 +2629,37 @@ body {
 .ai-assistant-widget-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     margin-bottom: 1rem;
+}
+
+.ai-assistant-close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ai-assistant-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.ai-assistant-close:active {
+    transform: scale(0.95);
 }
 
 .ai-assistant-icon {

@@ -147,10 +147,13 @@
         </div>
 
         <!-- AI Assistant Widget -->
-        <div class="ai-assistant-widget" id="aiAssistantWidget" onclick="openApp('ai-lab')">
+        <div class="ai-assistant-widget" id="aiAssistantWidget">
             <div class="ai-assistant-widget-header">
-                <div class="ai-assistant-icon">🤖</div>
-                <h3 class="ai-assistant-title">AI Assistant</h3>
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
+                    <div class="ai-assistant-icon">🤖</div>
+                    <h3 class="ai-assistant-title">AI Assistant</h3>
+                </div>
+                <button class="ai-assistant-close" id="aiAssistantClose" title="Close" onclick="event.stopPropagation(); closeAIAssistant();">×</button>
             </div>
             <div class="ai-assistant-stats">
                 <div class="ai-stat-item">
@@ -162,7 +165,7 @@
                     <span class="ai-stat-label">OCR Accuracy</span>
                 </div>
             </div>
-            <div class="ai-assistant-message">
+            <div class="ai-assistant-message" onclick="openApp('ai-lab')" style="cursor: pointer;">
                 Click to explore Document Intelligence capabilities and AI/ML projects
             </div>
         </div>

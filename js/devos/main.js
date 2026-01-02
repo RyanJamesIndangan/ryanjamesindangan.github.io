@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeThemeToggle();
     initializeGitHubStats();
     initializeCertificateModal();
+    initializeAIAssistant();
     
     // Auto-open apps in a nice cascading manner after boot
     // Wait for boot screen to finish (2500ms fade + 800ms transition = 3300ms)
@@ -1268,4 +1269,38 @@ function initializeCertificateModal() {
         }
     });
 }
+
+// ===========================
+// AI Assistant Widget
+// ===========================
+function initializeAIAssistant() {
+    const widget = document.getElementById('aiAssistantWidget');
+    if (!widget) return;
+    
+    // Check if widget was previously closed
+    const wasClosed = localStorage.getItem('aiAssistantClosed') === 'true';
+    if (wasClosed) {
+        widget.classList.add('hidden');
+    }
+}
+
+function closeAIAssistant() {
+    const widget = document.getElementById('aiAssistantWidget');
+    if (widget) {
+        widget.classList.add('hidden');
+        localStorage.setItem('aiAssistantClosed', 'true');
+    }
+}
+
+function showAIAssistant() {
+    const widget = document.getElementById('aiAssistantWidget');
+    if (widget) {
+        widget.classList.remove('hidden');
+        localStorage.setItem('aiAssistantClosed', 'false');
+    }
+}
+
+// Make functions globally available
+window.closeAIAssistant = closeAIAssistant;
+window.showAIAssistant = showAIAssistant;
 
