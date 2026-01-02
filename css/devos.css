@@ -3658,7 +3658,11 @@ body {
 }
 
 .ai-toggle-icon {
-    font-size: 1.75rem;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 @keyframes messageSlideIn {
