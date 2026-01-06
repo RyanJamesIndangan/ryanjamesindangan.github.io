@@ -581,8 +581,14 @@ class ClippySuggestions {
                 if (showAI) showAI();
                 // Show help message
                 setTimeout(() => {
-                    if (window.portfolioChatbot) {
-                        window.portfolioChatbot.addMessage('assistant', "Hi! I'm Clippy, your AI assistant. I can help you learn about Ryan's skills, experience, and projects. Try asking me questions like 'What are Ryan's skills?' or 'Tell me about his projects'!");
+                    if (typeof addChatMessage === 'function') {
+                        addChatMessage("Hi! I'm Clippy, your AI assistant. I can help you learn about Ryan's skills, experience, and projects. Try asking me questions like 'What are Ryan's skills?' or 'Tell me about his projects'!", 'assistant');
+                    } else if (window.portfolioChatbot) {
+                        // Fallback: use processMessage to generate a response
+                        const response = window.portfolioChatbot.processMessage("Hi, introduce yourself");
+                        if (response && response.text && typeof addChatMessage === 'function') {
+                            addChatMessage(response.text, 'assistant', response.suggestions);
+                        }
                     }
                 }, 500);
                 break;

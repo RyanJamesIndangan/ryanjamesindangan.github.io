@@ -2480,12 +2480,8 @@ window.sendChatMessage = function(messageText = null) {
     scrollChatToBottom();
     
     // Trigger deterministic animation for message sent (if desktop clippy exists)
-    if (role === 'user' && window.desktopClippy && window.desktopClippy.trigger) {
+    if (window.desktopClippy && window.desktopClippy.trigger) {
         window.desktopClippy.trigger('message-sent');
-    }
-    // Trigger deterministic animation for assistant message
-    if (role === 'assistant' && window.desktopClippy && window.desktopClippy.trigger) {
-        window.desktopClippy.trigger('assistant-response');
     }
 
     // Show typing indicator
@@ -2513,6 +2509,11 @@ window.sendChatMessage = function(messageText = null) {
         const lastMessage = window.portfolioChatbot.conversationHistory[window.portfolioChatbot.conversationHistory.length - 1];
         const messageId = lastMessage && lastMessage.messageId ? lastMessage.messageId : null;
         addChatMessage(response.text, 'assistant', response.suggestions || [], messageId);
+        
+        // Trigger deterministic animation for assistant response (if desktop clippy exists)
+        if (window.desktopClippy && window.desktopClippy.trigger) {
+            window.desktopClippy.trigger('assistant-response');
+        }
         
         // Restore reaction if exists (after DOM is ready)
         if (messageId) {
