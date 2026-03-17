@@ -2058,7 +2058,7 @@ function initializeCertificateModal() {
             container.style.left = '';
             container.style.top = '';
             container.style.transform = '';
-            container.style.margin = '';
+            container.style.animation = '';
         }
         
         // Properly encode the path for use in URLs
@@ -2124,32 +2124,34 @@ function initializeCertificateModal() {
     const modalContainer = modal.querySelector('.cert-modal-container');
     if (modalHeader && modalContainer) {
         let isDragging = false;
-        let dragStartX = 0;
-        let dragStartY = 0;
-        let containerStartX = 0;
-        let containerStartY = 0;
+        let dragOffsetX = 0;
+        let dragOffsetY = 0;
         
         modalHeader.addEventListener('mousedown', (e) => {
             // Don't drag if clicking close button
             if (e.target.closest('.cert-modal-close')) return;
             isDragging = true;
-            dragStartX = e.clientX;
-            dragStartY = e.clientY;
+            
+            // Get the container's current pixel position on screen
             const rect = modalContainer.getBoundingClientRect();
-            containerStartX = rect.left;
-            containerStartY = rect.top;
+            
+            // Switch from transform centering to pixel positioning
+            modalContainer.style.top = rect.top + 'px';
+            modalContainer.style.left = rect.left + 'px';
+            modalContainer.style.transform = 'none';
+            modalContainer.style.animation = 'none';
+            
+            // Calculate offset from mouse to container top-left
+            dragOffsetX = e.clientX - rect.left;
+            dragOffsetY = e.clientY - rect.top;
+            
             e.preventDefault();
         });
         
         document.addEventListener('mousemove', (e) => {
             if (!isDragging) return;
-            const dx = e.clientX - dragStartX;
-            const dy = e.clientY - dragStartY;
-            modalContainer.style.position = 'fixed';
-            modalContainer.style.left = (containerStartX + dx) + 'px';
-            modalContainer.style.top = (containerStartY + dy) + 'px';
-            modalContainer.style.transform = 'none';
-            modalContainer.style.margin = '0';
+            modalContainer.style.left = (e.clientX - dragOffsetX) + 'px';
+            modalContainer.style.top = (e.clientY - dragOffsetY) + 'px';
         });
         
         document.addEventListener('mouseup', () => {
