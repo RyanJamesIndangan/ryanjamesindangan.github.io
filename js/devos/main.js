@@ -2051,6 +2051,16 @@ function initializeCertificateModal() {
         modalTitle.textContent = title;
         modalBody.innerHTML = '';
         
+        // Reset container position (in case it was dragged previously)
+        const container = modal.querySelector('.cert-modal-container');
+        if (container) {
+            container.style.position = '';
+            container.style.left = '';
+            container.style.top = '';
+            container.style.transform = '';
+            container.style.margin = '';
+        }
+        
         // Properly encode the path for use in URLs
         // Split the path into directory and filename, encode only the filename
         const pathParts = certPath.split('/');
@@ -2062,7 +2072,7 @@ function initializeCertificateModal() {
             // Use iframe for better compatibility
             modalBody.innerHTML = `
                 <div style="width: 100%; height: 100%; display: flex; flex-direction: column;">
-                    <div style="flex: 1; position: relative; min-height: 500px;">
+                    <div style="flex: 1; position: relative;">
                         <iframe 
                             src="${encodedPath}#toolbar=1&navpanes=0&scrollbar=1&view=FitH" 
                             type="application/pdf"
@@ -2070,17 +2080,17 @@ function initializeCertificateModal() {
                             onload="this.style.background='#fff';"
                         ></iframe>
                     </div>
-                    <div style="padding: 1rem; background: rgba(0, 120, 215, 0.1); border-radius: 8px; text-align: center; margin-top: 1rem;">
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+                    <div style="padding: 0.75rem; background: rgba(0, 120, 215, 0.1); border-radius: 8px; text-align: center; margin-top: 0.5rem; flex-shrink: 0;">
+                        <p style="color: var(--text-secondary); margin-bottom: 0.75rem; font-size: 0.85rem;">
                             📄 PDF Document • Use the buttons below for more options
                         </p>
                         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                             <a href="${encodedPath}" target="_blank" rel="noopener noreferrer"
-                               style="padding: 0.75rem 1.5rem; background: var(--windows-blue); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                               style="padding: 0.5rem 1.25rem; background: var(--windows-blue); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
                                 🔗 Open in New Tab
                             </a>
                             <a href="${encodedPath}" download="${filename}"
-                               style="padding: 0.75rem 1.5rem; background: var(--success); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                               style="padding: 0.5rem 1.25rem; background: var(--success); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
                                 📥 Download PDF
                             </a>
                         </div>
@@ -2108,6 +2118,44 @@ function initializeCertificateModal() {
             closeModal();
         }
     });
+    
+    // Make certificate modal draggable by its header
+    const modalHeader = modal.querySelector('.cert-modal-header');
+    const modalContainer = modal.querySelector('.cert-modal-container');
+    if (modalHeader && modalContainer) {
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let containerStartX = 0;
+        let containerStartY = 0;
+        
+        modalHeader.addEventListener('mousedown', (e) => {
+            // Don't drag if clicking close button
+            if (e.target.closest('.cert-modal-close')) return;
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            const rect = modalContainer.getBoundingClientRect();
+            containerStartX = rect.left;
+            containerStartY = rect.top;
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - dragStartX;
+            const dy = e.clientY - dragStartY;
+            modalContainer.style.position = 'fixed';
+            modalContainer.style.left = (containerStartX + dx) + 'px';
+            modalContainer.style.top = (containerStartY + dy) + 'px';
+            modalContainer.style.transform = 'none';
+            modalContainer.style.margin = '0';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+    }
     
     // Listen for certificate button clicks (delegated event)
     document.addEventListener('click', (e) => {

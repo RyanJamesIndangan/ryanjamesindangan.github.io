@@ -752,7 +752,10 @@ class WindowManager {
         const minLeft = desktopIconWidth; // Keep space for desktop icons (2 columns)
         const maxLeft = desktopRect.width - windowEl.offsetWidth;
         const minTop = 0;
-        const maxTop = desktopRect.height - taskbarHeight - windowEl.offsetHeight;
+        // Ensure maxTop allows movement even for full-height windows
+        // Keep at least the title bar (32px) visible at the bottom
+        const rawMaxTop = desktopRect.height - taskbarHeight - windowEl.offsetHeight;
+        const maxTop = Math.max(rawMaxTop, desktopRect.height - taskbarHeight - 32);
         
         // Check for snapping
         const snapResult = this.checkSnapPosition(windowEl, newLeft, newTop);

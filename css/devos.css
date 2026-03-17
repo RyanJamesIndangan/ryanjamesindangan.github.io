@@ -518,9 +518,9 @@ body {
 
 .desktop-icon span {
     font-size: 0.75rem;
-    color: var(--text-primary);
+    color: #ffffff;
     text-align: center;
-    text-shadow: 0 1px 3px var(--shadow);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 0, 0, 0.5);
     font-weight: 500;
     transition: var(--theme-transition);
 }
@@ -1172,7 +1172,7 @@ body {
     background: transparent;
     border: none;
     border-radius: 0;
-    color: #ffffff;
+    color: #1a1a1a;
     font-size: 11px;
     cursor: pointer;
     transition: all 0.15s ease;
@@ -1184,7 +1184,7 @@ body {
     font-weight: 400;
     height: 32px;
     min-height: 32px;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
 }
 
 .taskbar-app .app-icon {
@@ -1218,7 +1218,7 @@ body {
         rgba(255, 255, 255, 0.15) 30%,
         rgba(255, 255, 255, 0.10) 70%,
         rgba(255, 255, 255, 0.06) 100%);
-    color: #fff;
+    color: #1a1a1a;
     box-shadow: 
         inset 0 1px 1px rgba(255, 255, 255, 0.25),
         inset 0 -1px 0 rgba(0, 0, 0, 0.08);
@@ -2473,8 +2473,9 @@ body {
 .cert-modal-container {
     position: relative;
     width: 90%;
-    max-width: 1200px;
-    max-height: 90vh;
+    max-width: 900px;
+    height: 75vh;
+    max-height: 80vh;
     background: rgba(30, 36, 66, 0.98);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
@@ -2483,6 +2484,7 @@ body {
     flex-direction: column;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     animation: modalSlideIn 0.3s ease;
+    z-index: 1;
 }
 
 @keyframes modalSlideIn {
@@ -2497,12 +2499,15 @@ body {
 }
 
 .cert-modal-header {
-    padding: 1.5rem 2rem;
-    background: rgba(255, 255, 255, 0.03);
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
     border-bottom: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: move;
+    flex-shrink: 0;
+    user-select: none;
 }
 
 .cert-modal-header h3 {
@@ -2535,12 +2540,13 @@ body {
 
 .cert-modal-body {
     flex: 1;
-    padding: 1.5rem;
-    overflow: hidden;
+    padding: 1rem;
+    overflow: auto;
     display: flex;
     align-items: stretch;
     justify-content: center;
     background: #000;
+    min-height: 0;
 }
 
 .cert-modal-body > div {
@@ -2564,11 +2570,12 @@ body {
 }
 
 .cert-modal-footer {
-    padding: 1.5rem 2rem;
+    padding: 0.75rem 1.5rem;
     background: rgba(255, 255, 255, 0.03);
     border-top: 1px solid var(--glass-border);
     display: flex;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .cert-download-btn {
