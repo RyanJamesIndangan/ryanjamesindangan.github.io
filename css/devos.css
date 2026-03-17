@@ -2452,10 +2452,12 @@ body {
     height: 100%;
     z-index: 10000;
     display: none;
+    align-items: center;
+    justify-content: center;
 }
 
 .cert-modal.active {
-    display: block;
+    display: flex;
 }
 
 .cert-modal-overlay {
@@ -2469,10 +2471,7 @@ body {
 }
 
 .cert-modal-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
     width: 90%;
     max-width: 900px;
     height: 75vh;
@@ -2483,19 +2482,7 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    animation: modalSlideIn 0.3s ease forwards;
     z-index: 1;
-}
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
 }
 
 .cert-modal-header {

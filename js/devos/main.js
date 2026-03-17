@@ -2034,6 +2034,15 @@ function autoOpenApps() {
 // ===========================
 function initializeCertificateModal() {
     const modal = document.getElementById('certificateModal');
+    
+    // CRITICAL: Move modal to document.body to escape any parent containing blocks.
+    // The taskbar has backdrop-filter which creates a new containing block,
+    // making position:fixed relative to the taskbar (39px) instead of the viewport.
+    // This ensures the modal covers the full viewport and centers correctly.
+    if (modal && modal.parentElement !== document.body) {
+        document.body.appendChild(modal);
+    }
+    
     const modalTitle = document.getElementById('certModalTitle');
     const modalBody = document.getElementById('certModalBody');
     const downloadBtn = document.getElementById('certDownloadBtn');
@@ -2051,14 +2060,10 @@ function initializeCertificateModal() {
         modalTitle.textContent = title;
         modalBody.innerHTML = '';
         
-        // Reset container position (in case it was dragged previously)
+        // Reset container to CSS defaults so flexbox re-centers it
         const container = modal.querySelector('.cert-modal-container');
         if (container) {
-            container.style.position = '';
-            container.style.left = '';
-            container.style.top = '';
-            container.style.transform = '';
-            container.style.animation = '';
+            container.style.cssText = '';
         }
         
         // Properly encode the path for use in URLs
@@ -2130,21 +2135,25 @@ function initializeCertificateModal() {
         modalHeader.addEventListener('mousedown', (e) => {
             // Don't drag if clicking close button
             if (e.target.closest('.cert-modal-close')) return;
-            isDragging = true;
             
-            // Get the container's current pixel position on screen
+            // Get the container's current viewport position
             const rect = modalContainer.getBoundingClientRect();
+            const currentWidth = rect.width;
             
-            // Switch from transform centering to pixel positioning
+            // Detach from flexbox: switch to position:fixed with exact viewport coords
+            // getBoundingClientRect() returns viewport coords, which is exactly what
+            // position:fixed uses, so there is ZERO coordinate jump.
+            modalContainer.style.position = 'fixed';
             modalContainer.style.top = rect.top + 'px';
             modalContainer.style.left = rect.left + 'px';
-            modalContainer.style.transform = 'none';
-            modalContainer.style.animation = 'none';
+            modalContainer.style.width = currentWidth + 'px';
+            modalContainer.style.margin = '0';
             
-            // Calculate offset from mouse to container top-left
+            // Calculate mouse offset relative to container top-left
             dragOffsetX = e.clientX - rect.left;
             dragOffsetY = e.clientY - rect.top;
             
+            isDragging = true;
             e.preventDefault();
         });
         
