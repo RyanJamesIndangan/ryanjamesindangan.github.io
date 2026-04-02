@@ -648,7 +648,7 @@ class PortfolioChatbot {
             
             if (lastTopic === 'experience') {
                 return {
-                    text: `More about Ryan's **work experience**:\n\n💼 **Current Role** (Nov 2025 - Present):\n• Building production AI pipelines\n• Leading document intelligence systems\n• Integrating LLM workflows for automation\n\n📈 **Key Achievements**:\n• Designed validation-first extraction framework\n• Created ML-based watermark removal system\n• Built secure AI gateway with JWT/RSA\n\n[Open Work Experience] for complete details!`,
+                    text: `More about Ryan's **work experience**:\n\n💼 **Most Recent Role** (Nov 2025 - Apr 2026):\n• Built production AI pipelines\n• Led document intelligence systems\n• Integrated LLM workflows for automation\n\n📈 **Key Achievements**:\n• Designed validation-first extraction framework\n• Created ML-based watermark removal system\n• Built secure AI gateway with JWT/RSA\n\n✅ **Currently available for work!**\n\n[Open Work Experience] for complete details!`,
                     suggestions: [
                         "What technologies did you use?",
                         "Tell me about projects",
@@ -789,7 +789,7 @@ class PortfolioChatbot {
         // Experience
         if (this.matches(message, ['experience', 'experiences', 'work', 'job', 'jobs', 'role', 'roles', 'position', 'positions', 'current', 'where do you work', 'employment', 'career'])) {
             return {
-                text: `Ryan currently works as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Present)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n• Built secure Node gateway with JWT/RSA\n\nPrevious role: Support Engineer at Bada LLC (Apr 2025 - Oct 2025)\n\n[Open Work Experience] for full details!`,
+                text: `Ryan most recently worked as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Apr 2026)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n• Built secure Node gateway with JWT/RSA\n\nPrevious role: Support Engineer at Bada LLC (Apr 2025 - Oct 2025)\n\n✅ **Currently available for work!**\n\n[Open Work Experience] for full details!`,
                 suggestions: [
                     "What technologies did you use?",
                     "Tell me about your projects",
@@ -1482,7 +1482,7 @@ class PortfolioChatbot {
         // Experience questions in Filipino
         if (this.matches(lowerMessage, ['ano ang experience', 'ano ang trabaho', 'saan ka nagtatrabaho', 'ano ang work', 'experience mo', 'trabaho mo'])) {
             return {
-                text: `Ryan currently works as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Present)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n\n[Open Work Experience] for full details!`,
+                text: `Ryan most recently worked as **AI Developer / Machine Learning Engineer** at **Alliance Global Solutions BPO Intl Corp.** (Nov 2025 - Apr 2026)\n\nKey achievements:\n• Built end-to-end bank statement extraction pipelines\n• Implemented advanced OCR preprocessing\n• Designed ML-based watermark removal system\n• Integrated local LLM workflows (Ollama)\n\n✅ **Currently available for work!**\n\n[Open Work Experience] for full details!`,
                 suggestions: [
                     "What technologies did you use?",
                     "Tell me about your projects",

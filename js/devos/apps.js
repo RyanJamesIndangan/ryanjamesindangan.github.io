@@ -95,7 +95,7 @@ const apps = {
                 ${createExperienceCard(
                     'AI Developer / Machine Learning Engineer',
                     'Alliance Global Solutions BPO Intl Corp. (Alternative Funding Group)',
-                    'Nov 2025 – Present',
+                    'Nov 2025 – Apr 2026',
                     'Remote',
                     [
                         'Built end-to-end bank statement extraction and validation pipelines using native PDF text and OCR fallback',
@@ -317,7 +317,7 @@ const apps = {
                         'ML-based watermark detection and removal using RandomForest classification. Automatically routes documents to appropriate removal strategies with quality scoring and validation.',
                         ['Python', 'scikit-learn', 'OpenCV', 'RandomForest', 'PIL'],
                         null,
-                        null,
+                        'https://huggingface.co/spaces/RyanSimper/ags-watermark-remover',
                         null,
                         'ai'
                     )}
@@ -820,9 +820,15 @@ const apps = {
                                 </div>
                             </div>
                         </div>
-                        <button id="processWatermarkBtn" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #7b1fa2; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
-                            🔄 Process Watermark Removal
-                        </button>
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem;">
+                            <button id="processWatermarkBtn" style="padding: 0.75rem 1.5rem; background: #7b1fa2; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                🔄 Process Watermark Removal
+                            </button>
+                            <a href="https://huggingface.co/spaces/RyanSimper/ags-watermark-remover" target="_blank" rel="noopener noreferrer"
+                               style="padding: 0.75rem 1.5rem; background: #FF9D00; color: #fff; border: none; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                                🤗 Try Live Demo on HuggingFace
+                            </a>
+                        </div>
                         <div id="watermarkInfo" style="margin-top: 1rem; padding: 1rem; background: #f3e5f5; border-radius: 6px; font-size: 0.85rem; color: #7b1fa2; display: none;">
                             <strong>ML Detection:</strong> <span id="watermarkType">-</span> | <strong>Confidence:</strong> <span id="watermarkConfidence">-</span>% | <strong>Processing Time:</strong> <span id="watermarkTime">-</span>ms
                         </div>

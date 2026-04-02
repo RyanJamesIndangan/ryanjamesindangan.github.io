@@ -1277,7 +1277,7 @@ Available commands:
             return `Ryan James Indangan - Full-Stack Developer & CTO\n${years}+ years of experience in web development\nSpecializing in AI/ML and Document Intelligence`;
         },
         skills: () => 'Frontend: React, Vue, Angular, Next.js\nBackend: PHP, Laravel, Node.js, FastAPI, Django\nCloud: AWS, Docker, Kubernetes\nAI/ML: Document Intelligence, OCR, LLM Integration',
-        experience: () => 'AI Developer/ML Engineer at Alliance Global Solutions (Nov 2025 - Present)\nSenior Full-Stack Developer at GlobalX Digital\nFormer CTO at Payo Digital\nTop Rated on Upwork',
+        experience: () => 'AI Developer/ML Engineer at Alliance Global Solutions (Nov 2025 - Apr 2026)\nSenior Full-Stack Developer at GlobalX Digital\nFormer CTO at Payo Digital\nTop Rated on Upwork\n\n✅ Currently available for work!',
         projects: () => 'Check out my projects:\n- Crypto Checkout Simulator\n- Supplier Order Management\n- GlobalX Platform Redesign\n- Document Intelligence Pipeline',
         contact: () => 'Email: ryanjamesfranciscoindangan@yahoo.com\nPhone: +63 999 333 9030\nLinkedIn: ryan-james-indangan',
         github: () => {
@@ -1303,8 +1303,10 @@ Specializing in Document Intelligence and AI-powered automation:
 • LLM integration (Ollama, vLLM, OpenAI APIs)
 • FastAPI SSE for real-time processing
 
-Current Role: AI Developer/ML Engineer at Alliance Global Solutions BPO
-Focus: Financial document processing and automated underwriting`;
+Previous Role: AI Developer/ML Engineer at Alliance Global Solutions BPO (Nov 2025 - Apr 2026)
+Focus: Financial document processing and automated underwriting
+
+✅ Currently available for new opportunities!`;
         },
         'ai-skills': () => {
             return `📎 Clippy: AI & Machine Learning Stack:
