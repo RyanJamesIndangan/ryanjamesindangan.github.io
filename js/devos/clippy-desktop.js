@@ -186,7 +186,7 @@ class DesktopClippy {
     getStaticHTML() {
         return `
             <div class="desktop-clippy-inner">
-                <!-- Multi-panel paper for realistic wrapping -->
+                <div class="desktop-clippy-glow"></div>
                 <div class="desktop-clippy-paper-wrapper">
                     <div class="desktop-clippy-paper-panel paper-top"></div>
                     <div class="desktop-clippy-paper-panel paper-right"></div>
@@ -256,124 +256,117 @@ class DesktopClippy {
         const inner = this.element?.querySelector('.desktop-clippy-inner');
         const paperWrapper = this.element?.querySelector('.desktop-clippy-paper-wrapper');
         const image = this.element?.querySelector('.desktop-clippy-image');
+        const glow = this.element?.querySelector('.desktop-clippy-glow');
         if (!inner || !paperWrapper) return;
-        
+
         const topPanel = paperWrapper.querySelector('.paper-top');
         const rightPanel = paperWrapper.querySelector('.paper-right');
         const bottomPanel = paperWrapper.querySelector('.paper-bottom');
         const leftPanel = paperWrapper.querySelector('.paper-left');
         const frontPanel = paperWrapper.querySelector('.paper-front');
-        
+
         if (!topPanel || !rightPanel || !bottomPanel || !leftPanel || !frontPanel) return;
-        
-        // Use GSAP Timeline for realistic multi-panel paper wrap
+
         if (typeof gsap !== 'undefined') {
-            const tl = gsap.timeline();
-            
-            // Reset all panels to starting positions (clean state)
-            gsap.set([topPanel, rightPanel, bottomPanel, leftPanel, frontPanel], {
-                opacity: 0,
-                rotateX: 0,
-                rotateY: 0,
-                rotateZ: 0,
-                scale: 1,
-                x: 0,
-                y: 0,
-                z: 0
+            const sidePanels = [topPanel, rightPanel, bottomPanel, leftPanel];
+            const allPanels = [...sidePanels, frontPanel];
+
+            gsap.set(allPanels, {
+                opacity: 0, rotateX: 0, rotateY: 0, rotateZ: 0,
+                scale: 1, x: 0, y: 0, z: 0, filter: 'blur(0px)'
             });
-            
-            // Wrap animation must be exactly 3 seconds total
-            // Stage 1: Top panel folds down (0.5s)
-            tl.set(topPanel, {
-                opacity: 1,
-                rotateX: -90,
-                transformOrigin: 'bottom center'
-            });
-            tl.to(topPanel, {
-                rotateX: 0,
-                duration: 0.5,
-                ease: 'power2.out'
-            });
-            
-            // Stage 2: Right panel folds left (0.5s) - overlaps with top
-            tl.set(rightPanel, {
-                opacity: 1,
-                rotateY: 90,
-                transformOrigin: 'left center'
-            });
-            tl.to(rightPanel, {
-                rotateY: 0,
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Stage 3: Bottom panel folds up (0.5s)
-            tl.set(bottomPanel, {
-                opacity: 1,
-                rotateX: 90,
-                transformOrigin: 'top center'
-            });
-            tl.to(bottomPanel, {
-                rotateX: 0,
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Stage 4: Left panel folds right (0.5s)
-            tl.set(leftPanel, {
-                opacity: 1,
-                rotateY: -90,
-                transformOrigin: 'right center'
-            });
-            tl.to(leftPanel, {
-                rotateY: 0,
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Stage 5: Front panel covers everything (0.5s)
-            tl.set(frontPanel, {
-                opacity: 0,
-                scale: 0.8,
-                z: 0
-            });
-            tl.to(frontPanel, {
-                opacity: 1,
-                scale: 1,
-                z: 40,
-                duration: 0.5,
-                ease: 'power2.in'
-            }, '-=0.3');
-            
-            // Hide image as paper wraps (overlaps with panels)
+            gsap.set(frontPanel, { xPercent: -50, yPercent: -50 });
+            if (glow) gsap.set(glow, { opacity: 0, scale: 0.4, xPercent: -50, yPercent: -50 });
+
+            const tl = gsap.timeline({ defaults: { overwrite: 'auto' } });
+
+            // Anticipation — Clippy squashes and leans slightly
             if (image) {
                 tl.to(image, {
-                    opacity: 0,
-                    scale: 0.9,
-                    duration: 0.5,
+                    scale: 0.88,
+                    rotateZ: -4,
+                    y: 2,
+                    duration: 0.18,
                     ease: 'power2.in'
-                }, '-=0.8');
+                }, 0);
             }
-            
-            // Stage 6: All panels fade out to reveal GIF underneath (0.5s to complete 3s total)
-            tl.to([topPanel, rightPanel, bottomPanel, leftPanel, frontPanel], {
-                opacity: 0,
+
+            // All four side panels fold in simultaneously from 90°
+            tl.set(topPanel,    { opacity: 1, rotateX: -90 }, 0.12);
+            tl.set(bottomPanel, { opacity: 1, rotateX:  90 }, 0.12);
+            tl.set(leftPanel,   { opacity: 1, rotateY: -90 }, 0.12);
+            tl.set(rightPanel,  { opacity: 1, rotateY:  90 }, 0.12);
+
+            tl.to([topPanel, bottomPanel], {
+                rotateX: 0,
                 duration: 0.5,
-                ease: 'power1.out'
-            });
-            
+                ease: 'power4.out'
+            }, 0.12);
+            tl.to([leftPanel, rightPanel], {
+                rotateY: 0,
+                duration: 0.5,
+                ease: 'power4.out'
+            }, 0.16);
+
+            // Clippy image spins and shrinks into the center of the wrap
+            if (image) {
+                tl.to(image, {
+                    scale: 0,
+                    opacity: 0,
+                    rotateZ: 180,
+                    duration: 0.42,
+                    ease: 'power2.in'
+                }, 0.22);
+            }
+
+            // Front panel pops in with a spring back-out
+            tl.fromTo(frontPanel, {
+                opacity: 0, scale: 0, rotateZ: -180, z: 80
+            }, {
+                opacity: 1, scale: 1, rotateZ: 0, z: 40,
+                duration: 0.55,
+                ease: 'back.out(2.1)'
+            }, 0.48);
+
+            // Magic glow halo bursts out during reveal
+            if (glow) {
+                tl.to(glow, {
+                    opacity: 0.9,
+                    scale: 1.9,
+                    duration: 0.35,
+                    ease: 'power2.out'
+                }, 0.55);
+                tl.to(glow, {
+                    opacity: 0,
+                    scale: 2.4,
+                    duration: 0.35,
+                    ease: 'power2.in'
+                }, 0.9);
+            }
+
+            // Paper bursts open and fades — reveals the GIF underneath
+            tl.to(sidePanels, {
+                opacity: 0,
+                scale: 1.35,
+                duration: 0.4,
+                ease: 'power2.out'
+            }, 0.95);
+            tl.to(frontPanel, {
+                opacity: 0,
+                scale: 1.5,
+                rotateZ: 15,
+                filter: 'blur(6px)',
+                duration: 0.4,
+                ease: 'power2.out'
+            }, 0.95);
+
             await tl;
         } else {
-            // Fallback
             inner.classList.add('clippy-wrap');
-            await this.waitForAnimation(inner, 'clippy-wrap', 3000);
+            await this.waitForAnimation(inner, 'clippy-wrap', 1400);
         }
-        
-        // Wait for wrap animation to fully complete before showing GIF
-        // This ensures proper sequencing
-        await this.waitForDuration(100);
-        
-        // Transition complete, move to ANIMATED_GIF
+
+        await this.waitForDuration(60);
         this.setState('ANIMATED_GIF');
     }
     
@@ -547,121 +540,120 @@ class DesktopClippy {
         const paperWrapper = this.element?.querySelector('.desktop-clippy-paper-wrapper');
         const gif = this.element?.querySelector('.desktop-clippy-gif');
         const image = this.element?.querySelector('.desktop-clippy-image');
+        const glow = this.element?.querySelector('.desktop-clippy-glow');
         if (!inner || !paperWrapper) return;
-        
+
         const topPanel = paperWrapper.querySelector('.paper-top');
         const rightPanel = paperWrapper.querySelector('.paper-right');
         const bottomPanel = paperWrapper.querySelector('.paper-bottom');
         const leftPanel = paperWrapper.querySelector('.paper-left');
         const frontPanel = paperWrapper.querySelector('.paper-front');
-        
+
         if (!topPanel || !rightPanel || !bottomPanel || !leftPanel || !frontPanel) return;
-        
-        // Use GSAP Timeline for realistic multi-panel paper unwrap
+
         if (typeof gsap !== 'undefined') {
-            const tl = gsap.timeline();
-            
-            // Reset all panels to wrapped state (visible) for unwrap animation
-            gsap.set([topPanel, rightPanel, bottomPanel, leftPanel, frontPanel], {
-                opacity: 0.85,
-                rotateX: 0,
-                rotateY: 0,
-                rotateZ: 0,
-                scale: 1,
-                x: 0,
-                y: 0,
-                z: 0
+            const sidePanels = [topPanel, rightPanel, bottomPanel, leftPanel];
+            const allPanels = [...sidePanels, frontPanel];
+
+            gsap.set(allPanels, {
+                opacity: 0, rotateX: 0, rotateY: 0, rotateZ: 0,
+                scale: 1, x: 0, y: 0, z: 0, filter: 'blur(0px)'
             });
-            
-            // Unwrap animation must be exactly 3 seconds total
-            // Stage 1: Front panel peels away first (0.5s)
-            tl.to(frontPanel, {
-                opacity: 0,
-                scale: 0.8,
-                z: 80,
-                rotateY: -45,
-                duration: 0.5,
-                ease: 'power2.out'
-            });
-            
-            // Stage 2: Left panel unfolds to the left (0.5s)
-            tl.to(leftPanel, {
-                opacity: 0,
-                rotateY: -90,
-                x: '-=30',
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Stage 3: Right panel unfolds to the right (0.5s)
-            tl.to(rightPanel, {
-                opacity: 0,
-                rotateY: 90,
-                x: '+=30',
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Stage 4: Top panel folds up (0.5s)
-            tl.to(topPanel, {
-                opacity: 0,
-                rotateX: -90,
-                y: '-=20',
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Stage 5: Bottom panel folds down (0.5s)
-            tl.to(bottomPanel, {
-                opacity: 0,
-                rotateX: 90,
-                y: '+=20',
-                duration: 0.5,
-                ease: 'power2.out'
-            }, '-=0.3');
-            
-            // Hide GIF as paper unwraps (overlaps with panels)
+            gsap.set(frontPanel, { xPercent: -50, yPercent: -50 });
+            if (glow) gsap.set(glow, { opacity: 0, scale: 0.6, xPercent: -50, yPercent: -50 });
+
+            const tl = gsap.timeline({ defaults: { overwrite: 'auto' } });
+
+            // Glow flash kicks off the reveal
+            if (glow) {
+                tl.to(glow, {
+                    opacity: 0.9,
+                    scale: 1.9,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                }, 0);
+                tl.to(glow, {
+                    opacity: 0,
+                    scale: 2.4,
+                    duration: 0.4,
+                    ease: 'power2.in'
+                }, 0.3);
+            }
+
+            // Front panel snaps in to cover the GIF
+            tl.fromTo(frontPanel, {
+                opacity: 0, scale: 0.4, rotateZ: -20, z: 60, filter: 'blur(4px)'
+            }, {
+                opacity: 1, scale: 1, rotateZ: 0, z: 40, filter: 'blur(0px)',
+                duration: 0.32,
+                ease: 'back.out(1.8)'
+            }, 0.02);
+
+            tl.set(sidePanels, { opacity: 1, rotateX: 0, rotateY: 0, scale: 1 }, 0.32);
+
+            // GIF shrinks and fades behind the wrap
             if (gif) {
                 tl.to(gif, {
                     opacity: 0,
-                    scale: 0.9,
-                    duration: 0.5,
+                    scale: 0.85,
+                    duration: 0.3,
                     ease: 'power2.in',
                     onComplete: () => {
                         gif.style.display = 'none';
                         gif.style.opacity = '0';
                         gif.src = '';
                     }
-                }, '-=0.8');
+                }, 0.02);
             }
-            
-            // Show static image with smooth reveal (0.5s to complete 3s total)
+
+            // All four side panels unfold outward simultaneously
+            tl.to([topPanel, bottomPanel], {
+                rotateX: (i) => (i === 0 ? -90 : 90),
+                opacity: 0,
+                duration: 0.5,
+                ease: 'power3.in'
+            }, 0.38);
+            tl.to([leftPanel, rightPanel], {
+                rotateY: (i) => (i === 0 ? -90 : 90),
+                opacity: 0,
+                duration: 0.5,
+                ease: 'power3.in'
+            }, 0.42);
+
+            // Front panel peels away with a spin
+            tl.to(frontPanel, {
+                opacity: 0,
+                scale: 1.4,
+                rotateZ: 25,
+                filter: 'blur(6px)',
+                duration: 0.42,
+                ease: 'power2.in'
+            }, 0.38);
+
+            // Static Clippy bounces back in
             if (image) {
-                tl.set(image, { 
-                    opacity: 0, 
-                    scale: 0.9,
-                    display: 'block'
-                }, '-=0.5');
-                tl.to(image, {
+                tl.set(image, { display: 'block' }, 0.5);
+                tl.fromTo(image, {
+                    opacity: 0,
+                    scale: 0.2,
+                    rotateZ: -180,
+                    y: 4
+                }, {
                     opacity: 1,
                     scale: 1,
-                    duration: 0.5,
-                    ease: 'power2.out'
-                }, '-=0.5');
+                    rotateZ: 0,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'back.out(1.7)'
+                }, 0.55);
             }
-            
-            // Reset all panels to clean state after unwrap completes
-            tl.set([topPanel, rightPanel, bottomPanel, leftPanel, frontPanel], {
-                opacity: 0,
-                rotateX: 0,
-                rotateY: 0,
-                rotateZ: 0,
-                scale: 1,
-                x: 0,
-                y: 0,
-                z: 0
+
+            // Clean slate for next cycle
+            tl.set(allPanels, {
+                opacity: 0, rotateX: 0, rotateY: 0, rotateZ: 0,
+                scale: 1, x: 0, y: 0, z: 0, filter: 'blur(0px)'
             });
-            
+
             await tl;
         } else {
             // Fallback

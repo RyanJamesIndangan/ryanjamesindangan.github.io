@@ -3366,26 +3366,56 @@ body {
     height: 150%;
     transform: translate(-50%, -50%);
     transform-style: preserve-3d;
-    perspective: 800px;
+    perspective: 1200px;
     pointer-events: none;
     z-index: 1;
+}
+
+/* Magic glow halo used during wrap / unwrap transformations */
+.desktop-clippy-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 220%;
+    height: 220%;
+    transform: translate(-50%, -50%) scale(0.4);
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 240, 170, 0.95) 0%,
+        rgba(255, 210, 120, 0.65) 22%,
+        rgba(255, 180, 80, 0.35) 45%,
+        rgba(255, 180, 80, 0) 72%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 3;
+    mix-blend-mode: screen;
+    filter: blur(10px);
+    will-change: transform, opacity;
 }
 
 /* Individual paper panels that fold around Clippy */
 .desktop-clippy-paper-panel {
     position: absolute;
-    background: linear-gradient(135deg, #fffef0 0%, #f5f5dc 50%, #fffef0 100%);
-    background-image: 
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px),
-        linear-gradient(135deg, #fffef0 0%, #f5f5dc 50%, #fffef0 100%);
-    border: 2px solid #d4af37;
-    box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    background:
+        linear-gradient(115deg,
+            rgba(255, 255, 255, 0.55) 0%,
+            rgba(255, 255, 255, 0) 35%,
+            rgba(255, 255, 255, 0) 60%,
+            rgba(255, 255, 255, 0.35) 100%),
+        linear-gradient(135deg, #fffdf0 0%, #f6ecc1 50%, #fff5d0 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.75);
+    border-radius: 3px;
+    box-shadow:
+        0 6px 18px rgba(212, 175, 55, 0.45),
+        0 2px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
     transform-style: preserve-3d;
     backface-visibility: hidden;
     opacity: 0;
+    will-change: transform, opacity, filter;
 }
 
 /* Top panel - folds down */
