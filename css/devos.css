@@ -1917,7 +1917,6 @@ body {
     visibility: hidden;
     transform: scale(0.95) translateY(-10px);
     transition: all 0.2s ease;
-    left: auto; /* Ensure left is auto so right positioning works */
 }
 
 .shutdown-menu.active {

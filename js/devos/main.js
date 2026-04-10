@@ -219,34 +219,38 @@ function showShutdownMenu(e) {
     `;
     
     document.body.appendChild(menu);
-    
-    // Position menu in the red square area (right side of desktop)
+
+    // Anchor menu to the shutdown button as a fly-out submenu
     const menuWidth = 220;
-    const menuHeight = 280;
-    
-    // Position in the right side of desktop, vertically centered
-    // This matches the red square area shown in the screenshot
-    const rightMargin = 50; // Distance from right edge
+    const menuHeight = menu.offsetHeight || 280;
     const viewportHeight = window.innerHeight;
     const viewportWidth = window.innerWidth;
-    const taskbarHeight = 60; // Approximate taskbar height
-    
-    // Calculate vertical center position (excluding taskbar)
-    const availableHeight = viewportHeight - taskbarHeight;
-    const centerTop = (availableHeight / 2) - (menuHeight / 2);
-    
-    // Ensure menu doesn't go off-screen
-    let finalTop = Math.max(80, Math.min(centerTop, viewportHeight - menuHeight - 80));
-    let finalRight = rightMargin;
-    
-    // Ensure it doesn't go off the right edge
-    if (finalRight + menuWidth > viewportWidth - 20) {
-        finalRight = viewportWidth - menuWidth - 20;
+    const gap = 6;
+
+    const shutdownBtn = document.querySelector('.shutdown-btn');
+    const btnRect = shutdownBtn ? shutdownBtn.getBoundingClientRect() : null;
+
+    let finalLeft;
+    let finalTop;
+
+    if (btnRect) {
+        // Prefer opening to the right of the button (classic XP fly-out)
+        finalLeft = btnRect.right + gap;
+        if (finalLeft + menuWidth > viewportWidth - 10) {
+            // Not enough room on the right — open above the button instead
+            finalLeft = Math.max(10, btnRect.left);
+        }
+        // Align the menu's bottom with the button's bottom so it flies upward
+        finalTop = btnRect.bottom - menuHeight;
+        finalTop = Math.max(10, Math.min(finalTop, viewportHeight - menuHeight - 10));
+    } else {
+        finalLeft = Math.max(10, viewportWidth - menuWidth - 20);
+        finalTop = Math.max(10, viewportHeight - menuHeight - 80);
     }
-    
-    menu.style.right = `${finalRight}px`;
+
+    menu.style.left = `${finalLeft}px`;
     menu.style.top = `${finalTop}px`;
-    menu.style.left = 'auto'; // Clear left positioning
+    menu.style.right = 'auto';
     
     // Animate in
     setTimeout(() => menu.classList.add('active'), 10);
