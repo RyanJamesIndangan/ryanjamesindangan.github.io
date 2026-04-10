@@ -146,17 +146,27 @@ function initializeStartMenu() {
     const startMenu = document.getElementById('startMenu');
     const shutdownBtn = document.querySelector('.shutdown-btn');
     
+    const closeShutdownMenu = () => {
+        const existingMenu = document.querySelector('.shutdown-menu');
+        if (existingMenu) existingMenu.remove();
+    };
+
     startButton.addEventListener('click', (e) => {
         e.stopPropagation();
+        const willClose = startMenu.classList.contains('active');
         startMenu.classList.toggle('active');
         startButton.classList.toggle('active');
+        if (willClose) closeShutdownMenu();
     });
-    
+
     // Close start menu when clicking outside
     document.addEventListener('click', (e) => {
         if (!startMenu.contains(e.target) && e.target !== startButton) {
-            startMenu.classList.remove('active');
-            startButton.classList.remove('active');
+            if (startMenu.classList.contains('active')) {
+                startMenu.classList.remove('active');
+                startButton.classList.remove('active');
+                closeShutdownMenu();
+            }
         }
     });
     
