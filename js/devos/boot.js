@@ -6,7 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const bootScreen = document.getElementById('bootScreen');
     const bootText = bootScreen?.querySelector('.boot-text');
     const desktop = document.getElementById('desktop');
-    
+
+    // Fast-boot shortcut (e.g. index.html?fastboot=1): skip the intro animation
+    // so previews/screenshots and impatient revisits land straight on the desktop.
+    if (new URLSearchParams(location.search).has('fastboot') ||
+        document.documentElement.classList.contains('mobile-shell')) {
+        if (bootScreen) bootScreen.style.display = 'none';
+        if (desktop) desktop.classList.add('loaded');
+        document.dispatchEvent(new CustomEvent('bootComplete'));
+        if (typeof initializeContextMenu === 'function') setTimeout(initializeContextMenu, 0);
+        return;
+    }
+
     if (!bootScreen || !bootText) return;
     
     // AI-themed boot messages

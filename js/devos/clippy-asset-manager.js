@@ -130,7 +130,7 @@ class ClippyAssetManager {
             
             // System events
             'shutdown': 'assets/clippy/deterministic/clippy-animation-saying-brb.gif',
-            'sleep': 'assets/clippy/deterministic/clippy-animation-sleepy-in-front-of-laptop.gif',
+            'sleep': 'assets/clippy/idle/clippy-animation-when-idle-sleepy-in-front-of-laptop.gif',
             'lock': 'assets/clippy/deterministic/clippy-animation-out-of-office.gif',
             
             // Status events
@@ -140,7 +140,7 @@ class ClippyAssetManager {
             'info': 'assets/clippy/deterministic/clippy-animation-saying-yeah.gif',
             
             // Special events
-            'idle-long': 'assets/clippy/deterministic/clippy-animation-saying-are-you-there.gif',
+            'idle-long': 'assets/clippy/idle/clippy-animation-when-idle-saying-are-you-there.gif',
             'money': 'assets/clippy/deterministic/clippy-animation-having-a-lot-of-money-around-him.gif',
             'stocks-down': 'assets/clippy/deterministic/clippy-animation-stocks-going-down.gif',
             'wounded': 'assets/clippy/deterministic/clippy-animation-have-bandages-wounded.gif',

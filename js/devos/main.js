@@ -28,6 +28,23 @@ function getClippyAvatar() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = window.DeviceMode && window.DeviceMode.isMobile();
+
+    // Shared inits (used by BOTH the desktop OS and the mobile shell)
+    updateExperienceYears();
+    initializeThemeToggle();
+    initializeCertificateModal();
+    initializeAIAssistant();
+
+    // Non-critical: Defer GitHub stats (external API call)
+    initNonCritical(() => {
+        initializeGitHubStats();
+    });
+
+    // On phones the mobile shell (mobile-shell.js) drives the UI — skip all the
+    // desktop-only machinery (icons, taskbar, start menu, context menu, auto-open windows).
+    if (isMobile) return;
+
     // Critical: Initialize immediately
     initializeClock();
     initializeStartMenu();
@@ -37,16 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSelectionBox();
     initializeAppTiles();
     initializeSystemTray();
-    updateExperienceYears();
-    initializeThemeToggle();
-    initializeCertificateModal();
-    initializeAIAssistant();
-    
-    // Non-critical: Defer GitHub stats (external API call)
-    initNonCritical(() => {
-        initializeGitHubStats();
-    });
-    
+
     // Auto-open apps in a nice cascading manner after boot
     // Wait for boot screen to finish (2500ms fade + 800ms transition = 3300ms)
     setTimeout(() => {

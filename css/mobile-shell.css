@@ -1,0 +1,170 @@
+/* =========================================================================
+   Mobile Shell ("Pocket OS") — phone-native experience.
+   Everything is scoped under html.mobile-shell so the desktop is untouched.
+   ========================================================================= */
+
+html.mobile-shell, html.mobile-shell body {
+  margin: 0; padding: 0; height: 100%;
+  overflow: hidden;
+  background: #0f1420;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* --- Hide all desktop chrome on phones --- */
+html.mobile-shell #bootScreen,
+html.mobile-shell #desktop,
+html.mobile-shell .taskbar,
+html.mobile-shell .start-menu,
+html.mobile-shell .start-button,
+html.mobile-shell .context-menu,
+html.mobile-shell .selection-box,
+html.mobile-shell #desktopClippy,
+html.mobile-shell .desktop-clippy { display: none !important; }
+
+/* --- Shell scaffold --- */
+html.mobile-shell #mobileShell {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #0f1420;
+}
+
+/* App bar */
+.ms-appbar {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  padding: calc(env(safe-area-inset-top) + 12px) 16px 12px;
+  background: linear-gradient(135deg, #16365c, #2171d6);
+  color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.28); z-index: 5;
+}
+.ms-brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; font-size: 1.05rem; letter-spacing: .2px; }
+.ms-brand img { width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.ms-appbar .ms-desktop-link {
+  background: rgba(255,255,255,.16); border: none; color: #fff;
+  height: 34px; padding: 0 12px; border-radius: 10px; font-size: .8rem; font-weight: 600;
+  display: inline-flex; align-items: center; gap: .35rem;
+}
+.ms-appbar .ms-desktop-link:active { background: rgba(255,255,255,.3); }
+
+/* Screens */
+#msScreens { flex: 1 1 auto; position: relative; overflow: hidden; background: #eef1f5; }
+.ms-screen {
+  position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px);
+  background: #eef1f5; display: none;
+}
+.ms-screen.active { display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  .ms-screen.active { animation: msFade .25s ease; }
+}
+@keyframes msFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+
+/* --- Content normalization for reused apps[].content (designed for desktop windows) --- */
+.ms-screen [style*="max-width"] { max-width: none !important; width: auto !important; }
+.ms-screen [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+.ms-screen img, .ms-screen iframe, .ms-screen video, .ms-screen canvas { max-width: 100% !important; height: auto; }
+.ms-screen iframe { width: 100% !important; aspect-ratio: 16 / 9; }
+.ms-screen h1 { font-size: 1.55rem !important; line-height: 1.2; }
+.ms-screen h2 { font-size: 1.25rem !important; }
+.ms-screen { font-size: 16px; }
+.ms-screen button, .ms-screen a[role="button"], .ms-screen .view-cert-btn { min-height: 44px; }
+.ms-screen ::-webkit-scrollbar { height: 6px; width: 6px; }
+
+/* Tab bar */
+.ms-tabbar {
+  flex: 0 0 auto; display: flex; background: #ffffff;
+  border-top: 1px solid #e3e8ef; padding-bottom: env(safe-area-inset-bottom);
+  z-index: 6; box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+}
+.ms-tabbar button {
+  flex: 1; background: none; border: none; cursor: pointer;
+  padding: 8px 2px 6px; font-size: .64rem; font-weight: 600; color: #8a96a3;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  transition: color .15s ease;
+}
+.ms-tabbar button .ms-ico { font-size: 1.3rem; line-height: 1; }
+.ms-tabbar button.active { color: #2171d6; }
+
+/* Home screen */
+.ms-hero {
+  background: linear-gradient(135deg, #16365c, #2171d6);
+  color: #fff; border-radius: 18px; padding: 22px 20px; margin-bottom: 18px;
+  box-shadow: 0 6px 20px rgba(33,113,214,.28);
+}
+.ms-hero-top { display: flex; align-items: center; gap: 14px; }
+.ms-hero-top img { width: 56px; height: 56px; border-radius: 14px; background: #fff; padding: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
+.ms-hero h1 { margin: 0; font-size: 1.4rem; }
+.ms-hero .ms-hero-title { font-size: .82rem; opacity: .92; margin-top: 2px; }
+.ms-hero p { margin: 14px 0 0; font-size: .92rem; line-height: 1.5; opacity: .95; }
+.ms-hero-cta { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.ms-hero-cta a {
+  flex: 1 1 auto; text-align: center; text-decoration: none; font-weight: 700; font-size: .85rem;
+  padding: 11px 14px; border-radius: 12px; min-height: 44px;
+  display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+}
+.ms-hero-cta .primary { background: #fff; color: #16365c; }
+.ms-hero-cta .ghost { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.4); }
+
+.ms-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+.ms-stat { background: #fff; border: 1px solid #e3e8ef; border-radius: 14px; padding: 12px 6px; text-align: center; }
+.ms-stat .n { font-size: 1.35rem; font-weight: 800; color: #2171d6; }
+.ms-stat .l { font-size: .62rem; color: #6b7785; margin-top: 2px; }
+
+.ms-section-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #8a96a3; margin: 4px 4px 12px; }
+.ms-grid { display: grid; grid-template-columns: repeat(4, 1fr) !important; gap: 14px; }
+.ms-grid button {
+  background: #fff; border: 1px solid #e3e8ef; border-radius: 16px; cursor: pointer;
+  padding: 14px 4px 10px; display: flex; flex-direction: column; align-items: center; gap: 7px;
+  font-size: .62rem; font-weight: 600; color: #45525f; min-height: 76px;
+}
+.ms-grid button:active { transform: scale(.96); }
+.ms-grid .ms-ico { font-size: 1.55rem; line-height: 1; height: 1.55rem; display: flex; align-items: center; justify-content: center; }
+/* Some app icons are <img> (e.g. AI Lab's Clippy) rather than an emoji — keep them icon-sized. */
+.ms-grid .ms-ico img { width: 1.6rem; height: 1.6rem; object-fit: contain; display: block; }
+
+/* Full-screen sheets (secondary apps) */
+.ms-sheet {
+  position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column;
+  background: #eef1f5; transform: translateY(100%); transition: transform .28s ease; visibility: hidden;
+}
+.ms-sheet.open { transform: none; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .ms-sheet { transition: none; } }
+.ms-sheet-head {
+  flex: 0 0 auto; display: flex; align-items: center; gap: .6rem;
+  padding: calc(env(safe-area-inset-top) + 12px) 12px 12px;
+  background: linear-gradient(135deg, #16365c, #2171d6); color: #fff;
+}
+.ms-sheet-head .ms-back {
+  background: rgba(255,255,255,.16); border: none; color: #fff; cursor: pointer;
+  height: 38px; min-width: 38px; border-radius: 10px; padding: 0 12px; font-weight: 700; font-size: .95rem;
+  display: inline-flex; align-items: center; gap: .3rem;
+}
+.ms-sheet-head .ms-sheet-title { font-weight: 700; font-size: 1.05rem; }
+.ms-sheet-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px); }
+.ms-sheet-body [style*="max-width"] { max-width: none !important; width: auto !important; }
+.ms-sheet-body [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+.ms-sheet-body img, .ms-sheet-body iframe, .ms-sheet-body canvas { max-width: 100% !important; height: auto; }
+.ms-sheet-body iframe { width: 100% !important; aspect-ratio: 16 / 9; }
+
+/* Clippy chat FAB + full-screen chat (reuse existing widget) */
+/* Hide the desktop chat toggle on phones; the shell uses its own Clippy FAB. */
+html.mobile-shell .ai-assistant-toggle { display: none !important; }
+.ms-clippy-fab {
+  position: fixed; right: 16px; bottom: calc(env(safe-area-inset-bottom) + 74px);
+  width: 58px; height: 58px; border-radius: 50%; border: none; cursor: pointer;
+  background: #fff; padding: 5px; z-index: 58;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+  display: flex; align-items: center; justify-content: center;
+}
+.ms-clippy-fab img { width: 100%; height: 100%; object-fit: contain; }
+.ms-clippy-fab:active { transform: scale(.94); }
+html.mobile-shell .ai-assistant-widget {
+  position: fixed !important; inset: 0 !important;
+  width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important;
+  border-radius: 0 !important; z-index: 75 !important; transform: none !important;
+}
+html.mobile-shell .ai-assistant-widget.hidden { display: none !important; }
+
+/* Keep the certificate / PDF modal usable on phones */
+html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !important; max-width: 96vw !important; height: 90vh !important; }

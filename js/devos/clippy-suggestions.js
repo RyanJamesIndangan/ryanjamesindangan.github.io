@@ -74,6 +74,9 @@ class ClippySuggestions {
     }
     
     init() {
+        // On phones the mobile shell provides the Clippy chat FAB; skip the
+        // desktop suggestion bubbles entirely (they float over the mobile UI).
+        if (document.documentElement.classList.contains('mobile-shell')) return;
         // Wait for DOM
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.setup());

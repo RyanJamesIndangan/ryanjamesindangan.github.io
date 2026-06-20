@@ -3,6 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      /* Device-mode classifier: decide phone vs desktop before anything else renders. */
+      (function () {
+        try {
+          var p = new URLSearchParams(location.search);
+          var forceDesktop = p.get('desktop') === '1' || localStorage.getItem('forceDesktopMode') === 'true';
+          var forceMobile = p.get('mobile') === '1';
+          var narrow = window.matchMedia('(max-width: 768px)').matches;
+          var touch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
+          var isMobile = forceMobile || (!forceDesktop && narrow && touch);
+          window.DeviceMode = { isMobile: function () { return isMobile; } };
+          if (isMobile) document.documentElement.classList.add('mobile-shell');
+        } catch (e) { window.DeviceMode = { isMobile: function () { return false; } }; }
+      })();
+    </script>
     <meta name="description" content="Ryan James Indangan - AI Software Engineer & Full-Stack Developer | 8+ years experience in Document Intelligence, OCR, LLM Integration. Interactive Windows 7-inspired portfolio showcasing AI/ML projects, technical skills, and professional experience.">
     <meta name="keywords" content="Full-Stack Developer, AI Developer, Machine Learning Engineer, Document Intelligence, OCR, LLM Integration, React, Node.js, Python, FastAPI, AWS, Docker, Kubernetes, Web Development, PHP, Laravel, CodeIgniter, JavaScript, TypeScript, Frontend Developer, Backend Developer, DevOps, Caloocan City, Philippines">
     <meta name="author" content="Ryan James Indangan">
@@ -187,6 +202,7 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/devos.css">
+    <link rel="stylesheet" href="css/mobile-shell.css">
     
     <!-- Performance: Cache Control Meta Tags -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable">
@@ -629,6 +645,7 @@
     <script src="js/devos/clippy.js" defer></script>
     <script src="js/devos/clippy-suggestions.js" defer></script>
     <script src="js/devos/main.js" defer></script>
+    <script src="js/devos/mobile-shell.js" defer></script>
 </body>
 </html>
 

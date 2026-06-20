@@ -146,16 +146,29 @@ class DesktopClippy {
         clippyEl.style.opacity = '1';
         clippyEl.style.visibility = 'visible';
         
-        // Set initial position (random on desktop)
-        // Use requestAnimationFrame to ensure element is rendered first
+        // Place initially WITHOUT the CSS slide transition so Clippy doesn't visibly
+        // glide in from the top-left corner on creation.
         requestAnimationFrame(() => {
+            const prevTransition = clippyEl.style.transition;
+            clippyEl.style.transition = 'none';
             this.setRandomPosition();
-            // Debug: verify element is visible
-            if (this.element) {
-                const rect = this.element.getBoundingClientRect();
-                console.log('Desktop Clippy created at:', this.position, 'Element visible:', rect.width > 0 && rect.height > 0);
-            }
+            void clippyEl.offsetWidth; // force reflow so the no-transition placement applies
+            requestAnimationFrame(() => { if (this.element) this.element.style.transition = prevTransition; });
         });
+
+        // Keep Clippy on-screen (and off the taskbar) when the viewport changes —
+        // previously it could be stranded off-screen or over the taskbar after a resize/rotate.
+        this._onResize = () => {
+            const d = document.getElementById('desktop');
+            if (!d || !this.element || !this.position) return;
+            const r = d.getBoundingClientRect();
+            const x = Math.min(Math.max(20, this.position.x), Math.max(20, r.width - 100));
+            const y = Math.min(Math.max(20, this.position.y), Math.max(20, r.height - 140));
+            this.position.x = x; this.position.y = y;
+            this.element.style.left = x + 'px';
+            this.element.style.top = y + 'px';
+        };
+        window.addEventListener('resize', this._onResize);
         
         // Start movement cycle (idle cycle is now part of movement flow)
         this.startMovementCycle();
@@ -1149,6 +1162,10 @@ function initializeDesktopClippy() {
 // Initialize after boot - but don't create instance in constructor
 // The instance will be created here
 function attemptDesktopClippyInit() {
+    // The roaming desktop Clippy is desktop-only; on phones the mobile shell
+    // provides a Clippy chat FAB instead. Also honour an explicit disable flag.
+    if (document.documentElement.classList.contains('mobile-shell')) return;
+    if (localStorage.getItem('desktop-clippy-disabled') === 'true') return;
     if (!desktopClippyInstance) {
         console.log('DesktopClippy: Attempting initialization...');
         initializeDesktopClippy();

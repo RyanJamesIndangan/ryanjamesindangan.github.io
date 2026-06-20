@@ -48,3 +48,7 @@ build/
 CHATBOT_IMPROVEMENTS.md
 PORTFOLIO_IMPROVEMENTS.md
 PORTFOLIO_REVIEW_AND_IMPROVEMENTS.md
+
+# Local preview/monitoring output
+.preview/
+.pdfbuild/
