@@ -1663,6 +1663,43 @@ function initializeGitHubStats() {
 // ===========================
 // Load GitHub Stats Data
 // ===========================
+// Self-contained "Achievement Ranks" — computes trophy tiers (C → SSS) from the
+// user's real GitHub numbers. No external service (the public github-profile-trophy
+// instance is offline), so this always renders and is honest.
+function renderGitHubTrophies(userData, totalStars) {
+    const el = document.getElementById('githubTrophies');
+    if (!el) return;
+    const years = userData.created_at
+        ? Math.floor((Date.now() - new Date(userData.created_at).getTime()) / (365.25 * 24 * 3600 * 1000))
+        : 0;
+    const NAMES = ['SSS', 'SS', 'S', 'AAA', 'AA', 'A', 'B', 'C'];
+    const rank = (v, thresholds) => {
+        for (let i = 0; i < thresholds.length; i++) if (v >= thresholds[i]) return NAMES[i];
+        return 'C';
+    };
+    const TIER_COLORS = {
+        SSS: ['#7b5cff', '#b07bff'], SS: ['#d9a328', '#f7d774'], S: ['#2171d6', '#5aa9ff'],
+        AAA: ['#16a34a', '#4ade80'], AA: ['#0891b2', '#22d3ee'], A: ['#0e7490', '#06b6d4'],
+        B: ['#64748b', '#94a3b8'], C: ['#94a3b8', '#cbd5e1']
+    };
+    const cats = [
+        { icon: '⏳', label: 'Experience',   val: years + ' yrs',           tier: rank(years, [10, 7, 5, 4, 3, 2, 1]) },
+        { icon: '⭐', label: 'Stars',        val: totalStars,                tier: rank(totalStars, [2000, 800, 200, 80, 30, 10, 3]) },
+        { icon: '👥', label: 'Followers',    val: userData.followers || 0,   tier: rank(userData.followers || 0, [1000, 400, 100, 50, 20, 10, 3]) },
+        { icon: '📦', label: 'Repositories', val: userData.public_repos || 0,tier: rank(userData.public_repos || 0, [100, 50, 30, 20, 10, 5, 2]) },
+        { icon: '🤝', label: 'Following',    val: userData.following || 0,   tier: rank(userData.following || 0, [500, 200, 100, 50, 20, 10, 3]) }
+    ];
+    el.innerHTML = cats.map(c => {
+        const g = TIER_COLORS[c.tier] || TIER_COLORS.C;
+        return `<div style="background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04);">
+            <div style="font-size:1.35rem;line-height:1;">${c.icon}</div>
+            <div style="font-size:1.55rem;font-weight:800;letter-spacing:1px;margin:4px 0 2px;background:linear-gradient(135deg,${g[0]},${g[1]});-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">${c.tier}</div>
+            <div style="font-size:0.68rem;font-weight:700;color:#33414f;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
+            <div style="font-size:0.78rem;color:#6b7785;">${c.val}</div>
+        </div>`;
+    }).join('');
+}
+
 async function loadGitHubStats() {
     const loadingEl = document.getElementById('githubStatsLoading');
     const errorEl = document.getElementById('githubStatsError');
@@ -1684,7 +1721,7 @@ async function loadGitHubStats() {
         const userData = await userResponse.json();
         
         // Fetch repositories (sorted by stars)
-        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=stars&per_page=5`);
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=pushed&per_page=100`);
         if (!reposResponse.ok) throw new Error('Failed to fetch repositories');
         const reposData = await reposResponse.json();
         
@@ -1701,11 +1738,17 @@ async function loadGitHubStats() {
         document.getElementById('githubFollowers').textContent = userData.followers || 0;
         document.getElementById('githubFollowing').textContent = userData.following || 0;
         document.getElementById('githubTotalStars').textContent = totalStars;
-        
+
+        // Render the self-contained Achievement Ranks badge wall (real numbers).
+        renderGitHubTrophies(userData, totalStars);
+
         // Update top repositories
         const topReposEl = document.getElementById('githubTopRepos');
         if (topReposEl) {
-            topReposEl.innerHTML = reposData.map(repo => `
+            topReposEl.innerHTML = [...reposData]
+                .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0))
+                .slice(0, 5)
+                .map(repo => `
                 <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
                         <h4 style="color: #1a1a1a; font-size: 1.1rem; font-weight: 700; margin: 0;">

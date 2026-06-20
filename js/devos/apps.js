@@ -1030,7 +1030,23 @@ const apps = {
                 <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
                     Real-time statistics from my GitHub profile, showcasing active development and community engagement.
                 </p>
-                
+
+                <!-- Profile badges & rankings (rendered live by GitHub stats services) -->
+                <div style="display: grid; gap: 1rem; margin-bottom: 2.5rem;">
+                    <div>
+                        <h3 style="color: #1a1a1a; font-size: 1.15rem; font-weight: 700; margin: 0 0 0.75rem;">🏆 Achievement Ranks</h3>
+                        <div id="githubTrophies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: 0.75rem;"></div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; align-items: start;">
+                        <img src="https://github-readme-stats.vercel.app/api?username=RyanJamesIndangan&include_all_commits=true&show_icons=true&hide_border=true&rank_icon=percentile&title_color=2171d6&icon_color=2171d6&text_color=333333&bg_color=00000000"
+                             alt="Ryan James Indangan's GitHub stats" loading="lazy" style="width: 100%; height: auto;">
+                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RyanJamesIndangan&layout=compact&hide_border=true&langs_count=8&title_color=2171d6&text_color=333333&bg_color=00000000"
+                             alt="Most used languages" loading="lazy" style="width: 100%; height: auto;">
+                    </div>
+                    <img src="https://streak-stats.demolab.com/?user=RyanJamesIndangan&hide_border=true&background=00000000&ring=2171d6&fire=f59e0b&currStreakLabel=2171d6&sideLabels=555555&dates=888888&stroke=2171d6&currStreakNum=222222&sideNums=222222&dayLabels=555555"
+                         alt="GitHub contribution streak" loading="lazy" style="width: 100%; max-width: 520px; height: auto;">
+                </div>
+
                 <!-- Loading State -->
                 <div id="githubStatsLoading" style="text-align: center; padding: 3rem;">
                     <div style="font-size: 3rem; margin-bottom: 1rem;">⏳</div>

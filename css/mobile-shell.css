@@ -62,12 +62,25 @@ html.mobile-shell #mobileShell {
 /* --- Content normalization for reused apps[].content (designed for desktop windows) --- */
 .ms-screen [style*="max-width"] { max-width: none !important; width: auto !important; }
 .ms-screen [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+/* Keep the Achievement Ranks badge wall as a multi-column grid on mobile. */
+html.mobile-shell #githubTrophies { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)) !important; }
 .ms-screen img, .ms-screen iframe, .ms-screen video, .ms-screen canvas { max-width: 100% !important; height: auto; }
 .ms-screen iframe { width: 100% !important; aspect-ratio: 16 / 9; }
 .ms-screen h1 { font-size: 1.55rem !important; line-height: 1.2; }
 .ms-screen h2 { font-size: 1.25rem !important; }
 .ms-screen { font-size: 16px; }
 .ms-screen button, .ms-screen a[role="button"], .ms-screen .view-cert-btn { min-height: 44px; }
+/* Some reused content (e.g. Contact) styles itself via theme CSS variables that
+   resolve to light text for a dark context — invisible on the light mobile screen.
+   Pin light-theme values so that content stays readable. */
+html.mobile-shell .ms-screen, html.mobile-shell .ms-sheet-body {
+  --text-primary: #1a2230;
+  --text-secondary: #55657a;
+  --bg-tertiary: #ffffff;
+  --bg-secondary: #f4f6f9;
+  --glass-bg: #ffffff;
+  --glass-border: #e3e8ef;
+}
 .ms-screen ::-webkit-scrollbar { height: 6px; width: 6px; }
 
 /* Tab bar */
