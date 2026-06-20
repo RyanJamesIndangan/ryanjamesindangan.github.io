@@ -157,9 +157,16 @@
     if (built) return;
     built = true;
 
+    // Faux status-bar icons (cellular / wifi / battery), monochrome currentColor.
+    var SB_ICONS =
+      '<svg class="ms-sb-svg" viewBox="0 0 19 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="2.8" width="3" height="9.2" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>' +
+      '<svg class="ms-sb-svg" viewBox="0 0 16 13" aria-hidden="true"><path d="M8 12.8l2.1-2.6a3.3 3.3 0 0 0-4.2 0L8 12.8z"/><path d="M8 6.1c1.9 0 3.7.7 5 2l1.6-2A9.5 9.5 0 0 0 8 3.4 9.5 9.5 0 0 0 1.4 6.1l1.6 2a7.2 7.2 0 0 1 5-2z"/></svg>' +
+      '<svg class="ms-sb-svg ms-sb-batt" viewBox="0 0 27 13" aria-hidden="true"><rect x="0.6" y="0.6" width="22" height="11.8" rx="3" fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.45"/><rect x="2.2" y="2.2" width="17" height="8.6" rx="1.6"/><rect x="23.4" y="4.3" width="2.2" height="4.4" rx="1"/></svg>';
+
     var shell = document.createElement('div');
     shell.id = 'mobileShell';
     shell.innerHTML =
+      '<div class="ms-statusbar"><span class="ms-sb-time">--:--</span><span class="ms-sb-icons">' + SB_ICONS + '</span></div>' +
       '<header class="ms-appbar">' +
         '<span class="ms-brand"><img src="assets/clippy/clippy-on-yellow-paper.png" alt="">RJ Portfolio</span>' +
         '<button class="ms-desktop-link" type="button">❖ Desktop view</button>' +
@@ -169,8 +176,19 @@
         PRIMARY.map(function (t) {
           return '<button data-tab="' + t.id + '" role="tab"><span class="ms-ico">' + t.icon + '</span>' + t.label + '</button>';
         }).join('') +
-      '</nav>';
+      '</nav>' +
+      '<div class="ms-home-indicator" aria-hidden="true"><span></span></div>';
     document.body.appendChild(shell);
+
+    // Live status-bar clock.
+    var sbTime = shell.querySelector('.ms-sb-time');
+    (function tickClock() {
+      const d = new Date();
+      const h = d.getHours() % 12 || 12;
+      const m = ('0' + d.getMinutes()).slice(-2);
+      if (sbTime) sbTime.textContent = h + ':' + m;
+      setTimeout(tickClock, 20000);
+    })();
 
     shell.querySelector('.ms-desktop-link').addEventListener('click', function () {
       location.href = location.pathname + '?desktop=1';

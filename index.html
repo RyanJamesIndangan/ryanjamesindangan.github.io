@@ -13,9 +13,16 @@
           var narrow = window.matchMedia('(max-width: 768px)').matches;
           var touch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
           var isMobile = forceMobile || (!forceDesktop && narrow && touch);
-          window.DeviceMode = { isMobile: function () { return isMobile; } };
-          if (isMobile) document.documentElement.classList.add('mobile-shell');
-        } catch (e) { window.DeviceMode = { isMobile: function () { return false; } }; }
+          var ua = navigator.userAgent || '';
+          var os = p.get('os'); // ?os=ios / ?os=android override (for testing)
+          if (os !== 'ios' && os !== 'android') {
+            if (/android/i.test(ua)) os = 'android';
+            else if (/iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) os = 'ios';
+            else os = 'ios';
+          }
+          window.DeviceMode = { isMobile: function () { return isMobile; }, os: os };
+          if (isMobile) document.documentElement.classList.add('mobile-shell', 'os-' + os);
+        } catch (e) { window.DeviceMode = { isMobile: function () { return false; }, os: 'ios' }; }
       })();
     </script>
     <meta name="description" content="Ryan James Indangan - AI Software Engineer & Full-Stack Developer | 8+ years experience in Document Intelligence, OCR, LLM Integration. Interactive Windows 7-inspired portfolio showcasing AI/ML projects, technical skills, and professional experience.">
