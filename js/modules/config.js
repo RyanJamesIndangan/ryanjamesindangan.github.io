@@ -18,7 +18,7 @@ export const config = {
     // Social Links
     social: {
         upwork: 'https://www.upwork.com/freelancers/~01d452f9125d3dcdf1',
-        linkedin: 'https://www.linkedin.com/in/ryanjamesindangan',
+        linkedin: 'https://www.linkedin.com/in/ryan-james-indangan-63b271164/',
         github: 'https://github.com/ryanjamesindangan'
     },
 

@@ -12,7 +12,7 @@ const apps = {
                     Ryan James Indangan
                 </h1>
                 <p style="font-size: 1.2rem; color: #2171d6; margin-bottom: 2rem; font-weight: 500;">
-                    Full-Stack Web Developer & Certified CTO
+                    AI Software Engineer · Full-Stack Developer · Certified CTO
                 </p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
@@ -31,7 +31,7 @@ const apps = {
                 </div>
 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
-                    I'm a versatile <strong style="color: #2171d6;">Full-Stack Web Developer</strong> with deep expertise in the LAMP stack, 
+                    I'm an <strong style="color: #2171d6;">AI Software Engineer</strong> and full-stack developer specializing in document intelligence, machine learning, and LLM-powered systems — backed by deep expertise in the LAMP stack,
                     PHP frameworks (CodeIgniter, Laravel), and modern frontend libraries including React, Vue, and Angular.
                 </p>
                 
@@ -50,9 +50,7 @@ const apps = {
                 <div style="margin-top: 2rem; padding: 1.5rem; background: #e8f4f8; border-left: 3px solid #2171d6; border-radius: 6px;">
                     <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
                     <p style="color: #1a1a1a; line-height: 1.6;">
-                        Led the complete redesign of database architecture for GlobalX Digital Corporation, 
-                        directed 12 developers across 3 teams, and revived a stalled project by delivering a fully 
-                        enhanced Version 2 within 2 months.
+                        Built an end-to-end, AI-powered bank-statement extraction and underwriting pipeline at Alliance Global Solutions (Alternative Funding Group) — combining OCR, computer vision, ML-based watermark removal, and local LLM workflows — and co-founded GO Models, a suite of AI companion apps. Earlier, led 12 developers across 3 teams at GlobalX Digital Corporation, reviving a stalled project to deliver an enhanced Version 2 in 2 months.
                     </p>
                 </div>
             </div>
@@ -91,12 +89,39 @@ const apps = {
         content: `
             <div style="max-width: 800px;">
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Journey</h2>
-                
+
+                ${createExperienceCard(
+                    'AI Workflow Engineer',
+                    'HireOverseas (deployed to Core Clinical Trials)',
+                    'May 2026 - Present',
+                    'Remote • Independent Contractor',
+                    [
+                        'Engaged through HireOverseas and deployed to Core Clinical Trials to lead development of a custom Clinical Data Management System (CDMS)',
+                        'Driving the migration of clinical operations off Salesforce to a tailored web application, eliminating licensing overhead and matching the organization\'s exact workflows',
+                        'Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time',
+                        'Designing AI-assisted workflows and data pipelines to streamline clinical data capture, validation, and reporting'
+                    ],
+                    ['Clinical Data Management', 'Salesforce Migration', 'Web App Development', 'AI Workflow Automation', 'Process Automation', 'Python', 'JavaScript']
+                )}
+
+                ${createExperienceCard(
+                    'AI Software Engineer & Co-Founder, GO Models',
+                    'FirstKind AI',
+                    'Jan 2026 - Present',
+                    'Remote • Independent Contractor',
+                    [
+                        'Co-founded GO Models, a suite of AI companion applications, serving as founding AI Software Engineer',
+                        'Architect and build LLM-powered conversational experiences end-to-end — model integration, backend APIs, and frontend',
+                        'Drive product and technical direction from prototype to deployment, establishing engineering standards and AI infrastructure'
+                    ],
+                    ['LLM', 'Conversational AI', 'AI Companion Apps', 'Python', 'Node.js', 'React', 'Product Strategy']
+                )}
+
                 ${createExperienceCard(
                     'AI Developer / Machine Learning Engineer',
                     'Alliance Global Solutions BPO Intl Corp. (Alternative Funding Group)',
                     'Nov 2025 – Apr 2026',
-                    'Remote',
+                    'On-site / SM North EDSA, Tower 1, Quezon City • Full-time',
                     [
                         'Built end-to-end bank statement extraction and validation pipelines using native PDF text and OCR fallback',
                         'Implemented advanced OCR preprocessing (OpenCV/PIL) with multi-angle scanning and quality scoring',
@@ -107,11 +132,25 @@ const apps = {
                     ],
                     ['Python', 'FastAPI', 'OpenCV', 'LLM', 'Ollama', 'PyMuPDF', 'pdfplumber', 'Tesseract OCR', 'RandomForest', 'scikit-learn', 'Node.js', 'JWT', 'RSA', 'Server-Sent Events']
                 )}
+
+                ${createExperienceCard(
+                    'Full-Stack Developer (Top Rated)',
+                    'Upwork',
+                    'Apr 2021 - Oct 2025',
+                    'Remote • Freelance Platform',
+                    [
+                        'Achieved Top Rated status with 100% job success score',
+                        'Delivered 50+ successful projects for international clients',
+                        'Specialized in LAMP stack and modern JavaScript frameworks',
+                        'Maintained long-term partnerships with multiple clients'
+                    ],
+                    ['PHP', 'Laravel', 'React', 'Node.js', 'AWS']
+                )}
                 
                 ${createExperienceCard(
                     'Support Engineer',
                     'Bada LLC',
-                    'Apr 24, 2025 - Oct 24, 2025',
+                    'Apr 2025 - Oct 2025',
                     'Remote',
                     [
                         'Developed and scripted solutions for data management and client image migrations',
@@ -128,7 +167,7 @@ const apps = {
                     'Consultant',
                     'GlobalX Digital Corporation',
                     'Jan 2025 - Apr 2025',
-                    'Hybrid / Unit  901,  9th  Floor  I-Land  Bay  Plaza  D-Macapagal  Blvd  Pasay  City, National  Capital  Region  (NCR),  1503',
+                    'Hybrid / Pasay City, NCR',
                     [
                         'Led the redesign of database architecture, creating scalable, high-performing systems that improved data integrity and business alignment',
                         'Developed and secured API endpoints, strengthening system communication and overall reliability',
@@ -141,10 +180,24 @@ const apps = {
                 
                  
                 ${createExperienceCard(
+                    'Back End Developer / Project Lead',
+                    'Net Global Solutions Inc.',
+                    'Apr 2023 - Nov 2024',
+                    'Hybrid / Pasig, Metro Manila',
+                    [
+                        'Served as Project Lead & Lead Programmer for PAGCOR compliance system (Back Office Access), ensuring regulatory adherence',
+                        'Managed PEZA Digital Marketplace (Builder.ai) as Project Manager, enabling streamlined data management for the Philippine Economic Zone Authority',
+                        'Built a custom PHP framework to enhance API development and system performance',
+                        'Developed a Sports Data Management System, Automated Billing System, and multiple enterprise solutions as Lead Programmer'
+                    ],
+                    ['PHP', 'MySQL', 'Custom Framework', 'REST APIs', 'Project Management']
+                )}
+
+                ${createExperienceCard(
                     'Chief Technology Officer / Co-Founder',
                     'Intermobile Solutions Corporation',
                     'Sep 2023 - Jan 2024',
-                    'Hybrid / Rm. 312 National Life Insurance Building, Ayala Ave, Legazpi Village, Makati City, Metro Manila',
+                    'Hybrid / Makati City, Metro Manila',
                     [
                         'Spearheaded product design and technical direction for early-stage startup projects under Intermobile Solutions Corporation.',
                         'Developed proof-of-concept applications and internal systems to demonstrate product viability to investors.',
@@ -160,7 +213,7 @@ const apps = {
                     'IT Director / Full-Stack Software Engineer',
                     'Microbitz Solutions Inc.',
                     'Jul 2023 - Jan 2024',
-                    'Hybrid / Rm. 312 National Life Insurance Building, Ayala Ave, Legazpi Village, Makati City, Metro Manila',
+                    'Hybrid / Makati City, Metro Manila',
                     [
                         'Led the full-cycle development of an online lottery platform, from architecture planning to deployment and maintenance.',
                         'Designed and managed the system infrastructure, ensuring high availability, scalability, and data security.',
@@ -175,20 +228,6 @@ const apps = {
                 )}
 
                 ${createExperienceCard(
-                    'Back End Developer / Project Lead',
-                    'Net Global Solutions Inc.',
-                    'Apr 2023 - Nov 2024',
-                    'Hybrid / 59 W Capitol Dr, Pasig, 1603 Metro Manila',
-                    [
-                        'Served as Project Lead & Lead Programmer for PAGCOR compliance system (Back Office Access), ensuring regulatory adherence',
-                        'Managed PEZA Digital Marketplace (Builder.ai) as Project Manager, enabling streamlined data management for the Philippine Economic Zone Authority',
-                        'Built a custom PHP framework to enhance API development and system performance',
-                        'Developed a Sports Data Management System, Automated Billing System, and multiple enterprise solutions as Lead Programmer'
-                    ],
-                    ['PHP', 'MySQL', 'Custom Framework', 'REST APIs', 'Project Management']
-                )}
-                
-                ${createExperienceCard(
                     'Systems Developer II',
                     'ADEC Innovations',
                     'Mar 2022 - Apr 2023',
@@ -202,23 +241,9 @@ const apps = {
                 )}
 
                 ${createExperienceCard(
-                    'Full-Stack Developer (Top Rated)',
-                    'Upwork',
-                    'Apr 2021 - October 2025',
-                    'Remote',
-                    [
-                        'Achieved Top Rated status with 100% job success score',
-                        'Delivered 50+ successful projects for international clients',
-                        'Specialized in LAMP stack and modern JavaScript frameworks',
-                        'Maintained long-term partnerships with multiple clients'
-                    ],
-                    ['PHP', 'Laravel', 'React', 'Node.js', 'AWS']
-                )}
-
-                ${createExperienceCard(
                     'Full-Stack Web Developer',
                     'Freelance',
-                    '2019 - Apr 2023',
+                    '2019 - 2023',
                     'Remote',
                     [
                         'Designed and developed a Sports Data Management System for a private company',
@@ -234,7 +259,7 @@ const apps = {
                     'Mar 2018 - Apr 2021',
                     'Remote',
                     [
-                        'Directed large-scale web and mobile projects including Lotto Play Mobile App, Wholesale E-Commerce, and whitelabeled Learning Management Systems',
+                        'Directed large-scale web and mobile projects including Lotto Play Mobile App, Wholesale E-Commerce, and white-labeled Learning Management Systems',
                         'Built enterprise systems: Online Inventory & Asset Tracking, Package Tracking, Broker Accreditation (Ayala Land), and Log Monitoring with Digital Signature',
                         'Delivered custom after-sales service and tracking solutions for corporate clients (Esquire Tech, Chubb Limited, Marmo Pizzara Trading)',
                         'Provided technical leadership as Lead Programmer, ensuring quality delivery and scalable architecture across projects'
@@ -598,7 +623,7 @@ const apps = {
             <div style="max-width: 800px; text-align: center;">
                 <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem; color: #1a1a1a; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Resume / CV</h2>
                 <p style="color: #4a5568; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 500;">
-                    Download my complete resume in your preferred format
+                    Preview or download my concise résumé or my full curriculum vitae (CV)
                 </p>
                 
                 <div style="display: grid; gap: 1.25rem; margin-bottom: 2.5rem;">
@@ -614,6 +639,20 @@ const apps = {
                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(33, 113, 214, 0.3)';"
                            onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(33, 113, 214, 0.2)';">
                             📥 Download PDF Resume
+                        </a>
+                    </div>
+                    <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
+                        <button class="view-cert-btn" data-cert="assets/certificates/Ryan James Indangan CV 2026.pdf" data-title="Curriculum Vitae - Ryan James Indangan" data-type="pdf"
+                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #16365c, #1f3a5f); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(22, 54, 92, 0.3);"
+                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(22, 54, 92, 0.4)';"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(22, 54, 92, 0.3)';">
+                            👁️ Preview Full CV
+                        </button>
+                        <a href="assets/certificates/Ryan James Indangan CV 2026.pdf" download="Ryan-James-Indangan-CV-2026.pdf"
+                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #16365c; border-radius: 12px; color: #16365c; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(22, 54, 92, 0.2);"
+                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(22, 54, 92, 0.3)';"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(22, 54, 92, 0.2)';">
+                            📥 Download PDF CV
                         </a>
                     </div>
                     <button onclick="window.open('https://www.linkedin.com/in/ryan-james-indangan-63b271164/', '_blank')"
@@ -633,7 +672,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🎓</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Education:</strong> <span style="color: #4a5568;">BS Computer Science</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Education:</strong> <span style="color: #4a5568;">BS Information Technology</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
@@ -641,7 +680,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">Full-Stack Developer & CTO</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">AI Software Engineer · Full-Stack Developer · Certified CTO</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🌍</span>
@@ -911,7 +950,7 @@ const apps = {
                             5,
                             'Ryan delivered exceptional results on our database architecture redesign. His technical expertise, leadership skills, and ability to coordinate multiple teams were outstanding. He revived a stalled project and delivered a fully enhanced Version 2 within 2 months.',
                             'LinkedIn',
-                            'https://www.linkedin.com/in/ryanjamesindangan'
+                            'https://www.linkedin.com/in/ryan-james-indangan-63b271164/'
                         )}
                         ${createTestimonialCard(
                             'Upwork Client',
@@ -929,7 +968,7 @@ const apps = {
                             5,
                             'Working with Ryan was a pleasure. His deep understanding of both frontend and backend technologies, combined with his AI/ML expertise, made him an invaluable team member. He consistently delivered high-quality solutions and was always willing to help teammates.',
                             'LinkedIn',
-                            'https://www.linkedin.com/in/ryanjamesindangan'
+                            'https://www.linkedin.com/in/ryan-james-indangan-63b271164/'
                         )}
                         ${createTestimonialCard(
                             'Client Feedback',
@@ -938,7 +977,7 @@ const apps = {
                             5,
                             'Ryan\'s work on our Document Intelligence pipeline was outstanding. He implemented complex OCR and watermark removal systems that significantly improved our processing accuracy. His attention to detail and problem-solving skills are top-notch.',
                             'LinkedIn',
-                            'https://www.linkedin.com/in/ryanjamesindangan'
+                            'https://www.linkedin.com/in/ryan-james-indangan-63b271164/'
                         )}
                         ${createTestimonialCard(
                             'Upwork Review',
@@ -968,7 +1007,7 @@ const apps = {
                         Check out more testimonials and recommendations on my professional profiles:
                     </p>
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="https://www.linkedin.com/in/ryanjamesindangan" target="_blank" rel="noopener noreferrer" 
+                        <a href="https://www.linkedin.com/in/ryan-james-indangan-63b271164/" target="_blank" rel="noopener noreferrer" 
                            style="padding: 1rem 1.5rem; background: #0077b5; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s;">
                             💼 LinkedIn Recommendations
                         </a>

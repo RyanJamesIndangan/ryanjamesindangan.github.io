@@ -3797,6 +3797,14 @@ function initializeProjectFilters() {
 // ===========================
 // Project Modals & Live Demos
 // ===========================
+// Optimistically check a live-demo URL's reachability. Cross-origin requests can't be
+// reliably probed from the browser (CORS), so we resolve true and let openProjectModal
+// handle genuinely dead links. (This helper was previously referenced but never defined,
+// which threw a ReferenceError and stopped the live-demo modal from ever opening.)
+function checkUrlAccessibility(url) {
+    return Promise.resolve(true);
+}
+
 function initializeProjectModals() {
     // Live demo buttons
     document.addEventListener('click', (e) => {

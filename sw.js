@@ -9,6 +9,7 @@ const OFFLINE_URL = '/offline.html';
 const STATIC_CACHE_URLS = [
     '/',
     '/index.html',
+    '/offline.html',
     '/css/devos.css',
     '/js/devos/main.js',
     '/js/devos/apps.js',

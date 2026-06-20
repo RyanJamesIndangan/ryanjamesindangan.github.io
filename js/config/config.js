@@ -8,7 +8,7 @@ const CONFIG = {
     // Personal Information
     personal: {
         name: 'Ryan James Indangan',
-        title: 'Full-Stack Developer & CTO',
+        title: 'AI Software Engineer · Full-Stack Developer · Certified CTO',
         initials: 'RJ',
         email: 'ryanjamesfranciscoindangan@yahoo.com',
         phone: '+63 999 333 9030',
@@ -90,6 +90,8 @@ const CONFIG = {
         profilePhoto: 'assets/profile-photo.jpg',
         certificates: {
             cto: 'assets/certificates/cto-certificate.pdf',
+            resume: 'assets/certificates/Ryan James Indangan Resume 2026.pdf',
+            cv: 'assets/certificates/Ryan James Indangan CV 2026.pdf',
             hackerX: {
                 final: 'assets/certificates/Hacker-X/hacker-x-final-certificate.jpg',
                 modules: {
