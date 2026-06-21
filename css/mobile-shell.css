@@ -1,16 +1,14 @@
 /* =========================================================================
-   Mobile Shell ("Pocket OS") — phone-native experience.
-   Everything is scoped under html.mobile-shell so the desktop is untouched.
+   Mobile Shell — a real phone HOME SCREEN (Android / iOS) on small devices.
+   Scoped under html.mobile-shell so the desktop is untouched.
    ========================================================================= */
 
 html.mobile-shell, html.mobile-shell body {
-  margin: 0; padding: 0; height: 100%;
-  overflow: hidden;
-  background: #0f1420;
-  -webkit-text-size-adjust: 100%;
+  margin: 0; padding: 0; height: 100%; overflow: hidden;
+  background: #0a0f1e; -webkit-text-size-adjust: 100%;
 }
 
-/* --- Hide all desktop chrome on phones --- */
+/* Hide all desktop chrome on phones */
 html.mobile-shell #bootScreen,
 html.mobile-shell #desktop,
 html.mobile-shell .taskbar,
@@ -20,122 +18,112 @@ html.mobile-shell .context-menu,
 html.mobile-shell .selection-box,
 html.mobile-shell #desktopClippy,
 html.mobile-shell .desktop-clippy { display: none !important; }
+html.mobile-shell .ai-assistant-toggle { display: none !important; }
 
-/* --- Shell scaffold --- */
+/* Shell scaffold (wallpaper set per-OS below) */
 html.mobile-shell #mobileShell {
-  position: fixed; inset: 0;
-  display: flex; flex-direction: column;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: #0f1420;
+  position: fixed; inset: 0; display: flex; flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
 }
 
-/* App bar */
-.ms-appbar {
-  flex: 0 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
-  padding: 11px 16px;
-  background: linear-gradient(135deg, #16365c, #2171d6);
-  color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,.28); z-index: 5;
+/* ---------------- Status bar ---------------- */
+.ms-statusbar {
+  flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+  padding: env(safe-area-inset-top) 22px 0;
+  min-height: calc(env(safe-area-inset-top) + 30px);
+  font-size: 14px; font-weight: 600; z-index: 7;
 }
-.ms-brand { display: flex; align-items: center; gap: .55rem; font-weight: 700; font-size: 1.05rem; letter-spacing: .2px; }
-.ms-brand img { width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
-.ms-appbar .ms-desktop-link {
-  background: rgba(255,255,255,.16); border: none; color: #fff;
-  height: 34px; padding: 0 12px; border-radius: 10px; font-size: .8rem; font-weight: 600;
-  display: inline-flex; align-items: center; gap: .35rem;
-}
-.ms-appbar .ms-desktop-link:active { background: rgba(255,255,255,.3); }
+.ms-sb-icons { display: inline-flex; align-items: center; gap: 6px; }
+.ms-sb-svg { height: 12px; width: auto; display: block; fill: currentColor; }
+.ms-sb-time { letter-spacing: .2px; font-variant-numeric: tabular-nums; }
 
-/* Screens */
-#msScreens { flex: 1 1 auto; position: relative; overflow: hidden; background: #eef1f5; }
-.ms-screen {
-  position: absolute; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px);
-  background: #eef1f5; display: none;
+/* ---------------- Home (scrollable springboard area) ---------------- */
+.ms-home {
+  flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 8px 18px 6px; display: flex; flex-direction: column;
 }
-.ms-screen.active { display: block; }
-@media (prefers-reduced-motion: no-preference) {
-  .ms-screen.active { animation: msFade .25s ease; }
-}
-@keyframes msFade { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
 
-/* --- Content normalization for reused apps[].content (designed for desktop windows) --- */
-.ms-screen [style*="max-width"] { max-width: none !important; width: auto !important; }
-.ms-screen [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-/* Keep the Achievement Ranks badge wall as a multi-column grid on mobile. */
-html.mobile-shell #githubTrophies { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)) !important; }
-.ms-screen img, .ms-screen iframe, .ms-screen video, .ms-screen canvas { max-width: 100% !important; height: auto; }
-.ms-screen iframe { width: 100% !important; aspect-ratio: 16 / 9; }
-.ms-screen h1 { font-size: 1.55rem !important; line-height: 1.2; }
-.ms-screen h2 { font-size: 1.25rem !important; }
-.ms-screen { font-size: 16px; }
-.ms-screen button, .ms-screen a[role="button"], .ms-screen .view-cert-btn { min-height: 44px; }
-/* Some reused content (e.g. Contact) styles itself via theme CSS variables that
-   resolve to light text for a dark context — invisible on the light mobile screen.
-   Pin light-theme values so that content stays readable. */
-html.mobile-shell .ms-screen, html.mobile-shell .ms-sheet-body {
-  --text-primary: #1a2230;
-  --text-secondary: #55657a;
-  --bg-tertiary: #ffffff;
-  --bg-secondary: #f4f6f9;
-  --glass-bg: #ffffff;
-  --glass-border: #e3e8ef;
+/* Android Google search bar */
+.ms-gsearch {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  background: rgba(255,255,255,.96); border: none; border-radius: 28px; cursor: pointer;
+  padding: 12px 16px; margin: 6px 0 22px; box-shadow: 0 2px 10px rgba(0,0,0,.25);
 }
-.ms-screen ::-webkit-scrollbar { height: 6px; width: 6px; }
+.ms-gsearch .ms-g svg { width: 22px; height: 22px; display: block; }
+.ms-gsearch-ph { flex: 1 1 auto; text-align: left; color: #5f6368; font-size: 1rem; }
+.ms-gtools { display: inline-flex; align-items: center; gap: 14px; }
+.ms-gtools svg { width: 22px; height: 22px; display: block; }
 
-/* Tab bar */
-.ms-tabbar {
-  flex: 0 0 auto; display: flex; background: #ffffff;
-  border-top: 1px solid #e3e8ef; padding-bottom: 4px;
-  z-index: 6; box-shadow: 0 -2px 12px rgba(0,0,0,.07);
+/* iOS widgets */
+.ms-widgets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 20px; }
+.ms-widget {
+  border: none; cursor: pointer; text-align: left; border-radius: 22px; padding: 16px;
+  min-height: 118px; color: #fff; display: flex; flex-direction: column;
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
 }
-.ms-tabbar button {
-  flex: 1; background: none; border: none; cursor: pointer;
-  padding: 8px 2px 6px; font-size: .64rem; font-weight: 600; color: #8a96a3;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  transition: color .15s ease;
-}
-.ms-tabbar button .ms-ico { font-size: 1.3rem; line-height: 1; }
-.ms-tabbar button.active { color: #2171d6; }
+.ms-w-profile { background: linear-gradient(150deg, #2e4a78, #5478b0); }
+.ms-w-profile img { width: 40px; height: 40px; border-radius: 11px; background: #fff; padding: 2px; }
+.ms-w-name { font-weight: 700; font-size: .95rem; margin-top: auto; }
+.ms-w-title { font-size: .72rem; opacity: .9; }
+.ms-w-status { background: rgba(255,255,255,.82); color: #1c1c1e; }
+.ms-w-h { font-size: .6rem; font-weight: 700; letter-spacing: .8px; color: #e0245e; }
+.ms-w-big { font-size: 1.25rem; font-weight: 800; margin-top: 6px; }
+.ms-w-sub { font-size: .72rem; color: #6b6b70; margin-top: auto; }
 
-/* Home screen */
-.ms-hero {
-  background: linear-gradient(135deg, #16365c, #2171d6);
-  color: #fff; border-radius: 18px; padding: 22px 20px; margin-bottom: 18px;
-  box-shadow: 0 6px 20px rgba(33,113,214,.28);
+/* App icon grid (springboard) */
+.ms-springboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 6px; }
+.ms-app {
+  background: none; border: none; cursor: pointer; padding: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
 }
-.ms-hero-top { display: flex; align-items: center; gap: 14px; }
-.ms-hero-top img { width: 56px; height: 56px; border-radius: 14px; background: #fff; padding: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.25); }
-.ms-hero h1 { margin: 0; font-size: 1.4rem; }
-.ms-hero .ms-hero-title { font-size: .82rem; opacity: .92; margin-top: 2px; }
-.ms-hero p { margin: 14px 0 0; font-size: .92rem; line-height: 1.5; opacity: .95; }
-.ms-hero-cta { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-.ms-hero-cta a {
-  flex: 1 1 auto; text-align: center; text-decoration: none; font-weight: 700; font-size: .85rem;
-  padding: 11px 14px; border-radius: 12px; min-height: 44px;
-  display: inline-flex; align-items: center; justify-content: center; gap: .35rem;
+.ms-app:active { transform: scale(.92); }
+.ms-app-ico {
+  width: 58px; height: 58px; display: flex; align-items: center; justify-content: center;
+  font-size: 27px; line-height: 1; color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,.3);
 }
-.ms-hero-cta .primary { background: #fff; color: #16365c; }
-.ms-hero-cta .ghost { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.4); }
-
-.ms-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
-.ms-stat { background: #fff; border: 1px solid #e3e8ef; border-radius: 14px; padding: 12px 6px; text-align: center; }
-.ms-stat .n { font-size: 1.35rem; font-weight: 800; color: #2171d6; }
-.ms-stat .l { font-size: .62rem; color: #6b7785; margin-top: 2px; }
-
-.ms-section-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #8a96a3; margin: 4px 4px 12px; }
-.ms-grid { display: grid; grid-template-columns: repeat(4, 1fr) !important; gap: 14px; }
-.ms-grid button {
-  background: #fff; border: 1px solid #e3e8ef; border-radius: 16px; cursor: pointer;
-  padding: 14px 4px 10px; display: flex; flex-direction: column; align-items: center; gap: 7px;
-  font-size: .62rem; font-weight: 600; color: #45525f; min-height: 76px;
+.ms-app-lbl {
+  font-size: .68rem; font-weight: 500; max-width: 72px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
 }
-.ms-grid button:active { transform: scale(.96); }
-.ms-grid .ms-ico { font-size: 1.55rem; line-height: 1; height: 1.55rem; display: flex; align-items: center; justify-content: center; }
-/* Some app icons are <img> (e.g. AI Lab's Clippy) rather than an emoji — keep them icon-sized. */
-.ms-grid .ms-ico img { width: 1.6rem; height: 1.6rem; object-fit: contain; display: block; }
 
-/* Full-screen sheets (secondary apps) */
+/* iOS page dots */
+.ms-page-dots { display: flex; gap: 7px; justify-content: center; padding: 16px 0 4px; margin-top: auto; }
+.ms-page-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.4); }
+.ms-page-dots i.on { background: rgba(255,255,255,.95); }
+
+/* ---------------- Dock ---------------- */
+.ms-dock { flex: 0 0 auto; display: flex; justify-content: space-around; align-items: center; }
+.ms-dock .ms-app { flex: 0 0 auto; }
+.ms-dock .ms-app-lbl { display: none; }
+
+/* Android 3-button nav bar */
+.ms-navbar {
+  flex: 0 0 auto; display: flex; justify-content: space-around; align-items: center;
+  padding: 6px 36px calc(env(safe-area-inset-bottom) + 6px); z-index: 6;
+}
+.ms-navbar button { background: none; border: none; cursor: pointer; padding: 8px; color: #fff; opacity: .92; }
+.ms-navbar svg { width: 19px; height: 19px; display: block; fill: currentColor; }
+.ms-navbar .ms-nav-back svg { fill: #fff; }
+
+/* iOS Spotlight search pill */
+.ms-ios-search {
+  flex: 0 0 auto; align-self: center; display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.28); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: none; cursor: pointer; color: #1c1c1e; font-size: .9rem; font-weight: 500;
+  padding: 7px 16px; border-radius: 18px; margin: 4px 0 10px;
+}
+.ms-ios-search svg { width: 15px; height: 15px; display: block; }
+
+/* Home indicator (iOS) */
+.ms-home-indicator {
+  flex: 0 0 auto; display: flex; align-items: center; justify-content: center;
+  height: calc(env(safe-area-inset-bottom) + 22px); padding-bottom: 7px; z-index: 6;
+}
+.ms-home-indicator span { display: block; width: 140px; height: 5px; border-radius: 3px; background: #000; opacity: .32; }
+
+/* ============================================================
+   Full-screen "app" sheets (reused apps[].content)
+   ============================================================ */
 .ms-sheet {
   position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column;
   background: #eef1f5; transform: translateY(100%); transition: transform .28s ease; visibility: hidden;
@@ -150,97 +138,67 @@ html.mobile-shell .ms-screen, html.mobile-shell .ms-sheet-body {
 .ms-sheet-head .ms-back {
   background: rgba(255,255,255,.16); border: none; color: #fff; cursor: pointer;
   height: 38px; min-width: 38px; border-radius: 10px; padding: 0 12px; font-weight: 700; font-size: .95rem;
-  display: inline-flex; align-items: center; gap: .3rem;
 }
 .ms-sheet-head .ms-sheet-title { font-weight: 700; font-size: 1.05rem; }
-.ms-sheet-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px); }
+.ms-sheet-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px); font-size: 16px; }
+
+/* Content normalization for reused desktop-window content */
 .ms-sheet-body [style*="max-width"] { max-width: none !important; width: auto !important; }
 .ms-sheet-body [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
-.ms-sheet-body img, .ms-sheet-body iframe, .ms-sheet-body canvas { max-width: 100% !important; height: auto; }
+html.mobile-shell #githubTrophies { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)) !important; }
+.ms-sheet-body img, .ms-sheet-body iframe, .ms-sheet-body video, .ms-sheet-body canvas { max-width: 100% !important; height: auto; }
 .ms-sheet-body iframe { width: 100% !important; aspect-ratio: 16 / 9; }
-
-/* Clippy chat FAB + full-screen chat (reuse existing widget) */
-/* Hide the desktop chat toggle on phones; the shell uses its own Clippy FAB. */
-html.mobile-shell .ai-assistant-toggle { display: none !important; }
-.ms-clippy-fab {
-  position: fixed; right: 16px; bottom: calc(env(safe-area-inset-bottom) + 74px);
-  width: 58px; height: 58px; border-radius: 50%; border: none; cursor: pointer;
-  background: #fff; padding: 5px; z-index: 58;
-  box-shadow: 0 6px 18px rgba(0,0,0,.35);
-  display: flex; align-items: center; justify-content: center;
+.ms-sheet-body h1 { font-size: 1.55rem !important; line-height: 1.2; }
+.ms-sheet-body h2 { font-size: 1.25rem !important; }
+.ms-sheet-body button, .ms-sheet-body a[role="button"], .ms-sheet-body .view-cert-btn { min-height: 44px; }
+/* Content that themes via CSS variables (e.g. Contact) was built for a dark
+   context; pin light-theme values so it stays readable on the light sheet. */
+html.mobile-shell .ms-sheet-body {
+  --text-primary: #1a2230; --text-secondary: #55657a;
+  --bg-tertiary: #ffffff; --bg-secondary: #f4f6f9;
+  --glass-bg: #ffffff; --glass-border: #e3e8ef;
 }
-.ms-clippy-fab img { width: 100%; height: 100%; object-fit: contain; }
-.ms-clippy-fab:active { transform: scale(.94); }
+
+/* Clippy chat reuses the existing widget, full-screen on phones */
 html.mobile-shell .ai-assistant-widget {
-  position: fixed !important; inset: 0 !important;
-  width: 100% !important; height: 100% !important;
-  max-width: none !important; max-height: none !important;
-  border-radius: 0 !important; z-index: 75 !important; transform: none !important;
+  position: fixed !important; inset: 0 !important; width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important; border-radius: 0 !important;
+  z-index: 75 !important; transform: none !important;
 }
 html.mobile-shell .ai-assistant-widget.hidden { display: none !important; }
-
-/* Keep the certificate / PDF modal usable on phones */
 html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !important; max-width: 96vw !important; height: 90vh !important; }
 
 /* ============================================================
-   Phone chrome: status bar + home indicator, with OS skins
+   Android (Pixel / Material) skin
    ============================================================ */
+.os-android #mobileShell {
+  font-family: "Roboto", "Google Sans", system-ui, "Segoe UI", sans-serif;
+  background:
+    radial-gradient(120% 80% at 12% 8%, #244a8c 0%, transparent 48%),
+    radial-gradient(110% 75% at 92% 96%, #145048 0%, transparent 55%),
+    linear-gradient(160deg, #0c1428, #070b16);
+}
+.os-android .ms-statusbar { color: #fff; }
+.os-android .ms-app-lbl { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65); }
+.os-android .ms-app-ico { border-radius: 50%; }          /* Pixel adaptive icons = circles */
+.os-android .ms-dock { padding: 6px 14px 4px; }
+.os-android .ms-page-dots i { background: rgba(255,255,255,.4); }
 
-/* Status bar (shared) */
-.ms-statusbar {
-  flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
-  padding: env(safe-area-inset-top) 16px 0;
-  min-height: calc(env(safe-area-inset-top) + 26px);
-  font-size: 13px; font-weight: 600; z-index: 7;
+/* ============================================================
+   iOS (Cupertino) skin
+   ============================================================ */
+.os-ios #mobileShell {
+  font-family: -apple-system, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
+  background:
+    radial-gradient(120% 90% at 18% 12%, #dccab4 0%, #b69d83 42%, #8a7058 78%),
+    linear-gradient(160deg, #cbb699, #8f7257);
 }
-.ms-sb-icons { display: inline-flex; align-items: center; gap: 6px; }
-.ms-sb-svg { height: 12px; width: auto; display: block; fill: currentColor; }
-.ms-sb-time { letter-spacing: .2px; font-variant-numeric: tabular-nums; }
-
-/* Home indicator / gesture area (shared) */
-.ms-home-indicator {
-  flex: 0 0 auto; display: flex; align-items: center; justify-content: center;
-  height: calc(env(safe-area-inset-bottom) + 20px); padding-bottom: 5px; z-index: 6;
+.os-ios .ms-statusbar { color: #1a1410; }
+.os-ios .ms-app-lbl { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.6), 0 0 2px rgba(0,0,0,.35); }
+.os-ios .ms-app-ico { border-radius: 14px; }              /* iOS squircle */
+.os-ios .ms-dock {
+  margin: 0 10px; padding: 12px 10px;
+  background: rgba(255,255,255,.26); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+  border-radius: 30px;
 }
-.ms-home-indicator span { display: block; border-radius: 3px; }
-
-/* ---------------- iOS (Cupertino) ---------------- */
-.os-ios #mobileShell { font-family: -apple-system, "SF Pro Text", "SF Pro Display", system-ui, "Segoe UI", sans-serif; }
-.os-ios .ms-statusbar { background: #f6f6f8; color: #0b0b0c; }
-.os-ios .ms-appbar {
-  background: rgba(246,246,248,.82); color: #0b0b0c; justify-content: center; position: relative;
-  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: .5px solid rgba(0,0,0,.14); box-shadow: none; padding: 9px 16px;
-}
-.os-ios .ms-brand { font-size: 1.02rem; font-weight: 600; color: #0b0b0c; gap: .4rem; }
-.os-ios .ms-brand img { width: 24px; height: 24px; }
-.os-ios .ms-desktop-link {
-  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-  background: none; color: #007aff; font-weight: 500; padding: 0; height: auto;
-}
-.os-ios .ms-tabbar {
-  background: rgba(246,246,248,.86); border-top: .5px solid rgba(0,0,0,.16); box-shadow: none;
-  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
-}
-.os-ios .ms-tabbar button { color: #8e8e93; font-size: .58rem; font-weight: 500; }
-.os-ios .ms-tabbar button.active { color: #007aff; }
-.os-ios .ms-tabbar button .ms-ico { font-size: 1.35rem; }
-.os-ios .ms-home-indicator { background: rgba(246,246,248,.86); }
-.os-ios .ms-home-indicator span { width: 140px; height: 5px; background: #0b0b0c; opacity: .9; }
-.os-ios .ms-clippy-fab { border-radius: 50%; box-shadow: 0 4px 16px rgba(0,0,0,.22); }
-
-/* ---------------- Android (Material) ---------------- */
-.os-android #mobileShell { font-family: "Roboto", "Google Sans", system-ui, "Segoe UI", sans-serif; }
-.os-android .ms-statusbar { background: #185bcc; color: #fff; justify-content: flex-end; gap: 7px; }
-.os-android .ms-statusbar .ms-sb-icons { order: 1; }
-.os-android .ms-statusbar .ms-sb-time { order: 2; margin-left: 3px; }
-.os-android .ms-appbar { background: #1f6feb; color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.22); padding: 13px 16px; }
-.os-android .ms-appbar .ms-desktop-link { background: rgba(255,255,255,.18); border-radius: 8px; }
-.os-android .ms-tabbar { background: #fff; border-top: none; box-shadow: 0 -1px 8px rgba(0,0,0,.12); }
-.os-android .ms-tabbar button { color: #5f6368; font-size: .6rem; }
-.os-android .ms-tabbar button.active { color: #1f6feb; }
-.os-android .ms-tabbar button .ms-ico { font-size: 1.3rem; border-radius: 999px; transition: background .2s, padding .2s; }
-.os-android .ms-tabbar button.active .ms-ico { background: #d7e3ff; padding: 2px 16px; }
-.os-android .ms-home-indicator { background: #fff; }
-.os-android .ms-home-indicator span { width: 108px; height: 4px; background: #202124; opacity: .55; }
-.os-android .ms-clippy-fab { border-radius: 18px; box-shadow: 0 6px 14px rgba(0,0,0,.3); }
+.os-ios .ms-dock .ms-app-ico { box-shadow: 0 3px 8px rgba(0,0,0,.22); }
