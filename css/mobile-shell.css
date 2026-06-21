@@ -202,3 +202,65 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
   border-radius: 30px;
 }
 .os-ios .ms-dock .ms-app-ico { box-shadow: 0 3px 8px rgba(0,0,0,.22); }
+
+/* ============================================================
+   Swipe-down control center / notification shade
+   ============================================================ */
+.ms-dim { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 90; transition: opacity .15s; }
+.ms-cc-backdrop { position: fixed; inset: 0; z-index: 95; visibility: hidden; opacity: 0; transition: opacity .25s; background: rgba(0,0,0,.28); }
+.ms-cc-backdrop.show { visibility: visible; opacity: 1; }
+
+.ms-cc {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  transform: translateY(-100%); transition: transform .34s cubic-bezier(.3,1.1,.4,1);
+  padding: calc(env(safe-area-inset-top) + 8px) 14px 18px;
+  max-height: 94%; overflow-y: auto; will-change: transform;
+}
+.ms-cc.open { transform: translateY(0); }
+.ms-cc-grab { display: flex; justify-content: center; padding: 2px 0 12px; touch-action: none; }
+.ms-cc-grab span { width: 38px; height: 5px; border-radius: 3px; background: rgba(150,150,160,.6); }
+
+/* Android shade + quick settings */
+.ms-cc-android {
+  background: rgba(22,24,30,.97); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
+  color: #e8eaed; border-radius: 0 0 28px 28px; box-shadow: 0 14px 34px rgba(0,0,0,.55);
+}
+.ms-cc-android .ms-cc-head { display: flex; justify-content: space-between; align-items: baseline; padding: 0 8px 14px; }
+.ms-cc-android .ms-cc-clock { font-size: 1.7rem; font-weight: 400; }
+.ms-cc-android .ms-cc-date { font-size: .82rem; color: #9aa0a6; }
+.ms-qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.ms-qs-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 13px 4px;
+  border: none; cursor: pointer; border-radius: 20px; background: rgba(255,255,255,.08);
+  color: #c9ccd1; font-size: .6rem; font-weight: 600;
+}
+.ms-qs-tile .ms-qs-ico { font-size: 1.3rem; }
+.ms-qs-tile.on { background: #aecbfa; color: #0b1b34; }
+.ms-bright { display: flex; align-items: center; gap: 10px; padding: 4px 4px 16px; }
+.ms-bright span { font-size: 1.1rem; }
+.ms-bright-range { flex: 1; accent-color: #aecbfa; height: 6px; }
+.ms-notif { display: flex; flex-direction: column; gap: 8px; }
+.ms-notif-card { display: flex; gap: 12px; align-items: center; text-align: left; border: none; cursor: pointer; background: rgba(255,255,255,.07); border-radius: 18px; padding: 12px; color: #e8eaed; }
+.ms-notif-ico { font-size: 1.45rem; flex: 0 0 auto; }
+.ms-notif-t { font-weight: 700; font-size: .82rem; }
+.ms-notif-b { font-size: .72rem; color: #9aa0a6; margin-top: 1px; }
+
+/* iOS control center */
+.ms-cc-ios {
+  background: rgba(60,60,72,.42); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+  color: #fff; border-radius: 0 0 30px 30px;
+}
+.ms-cc-ios .ms-cc-head { text-align: right; padding: 0 10px 10px; }
+.ms-cc-ios .ms-cc-clock { font-size: .9rem; font-weight: 600; opacity: .85; }
+.ms-ccgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ms-cc-conn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; place-items: center; background: rgba(255,255,255,.16); border-radius: 24px; padding: 14px; }
+.ms-cc-round { width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255,255,255,.22); color: #fff; font-size: 1.1rem; }
+.ms-cc-round.on { background: #34c759; }
+.ms-cc-round[data-toggle="wifi"].on, .ms-cc-round[data-toggle="bt"].on { background: #0a84ff; }
+.ms-cc-stack { display: flex; flex-direction: column; gap: 12px; }
+.ms-cc-sq { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 5px; border: none; cursor: pointer; background: rgba(255,255,255,.16); border-radius: 24px; padding: 14px; color: #fff; font-size: .74rem; font-weight: 600; }
+.ms-cc-sq-ico { font-size: 1.35rem; }
+.ms-cc-sliders { grid-column: 1 / -1; display: flex; gap: 12px; }
+.ms-vslider { position: relative; flex: 1; height: 160px; border-radius: 28px; overflow: hidden; background: rgba(255,255,255,.16); cursor: pointer; touch-action: none; }
+.ms-vs-fill { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,.95); }
+.ms-vs-ico { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; font-size: 1.25rem; mix-blend-mode: difference; }

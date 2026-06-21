@@ -15,6 +15,7 @@
   var OS = (window.DeviceMode.os === 'android') ? 'android' : 'ios';
   var apps = window.apps || {};
   var built = false, sheetOpen = false;
+  var ControlCenter = null;
 
   function appData(id) { return apps[id] || {}; }
   function appContent(id) { return appData(id).content || '<div style="padding:24px;color:#556">Content unavailable.</div>'; }
@@ -168,6 +169,118 @@
            '<div class="ms-home-indicator" aria-hidden="true"><span></span></div>';
   }
 
+  // ---- Control center / notification shade (swipe down from the top) -----
+  function ccAndroid() {
+    var date = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    function tile(id, ico, label, on, app) {
+      var attr = app ? 'data-app="' + app + '"' : 'data-toggle="' + id + '"';
+      return '<button class="ms-qs-tile' + (on ? ' on' : '') + '" ' + attr + ' type="button">' +
+        '<span class="ms-qs-ico">' + ico + '</span><span class="ms-qs-lbl">' + label + '</span></button>';
+    }
+    return '<div class="ms-cc-grab"><span></span></div>' +
+      '<div class="ms-cc-head"><span class="ms-cc-clock">--:--</span><span class="ms-cc-date">' + date + '</span></div>' +
+      '<div class="ms-qs">' +
+        tile('wifi', '📶', 'Wi-Fi', true) +
+        tile('bt', '🔷', 'Bluetooth', true) +
+        tile('flash', '🔦', 'Flashlight', false) +
+        tile('dnd', '🌙', 'Do Not Disturb', false) +
+        tile('desktop', '🖥️', 'Desktop', false, '__desktop') +
+        tile('clippy', '📎', 'Clippy', false, '__chat') +
+      '</div>' +
+      '<div class="ms-bright"><span>🔅</span><input type="range" class="ms-bright-range" min="12" max="100" value="100" aria-label="Brightness"><span>🔆</span></div>' +
+      '<div class="ms-notif">' +
+        '<button class="ms-notif-card" data-app="__chat" type="button"><span class="ms-notif-ico">📎</span><div><div class="ms-notif-t">Clippy</div><div class="ms-notif-b">Need a hand? Tap to chat with my AI assistant.</div></div></button>' +
+        '<button class="ms-notif-card" data-app="resume" type="button"><span class="ms-notif-ico">📄</span><div><div class="ms-notif-t">Résumé 2026</div><div class="ms-notif-b">My latest résumé is ready — tap to view.</div></div></button>' +
+      '</div>';
+  }
+  function ccIOS() {
+    function round(id, ico, on) { return '<button class="ms-cc-round' + (on ? ' on' : '') + '" data-toggle="' + id + '" type="button">' + ico + '</button>'; }
+    function sq(app, ico, label) { return '<button class="ms-cc-sq" data-app="' + app + '" type="button"><span class="ms-cc-sq-ico">' + ico + '</span><span>' + label + '</span></button>'; }
+    function vs(id, ico, val) { return '<div class="ms-vslider" data-vs="' + id + '"><div class="ms-vs-fill" style="height:' + val + '%"></div><span class="ms-vs-ico">' + ico + '</span></div>'; }
+    return '<div class="ms-cc-grab"><span></span></div>' +
+      '<div class="ms-cc-head"><span class="ms-cc-clock">--:--</span></div>' +
+      '<div class="ms-ccgrid">' +
+        '<div class="ms-cc-conn">' + round('airplane', '✈️', false) + round('cell', '📶', true) + round('wifi', '📡', true) + round('bt', '🔷', true) + '</div>' +
+        '<div class="ms-cc-stack">' + sq('__desktop', '🖥️', 'Desktop') + sq('__chat', '📎', 'Clippy') + '</div>' +
+        '<div class="ms-cc-sliders">' + vs('bright', '🔆', 100) + vs('vol', '🔊', 65) + '</div>' +
+      '</div>';
+  }
+
+  function initControlCenter(shell) {
+    var dim = document.createElement('div'); dim.className = 'ms-dim';
+    var backdrop = document.createElement('div'); backdrop.className = 'ms-cc-backdrop';
+    var cc = document.createElement('div'); cc.className = 'ms-cc ms-cc-' + OS;
+    cc.innerHTML = (OS === 'android') ? ccAndroid() : ccIOS();
+    shell.appendChild(dim); shell.appendChild(backdrop); shell.appendChild(cc);
+
+    var ccOpen = false;
+    function openCC() { cc.classList.add('open'); backdrop.classList.add('show'); ccOpen = true; }
+    function closeCC() { cc.classList.remove('open'); backdrop.classList.remove('show'); ccOpen = false; }
+    ControlCenter = { isOpen: function () { return ccOpen; }, open: openCC, close: closeCC };
+    backdrop.addEventListener('click', closeCC);
+
+    function setBright(v) { dim.style.opacity = String(Math.max(0, (100 - v) / 100 * 0.72)); }
+
+    cc.addEventListener('click', function (e) {
+      var app = e.target.closest('[data-app]');
+      if (app) { closeCC(); launch(app.getAttribute('data-app')); return; }
+      var tog = e.target.closest('[data-toggle]');
+      if (tog) tog.classList.toggle('on');
+    });
+    var br = cc.querySelector('.ms-bright-range');
+    if (br) br.addEventListener('input', function () { setBright(+br.value); });
+    cc.querySelectorAll('.ms-vslider').forEach(function (vsl) {
+      var fill = vsl.querySelector('.ms-vs-fill'); var active = false;
+      function set(clientY) {
+        var r = vsl.getBoundingClientRect();
+        var pct = Math.max(0, Math.min(1, (r.bottom - clientY) / r.height));
+        fill.style.height = Math.round(pct * 100) + '%';
+        if (vsl.getAttribute('data-vs') === 'bright') setBright(pct * 100);
+      }
+      vsl.addEventListener('pointerdown', function (e) { active = true; try { vsl.setPointerCapture(e.pointerId); } catch (x) {} set(e.clientY); });
+      vsl.addEventListener('pointermove', function (e) { if (active) set(e.clientY); });
+      window.addEventListener('pointerup', function () { active = false; });
+    });
+
+    // Open gesture: pull down from the top edge.
+    var startY = 0, pulling = false, ph = 1, prog = 0;
+    shell.addEventListener('touchstart', function (e) {
+      if (ccOpen || sheetOpen) return;
+      var t = e.touches[0];
+      if (t.clientY <= 70) { pulling = true; startY = t.clientY; ph = cc.offsetHeight || window.innerHeight; cc.style.transition = 'none'; }
+    }, { passive: true });
+    shell.addEventListener('touchmove', function (e) {
+      if (!pulling) return;
+      prog = Math.max(0, Math.min(1, (e.touches[0].clientY - startY) / ph));
+      cc.style.transform = 'translateY(' + (-100 + prog * 100) + '%)';
+      backdrop.style.visibility = 'visible'; backdrop.style.opacity = String(prog * 0.5);
+    }, { passive: true });
+    shell.addEventListener('touchend', function () {
+      if (!pulling) return; pulling = false;
+      cc.style.transition = ''; cc.style.transform = ''; backdrop.style.opacity = ''; backdrop.style.visibility = '';
+      if (prog > 0.35) openCC(); else closeCC();
+      prog = 0;
+    }, { passive: true });
+
+    // Close gesture: drag the grab handle up.
+    var gY = 0, gDrag = false, gProg = 0;
+    cc.addEventListener('touchstart', function (e) {
+      if (!ccOpen || !e.target.closest('.ms-cc-grab')) return;
+      gDrag = true; gY = e.touches[0].clientY; cc.style.transition = 'none';
+    }, { passive: true });
+    cc.addEventListener('touchmove', function (e) {
+      if (!gDrag) return;
+      var dy = Math.min(0, e.touches[0].clientY - gY);
+      gProg = Math.max(-1, dy / (cc.offsetHeight || 1));
+      cc.style.transform = 'translateY(' + (gProg * 100) + '%)';
+    }, { passive: true });
+    cc.addEventListener('touchend', function () {
+      if (!gDrag) return; gDrag = false; cc.style.transition = ''; cc.style.transform = '';
+      if (gProg < -0.3) closeCC(); else openCC();
+      gProg = 0;
+    }, { passive: true });
+  }
+
   // ---- Build ------------------------------------------------------------
   function build() {
     if (built) return;
@@ -189,8 +302,12 @@
     // Delegated taps: app icons / dock / search → launch; Android nav → back/home.
     shell.addEventListener('click', function (e) {
       var nav = e.target.closest('.ms-nav-back, .ms-nav-home');
-      if (nav) { if (sheetOpen) history.back(); return; }
-      var app = e.target.closest('[data-app]');
+      if (nav) {
+        if (ControlCenter && ControlCenter.isOpen()) { ControlCenter.close(); return; }
+        if (sheetOpen) history.back();
+        return;
+      }
+      var app = e.target.closest('.ms-home [data-app], .ms-dock [data-app]');
       if (app) launch(app.getAttribute('data-app'));
     });
 
@@ -198,19 +315,23 @@
     var widget = document.getElementById('aiAssistantWidget');
     if (widget) widget.classList.add('hidden');
 
-    // Live status-bar clock.
-    var sbTime = shell.querySelector('.ms-sb-time');
+    // Swipe-down quick settings / control center.
+    initControlCenter(shell);
+
+    // Live status-bar + control-center clock.
     (function tickClock() {
       var d = new Date();
       var h = d.getHours() % 12 || 12;
       var m = ('0' + d.getMinutes()).slice(-2);
-      if (sbTime) sbTime.textContent = h + ':' + m;
+      shell.querySelectorAll('.ms-sb-time, .ms-cc-clock').forEach(function (e2) { e2.textContent = h + ':' + m; });
       setTimeout(tickClock, 20000);
     })();
 
-    // Optional deep-link for previews/sharing: ?msapp=experience
-    var dl = new URLSearchParams(location.search).get('msapp');
+    // Optional preview hooks: ?msapp=experience opens an app; ?cc=1 opens control center.
+    var params = new URLSearchParams(location.search);
+    var dl = params.get('msapp');
     if (dl && apps[dl]) openSheet(dl);
+    if (params.get('cc') === '1' && ControlCenter) ControlCenter.open();
   }
 
   function start() { try { build(); } catch (e) { console.error('[mobile-shell] build failed', e); } }
