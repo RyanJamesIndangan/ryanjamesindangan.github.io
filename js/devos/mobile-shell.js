@@ -38,7 +38,8 @@
     { id: 'code-snippets', label: 'Snippets',   grad: 'linear-gradient(145deg,#7c83ff,#4f46e5)' },
     { id: 'analytics',     label: 'Analytics',  grad: 'linear-gradient(145deg,#2bd4c0,#0f9e95)' },
     { id: 'easter-eggs',   label: 'Secrets',    grad: 'linear-gradient(145deg,#ff8ec2,#e1559a)' },
-    { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#8090a8,#475569)' }
+    { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#8090a8,#475569)' },
+    { id: '__os',          label: OS === 'ios' ? 'Android' : 'iOS', grad: OS === 'ios' ? 'linear-gradient(145deg,#3ddc84,#0f9d58)' : 'linear-gradient(145deg,#aab0bb,#5b6370)' }
   ];
   var DOCK_APPS = [
     { id: 'resume',   label: 'Résumé',  grad: 'linear-gradient(145deg,#5aa0ff,#2f6fe6)' },
@@ -106,6 +107,7 @@
     resume: '<path d="M13.5 3.5H7A2 2 0 0 0 5 5.5v13A2 2 0 0 0 7 20.5h10a2 2 0 0 0 2-2V9l-5.5-5.5z"/><path d="M13.5 3.5V9H19"/><path d="M8.5 12.5h7M8.5 16h7"/>',
     contact: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/>',
     __github: '<circle cx="6.5" cy="6" r="2.2"/><circle cx="6.5" cy="18" r="2.2"/><circle cx="16.5" cy="8.5" r="2.2"/><path d="M6.5 8.2v7.6M16.5 10.7c0 3.2-2.7 4-5.5 4H6.5"/>',
+    __os: '<path d="M3.5 8.5h13M13 5l3.5 3.5L13 12"/><path d="M20.5 15.5h-13M11 12l-3.5 3.5L11 19"/>',
     _default: '<circle cx="12" cy="12" r="8"/>'
   };
 
@@ -126,6 +128,7 @@
 
   function launch(id) {
     if (id === '__desktop') { location.href = location.pathname + '?desktop=1'; return; }
+    if (id === '__os') { location.href = location.pathname + '?mobile=1&os=' + (OS === 'ios' ? 'android' : 'ios'); return; }
     if (id === '__chat') { openChat(); return; }
     if (id === '__github') { window.open('https://github.com/ryanjamesindangan', '_blank', 'noopener'); return; }
     openSheet(id);
@@ -252,6 +255,7 @@
         tile('dnd', '🌙', 'Do Not Disturb', false) +
         tile('desktop', '🖥️', 'Desktop', false, '__desktop') +
         tile('clippy', '📎', 'Clippy', false, '__chat') +
+        tile('osswitch', '🍏', 'See iOS', false, '__os') +
       '</div>' +
       '<div class="ms-bright"><span>🔅</span><input type="range" class="ms-bright-range" min="12" max="100" value="100" aria-label="Brightness"><span>🔆</span></div>' +
       '<div class="ms-notif">' +
@@ -267,7 +271,7 @@
       '<div class="ms-cc-head"><span class="ms-cc-clock">--:--</span></div>' +
       '<div class="ms-ccgrid">' +
         '<div class="ms-cc-conn">' + round('airplane', '✈️', false) + round('cell', '📶', true) + round('wifi', '📡', true) + round('bt', '🔷', true) + '</div>' +
-        '<div class="ms-cc-stack">' + sq('__desktop', '🖥️', 'Desktop') + sq('__chat', '📎', 'Clippy') + '</div>' +
+        '<div class="ms-cc-stack">' + sq('__desktop', '🖥️', 'Desktop') + sq('__chat', '📎', 'Clippy') + sq('__os', '🤖', 'See Android') + '</div>' +
         '<div class="ms-cc-sliders">' + vs('bright', '🔆', 100) + vs('vol', '🔊', 65) + '</div>' +
       '</div>';
   }
