@@ -16,34 +16,35 @@
   var apps = window.apps || {};
   var built = false, sheetOpen = false;
   var ControlCenter = null;
+  var Search = null;
 
   function appData(id) { return apps[id] || {}; }
   function appContent(id) { return appData(id).content || '<div style="padding:24px;color:#556">Content unavailable.</div>'; }
   function appTitle(id) { return appData(id).title || id; }
 
-  // Portfolio sections styled as phone apps (id, label, emoji, icon color).
+  // Portfolio sections styled as crafted phone apps (id, label, gradient).
   var HOME_APPS = [
-    { id: 'about',         label: 'About',      emoji: '👤', color: '#2171d6' },
-    { id: 'experience',    label: 'Experience', emoji: '💼', color: '#0ea5e9' },
-    { id: 'projects',      label: 'Projects',   emoji: '🚀', color: '#7c3aed' },
-    { id: 'skills',        label: 'Skills',     emoji: '🛠️', color: '#f59e0b' },
-    { id: 'certifications',label: 'Certs',      emoji: '🎓', color: '#e11d48' },
-    { id: 'github-stats',  label: 'GitHub',     emoji: '📊', color: '#111827' },
-    { id: 'ai-lab',        label: 'AI Lab',     emoji: '🤖', color: '#10b981' },
-    { id: 'testimonials',  label: 'Reviews',    emoji: '⭐', color: '#eab308' },
-    { id: 'blog',          label: 'Blog',       emoji: '📝', color: '#ef4444' },
-    { id: 'terminal',      label: 'Terminal',   emoji: '⌨️', color: '#1f2937' },
-    { id: 'snake',         label: 'Snake',      emoji: '🐍', color: '#22c55e' },
-    { id: 'code-snippets', label: 'Snippets',   emoji: '💻', color: '#6366f1' },
-    { id: 'analytics',     label: 'Analytics',  emoji: '📈', color: '#14b8a6' },
-    { id: 'easter-eggs',   label: 'Secrets',    emoji: '🥚', color: '#ec4899' },
-    { id: '__desktop',     label: 'Desktop',    emoji: '🖥️', color: '#475569' }
+    { id: 'about',         label: 'About',      grad: 'linear-gradient(145deg,#4f9cff,#1d6fe0)' },
+    { id: 'experience',    label: 'Experience', grad: 'linear-gradient(145deg,#22b8e6,#0e86c4)' },
+    { id: 'projects',      label: 'Projects',   grad: 'linear-gradient(145deg,#9b6cff,#6d3bdb)' },
+    { id: 'skills',        label: 'Skills',     grad: 'linear-gradient(145deg,#ffb24d,#f08a1d)' },
+    { id: 'certifications',label: 'Certs',      grad: 'linear-gradient(145deg,#ff6b81,#e11d48)' },
+    { id: 'github-stats',  label: 'GitHub',     grad: 'linear-gradient(145deg,#485063,#1b1f2a)' },
+    { id: 'ai-lab',        label: 'AI Lab',     grad: 'linear-gradient(145deg,#2dd4a7,#0ea371)' },
+    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#ffd24d,#f1a811)' },
+    { id: 'blog',          label: 'Blog',       grad: 'linear-gradient(145deg,#ff7a59,#e0492f)' },
+    { id: 'terminal',      label: 'Terminal',   grad: 'linear-gradient(145deg,#2b3340,#11151d)' },
+    { id: 'snake',         label: 'Snake',      grad: 'linear-gradient(145deg,#46d66b,#1ba345)' },
+    { id: 'code-snippets', label: 'Snippets',   grad: 'linear-gradient(145deg,#7c83ff,#4f46e5)' },
+    { id: 'analytics',     label: 'Analytics',  grad: 'linear-gradient(145deg,#2bd4c0,#0f9e95)' },
+    { id: 'easter-eggs',   label: 'Secrets',    grad: 'linear-gradient(145deg,#ff8ec2,#e1559a)' },
+    { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#8090a8,#475569)' }
   ];
   var DOCK_APPS = [
-    { id: 'resume',   label: 'Résumé',  emoji: '📄', color: '#3b82f6' },
-    { id: 'contact',  label: 'Contact', emoji: '✉️', color: '#22c55e' },
-    { id: '__chat',   label: 'Clippy',  emoji: '📎', color: '#f59e0b' },
-    { id: '__github', label: 'GitHub',  emoji: '🐙', color: '#111827' }
+    { id: 'resume',   label: 'Résumé',  grad: 'linear-gradient(145deg,#5aa0ff,#2f6fe6)' },
+    { id: 'contact',  label: 'Contact', grad: 'linear-gradient(145deg,#49d96b,#1ea34a)' },
+    { id: '__chat',   label: 'Clippy',  grad: 'linear-gradient(145deg,#ffffff,#eef0f3)', img: 'assets/clippy/clippy-on-yellow-paper.png', badge: '1' },
+    { id: '__github', label: 'GitHub',  grad: 'linear-gradient(145deg,#485063,#15181f)' }
   ];
 
   // ---- SVG bits ---------------------------------------------------------
@@ -85,9 +86,36 @@
     }
   }
 
+  // Cohesive line-glyph set (24x24, white stroke via CSS) for crafted app icons.
+  var GLYPHS = {
+    about: '<circle cx="12" cy="8.5" r="3.4"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0"/>',
+    experience: '<rect x="3" y="7.5" width="18" height="12" rx="2"/><path d="M8.5 7.5V6.2A2.2 2.2 0 0 1 10.7 4h2.6a2.2 2.2 0 0 1 2.2 2.2V7.5"/><path d="M3 12.5h18"/>',
+    projects: '<path d="M12 3.4c2.8 1.7 4.3 4.4 4.3 7.3L13.8 14.2h-3.6L7.7 10.7c0-2.9 1.5-5.6 4.3-7.3z"/><circle cx="12" cy="9.6" r="1.4"/><path d="M9.6 14.6 8 18M14.4 14.6 16 18"/>',
+    skills: '<path d="M14.8 6.2a4 4 0 0 0-5.1 5L4 16.9 7.1 20l5.7-5.7a4 4 0 0 0 5-5.1l-2.7 2.7-2.3-2.3 2.8-2.7z"/>',
+    certifications: '<path d="M12 4 2.8 8.3 12 12.6l9.2-4.3L12 4z"/><path d="M6.6 10.4v4.1c0 1.4 2.4 2.5 5.4 2.5s5.4-1.1 5.4-2.5v-4.1"/><path d="M21.2 8.3v4.4"/>',
+    'github-stats': '<line x1="3.5" y1="20" x2="20.5" y2="20"/><rect x="5.5" y="11" width="3" height="8"/><rect x="10.5" y="6.5" width="3" height="12.5"/><rect x="15.5" y="13.5" width="3" height="5.5"/>',
+    'ai-lab': '<path d="M11 4l1.5 4 4 1.5-4 1.5L11 15l-1.5-4-4-1.5 4-1.5L11 4z"/><path d="M17.8 4.6l.7 1.9 1.9.7-1.9.7-.7 1.9-.7-1.9-1.9-.7 1.9-.7.7-1.9z"/>',
+    testimonials: '<path d="M12 3.6l2.5 5.2 5.7.8-4.1 4 1 5.7L12 16.9l-5.1 2.4 1-5.7-4.1-4 5.7-.8L12 3.6z"/>',
+    blog: '<path d="M13.5 3.5H7A2 2 0 0 0 5 5.5v13A2 2 0 0 0 7 20.5h10a2 2 0 0 0 2-2V9l-5.5-5.5z"/><path d="M13.5 3.5V9H19"/><path d="M8.5 13h7M8.5 16.5h7"/>',
+    terminal: '<rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M7 9.5l3 2.5-3 2.5"/><path d="M12.5 15h5"/>',
+    snake: '<rect x="2.5" y="8" width="19" height="9" rx="4.5"/><path d="M6.8 11v3M5.3 12.5h3"/><circle cx="15.8" cy="11.8" r="1.05"/><circle cx="18.2" cy="13.6" r="1.05"/>',
+    'code-snippets': '<path d="M8.6 8 4.6 12l4 4M15.4 8l4 4-4 4M13.4 6l-2.8 12"/>',
+    analytics: '<path d="M3.5 16.5l5-5 3 3 6.5-6.5"/><path d="M15.5 8h4.5v4.5"/>',
+    'easter-eggs': '<path d="M12 3.5c3.3 0 6 4.7 6 8.6a6 6 0 0 1-12 0c0-3.9 2.7-8.6 6-8.6z"/>',
+    __desktop: '<rect x="3" y="4.5" width="18" height="11.5" rx="2"/><path d="M9 20h6M12 16v4"/>',
+    resume: '<path d="M13.5 3.5H7A2 2 0 0 0 5 5.5v13A2 2 0 0 0 7 20.5h10a2 2 0 0 0 2-2V9l-5.5-5.5z"/><path d="M13.5 3.5V9H19"/><path d="M8.5 12.5h7M8.5 16h7"/>',
+    contact: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M4 7l8 6 8-6"/>',
+    __github: '<circle cx="6.5" cy="6" r="2.2"/><circle cx="6.5" cy="18" r="2.2"/><circle cx="16.5" cy="8.5" r="2.2"/><path d="M6.5 8.2v7.6M16.5 10.7c0 3.2-2.7 4-5.5 4H6.5"/>',
+    _default: '<circle cx="12" cy="12" r="8"/>'
+  };
+
   function iconHTML(a) {
+    var inner = a.img
+      ? '<img src="' + a.img + '" alt="">'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true">' + (GLYPHS[a.id] || GLYPHS._default) + '</svg>';
     return '<button class="ms-app" data-app="' + a.id + '" type="button">' +
-             '<span class="ms-app-ico" style="background:' + a.color + '">' + a.emoji + '</span>' +
+             '<span class="ms-app-ico' + (a.img ? ' ms-app-img' : '') + '" style="background:' + a.grad + '">' + inner +
+               (a.badge ? '<i class="ms-badge">' + a.badge + '</i>' : '') + '</span>' +
              '<span class="ms-app-lbl">' + a.label + '</span></button>';
   }
 
@@ -134,7 +162,7 @@
   // ---- Home-screen regions ---------------------------------------------
   function topHTML() {
     if (OS === 'android') {
-      return '<button class="ms-gsearch" data-app="__chat" type="button">' +
+      return '<button class="ms-gsearch" type="button">' +
                '<span class="ms-g">' + GOOGLE_G + '</span>' +
                '<span class="ms-gsearch-ph">Search</span>' +
                '<span class="ms-gtools">' + MIC_SVG + LENS_SVG + '</span>' +
@@ -164,9 +192,47 @@
           '<button class="ms-nav-recents" type="button" aria-label="Recents">' + NAV_RECENTS + '</button>' +
         '</div>';
     }
-    return '<button class="ms-ios-search" data-app="__chat" type="button">' + MAG_SVG + '<span>Search</span></button>' +
+    return '<button class="ms-ios-search" type="button">' + MAG_SVG + '<span>Search</span></button>' +
            dock +
            '<div class="ms-home-indicator" aria-hidden="true"><span></span></div>';
+  }
+
+  // ---- Search overlay (filters & launches apps) -------------------------
+  function initSearch(shell) {
+    var ov = document.createElement('div'); ov.className = 'ms-search';
+    ov.innerHTML =
+      '<div class="ms-search-bar"><span class="ms-search-mag">' + MAG_SVG + '</span>' +
+      '<input class="ms-search-input" type="text" placeholder="Search apps & sections" autocomplete="off" autocapitalize="off">' +
+      '<button class="ms-search-cancel" type="button">Cancel</button></div>' +
+      '<div class="ms-search-results"></div>';
+    shell.appendChild(ov);
+    var input = ov.querySelector('.ms-search-input');
+    var results = ov.querySelector('.ms-search-results');
+    var ALL = HOME_APPS.concat(DOCK_APPS);
+    var open = false;
+    function render(q) {
+      q = (q || '').trim().toLowerCase();
+      var list = ALL.filter(function (a) {
+        var sub = (apps[a.id] && apps[a.id].title) || '';
+        return !q || (a.label + ' ' + sub).toLowerCase().indexOf(q) >= 0;
+      });
+      results.innerHTML = list.map(function (a) {
+        var sub = (apps[a.id] && apps[a.id].title) || '';
+        var inner = a.img ? '<img src="' + a.img + '" alt="">' : '<svg viewBox="0 0 24 24">' + (GLYPHS[a.id] || GLYPHS._default) + '</svg>';
+        return '<button class="ms-search-row" data-app="' + a.id + '" type="button">' +
+          '<span class="ms-app-ico' + (a.img ? ' ms-app-img' : '') + '" style="background:' + a.grad + '">' + inner + '</span>' +
+          '<span class="ms-search-row-t">' + a.label + (sub ? '<small>' + sub + '</small>' : '') + '</span></button>';
+      }).join('') || '<div class="ms-search-empty">No matches</div>';
+    }
+    function openS() { ov.classList.add('open'); open = true; render(''); setTimeout(function () { try { input.focus(); } catch (e) {} }, 80); }
+    function closeS() { ov.classList.remove('open'); open = false; input.value = ''; }
+    Search = { open: openS, close: closeS, isOpen: function () { return open; } };
+    input.addEventListener('input', function () { render(input.value); });
+    ov.querySelector('.ms-search-cancel').addEventListener('click', closeS);
+    results.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-app]');
+      if (b) { closeS(); launch(b.getAttribute('data-app')); }
+    });
   }
 
   // ---- Control center / notification shade (swipe down from the top) -----
@@ -301,8 +367,10 @@
 
     // Delegated taps: app icons / dock / search → launch; Android nav → back/home.
     shell.addEventListener('click', function (e) {
+      if (e.target.closest('.ms-gsearch, .ms-ios-search')) { if (Search) Search.open(); return; }
       var nav = e.target.closest('.ms-nav-back, .ms-nav-home');
       if (nav) {
+        if (Search && Search.isOpen()) { Search.close(); return; }
         if (ControlCenter && ControlCenter.isOpen()) { ControlCenter.close(); return; }
         if (sheetOpen) history.back();
         return;
@@ -315,8 +383,9 @@
     var widget = document.getElementById('aiAssistantWidget');
     if (widget) widget.classList.add('hidden');
 
-    // Swipe-down quick settings / control center.
+    // Swipe-down quick settings / control center + tap-to-search.
     initControlCenter(shell);
+    initSearch(shell);
 
     // Live status-bar + control-center clock.
     (function tickClock() {
@@ -332,6 +401,7 @@
     var dl = params.get('msapp');
     if (dl && apps[dl]) openSheet(dl);
     if (params.get('cc') === '1' && ControlCenter) ControlCenter.open();
+    if (params.get('search') === '1' && Search) Search.open();
   }
 
   function start() { try { build(); } catch (e) { console.error('[mobile-shell] build failed', e); } }
