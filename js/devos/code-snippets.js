@@ -3,6 +3,8 @@
 // ===========================
 
 function initializeCodeSnippets() {
+    if (initializeCodeSnippets._bound) return;   // document-delegated: bind once
+    initializeCodeSnippets._bound = true;
     // Initialize copy buttons
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('code-copy-btn') || e.target.closest('.code-copy-btn')) {

@@ -112,7 +112,7 @@ html.mobile-shell #mobileShell {
   flex: 0 0 auto; display: flex; justify-content: space-around; align-items: center;
   padding: 6px 36px calc(env(safe-area-inset-bottom) + 6px); z-index: 6;
 }
-.ms-navbar button { background: none; border: none; cursor: pointer; padding: 8px; color: #fff; opacity: .92; }
+.ms-navbar button { background: none; border: none; cursor: pointer; padding: 8px; color: #fff; opacity: .92; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
 .ms-navbar svg { width: 19px; height: 19px; display: block; fill: currentColor; }
 .ms-navbar .ms-nav-back svg { fill: #fff; }
 
@@ -121,7 +121,7 @@ html.mobile-shell #mobileShell {
   flex: 0 0 auto; align-self: center; display: inline-flex; align-items: center; gap: 6px;
   background: rgba(255,255,255,.28); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
   border: none; cursor: pointer; color: #1c1c1e; font-size: .9rem; font-weight: 500;
-  padding: 7px 16px; border-radius: 18px; margin: 4px 0 10px;
+  padding: 10px 18px; border-radius: 18px; margin: 4px 0 10px; min-height: 40px;
 }
 .ms-ios-search svg { width: 15px; height: 15px; display: block; }
 
@@ -141,7 +141,10 @@ html.mobile-shell #mobileShell {
   transition: transform .32s cubic-bezier(.2,.8,.2,1), opacity .24s ease; visibility: hidden;
 }
 .ms-sheet.open { transform: none; opacity: 1; visibility: visible; }
-@media (prefers-reduced-motion: reduce) { .ms-sheet { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .ms-sheet, .ms-cc, .ms-cc-backdrop, .ms-dim, .ms-search { transition: none !important; }
+  .ms-app:active { transform: none; }
+}
 .ms-sheet-head {
   flex: 0 0 auto; display: flex; align-items: center; gap: .6rem;
   padding: calc(env(safe-area-inset-top) + 12px) 12px 12px;
@@ -176,6 +179,9 @@ html.mobile-shell .ai-assistant-widget {
   position: fixed !important; inset: 0 !important; width: 100% !important; height: 100% !important;
   max-width: none !important; max-height: none !important; border-radius: 0 !important;
   z-index: 75 !important; transform: none !important;
+  padding-top: env(safe-area-inset-top) !important;
+  padding-bottom: env(safe-area-inset-bottom) !important;
+  box-sizing: border-box !important;
 }
 html.mobile-shell .ai-assistant-widget.hidden { display: none !important; }
 html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !important; max-width: 96vw !important; height: 90vh !important; }
@@ -226,9 +232,9 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   transform: translateY(-100%); transition: transform .34s cubic-bezier(.3,1.1,.4,1);
   padding: calc(env(safe-area-inset-top) + 8px) 14px 18px;
-  max-height: 94%; overflow-y: auto; will-change: transform;
+  max-height: 94%; overflow-y: auto;
 }
-.ms-cc.open { transform: translateY(0); }
+.ms-cc.open { transform: translateY(0); will-change: transform; }
 .ms-cc-grab { display: flex; justify-content: center; padding: 2px 0 12px; touch-action: none; }
 .ms-cc-grab span { width: 38px; height: 5px; border-radius: 3px; background: rgba(150,150,160,.6); }
 

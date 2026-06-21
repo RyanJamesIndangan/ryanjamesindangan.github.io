@@ -837,7 +837,14 @@ function initializeAppTiles() {
 function openApp(appId, position = null) {
     const app = apps[appId];
     if (!app) return;
-    
+
+    // On phones, route to the mobile shell (open full-screen) instead of creating
+    // a desktop window the user can't see or manage.
+    if (window.DeviceMode && window.DeviceMode.isMobile() && window.MobileShell && window.MobileShell.open) {
+        window.MobileShell.open(appId);
+        return;
+    }
+
     // Check if window already exists
     const existingWindow = window.windowManager?.windows.get(appId);
     if (existingWindow) {
@@ -863,7 +870,10 @@ function openApp(appId, position = null) {
     } else {
         console.error('WindowManager not initialized');
     }
-    
+
+    // Notify event-driven modules (analytics, contact form, code snippets, clippy).
+    document.dispatchEvent(new CustomEvent('appOpened', { detail: { appId } }));
+
     // Trigger Clippy animation for specific app opens
     if (window.desktopClippy && window.desktopClippy.trigger) {
         const appEventMap = {
@@ -909,9 +919,9 @@ function openApp(appId, position = null) {
     // Initialize blog if opened
     if (appId === 'blog') {
         setTimeout(() => {
-            initializeBlogFilters();
-            initializeBlogSearch();
-            initializeBlogPostModals();
+            if (typeof initializeBlogFilters === 'function') initializeBlogFilters();
+            if (typeof initializeBlogSearch === 'function') initializeBlogSearch();
+            if (typeof initializeBlogPostModals === 'function') initializeBlogPostModals();
         }, 100);
     }
     
@@ -3857,6 +3867,8 @@ function checkUrlAccessibility(url) {
 }
 
 function initializeProjectModals() {
+    if (initializeProjectModals._bound) return;   // document-delegated: bind once
+    initializeProjectModals._bound = true;
     // Live demo buttons
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('project-live-demo-btn') || e.target.closest('.project-live-demo-btn')) {

@@ -115,7 +115,7 @@
     var inner = a.img
       ? '<img src="' + a.img + '" alt="">'
       : '<svg viewBox="0 0 24 24" aria-hidden="true">' + (GLYPHS[a.id] || GLYPHS._default) + '</svg>';
-    return '<button class="ms-app" data-app="' + a.id + '" type="button">' +
+    return '<button class="ms-app" data-app="' + a.id + '" type="button" aria-label="' + a.label + '">' +
              '<span class="ms-app-ico' + (a.img ? ' ms-app-img' : '') + '" style="background:' + a.grad + '">' + inner +
                (a.badge ? '<i class="ms-badge">' + a.badge + '</i>' : '') + '</span>' +
              '<span class="ms-app-lbl">' + a.label + '</span></button>';
@@ -126,7 +126,10 @@
     else { var w = document.getElementById('aiAssistantWidget'); if (w) w.classList.remove('hidden'); }
   }
 
+  function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
+
   function launch(id) {
+    haptic(8);
     if (id === '__desktop') { location.href = location.pathname + '?desktop=1'; return; }
     if (id === '__os') { location.href = location.pathname + '?mobile=1&os=' + (OS === 'ios' ? 'android' : 'ios'); return; }
     if (id === '__chat') { openChat(); return; }
@@ -139,6 +142,7 @@
     if (sheetOpen) closeSheet(true);
     var sheet = document.createElement('div');
     sheet.className = 'ms-sheet';
+    sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', appTitle(id));
     sheet.innerHTML =
       '<div class="ms-sheet-head">' +
         '<button class="ms-back" type="button" aria-label="Back">‹ Back</button>' +
@@ -149,6 +153,7 @@
     sheet.querySelector('.ms-back').addEventListener('click', function () { history.back(); });
     requestAnimationFrame(function () { sheet.classList.add('open'); });
     runInit(id);
+    document.dispatchEvent(new CustomEvent('appOpened', { detail: { appId: id } }));
     sheetOpen = true;
     try { history.pushState({ msSheet: id }, ''); } catch (e) {}
   }
@@ -165,7 +170,7 @@
   // ---- Home-screen regions ---------------------------------------------
   function topHTML() {
     if (OS === 'android') {
-      return '<button class="ms-gsearch" type="button">' +
+      return '<button class="ms-gsearch" type="button" aria-label="Search">' +
                '<span class="ms-g">' + GOOGLE_G + '</span>' +
                '<span class="ms-gsearch-ph">Search</span>' +
                '<span class="ms-gtools">' + MIC_SVG + LENS_SVG + '</span>' +
@@ -203,9 +208,10 @@
   // ---- Search overlay (filters & launches apps) -------------------------
   function initSearch(shell) {
     var ov = document.createElement('div'); ov.className = 'ms-search';
+    ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', 'Search');
     ov.innerHTML =
       '<div class="ms-search-bar"><span class="ms-search-mag">' + MAG_SVG + '</span>' +
-      '<input class="ms-search-input" type="text" placeholder="Search apps & sections" autocomplete="off" autocapitalize="off">' +
+      '<input class="ms-search-input" type="search" placeholder="Search apps & sections" aria-label="Search apps and sections" autocomplete="off" autocapitalize="off">' +
       '<button class="ms-search-cancel" type="button">Cancel</button></div>' +
       '<div class="ms-search-results"></div>';
     shell.appendChild(ov);
@@ -242,7 +248,7 @@
   function ccAndroid() {
     var date = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
     function tile(id, ico, label, on, app) {
-      var attr = app ? 'data-app="' + app + '"' : 'data-toggle="' + id + '"';
+      var attr = app ? 'data-app="' + app + '"' : 'data-toggle="' + id + '" aria-pressed="' + (on ? 'true' : 'false') + '"';
       return '<button class="ms-qs-tile' + (on ? ' on' : '') + '" ' + attr + ' type="button">' +
         '<span class="ms-qs-ico">' + ico + '</span><span class="ms-qs-lbl">' + label + '</span></button>';
     }
@@ -264,7 +270,7 @@
       '</div>';
   }
   function ccIOS() {
-    function round(id, ico, on) { return '<button class="ms-cc-round' + (on ? ' on' : '') + '" data-toggle="' + id + '" type="button">' + ico + '</button>'; }
+    function round(id, ico, on) { return '<button class="ms-cc-round' + (on ? ' on' : '') + '" data-toggle="' + id + '" aria-pressed="' + (on ? 'true' : 'false') + '" type="button">' + ico + '</button>'; }
     function sq(app, ico, label) { return '<button class="ms-cc-sq" data-app="' + app + '" type="button"><span class="ms-cc-sq-ico">' + ico + '</span><span>' + label + '</span></button>'; }
     function vs(id, ico, val) { return '<div class="ms-vslider" data-vs="' + id + '"><div class="ms-vs-fill" style="height:' + val + '%"></div><span class="ms-vs-ico">' + ico + '</span></div>'; }
     return '<div class="ms-cc-grab"><span></span></div>' +
@@ -280,6 +286,7 @@
     var dim = document.createElement('div'); dim.className = 'ms-dim';
     var backdrop = document.createElement('div'); backdrop.className = 'ms-cc-backdrop';
     var cc = document.createElement('div'); cc.className = 'ms-cc ms-cc-' + OS;
+    cc.setAttribute('role', 'dialog'); cc.setAttribute('aria-modal', 'true'); cc.setAttribute('aria-label', 'Control center');
     cc.innerHTML = (OS === 'android') ? ccAndroid() : ccIOS();
     shell.appendChild(dim); shell.appendChild(backdrop); shell.appendChild(cc);
 
@@ -295,7 +302,7 @@
       var app = e.target.closest('[data-app]');
       if (app) { closeCC(); launch(app.getAttribute('data-app')); return; }
       var tog = e.target.closest('[data-toggle]');
-      if (tog) tog.classList.toggle('on');
+      if (tog) { tog.classList.toggle('on'); tog.setAttribute('aria-pressed', String(tog.classList.contains('on'))); haptic(5); }
     });
     var br = cc.querySelector('.ms-bright-range');
     if (br) br.addEventListener('input', function () { setBright(+br.value); });
@@ -364,7 +371,7 @@
       '<div class="ms-home">' +
         topHTML() +
         '<div class="ms-springboard">' + HOME_APPS.map(iconHTML).join('') + '</div>' +
-        (OS === 'ios' ? '<div class="ms-page-dots"><i class="on"></i><i></i></div>' : '') +
+        (OS === 'ios' ? '<div class="ms-page-dots"><i class="on"></i></div>' : '') +
       '</div>' +
       bottomHTML();
     document.body.appendChild(shell);
@@ -387,6 +394,15 @@
     var widget = document.getElementById('aiAssistantWidget');
     if (widget) widget.classList.add('hidden');
 
+    // Let desktop openApp() route into the shell, and allow Escape to dismiss overlays.
+    window.MobileShell = { open: openSheet };
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (Search && Search.isOpen()) Search.close();
+      else if (ControlCenter && ControlCenter.isOpen()) ControlCenter.close();
+      else if (sheetOpen) history.back();
+    });
+
     // Swipe-down quick settings / control center + tap-to-search.
     initControlCenter(shell);
     initSearch(shell);
@@ -406,6 +422,7 @@
     if (dl && apps[dl]) openSheet(dl);
     if (params.get('cc') === '1' && ControlCenter) ControlCenter.open();
     if (params.get('search') === '1' && Search) Search.open();
+    if (params.get('chat') === '1') openChat();
   }
 
   function start() { try { build(); } catch (e) { console.error('[mobile-shell] build failed', e); } }

@@ -193,8 +193,12 @@ class MobileEnhancements {
     }
 }
 
-// Initialize mobile enhancements
-if (window.innerWidth <= 768) {
+// Initialize mobile enhancements — but NOT when the new mobile shell governs the
+// phone UI (it would create a competing/duplicate mobile experience).
+function legacyMobileActive() {
+    return window.innerWidth <= 768 && !document.documentElement.classList.contains('mobile-shell');
+}
+if (legacyMobileActive()) {
     window.mobileEnhancements = new MobileEnhancements();
 }
 
@@ -203,9 +207,9 @@ let resizeTimeout;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        if (window.innerWidth <= 768 && !window.mobileEnhancements) {
+        if (legacyMobileActive() && !window.mobileEnhancements) {
             window.mobileEnhancements = new MobileEnhancements();
-        } else if (window.innerWidth > 768 && window.mobileEnhancements) {
+        } else if (!legacyMobileActive() && window.mobileEnhancements) {
             // Clean up mobile drawer if exists
             const drawer = document.getElementById('mobileAppDrawer');
             if (drawer) drawer.remove();
