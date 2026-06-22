@@ -67,11 +67,11 @@ function initializeOCRDemo() {
             
             // Display results
             resultDiv.textContent = text || 'No text detected';
-            resultDiv.style.color = '#1a1a1a';
+            resultDiv.style.color = '#141413';
             
             // Show confidence
             const confidenceInfo = document.createElement('div');
-            confidenceInfo.style.cssText = 'margin-top: 0.5rem; padding: 0.5rem; background: #e8f4f8; border-radius: 4px; font-size: 0.8rem; color: #2171d6;';
+            confidenceInfo.style.cssText = 'margin-top: 0.5rem; padding: 0.5rem; background: #F5F4EF; border-radius: 4px; font-size: 0.8rem; color: #D97757;';
             confidenceInfo.textContent = `Confidence: ${Math.round(confidence)}%`;
             resultDiv.appendChild(confidenceInfo);
             
@@ -138,14 +138,14 @@ function initializePipelineVisualization() {
             }
             
             const step = steps[stepIndex];
-            step.style.background = '#e8f4f8';
-            step.style.borderColor = '#2171d6';
+            step.style.background = '#F5F4EF';
+            step.style.borderColor = '#D97757';
             step.style.transform = 'scale(1.05)';
             
             const titleDiv = step.querySelector('div[style*="font-weight: 600"]');
             const descDiv = step.querySelector('div[style*="font-size: 0.85rem"]');
             
-            if (titleDiv) titleDiv.style.color = '#2171d6';
+            if (titleDiv) titleDiv.style.color = '#D97757';
             if (descDiv) descDiv.style.color = '#666';
             
             setTimeout(() => {

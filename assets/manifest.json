@@ -4,8 +4,8 @@
   "description": "Interactive Windows 7-themed portfolio showcasing full-stack development skills",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#1a1d29",
-  "theme_color": "#2171d6",
+  "background_color": "#FAF9F5",
+  "theme_color": "#D97757",
   "orientation": "any",
   "icons": [
     {
