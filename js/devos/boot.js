@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Hide boot screen after transition
                     setTimeout(() => {
                         bootScreen.style.display = 'none';
+                        bootScreen.setAttribute('aria-hidden', 'true');
                         // Dispatch boot complete event
                         document.dispatchEvent(new CustomEvent('bootComplete'));
                         // Re-initialize context menu in case it wasn't ready before

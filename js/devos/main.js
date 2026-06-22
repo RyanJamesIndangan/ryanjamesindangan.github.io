@@ -3059,9 +3059,10 @@ function closeAIAssistant() {
         widget.classList.add('hidden');
         localStorage.setItem('aiAssistantClosed', 'true');
     }
-    
+
     if (toggleBtn) {
         toggleBtn.classList.add('visible');
+        toggleBtn.setAttribute('aria-expanded', 'false');
     }
 }
 
@@ -3128,9 +3129,10 @@ function showAIAssistant() {
         widget.classList.remove('hidden');
         localStorage.setItem('aiAssistantClosed', 'false');
     }
-    
+
     if (toggleBtn) {
         toggleBtn.classList.remove('visible');
+        toggleBtn.setAttribute('aria-expanded', 'true');
     }
 
     // Focus input
