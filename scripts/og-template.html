@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+    background: radial-gradient(1200px 700px at 78% -10%, #2f7ee6 0%, #1b56b0 38%, #10316e 100%);
+    color: #fff; position: relative;
+  }
+  /* subtle grid + window-chrome motif to hint the "Web OS" concept */
+  .grid { position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 48px 48px; mask: radial-gradient(900px 600px at 30% 50%, #000 55%, transparent 100%); }
+  .win { position: absolute; right: 50px; bottom: 64px; width: 372px; height: 252px;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.22); border-radius: 14px;
+    backdrop-filter: blur(2px); box-shadow: 0 30px 80px rgba(0,0,0,.35); overflow: hidden; }
+  .win-bar { height: 38px; background: rgba(255,255,255,.10); display: flex; align-items: center; padding: 0 14px; gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,.14); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .win-title { margin-left: 10px; font-size: 13px; color: rgba(255,255,255,.75); font-weight: 600; }
+  .win-body { padding: 20px; font-family: 'Cascadia Code', Consolas, monospace; font-size: 15px; line-height: 1.9; color: #cfe0ff; }
+  .win-body .k { color: #79b8ff; } .win-body .s { color: #9be4a8; } .win-body .c { color: #7d8db0; }
+  .wrap { position: relative; z-index: 2; height: 100%; display: flex; align-items: center; padding: 0 0 0 70px; }
+  .photo { width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+    border: 5px solid rgba(255,255,255,.85); box-shadow: 0 16px 44px rgba(0,0,0,.4); flex: none; }
+  .info { margin-left: 46px; max-width: 470px; }
+  .eyebrow { font-size: 18px; letter-spacing: 3px; text-transform: uppercase; color: #9cc4ff; font-weight: 700; margin-bottom: 10px; }
+  h1 { font-size: 58px; font-weight: 800; line-height: 1.05; letter-spacing: -1px; }
+  h2 { font-size: 27px; font-weight: 600; color: #dceaff; margin-top: 12px; }
+  .tags { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .tag { font-size: 16px; font-weight: 600; padding: 7px 15px; border-radius: 999px;
+    background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); }
+  .url { position: absolute; left: 80px; bottom: 46px; z-index: 3; font-size: 19px; font-weight: 700; color: #bcd6ff; }
+  .url::before { content: "🌐 "; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="win">
+    <div class="win-bar">
+      <span class="dot" style="background:#ff5f57"></span>
+      <span class="dot" style="background:#febc2e"></span>
+      <span class="dot" style="background:#28c840"></span>
+      <span class="win-title">portfolio.exe — Web OS</span>
+    </div>
+    <div class="win-body">
+      <span class="c">// shipping AI into production</span><br>
+      <span class="k">const</span> focus = [<br>
+      &nbsp;&nbsp;<span class="s">"Document Intelligence"</span>,<br>
+      &nbsp;&nbsp;<span class="s">"OCR + LLM pipelines"</span>,<br>
+      &nbsp;&nbsp;<span class="s">"Full-Stack Web Apps"</span><br>
+      ];
+    </div>
+  </div>
+  <div class="wrap">
+    <img class="photo" src="../assets/profile-photo.jpg" alt="">
+    <div class="info">
+      <div class="eyebrow">Portfolio</div>
+      <h1>Ryan James<br>Indangan</h1>
+      <h2>AI Software Engineer &amp; Full-Stack Developer</h2>
+      <div class="tags">
+        <span class="tag">AI / ML</span>
+        <span class="tag">Document Intelligence</span>
+        <span class="tag">OCR</span>
+        <span class="tag">LLM Integration</span>
+      </div>
+    </div>
+  </div>
+  <div class="url">ryanjamesindangan.github.io</div>
+</body>
+</html>

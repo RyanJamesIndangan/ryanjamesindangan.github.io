@@ -5841,3 +5841,34 @@ body {
     }
 }
 
+/* ===================================
+   Accessibility — global focus + motion
+   =================================== */
+
+/* Visible keyboard focus for every interactive control (mouse clicks stay clean
+   thanks to :focus-visible). The skip-link keeps its own stronger style. */
+:focus-visible {
+    outline: 2px solid #2171d6;
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+.desktop-icon:focus-visible,
+.start-button:focus-visible,
+.taskbar-app:focus-visible,
+.window-btn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 1px;
+    box-shadow: 0 0 0 4px rgba(33, 113, 214, 0.65);
+}
+
+/* Honor prefers-reduced-motion site-wide: neutralize transitions/animations
+   and any smooth-scroll, rather than only the handful of Clippy keyframes. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+

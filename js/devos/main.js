@@ -1023,6 +1023,10 @@ function initializeDemoButtons() {
 // Context Menu
 // ===========================
 function initializeContextMenu() {
+    // Bind once. Called from main init, the boot fade-out, and self-retries —
+    // without this guard the document-level fallback/close listeners below stack
+    // and fire 2+ times per event for the rest of the session.
+    if (initializeContextMenu._bound) return;
     let contextMenu = document.getElementById('contextMenu');
     const desktop = document.getElementById('desktop') || document.querySelector('.desktop');
     
@@ -1035,7 +1039,6 @@ function initializeContextMenu() {
     
     // Move context menu to body if it's not already there (to avoid overflow:hidden clipping)
     if (contextMenu.parentElement !== document.body) {
-        console.log('Moving context menu to body');
         document.body.appendChild(contextMenu);
     }
     
@@ -1045,50 +1048,42 @@ function initializeContextMenu() {
         setTimeout(initializeContextMenu, 500);
         return;
     }
-    
+
+    initializeContextMenu._bound = true;
+
     // Remove any existing listener if it exists (by using a named function)
     if (desktop._contextMenuHandler) {
         desktop.removeEventListener('contextmenu', desktop._contextMenuHandler, true);
     }
-    
+
     // Create handler function
     desktop._contextMenuHandler = (e) => {
-        console.log('Context menu event triggered on:', e.target, 'closest desktop:', e.target.closest('.desktop'));
-        
         // Only show on desktop area, not on windows, icons, or other interactive elements
         const target = e.target;
-        
+
         // Check if clicking on interactive elements
         if (target.closest('.window')) {
-            console.log('Blocked: clicked on window');
             return;
         }
         if (target.closest('.desktop-icon')) {
-            console.log('Blocked: clicked on desktop icon');
             return;
         }
         if (target.closest('.taskbar')) {
-            console.log('Blocked: clicked on taskbar');
             return;
         }
         if (target.closest('.ai-assistant-widget')) {
-            console.log('Blocked: clicked on AI assistant');
             return;
         }
         if (target.closest('.context-menu')) {
-            console.log('Blocked: clicked on context menu');
             return;
         }
         if (target.closest('.start-menu')) {
-            console.log('Blocked: clicked on start menu');
             return;
         }
         if (target.closest('.notification')) {
-            console.log('Blocked: clicked on notification');
             return;
         }
         if (target.closest('.wallpaper-menu')) {
-            console.log('Blocked: clicked on wallpaper menu');
             return;
         }
         
@@ -1113,23 +1108,11 @@ function initializeContextMenu() {
             pointer-events: auto !important;
         `;
         contextMenu.classList.add('active');
-        
+
         // Ensure it's in the body, not nested
         if (contextMenu.parentElement !== document.body) {
             document.body.appendChild(contextMenu);
         }
-        
-        console.log('Context menu shown at', x, y, 'menu element:', contextMenu); // Debug log
-        console.log('Context menu computed styles:', {
-            display: window.getComputedStyle(contextMenu).display,
-            opacity: window.getComputedStyle(contextMenu).opacity,
-            visibility: window.getComputedStyle(contextMenu).visibility,
-            zIndex: window.getComputedStyle(contextMenu).zIndex,
-            position: window.getComputedStyle(contextMenu).position,
-            left: window.getComputedStyle(contextMenu).left,
-            top: window.getComputedStyle(contextMenu).top
-        });
-        console.log('Context menu parent:', contextMenu.parentElement);
     };
     
     // Add context menu event listener to desktop
@@ -1147,7 +1130,6 @@ function initializeContextMenu() {
                 !e.target.closest('.ai-assistant-widget') &&
                 !e.target.closest('.context-menu') &&
                 !e.target.closest('.start-menu')) {
-                console.log('Document-level context menu handler triggered');
                 desktop._contextMenuHandler(e);
             }
         }

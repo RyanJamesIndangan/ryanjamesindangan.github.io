@@ -247,9 +247,9 @@ class WindowManager {
                     <span>${title}</span>
                 </div>
                 <div class="window-controls">
-                    <button class="window-btn minimize" title="Minimize">−</button>
-                    <button class="window-btn maximize" title="Maximize">□</button>
-                    <button class="window-btn close" title="Close">×</button>
+                    <button class="window-btn minimize" type="button" title="Minimize" aria-label="Minimize window">−</button>
+                    <button class="window-btn maximize" type="button" title="Maximize" aria-label="Maximize window">□</button>
+                    <button class="window-btn close" type="button" title="Close" aria-label="Close window">×</button>
                 </div>
             </div>
             <div class="window-content">${content}</div>
@@ -423,12 +423,9 @@ class WindowManager {
         const windowEl = this.windows.get(appId);
         if (!windowEl) return;
 
-        // Update z-index
-        this.windows.forEach(win => {
-            if (win !== windowEl) {
-                win.style.zIndex = 100;
-            }
-        });
+        // Raise the focused window above the rest. (Previously every other
+        // window was flattened to z-index 100, which destroyed relative stacking
+        // order between background windows.)
         windowEl.style.zIndex = ++this.zIndex;
         this.activeWindow = windowEl;
         
@@ -898,6 +895,7 @@ class WindowManager {
 
 // Global mouse events for dragging and resizing
 document.addEventListener('mousemove', (e) => {
+    if (!window.windowManager) return;
     if (window.windowManager.isDragging || window.windowManager.isResizing) {
         window.windowManager.mouseX = e.clientX;
         window.windowManager.mouseY = e.clientY;
@@ -914,6 +912,7 @@ document.addEventListener('mousemove', (e) => {
 });
 
 document.addEventListener('mouseup', () => {
+    if (!window.windowManager) return;
     if (window.windowManager.isDragging) {
         const header = window.windowManager.activeWindow?.querySelector('.window-header');
         if (header) {

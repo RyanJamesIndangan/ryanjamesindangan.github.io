@@ -193,9 +193,25 @@
     sheet.addEventListener('touchcancel', onEnd, { passive: true });
   }
 
+  // Keep Tab within an open dialog (focus trap) for keyboard/AT users.
+  function trapFocus(container) {
+    container.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = container.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select,textarea,[tabindex]:not([tabindex="-1"])');
+      f = Array.prototype.filter.call(f, function (el) { return el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+
   // ---- Full-screen "app" sheets ----------------------------------------
+  var lastSheetFocus = null;
   function openSheet(id) {
-    if (sheetOpen) closeSheet(true);
+    var replacing = sheetOpen;
+    if (replacing) closeSheet(true);
+    else lastSheetFocus = document.activeElement;   // remember launcher only for the first sheet
     var sheet = document.createElement('div');
     sheet.className = 'ms-sheet';
     sheet.setAttribute('role', 'dialog'); sheet.setAttribute('aria-modal', 'true'); sheet.setAttribute('aria-label', appTitle(id));
@@ -207,18 +223,24 @@
       '<div class="ms-sheet-body">' + appContent(id) + '</div>';
     document.body.appendChild(sheet);
     sheet.querySelector('.ms-back').addEventListener('click', function () { history.back(); });
+    trapFocus(sheet);
     enableSheetGestures(sheet);
-    requestAnimationFrame(function () { sheet.classList.add('open'); });
+    requestAnimationFrame(function () {
+      sheet.classList.add('open');
+      var b = sheet.querySelector('.ms-back'); if (b) { try { b.focus({ preventScroll: true }); } catch (e) { try { b.focus(); } catch (x) {} } }
+    });
     runInit(id);
     document.dispatchEvent(new CustomEvent('appOpened', { detail: { appId: id } }));
     sheetOpen = true;
-    try { history.pushState({ msSheet: id }, ''); } catch (e) {}
+    // Replacing an open sheet must not stack a 2nd history entry (would break Back).
+    try { history[replacing ? 'replaceState' : 'pushState']({ msSheet: id }, ''); } catch (e) {}
   }
   function closeSheet(immediate) {
     var s = document.querySelector('.ms-sheet.open');
     if (!s) { sheetOpen = false; return; }
     s.classList.remove('open');
     sheetOpen = false;
+    if (lastSheetFocus && lastSheetFocus.focus) { try { lastSheetFocus.focus({ preventScroll: true }); } catch (e) {} lastSheetFocus = null; }
     if (immediate) s.remove();
     else setTimeout(function () { s.remove(); }, 300);
   }
@@ -349,7 +371,7 @@
 
     var ccOpen = false;
     function openCC() { cc.classList.add('open'); backdrop.classList.add('show'); ccOpen = true; }
-    function closeCC() { cc.classList.remove('open'); backdrop.classList.remove('show'); ccOpen = false; }
+    function closeCC() { cc.classList.remove('open'); backdrop.classList.remove('show'); ccOpen = false; dim.style.opacity = ''; }
     ControlCenter = { isOpen: function () { return ccOpen; }, open: openCC, close: closeCC };
     backdrop.addEventListener('click', closeCC);
 
@@ -392,7 +414,7 @@
     shell.addEventListener('touchend', function () {
       if (!pulling) return; pulling = false;
       cc.style.transition = ''; cc.style.transform = ''; backdrop.style.opacity = ''; backdrop.style.visibility = '';
-      if (prog > 0.35) openCC(); else closeCC();
+      if (prog > 0.35) openCC();   // a plain top-edge tap (prog 0) just resets; never force-closes
       prog = 0;
     }, { passive: true });
 
