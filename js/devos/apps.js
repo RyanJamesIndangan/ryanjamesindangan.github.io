@@ -1682,6 +1682,94 @@ function formatBlogDate(dateString) {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+// ---- Blog interactivity (document-delegated, bind once; works for desktop windows AND mobile sheets) ----
+function applyBlogFilters() {
+    const container = document.getElementById('blogPostsContainer');
+    if (!container) return;
+    const activeBtn = document.querySelector('.blog-filter-btn.active');
+    const filter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+    const q = ((document.getElementById('blogSearchInput') || {}).value || '').trim().toLowerCase();
+    let shown = 0;
+    container.querySelectorAll('.blog-post-card').forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        const ok = (filter === 'all' || cat === filter) && (!q || card.textContent.toLowerCase().includes(q));
+        card.style.display = ok ? '' : 'none';
+        if (ok) shown++;
+    });
+    let empty = container.querySelector('.blog-empty');
+    if (shown === 0) {
+        if (!empty) {
+            empty = document.createElement('div');
+            empty.className = 'blog-empty';
+            empty.style.cssText = 'grid-column:1/-1;text-align:center;color:#999;padding:2rem;';
+            empty.textContent = 'No articles match your search.';
+            container.appendChild(empty);
+        }
+        empty.style.display = '';
+    } else if (empty) { empty.style.display = 'none'; }
+}
+function initializeBlogFilters() {
+    if (initializeBlogFilters._bound) return;
+    initializeBlogFilters._bound = true;
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.blog-filter-btn');
+        if (!btn) return;
+        document.querySelectorAll('.blog-filter-btn').forEach(b => {
+            const on = b === btn;
+            b.classList.toggle('active', on);
+            b.style.background = on ? '#2171d6' : '#f0f0f0';
+            b.style.color = on ? '#fff' : '#1a1a1a';
+            b.style.border = on ? 'none' : '1px solid #e0e0e0';
+        });
+        applyBlogFilters();
+    });
+}
+function initializeBlogSearch() {
+    if (initializeBlogSearch._bound) return;
+    initializeBlogSearch._bound = true;
+    document.addEventListener('input', (e) => {
+        if (e.target && e.target.id === 'blogSearchInput') applyBlogFilters();
+    });
+}
+function openBlogPostModal(post) {
+    const existing = document.querySelector('.blog-modal-overlay');
+    if (existing) existing.remove();
+    const tags = (post.tags || []).map(t =>
+        `<span style="padding:.2rem .6rem;background:#eef2f7;border:1px solid #dde4ec;border-radius:4px;color:#445; font-size:.75rem;font-weight:500;">${t}</span>`).join('');
+    const overlay = document.createElement('div');
+    overlay.className = 'blog-modal-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', post.title);
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    overlay.innerHTML =
+        `<div class="blog-modal" style="background:#fff;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;border-radius:16px;padding:28px 26px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+            <button class="blog-modal-close" aria-label="Close" style="position:absolute;top:14px;right:14px;border:none;background:#f0f0f0;width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:1.2rem;line-height:1;">×</button>
+            <div style="color:#2171d6;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;">${post.category}</div>
+            <h2 style="margin:.45rem 2rem .55rem 0;color:#1a1a1a;font-size:1.5rem;line-height:1.25;">${post.title}</h2>
+            <div style="color:#999;font-size:.84rem;margin-bottom:1.1rem;">${formatBlogDate(post.date)} &nbsp;·&nbsp; ${post.readTime || ''}</div>
+            <p style="color:#333;line-height:1.75;font-size:1rem;">${post.excerpt}</p>
+            <div style="margin:1.1rem 0;display:flex;flex-wrap:wrap;gap:.5rem;">${tags}</div>
+            <p style="color:#888;font-size:.88rem;border-top:1px solid #eee;padding-top:1rem;">📝 Full write-up in progress — reach out via the Contact app and I'll happily walk you through it.</p>
+        </div>`;
+    document.body.appendChild(overlay);
+    const close = () => { overlay.remove(); document.removeEventListener('keydown', onKey); };
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    overlay.addEventListener('click', (e) => { if (e.target === overlay || e.target.closest('.blog-modal-close')) close(); });
+    document.addEventListener('keydown', onKey);
+}
+function initializeBlogPostModals() {
+    if (initializeBlogPostModals._bound) return;
+    initializeBlogPostModals._bound = true;
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.blog-post-card');
+        if (!card) return;
+        const id = card.getAttribute('data-post-id');
+        const post = (typeof getBlogPosts === 'function' ? getBlogPosts() : []).find(p => p.id === id);
+        if (post) openBlogPostModal(post);
+    });
+}
+
 // Helper functions to create UI components
 function createSkillCategory(title, skills) {
     return `

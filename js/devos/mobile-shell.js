@@ -84,6 +84,7 @@
       case 'testimonials': g('initializeTestimonialsCarousel'); break;
       case 'github-stats': g('loadGitHubStats', 'initializeGitHubStats'); break;
       case 'ai-lab':       g('initializeOCRDemo', 'initializePipelineVisualization', 'initializeWatermarkDemo'); break;
+      case 'blog':         g('initializeBlogFilters', 'initializeBlogSearch', 'initializeBlogPostModals'); break;
     }
   }
 
