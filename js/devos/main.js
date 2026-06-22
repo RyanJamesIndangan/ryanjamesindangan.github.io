@@ -1722,14 +1722,20 @@ async function loadGitHubStats() {
         if (!eventsResponse.ok) throw new Error('Failed to fetch events');
         const eventsData = await eventsResponse.json();
         
+        // If the panel was closed while we awaited the network (e.g. the user
+        // tapped in and straight back out on mobile), bail quietly — the captured
+        // elements are now detached and writing to them would throw.
+        if (!contentEl.isConnected) return;
+
         // Calculate total stars
         const totalStars = reposData.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
-        
-        // Update user stats
-        document.getElementById('githubPublicRepos').textContent = userData.public_repos || 0;
-        document.getElementById('githubFollowers').textContent = userData.followers || 0;
-        document.getElementById('githubFollowing').textContent = userData.following || 0;
-        document.getElementById('githubTotalStars').textContent = totalStars;
+
+        // Update user stats (null-safe in case markup changes)
+        const setStat = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+        setStat('githubPublicRepos', userData.public_repos || 0);
+        setStat('githubFollowers', userData.followers || 0);
+        setStat('githubFollowing', userData.following || 0);
+        setStat('githubTotalStars', totalStars);
 
         // Render the self-contained Achievement Ranks badge wall (real numbers).
         renderGitHubTrophies(userData, totalStars);
@@ -1820,6 +1826,8 @@ async function loadGitHubStats() {
         contentEl.style.display = 'block';
         
     } catch (error) {
+        // Panel closed mid-flight — nothing to update, don't log a phantom error.
+        if (!contentEl.isConnected) return;
         console.error('GitHub Stats Error:', error);
         loadingEl.style.display = 'none';
         errorEl.style.display = 'block';

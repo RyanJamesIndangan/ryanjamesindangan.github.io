@@ -129,13 +129,13 @@
 
   function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
 
-  function launch(id) {
+  function launch(id, originEl) {
     haptic(8);
     if (id === '__desktop') { location.href = location.pathname + '?desktop=1'; return; }
     if (id === '__os') { location.href = location.pathname + '?mobile=1&os=' + (OS === 'ios' ? 'android' : 'ios'); return; }
     if (id === '__chat') { openChat(); return; }
     if (id === '__github') { window.open('https://github.com/ryanjamesindangan', '_blank', 'noopener'); return; }
-    openSheet(id);
+    openSheet(id, originEl);
   }
 
   // Real-phone dismiss gestures on a sheet: pull-down-to-dismiss (the sheet
@@ -208,7 +208,7 @@
 
   // ---- Full-screen "app" sheets ----------------------------------------
   var lastSheetFocus = null;
-  function openSheet(id) {
+  function openSheet(id, originEl) {
     var replacing = sheetOpen;
     if (replacing) closeSheet(true);
     else lastSheetFocus = document.activeElement;   // remember launcher only for the first sheet
@@ -225,8 +225,17 @@
     sheet.querySelector('.ms-back').addEventListener('click', function () { history.back(); });
     trapFocus(sheet);
     enableSheetGestures(sheet);
+    // Zoom the sheet open from the tapped icon's center (real-phone feel).
+    var origin = null;
+    if (originEl) {
+      var ico = originEl.querySelector('.ms-app-ico') || originEl;
+      var r = ico.getBoundingClientRect();
+      if (r.width) { origin = (r.left + r.width / 2) + 'px ' + (r.top + r.height / 2) + 'px'; }
+    }
+    if (origin) { sheet.style.transformOrigin = origin; sheet.style.transform = 'scale(.5)'; }
     requestAnimationFrame(function () {
       sheet.classList.add('open');
+      if (origin) sheet.style.transform = '';   // clear inline so .open animates to full size from the icon
       var b = sheet.querySelector('.ms-back'); if (b) { try { b.focus({ preventScroll: true }); } catch (e) { try { b.focus(); } catch (x) {} } }
     });
     runInit(id);
@@ -466,7 +475,7 @@
         return;
       }
       var app = e.target.closest('.ms-home [data-app], .ms-dock [data-app]');
-      if (app) launch(app.getAttribute('data-app'));
+      if (app) launch(app.getAttribute('data-app'), app);
     });
 
     // Keep the chat widget closed until summoned.
