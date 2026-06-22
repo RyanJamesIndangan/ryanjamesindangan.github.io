@@ -408,7 +408,7 @@ function showLockScreen() {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #3A2A22 0%, #1F1E1B 100%);
         z-index: 999997;
         display: flex;
         align-items: center;
@@ -1538,7 +1538,7 @@ Processing Time: 1.8s`;
             // Execute command
             if (command) {
                 const output = document.createElement('div');
-                output.style.color = '#e2e8f0';
+                output.style.color = '#E4E1D8';
                 output.style.whiteSpace = 'pre-wrap';
                 output.style.marginBottom = '1rem';
                 output.style.fontFamily = 'JetBrains Mono, monospace';
@@ -1683,11 +1683,11 @@ function renderGitHubTrophies(userData, totalStars) {
     ];
     el.innerHTML = cats.map(c => {
         const g = TIER_COLORS[c.tier] || TIER_COLORS.C;
-        return `<div style="background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04);">
+        return `<div style="background:#fff;border:1px solid #DAD9D2;border-radius:14px;padding:14px 8px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.04);">
             <div style="font-size:1.35rem;line-height:1;">${c.icon}</div>
             <div style="font-size:1.55rem;font-weight:800;letter-spacing:1px;margin:4px 0 2px;background:linear-gradient(135deg,${g[0]},${g[1]});-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;">${c.tier}</div>
-            <div style="font-size:0.68rem;font-weight:700;color:#33414f;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
-            <div style="font-size:0.78rem;color:#6b7785;">${c.val}</div>
+            <div style="font-size:0.68rem;font-weight:700;color:#141413;text-transform:uppercase;letter-spacing:.5px;">${c.label}</div>
+            <div style="font-size:0.78rem;color:#5C5A53;">${c.val}</div>
         </div>`;
     }).join('');
 }
@@ -1750,7 +1750,7 @@ async function loadGitHubStats() {
                 <div style="padding: 1.5rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-left: 3px solid #D97757; border-radius: 8px;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
                         <h4 style="color: #141413; font-size: 1.1rem; font-weight: 700; margin: 0;">
-                            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="color: #D97757; text-decoration: none;">
+                            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="color: #A84B2A; text-decoration: none;">
                                 ${repo.name}
                             </a>
                         </h4>
@@ -1761,7 +1761,7 @@ async function loadGitHubStats() {
                     </div>
                     ${repo.description ? `<p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; line-height: 1.5;">${repo.description}</p>` : ''}
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        ${repo.language ? `<span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">${repo.language}</span>` : ''}
+                        ${repo.language ? `<span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #A84B2A; font-size: 0.85rem; font-weight: 500;">${repo.language}</span>` : ''}
                         <span style="padding: 0.25rem 0.75rem; background: #f0f0f0; border: 1px solid #DAD9D2; border-radius: 4px; color: #666; font-size: 0.85rem;">
                             Updated ${formatDate(repo.updated_at)}
                         </span>
@@ -1773,9 +1773,9 @@ async function loadGitHubStats() {
         // Update recent activity
         const activityEl = document.getElementById('githubRecentActivity');
         if (activityEl) {
-            activityEl.innerHTML = eventsData.slice(0, 5).map(event => {
+            activityEl.innerHTML = eventsData.filter(e => e && e.type).slice(0, 5).map(event => {
                 const eventType = event.type;
-                const repo = event.repo.name;
+                const repo = event.repo?.name || 'a repository';
                 const date = formatDate(event.created_at);
                 let icon = '📝';
                 let description = '';
@@ -2862,7 +2862,7 @@ function formatChatMessage(text, isUserMessage = false) {
                 return escapeHtml(match); // Show as plain text if dangerous
             }
             const escapedUrl = escapeHtml(match);
-            return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #D97757; text-decoration: underline;">${escapedUrl}</a>`;
+            return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #A84B2A; text-decoration: underline;">${escapedUrl}</a>`;
         });
         
         return text;
@@ -2890,7 +2890,7 @@ function formatChatMessage(text, isUserMessage = false) {
             return escapeHtml(match); // Show as plain text if dangerous
         }
         const escapedUrl = escapeHtml(match);
-        return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #D97757; text-decoration: underline;">${escapedUrl}</a>`;
+        return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #A84B2A; text-decoration: underline;">${escapedUrl}</a>`;
     });
     
     // Convert markdown-style formatting to HTML
@@ -4096,7 +4096,7 @@ function showProjectDetailsModal(title, description, tech, github, live) {
                     <h4 style="color: #141413; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">Technologies Used</h4>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                         ${tech.split(', ').map(t => `
-                            <span style="padding: 0.5rem 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; color: #D97757; font-size: 0.9rem; font-weight: 500;">
+                            <span style="padding: 0.5rem 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; color: #A84B2A; font-size: 0.9rem; font-weight: 500;">
                                 ${t}
                             </span>
                         `).join('')}
@@ -4105,7 +4105,7 @@ function showProjectDetailsModal(title, description, tech, github, live) {
                 <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                     ${live ? `
                         <button class="project-live-demo-btn-modal" data-live-demo="${live}" 
-                           style="padding: 1rem 2rem; background: #4caf50; border: 1px solid #45a049; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                           style="padding: 1rem 2rem; background: #788C5D; border: 1px solid #6B7D4F; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
                             🌐 View Live Demo
                         </button>
                     ` : ''}

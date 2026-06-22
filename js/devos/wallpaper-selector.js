@@ -88,6 +88,7 @@ class WallpaperSelector {
             wallpaper.style.removeProperty('transition');
             localStorage.setItem('selectedWallpaper', index.toString());
             this.currentWallpaper = index;
+            this.updateMenuActiveState();
             return;
         }
 
@@ -167,7 +168,10 @@ class WallpaperSelector {
                     } else if (wp.gradient) {
                         previewStyle = `background: ${wp.gradient};`;
                     } else {
-                        previewStyle = `background: linear-gradient(160deg, #FAF9F5 0%, #E8E6DC 100%);`;
+                        // "Auto" mirrors the active theme's CSS wallpaper.
+                        previewStyle = document.documentElement.getAttribute('data-theme') === 'light'
+                            ? `background: linear-gradient(160deg, #FAF9F5 0%, #ECE8DC 100%);`
+                            : `background: linear-gradient(160deg, #232019 0%, #181614 100%);`;
                     }
                     
                     return `

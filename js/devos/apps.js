@@ -11,44 +11,44 @@ const apps = {
                 <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #141413; font-weight: 700;">
                     Ryan James Indangan
                 </h1>
-                <p style="font-size: 1.2rem; color: #D97757; margin-bottom: 2rem; font-weight: 500;">
+                <p style="font-size: 1.2rem; color: #A84B2A; margin-bottom: 2rem; font-weight: 500;">
                     AI Software Engineer · Full-Stack Developer · Certified CTO
                 </p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
                     <div style="padding: 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #D97757;"><span id="yearsExp">8</span>+</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #A84B2A;"><span id="yearsExp">8</span>+</div>
                         <div style="font-size: 0.9rem; color: #141413;">Years Experience</div>
                     </div>
                     <div style="padding: 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #D97757;">50+</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #A84B2A;">50+</div>
                         <div style="font-size: 0.9rem; color: #141413;">Projects Delivered</div>
                     </div>
-                    <div style="padding: 1rem; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">12</div>
+                    <div style="padding: 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #A84B2A;">12</div>
                         <div style="font-size: 0.9rem; color: #141413;">Team Members Led</div>
                     </div>
                 </div>
 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #141413;">
-                    I'm an <strong style="color: #D97757;">AI Software Engineer</strong> and full-stack developer specializing in document intelligence, machine learning, and LLM-powered systems — backed by deep expertise in the LAMP stack,
+                    I'm an <strong style="color: #A84B2A;">AI Software Engineer</strong> and full-stack developer specializing in document intelligence, machine learning, and LLM-powered systems — backed by deep expertise in the LAMP stack,
                     PHP frameworks (CodeIgniter, Laravel), and modern frontend libraries including React, Vue, and Angular.
                 </p>
                 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #141413;">
-                    With over <strong style="color: #D97757;"><span id="yearsExp2">8</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
+                    With over <strong style="color: #A84B2A;"><span id="yearsExp2">8</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
                     and leveraged AWS for cloud infrastructure. My approach combines strong technical hands-on expertise 
                     with strategic thinking to deliver results in Agile environments.
                 </p>
                 
                 <p style="line-height: 1.8; margin-bottom: 1rem; color: #141413;">
-                    I specialize in <strong style="color: #D97757;">AI-integrated development</strong>, applying cutting-edge AI tools 
+                    I specialize in <strong style="color: #A84B2A;">AI-integrated development</strong>, applying cutting-edge AI tools 
                     to improve efficiency, enhance quality assurance, and scale solutions while maintaining code 
                     quality and best practices.
                 </p>
 
                 <div style="margin-top: 2rem; padding: 1.5rem; background: #F5F4EF; border-left: 3px solid #D97757; border-radius: 6px;">
-                    <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
+                    <h3 style="color: #A84B2A; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
                     <p style="color: #141413; line-height: 1.6;">
                         Built an end-to-end, AI-powered bank-statement extraction and underwriting pipeline at Alliance Global Solutions (Alternative Funding Group) — combining OCR, computer vision, ML-based watermark removal, and local LLM workflows — and co-founded GO Models, a suite of AI companion apps. Earlier, led 12 developers across 3 teams at GlobalX Digital Corporation, reviving a stalled project to deliver an enhanced Version 2 in 2 months.
                     </p>
@@ -379,7 +379,7 @@ const apps = {
                                 👁️ View Certificate
                             </button>
                             <a href="assets/certificates/Hacker-X/hacker-x-final-certificate.jpg" download 
-                               style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                               style="padding: 0.75rem 1.5rem; background: #788C5D; color: #fff; border: 1px solid #6B7D4F; border-radius: 6px; text-decoration: none; font-weight: 600;">
                                 📥 Download
                             </a>
                         </div>
@@ -560,11 +560,11 @@ const apps = {
                     DevOS Terminal v2.0.0<br>
                     Type 'help' for available commands
                 </div>
-                <div id="terminalOutput" style="color: #e2e8f0; margin-bottom: 1rem; max-height: 300px; overflow-y: auto;"></div>
-                <div style="display: flex; align-items: center; color: #e2e8f0;">
+                <div id="terminalOutput" style="color: #E4E1D8; margin-bottom: 1rem; max-height: 300px; overflow-y: auto;"></div>
+                <div style="display: flex; align-items: center; color: #E4E1D8;">
                     <span style="color: #5eb3ff;">ryan@devos:~$</span>
                     <input type="text" id="terminalInput" 
-                           style="flex: 1; margin-left: 0.5rem; background: transparent; border: none; color: #e2e8f0; outline: none; font-family: inherit;"
+                           style="flex: 1; margin-left: 0.5rem; background: transparent; border: none; color: #E4E1D8; outline: none; font-family: inherit;"
                            placeholder="Enter command..." />
                 </div>
             </div>
@@ -579,13 +579,13 @@ const apps = {
                 <div style="padding: 1.25rem; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)); border-bottom: 1px solid rgba(217, 119, 87, 0.2); backdrop-filter: blur(10px);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                         <div>
-                            <h3 style="color: #D97757; margin: 0; font-size: 1.3rem; text-shadow: 0 0 10px rgba(217, 119, 87, 0.5);">🐍 Snake Game</h3>
+                            <h3 style="color: #A84B2A; margin: 0; font-size: 1.3rem; text-shadow: 0 0 10px rgba(217, 119, 87, 0.5);">🐍 Snake Game</h3>
                             <p style="color: #94a3b8; margin: 0.25rem 0 0 0; font-size: 0.85rem;">Arrow keys / WASD • Space to pause</p>
                         </div>
                         <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
                             <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(217, 119, 87, 0.1); border-radius: 8px; border: 1px solid rgba(217, 119, 87, 0.2);">
                                 <div style="color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">Score</div>
-                                <div id="snakeScore" style="color: #D97757; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(217, 119, 87, 0.5);">0</div>
+                                <div id="snakeScore" style="color: #A84B2A; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(217, 119, 87, 0.5);">0</div>
                             </div>
                             <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
                                 <div style="color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">High</div>
@@ -595,7 +595,7 @@ const apps = {
                                 <button id="snakeStartBtn" style="padding: 0.6rem 1.5rem; background: linear-gradient(135deg, #D97757, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(217, 119, 87, 0.3); transition: transform 0.2s;">
                                     Start
                                 </button>
-                                <button id="snakePauseBtn" style="padding: 0.6rem 1.5rem; background: rgba(217, 119, 87, 0.1); color: #D97757; border: 1px solid rgba(217, 119, 87, 0.3); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
+                                <button id="snakePauseBtn" style="padding: 0.6rem 1.5rem; background: rgba(217, 119, 87, 0.1); color: #A84B2A; border: 1px solid rgba(217, 119, 87, 0.3); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
                                     Pause
                                 </button>
                             </div>
@@ -605,8 +605,8 @@ const apps = {
                 <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 1rem;">
                     <canvas id="snakeCanvas" style="border: 3px solid #D97757; border-radius: 12px; background: #0a0a0a; box-shadow: 0 0 30px rgba(217, 119, 87, 0.4), inset 0 0 30px rgba(217, 119, 87, 0.1);"></canvas>
                     <div id="snakeGameOver" style="position: absolute; background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)); padding: 3rem; border-radius: 16px; text-align: center; display: none; border: 2px solid #D97757; box-shadow: 0 0 40px rgba(217, 119, 87, 0.5); backdrop-filter: blur(10px);">
-                        <h3 style="color: #D97757; margin: 0 0 1rem 0; font-size: 2rem; text-shadow: 0 0 20px rgba(217, 119, 87, 0.8);">Game Over!</h3>
-                        <p style="color: #e2e8f0; margin: 0 0 1.5rem 0; font-size: 1.1rem;">Final Score: <span id="finalScore" style="color: #D97757; font-weight: bold; font-size: 1.5rem;">0</span></p>
+                        <h3 style="color: #A84B2A; margin: 0 0 1rem 0; font-size: 2rem; text-shadow: 0 0 20px rgba(217, 119, 87, 0.8);">Game Over!</h3>
+                        <p style="color: #E4E1D8; margin: 0 0 1.5rem 0; font-size: 1.1rem;">Final Score: <span id="finalScore" style="color: #A84B2A; font-weight: bold; font-size: 1.5rem;">0</span></p>
                         <button id="snakeRestartBtn" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #D97757, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; box-shadow: 0 4px 15px rgba(217, 119, 87, 0.4);">
                             Play Again
                         </button>
@@ -622,7 +622,7 @@ const apps = {
         content: `
             <div style="max-width: 800px; text-align: center;">
                 <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem; color: #141413; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Resume / CV</h2>
-                <p style="color: #4a5568; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 500;">
+                <p style="color: #5C5A53; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 500;">
                     Preview or download my concise résumé or my full curriculum vitae (CV)
                 </p>
                 
@@ -635,23 +635,23 @@ const apps = {
                                 👁️ Preview Resume
                             </button>
                             <a href="assets/certificates/Ryan James Indangan Resume 2026.pdf" download="Ryan-James-Indangan-Resume-2026.pdf"
-                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #D97757; border-radius: 12px; color: #D97757; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(217, 119, 87, 0.2);"
-                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(217, 119, 87, 0.3)';"
-                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(217, 119, 87, 0.2)';">
+                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #F5F4EF); border: 2px solid #D97757; border-radius: 12px; color: #A84B2A; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(217, 119, 87, 0.2);"
+                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #F5F4EF, #E8E6DC)'; this.style.boxShadow='0 4px 12px rgba(217, 119, 87, 0.3)';"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #F5F4EF)'; this.style.boxShadow='0 2px 8px rgba(217, 119, 87, 0.2)';">
                             📥 Download PDF Resume
                         </a>
                     </div>
                     <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
                         <button class="view-cert-btn" data-cert="assets/certificates/Ryan James Indangan CV 2026.pdf" data-title="Curriculum Vitae - Ryan James Indangan" data-type="pdf"
-                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #BD5D3A, #1f3a5f); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(22, 54, 92, 0.3);"
-                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(22, 54, 92, 0.4)';"
-                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(22, 54, 92, 0.3)';">
+                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #BD5D3A, #8A4A30); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(189, 93, 58, 0.3);"
+                                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(189, 93, 58, 0.4)';"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(189, 93, 58, 0.3)';">
                             👁️ Preview Full CV
                         </button>
                         <a href="assets/certificates/Ryan James Indangan CV 2026.pdf" download="Ryan-James-Indangan-CV-2026.pdf"
-                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #BD5D3A; border-radius: 12px; color: #BD5D3A; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(22, 54, 92, 0.2);"
-                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(22, 54, 92, 0.3)';"
-                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(22, 54, 92, 0.2)';">
+                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #F5F4EF); border: 2px solid #BD5D3A; border-radius: 12px; color: #BD5D3A; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(189, 93, 58, 0.2);"
+                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #F5F4EF, #E8E6DC)'; this.style.boxShadow='0 4px 12px rgba(189, 93, 58, 0.3)';"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #F5F4EF)'; this.style.boxShadow='0 2px 8px rgba(189, 93, 58, 0.2)';">
                             📥 Download PDF CV
                         </a>
                     </div>
@@ -663,32 +663,32 @@ const apps = {
                     </button>
                 </div>
 
-                <div style="padding: 2.5rem; background: linear-gradient(135deg, #f7fafc, #edf2f7); border: 2px solid #e2e8f0; border-radius: 16px; text-align: left; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
+                <div style="padding: 2.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 2px solid #E4E1D8; border-radius: 16px; text-align: left; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
                     <h3 style="color: #141413; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #D97757; padding-bottom: 0.75rem;">Quick Stats</h3>
-                    <div style="color: #2d3748; line-height: 2.5; font-size: 1.05rem;">
+                    <div style="color: #141413; line-height: 2.5; font-size: 1.05rem;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">📅</span>
-                            <div><strong style="color: #141413; font-weight: 600;">Experience:</strong> <span style="color: #D97757; font-weight: 600;" id="yearsExp3">8</span>+ years</div>
+                            <div><strong style="color: #141413; font-weight: 600;">Experience:</strong> <span style="color: #A84B2A; font-weight: 600;" id="yearsExp3">8</span>+ years</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🎓</span>
-                            <div><strong style="color: #141413; font-weight: 600;">Education:</strong> <span style="color: #4a5568;">BS Information Technology</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Education:</strong> <span style="color: #5C5A53;">BS Information Technology</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
-                            <div><strong style="color: #141413; font-weight: 600;">Certification:</strong> <span style="color: #D97757; font-weight: 600;">Certified CTO</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Certification:</strong> <span style="color: #A84B2A; font-weight: 600;">Certified CTO</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
-                            <div><strong style="color: #141413; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">AI Software Engineer · Full-Stack Developer · Certified CTO</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Role:</strong> <span style="color: #5C5A53;">AI Software Engineer · Full-Stack Developer · Certified CTO</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🌍</span>
-                            <div><strong style="color: #141413; font-weight: 600;">Location:</strong> <span style="color: #4a5568;">Metro Manila, Philippines</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Location:</strong> <span style="color: #5C5A53;">Metro Manila, Philippines</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">✉️</span>
-                            <div><strong style="color: #141413; font-weight: 600;">Email:</strong> <span style="color: #D97757; font-weight: 500;">ryanjamesfranciscoindangan@yahoo.com</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Email:</strong> <span style="color: #A84B2A; font-weight: 500;">ryanjamesfranciscoindangan@yahoo.com</span></div>
                         </div>
                     </div>
                 </div>
@@ -724,7 +724,7 @@ const apps = {
                         🔗 Open in YouTube
                     </a>
                     <a href="https://github.com/ryanjamesindangan/crypto-checkout-simulator" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #E0916F; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(120, 140, 93, 0.2); border: 1px solid #E0916F; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
                 </div>
@@ -760,7 +760,7 @@ const apps = {
                         🔗 Open in YouTube
                     </a>
                     <a href="https://github.com/ryanjamesindangan/supplier-order-management-rjfi" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #E0916F; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(120, 140, 93, 0.2); border: 1px solid #E0916F; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
                 </div>
@@ -802,7 +802,7 @@ const apps = {
                             </div>
                             <div>
                                 <label style="display: block; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">Extracted Text</label>
-                                <button id="ocrProcessBtn" style="width: 100%; padding: 1rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem;" disabled>
+                                <button id="ocrProcessBtn" style="width: 100%; padding: 1rem; background: #788C5D; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem;" disabled>
                                     🔍 Process OCR
                                 </button>
                                 <div id="ocrProgress" style="display: none; margin-bottom: 1rem; padding: 0.75rem; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; color: #f57c00; font-size: 0.85rem;">
@@ -813,13 +813,13 @@ const apps = {
                                 </div>
                             </div>
                         </div>
-                        <div style="padding: 1rem; background: #F5F4EF; border-radius: 6px; font-size: 0.85rem; color: #D97757;">
+                        <div style="padding: 1rem; background: #F5F4EF; border-radius: 6px; font-size: 0.85rem; color: #A84B2A;">
                             <strong>💡 Tip:</strong> For best results, use clear images with high contrast text. The OCR engine works best with printed text.
                         </div>
                     </div>
                     
                     <!-- Pipeline Visualization -->
-                    <div style="padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #f5f5f5); border: 1px solid #DAD9D2; border-left: 4px solid #4caf50; border-radius: 12px;">
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #f5f5f5); border: 1px solid #DAD9D2; border-left: 4px solid #788C5D; border-radius: 12px;">
                         <h3 style="color: #141413; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">📊 Document Intelligence Pipeline</h3>
                         <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
                             Interactive visualization of the end-to-end document processing pipeline
@@ -827,7 +827,7 @@ const apps = {
                         <div id="pipelineVisualization" style="padding: 1.5rem; background: #fff; border-radius: 8px; min-height: 400px;">
                             ${createPipelineFlowchart()}
                         </div>
-                        <button id="simulatePipelineBtn" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        <button id="simulatePipelineBtn" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: #788C5D; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
                             ▶️ Simulate Pipeline
                         </button>
                     </div>
@@ -914,15 +914,15 @@ const apps = {
                 </div>
                 
                 <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border-left: 4px solid #D97757; border-radius: 8px;">
-                    <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600;">🚀 Try It Out</h3>
+                    <h3 style="color: #A84B2A; margin-bottom: 1rem; font-weight: 600;">🚀 Try It Out</h3>
                     <p style="color: #141413; margin-bottom: 1rem;">
                         Open the Terminal and try these AI commands:
                     </p>
                     <div style="background: #141413; padding: 1rem; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
-                        <div style="color: #D97757;">$ ai-about</div>
-                        <div style="color: #D97757;">$ ocr-demo</div>
-                        <div style="color: #D97757;">$ extract-doc</div>
-                        <div style="color: #D97757;">$ llm-status</div>
+                        <div style="color: #A84B2A;">$ ai-about</div>
+                        <div style="color: #A84B2A;">$ ocr-demo</div>
+                        <div style="color: #A84B2A;">$ extract-doc</div>
+                        <div style="color: #A84B2A;">$ llm-status</div>
                     </div>
                 </div>
             </div>
@@ -1002,7 +1002,7 @@ const apps = {
                 
                 <!-- External Links -->
                 <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border-left: 4px solid #D97757; border-radius: 8px;">
-                    <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600;">📊 View More Reviews</h3>
+                    <h3 style="color: #A84B2A; margin-bottom: 1rem; font-weight: 600;">📊 View More Reviews</h3>
                     <p style="color: #141413; margin-bottom: 1.5rem; line-height: 1.6;">
                         Check out more testimonials and recommendations on my professional profiles:
                     </p>
@@ -1038,12 +1038,12 @@ const apps = {
                         <div id="githubTrophies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: 0.75rem;"></div>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; align-items: start;">
-                        <img src="https://github-readme-stats.vercel.app/api?username=RyanJamesIndangan&include_all_commits=true&show_icons=true&hide_border=true&rank_icon=percentile&title_color=2171d6&icon_color=2171d6&text_color=333333&bg_color=00000000"
+                        <img src="https://github-readme-stats.vercel.app/api?username=RyanJamesIndangan&include_all_commits=true&show_icons=true&hide_border=true&rank_icon=percentile&title_color=D97757&icon_color=D97757&text_color=333333&bg_color=00000000"
                              alt="Ryan James Indangan's GitHub stats" loading="lazy" style="width: 100%; height: auto;">
-                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RyanJamesIndangan&layout=compact&hide_border=true&langs_count=8&title_color=2171d6&text_color=333333&bg_color=00000000"
+                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RyanJamesIndangan&layout=compact&hide_border=true&langs_count=8&title_color=D97757&text_color=333333&bg_color=00000000"
                              alt="Most used languages" loading="lazy" style="width: 100%; height: auto;">
                     </div>
-                    <img src="https://streak-stats.demolab.com/?user=RyanJamesIndangan&hide_border=true&background=00000000&ring=2171d6&fire=f59e0b&currStreakLabel=2171d6&sideLabels=555555&dates=888888&stroke=2171d6&currStreakNum=222222&sideNums=222222&dayLabels=555555"
+                    <img src="https://streak-stats.demolab.com/?user=RyanJamesIndangan&hide_border=true&background=00000000&ring=D97757&fire=f59e0b&currStreakLabel=D97757&sideLabels=555555&dates=888888&stroke=D97757&currStreakNum=222222&sideNums=222222&dayLabels=555555"
                          alt="GitHub contribution streak" loading="lazy" style="width: 100%; max-width: 520px; height: auto;">
                 </div>
 
@@ -1065,15 +1065,15 @@ const apps = {
                     <!-- User Stats -->
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                         <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: bold; color: #D97757; margin-bottom: 0.5rem;" id="githubPublicRepos">-</div>
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #A84B2A; margin-bottom: 0.5rem;" id="githubPublicRepos">-</div>
                             <div style="color: #666; font-size: 0.9rem;">Public Repositories</div>
                         </div>
                         <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: bold; color: #D97757; margin-bottom: 0.5rem;" id="githubFollowers">-</div>
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #A84B2A; margin-bottom: 0.5rem;" id="githubFollowers">-</div>
                             <div style="color: #666; font-size: 0.9rem;">Followers</div>
                         </div>
                         <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: bold; color: #D97757; margin-bottom: 0.5rem;" id="githubFollowing">-</div>
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #A84B2A; margin-bottom: 0.5rem;" id="githubFollowing">-</div>
                             <div style="color: #666; font-size: 0.9rem;">Following</div>
                         </div>
                         <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #fff8e1, #fffde7); border: 1px solid #ffe082; border-radius: 8px; text-align: center;">
@@ -1195,7 +1195,7 @@ const apps = {
                                 <span style="color: var(--text-primary); font-weight: 600;">JavaScript - Window Management (Vanilla JS)</span>
                             </div>
                             <div style="display: flex; gap: 0.5rem;">
-                                <button class="code-run-btn" style="padding: 0.5rem 1rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#45a049'" onmouseout="this.style.background='#4caf50'">
+                                <button class="code-run-btn" style="padding: 0.5rem 1rem; background: #788C5D; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#6B7D4F'" onmouseout="this.style.background='#788C5D'">
                                     ▶️ Run
                                 </button>
                                 <button class="code-copy-btn" style="padding: 0.5rem 1rem; background: var(--windows-blue); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='var(--windows-hover)'" onmouseout="this.style.background='var(--windows-blue)'">
@@ -1403,7 +1403,7 @@ export default DocumentProcessor;</code></pre>
                     </div>
                     
                     <!-- Keyboard Shortcuts -->
-                    <div style="padding: 1.5rem; background: #e8f5e9; border: 2px solid #4caf50; border-radius: 8px;">
+                    <div style="padding: 1.5rem; background: #e8f5e9; border: 2px solid #788C5D; border-radius: 8px;">
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">⌨️</div>
                             <div style="flex: 1;">
@@ -1745,7 +1745,7 @@ function openBlogPostModal(post) {
     overlay.innerHTML =
         `<div class="blog-modal" style="background:#fff;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;border-radius:16px;padding:28px 26px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);">
             <button class="blog-modal-close" aria-label="Close" style="position:absolute;top:14px;right:14px;border:none;background:#f0f0f0;width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:1.2rem;line-height:1;">×</button>
-            <div style="color:#D97757;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;">${post.category}</div>
+            <div style="color: #A84B2A;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;">${post.category}</div>
             <h2 style="margin:.45rem 2rem .55rem 0;color:#141413;font-size:1.5rem;line-height:1.25;">${post.title}</h2>
             <div style="color:#999;font-size:.84rem;margin-bottom:1.1rem;">${formatBlogDate(post.date)} &nbsp;·&nbsp; ${post.readTime || ''}</div>
             <p style="color:#333;line-height:1.75;font-size:1rem;">${post.excerpt}</p>
@@ -1774,7 +1774,7 @@ function initializeBlogPostModals() {
 function createSkillCategory(title, skills) {
     return `
         <div style="padding: 1.5rem; background: #f5f5f5; border: 1px solid #DAD9D2; border-radius: 8px;">
-            <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">${title}</h3>
+            <h3 style="color: #A84B2A; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">${title}</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${skills.map(skill => `
                     <span style="padding: 0.5rem 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #141413; font-size: 0.9rem; font-weight: 500;">
@@ -1790,14 +1790,14 @@ function createExperienceCard(title, company, dates, location, responsibilities,
     return `
         <div style="padding: 1.5rem; background: #F5F4EF; border-left: 3px solid #D97757; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #DAD9D2;">
             <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
-            <div style="color: #D97757; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
+            <div style="color: #A84B2A; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
             <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${dates} • ${location}</div>
             <ul style="color: #141413; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem;">
                 ${responsibilities.map(resp => `<li style="margin-bottom: 0.5rem;">${resp}</li>`).join('')}
             </ul>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
+                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #A84B2A; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -1813,7 +1813,7 @@ function createProjectCard(title, description, tech, link, demoApp) {
             <p style="color: #141413; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
+                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #A84B2A; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -1827,7 +1827,7 @@ function createProjectCard(title, description, tech, link, demoApp) {
                 ` : ''}
                 ${link ? `
                     <a href="${link}" target="_blank" rel="noopener noreferrer" 
-                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #D97757; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #A84B2A; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                         📂 View on GitHub
                     </a>
                 ` : !demoApp ? `
@@ -1858,7 +1858,7 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
                 <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${description}</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
                     ${tech.map(t => `
-                        <span class="tech-tag" style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
+                        <span class="tech-tag" style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #A84B2A; font-size: 0.85rem; font-weight: 500;">
                             ${t}
                         </span>
                     `).join('')}
@@ -1866,7 +1866,7 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
                 <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                     ${liveDemoLink ? `
                         <button class="project-live-demo-btn" data-live-demo="${liveDemoLink}" 
-                           style="padding: 0.75rem 1.5rem; background: #4caf50; border: 1px solid #45a049; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                           style="padding: 0.75rem 1.5rem; background: #788C5D; border: 1px solid #6B7D4F; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
                             🌐 View Live
                         </button>
                     ` : ''}
@@ -1902,7 +1902,7 @@ function createCertCard(title, issuer, date, description, link) {
                         👁️ View Certificate
                     </button>
                     <a href="${link}" download 
-                       style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                       style="padding: 0.75rem 1.5rem; background: #788C5D; color: #fff; border: 1px solid #6B7D4F; border-radius: 6px; text-decoration: none; font-weight: 600;">
                         📥 Download
                     </a>
                 ` : ''}
@@ -1913,7 +1913,7 @@ function createCertCard(title, issuer, date, description, link) {
 
 function createModuleBadge(name) {
     return `
-        <div style="padding: 0.5rem; background: rgba(124, 58, 237, 0.2); border-radius: 6px; text-align: center; font-size: 0.85rem; color: #e2e8f0;">
+        <div style="padding: 0.5rem; background: rgba(120, 140, 93, 0.2); border-radius: 6px; text-align: center; font-size: 0.85rem; color: #E4E1D8;">
             ✓ ${name}
         </div>
     `;
@@ -1952,14 +1952,14 @@ function createAIFeatureCard(title, description, features, tech) {
             <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
             <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">${description}</p>
             <div style="margin-bottom: 1rem;">
-                <h4 style="color: #D97757; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Key Features:</h4>
+                <h4 style="color: #A84B2A; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Key Features:</h4>
                 <ul style="color: #141413; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 1rem;">
                     ${features.map(feature => `<li style="margin-bottom: 0.25rem; font-size: 0.9rem;">${feature}</li>`).join('')}
                 </ul>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
+                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #A84B2A; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -1987,7 +1987,7 @@ function createTestimonialCard(name, role, company, rating, text, source, source
             ${sourceLink ? `
                 <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #DAD9D2;">
                     <a href="${sourceLink}" target="_blank" rel="noopener noreferrer" 
-                       style="display: inline-flex; align-items: center; gap: 0.5rem; color: #D97757; text-decoration: none; font-size: 0.85rem; font-weight: 600;">
+                       style="display: inline-flex; align-items: center; gap: 0.5rem; color: #A84B2A; text-decoration: none; font-size: 0.85rem; font-weight: 600;">
                         ${sourceIcon} View on ${source}
                     </a>
                 </div>
@@ -2005,12 +2005,12 @@ function createPipelineFlowchart() {
             <!-- Step 1: Document Input -->
             <div class="pipeline-step" data-step="1" style="padding: 1rem; background: #F5F4EF; border: 2px solid #D97757; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
-                <div style="font-weight: 600; color: #D97757; margin-bottom: 0.25rem;">Document Input</div>
+                <div style="font-weight: 600; color: #A84B2A; margin-bottom: 0.25rem;">Document Input</div>
                 <div style="font-size: 0.85rem; color: #666;">PDF/Image Upload</div>
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #A84B2A; font-size: 1.5rem;">↓</div>
             
             <!-- Step 2: Preprocessing -->
             <div class="pipeline-step" data-step="2" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
@@ -2020,7 +2020,7 @@ function createPipelineFlowchart() {
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #A84B2A; font-size: 1.5rem;">↓</div>
             
             <!-- Step 3: Extraction -->
             <div class="pipeline-step" data-step="3" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
@@ -2030,7 +2030,7 @@ function createPipelineFlowchart() {
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #A84B2A; font-size: 1.5rem;">↓</div>
             
             <!-- Step 4: Validation -->
             <div class="pipeline-step" data-step="4" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
@@ -2040,7 +2040,7 @@ function createPipelineFlowchart() {
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #A84B2A; font-size: 1.5rem;">↓</div>
             
             <!-- Step 5: Output -->
             <div class="pipeline-step" data-step="5" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">

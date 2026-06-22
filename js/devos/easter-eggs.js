@@ -67,7 +67,7 @@ class EasterEggs {
     }
     
     createConfetti() {
-        const colors = ['#D97757', '#4ade80', '#fbbf24', '#f87171', '#a78bfa', '#60a5fa'];
+        const colors = ['#D97757', '#4ade80', '#fbbf24', '#f87171', '#E8B79E', '#788C5D'];
         const confettiCount = 50;
         
         for (let i = 0; i < confettiCount; i++) {
@@ -149,9 +149,9 @@ class EasterEggs {
                 if (window.showNotification) {
                     window.showNotification('👨‍💻 Developer mode activated! Check console for details.', 'info', 3000);
                 }
-                console.log('%c👨‍💻 Developer Mode', 'font-size: 20px; font-weight: bold; color: #D97757;');
+                console.log('%c👨‍💻 Developer Mode', 'font-size: 20px; font-weight: bold; color: #A84B2A;');
                 console.log('%cPortfolio built with vanilla JavaScript, no frameworks!', 'font-size: 14px; color: #4ade80;');
-                console.log('%cCheck out the code: https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', 'font-size: 12px; color: #60a5fa;');
+                console.log('%cCheck out the code: https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', 'font-size: 12px; color: #788C5D;');
             }
             
             // Ctrl + Shift + M = Matrix mode (rain effect)
@@ -246,9 +246,9 @@ class EasterEggs {
     
     initConsoleMessage() {
         // Show a friendly message in console
-        console.log('%c👋 Hello Developer!', 'font-size: 24px; font-weight: bold; color: #D97757;');
+        console.log('%c👋 Hello Developer!', 'font-size: 24px; font-weight: bold; color: #A84B2A;');
         console.log('%cWelcome to Ryan\'s Portfolio!', 'font-size: 16px; color: #4ade80;');
-        console.log('%cBuilt with vanilla JavaScript, CSS3, and lots of ❤️', 'font-size: 12px; color: #60a5fa;');
+        console.log('%cBuilt with vanilla JavaScript, CSS3, and lots of ❤️', 'font-size: 12px; color: #788C5D;');
         console.log('%cTry the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', 'font-size: 12px; color: #fbbf24;');
         console.log('%cOr press Ctrl+Shift+D for developer mode!', 'font-size: 12px; color: #f87171;');
     }
