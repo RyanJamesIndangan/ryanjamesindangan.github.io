@@ -16,7 +16,9 @@ const chrome = spawn(CHROME, [
   '--headless=new', `--remote-debugging-port=${PORT}`,
   '--disable-gpu', '--no-first-run', '--no-default-browser-check',
   `--window-size=${W},${H}`, '--force-device-scale-factor=2',
-  '--user-data-dir=' + process.cwd() + '/.preview/cdp-profile',
+  // Fresh profile per run + no disk cache, so edits are never masked by a stale page.
+  '--user-data-dir=' + process.cwd() + '/.preview/cdp-profile-' + PORT,
+  '--disk-cache-size=1', '--disable-application-cache',
   'about:blank',
 ], { stdio: 'ignore' });
 

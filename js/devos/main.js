@@ -2107,15 +2107,20 @@ function initializeCertificateModal() {
     const downloadBtn = document.getElementById('certDownloadBtn');
     const closeBtn = document.getElementById('certModalClose');
     const overlay = modal.querySelector('.cert-modal-overlay');
-    
+    const dialog = modal.querySelector('.cert-modal-container');
+    let lastCertFocus = null;
+
     // Close modal function
     function closeModal() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        // Restore focus to whatever opened the modal (a11y).
+        if (lastCertFocus && lastCertFocus.focus) { try { lastCertFocus.focus(); } catch (e) {} lastCertFocus = null; }
     }
-    
+
     // Open modal function
     function openModal(certPath, title, type) {
+        lastCertFocus = document.activeElement;
         modalTitle.textContent = title;
         modalBody.innerHTML = '';
         
@@ -2170,16 +2175,25 @@ function initializeCertificateModal() {
         
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        // Move focus into the dialog (a11y).
+        requestAnimationFrame(() => { try { closeBtn.focus(); } catch (e) {} });
     }
-    
+
     // Event listeners
     closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', closeModal);
-    
-    // Escape key to close
+
+    // Escape to close; Tab is trapped within the dialog while it's open.
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') { closeModal(); return; }
+        if (e.key === 'Tab' && dialog) {
+            let f = dialog.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select,textarea,iframe,[tabindex]:not([tabindex="-1"])');
+            f = Array.prototype.filter.call(f, (el) => el.offsetParent !== null);
+            if (!f.length) return;
+            const first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         }
     });
     
