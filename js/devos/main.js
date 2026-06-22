@@ -1531,7 +1531,7 @@ Processing Time: 1.8s`;
             
             // Display command
             const commandLine = document.createElement('div');
-            commandLine.style.color = '#64ffda';
+            commandLine.style.color = '#D97757';
             commandLine.textContent = `ryan@devos:~$ ${command}`;
             terminalOutput.appendChild(commandLine);
             
@@ -1670,7 +1670,7 @@ function renderGitHubTrophies(userData, totalStars) {
         return 'C';
     };
     const TIER_COLORS = {
-        SSS: ['#7b5cff', '#b07bff'], SS: ['#d9a328', '#f7d774'], S: ['#2171d6', '#5aa9ff'],
+        SSS: ['#7b5cff', '#b07bff'], SS: ['#d9a328', '#f7d774'], S: ['#D97757', '#5aa9ff'],
         AAA: ['#16a34a', '#4ade80'], AA: ['#0891b2', '#22d3ee'], A: ['#0e7490', '#06b6d4'],
         B: ['#64748b', '#94a3b8'], C: ['#94a3b8', '#cbd5e1']
     };
@@ -1747,10 +1747,10 @@ async function loadGitHubStats() {
                 .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0))
                 .slice(0, 5)
                 .map(repo => `
-                <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+                <div style="padding: 1.5rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-left: 3px solid #D97757; border-radius: 8px;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
-                        <h4 style="color: #1a1a1a; font-size: 1.1rem; font-weight: 700; margin: 0;">
-                            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="color: #2171d6; text-decoration: none;">
+                        <h4 style="color: #141413; font-size: 1.1rem; font-weight: 700; margin: 0;">
+                            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" style="color: #D97757; text-decoration: none;">
                                 ${repo.name}
                             </a>
                         </h4>
@@ -1761,8 +1761,8 @@ async function loadGitHubStats() {
                     </div>
                     ${repo.description ? `<p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem; line-height: 1.5;">${repo.description}</p>` : ''}
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                        ${repo.language ? `<span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">${repo.language}</span>` : ''}
-                        <span style="padding: 0.25rem 0.75rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 4px; color: #666; font-size: 0.85rem;">
+                        ${repo.language ? `<span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">${repo.language}</span>` : ''}
+                        <span style="padding: 0.25rem 0.75rem; background: #f0f0f0; border: 1px solid #DAD9D2; border-radius: 4px; color: #666; font-size: 0.85rem;">
                             Updated ${formatDate(repo.updated_at)}
                         </span>
                     </div>
@@ -1810,10 +1810,10 @@ async function loadGitHubStats() {
                 }
                 
                 return `
-                    <div style="padding: 1rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 6px; display: flex; align-items: center; gap: 1rem;">
+                    <div style="padding: 1rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-radius: 6px; display: flex; align-items: center; gap: 1rem;">
                         <div style="font-size: 1.5rem;">${icon}</div>
                         <div style="flex: 1;">
-                            <div style="color: #1a1a1a; font-size: 0.9rem; font-weight: 500;">${description}</div>
+                            <div style="color: #141413; font-size: 0.9rem; font-weight: 500;">${description}</div>
                             <div style="color: #999; font-size: 0.8rem; margin-top: 0.25rem;">${date}</div>
                         </div>
                     </div>
@@ -1838,7 +1838,7 @@ async function loadGitHubStats() {
         errorMessage.innerHTML = `
             <p style="color: #ef4444; margin-bottom: 1rem;">Failed to load GitHub statistics.</p>
             <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${error.message || 'Network error or API rate limit exceeded.'}</p>
-            <button onclick="loadGitHubStats()" style="padding: 0.5rem 1rem; background: #2171d6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            <button onclick="loadGitHubStats()" style="padding: 0.5rem 1rem; background: #D97757; color: white; border: none; border-radius: 4px; cursor: pointer;">
                 Retry
             </button>
         `;
@@ -1883,10 +1883,10 @@ function showNotification(message, type = 'info', duration = 3000) {
     };
     
     const colors = {
-        info: '#64ffda',
-        success: '#4caf50',
-        warning: '#ffb900',
-        error: '#ef4444'
+        info: '#D97757',
+        success: '#788C5D',
+        warning: '#C2843A',
+        error: '#C0492F'
     };
     
     notification.innerHTML = `
@@ -1900,20 +1900,20 @@ function showNotification(message, type = 'info', duration = 3000) {
         top: 20px;
         right: 20px;
         padding: 1rem 1.5rem;
-        background: rgba(30, 36, 66, 0.98);
+        background: rgba(245, 244, 239, 0.98);
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
         border: 1px solid ${colors[type] || colors.info}40;
         border-left: 3px solid ${colors[type] || colors.info};
-        border-radius: 8px;
-        color: ${colors[type] || colors.info};
+        border-radius: 10px;
+        color: #141413;
         z-index: 10000;
         display: flex;
         align-items: center;
         gap: 0.75rem;
         min-width: 300px;
         max-width: 400px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px ${colors[type] || colors.info}20;
+        box-shadow: 0 8px 32px rgba(60, 50, 40, 0.18), 0 0 0 1px rgba(218, 217, 210, 0.6);
         animation: notificationSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     `;
     
@@ -2157,7 +2157,7 @@ function initializeCertificateModal() {
                             onload="this.style.background='#fff';"
                         ></iframe>
                     </div>
-                    <div style="padding: 0.75rem; background: rgba(0, 120, 215, 0.1); border-radius: 8px; text-align: center; margin-top: 0.5rem; flex-shrink: 0;">
+                    <div style="padding: 0.75rem; background: rgba(217, 119, 87, 0.1); border-radius: 8px; text-align: center; margin-top: 0.5rem; flex-shrink: 0;">
                         <p style="color: var(--text-secondary); margin-bottom: 0.75rem; font-size: 0.85rem;">
                             📄 PDF Document • Use the buttons below for more options
                         </p>
@@ -2852,7 +2852,7 @@ function formatChatMessage(text, isUserMessage = false) {
         text = text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            .replace(/`(.*?)`/g, '<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">$1</code>')
+            .replace(/`(.*?)`/g, '<code style="background: rgba(217, 119, 87, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">$1</code>')
             .replace(/\n/g, '<br>');
         
         // Convert URLs to clickable links (with sanitization)
@@ -2862,7 +2862,7 @@ function formatChatMessage(text, isUserMessage = false) {
                 return escapeHtml(match); // Show as plain text if dangerous
             }
             const escapedUrl = escapeHtml(match);
-            return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: underline;">${escapedUrl}</a>`;
+            return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #D97757; text-decoration: underline;">${escapedUrl}</a>`;
         });
         
         return text;
@@ -2890,7 +2890,7 @@ function formatChatMessage(text, isUserMessage = false) {
             return escapeHtml(match); // Show as plain text if dangerous
         }
         const escapedUrl = escapeHtml(match);
-        return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #64ffda; text-decoration: underline;">${escapedUrl}</a>`;
+        return `<a href="${sanitized}" target="_blank" rel="noopener noreferrer" style="color: #D97757; text-decoration: underline;">${escapedUrl}</a>`;
     });
     
     // Convert markdown-style formatting to HTML
@@ -2898,7 +2898,7 @@ function formatChatMessage(text, isUserMessage = false) {
     text = text
         .replace(/\*\*(.*?)\*\*/g, (match, content) => `<strong>${escapeHtml(content)}</strong>`)
         .replace(/\*(.*?)\*/g, (match, content) => `<em>${escapeHtml(content)}</em>`)
-        .replace(/`(.*?)`/g, (match, content) => `<code style="background: rgba(100, 255, 218, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">${escapeHtml(content)}</code>`)
+        .replace(/`(.*?)`/g, (match, content) => `<code style="background: rgba(217, 119, 87, 0.2); padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; font-size: 0.9em;">${escapeHtml(content)}</code>`)
         .replace(/\n/g, '<br>');
     
     return text;
@@ -3709,7 +3709,7 @@ function initializeTestimonialsCarousel() {
             dot.setAttribute('data-index', index);
             dot.style.cssText = 'width: 12px; height: 12px; border-radius: 50%; border: none; background: #ccc; cursor: pointer; transition: all 0.2s;';
             if (index === 0) {
-                dot.style.background = '#2171d6';
+                dot.style.background = '#D97757';
                 dot.style.transform = 'scale(1.2)';
             }
             dot.addEventListener('click', () => goToSlide(index));
@@ -3727,7 +3727,7 @@ function initializeTestimonialsCarousel() {
         if (dotsContainer) {
             dotsContainer.querySelectorAll('.testimonial-dot').forEach((dot, index) => {
                 if (index === currentIndex) {
-                    dot.style.background = '#2171d6';
+                    dot.style.background = '#D97757';
                     dot.style.transform = 'scale(1.2)';
                 } else {
                     dot.style.background = '#ccc';
@@ -3786,7 +3786,7 @@ function initializeTestimonialsCarousel() {
             if (dotsContainer) {
                 dotsContainer.querySelectorAll('.testimonial-dot').forEach((dot, index) => {
                     if (index === currentIndex) {
-                        dot.style.background = '#2171d6';
+                        dot.style.background = '#D97757';
                         dot.style.transform = 'scale(1.2)';
                     } else {
                         dot.style.background = '#ccc';
@@ -3822,13 +3822,13 @@ function initializeProjectFilters() {
             filterButtons.forEach(b => {
                 b.classList.remove('active');
                 b.style.background = '#f0f0f0';
-                b.style.color = '#1a1a1a';
-                b.style.border = '1px solid #e0e0e0';
+                b.style.color = '#141413';
+                b.style.border = '1px solid #DAD9D2';
             });
             btn.classList.add('active');
-            btn.style.background = '#2171d6';
+            btn.style.background = '#D97757';
             btn.style.color = '#fff';
-            btn.style.border = '1px solid #1a5fb8';
+            btn.style.border = '1px solid #BD5D3A';
             
             // Filter projects
             projectCards.forEach(card => {
@@ -3947,21 +3947,21 @@ function openProjectModal(card, liveUrl) {
     
     modal.innerHTML = `
         <div style="background: #fff; border-radius: 12px; width: 100%; max-width: 1200px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
-            <div style="padding: 1.5rem; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="color: #1a1a1a; font-size: 1.5rem; font-weight: 700; margin: 0;">Live Demo</h3>
+            <div style="padding: 1.5rem; border-bottom: 1px solid #DAD9D2; display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="color: #141413; font-size: 1.5rem; font-weight: 700; margin: 0;">Live Demo</h3>
                 <button class="close-project-modal" style="background: none; border: none; font-size: 2rem; color: #666; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;">×</button>
             </div>
             <div style="flex: 1; overflow: hidden; position: relative;">
                 <div id="demo-error" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; padding: 2rem; background: rgba(255, 255, 255, 0.95); border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); z-index: 10;">
                     <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
-                    <h4 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;">Demo Not Available</h4>
+                    <h4 style="color: #141413; margin-bottom: 0.5rem; font-weight: 600;">Demo Not Available</h4>
                     <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">The live demo is currently unavailable. This could be due to:</p>
                     <ul style="color: #666; text-align: left; margin-bottom: 1rem; font-size: 0.85rem; padding-left: 1.5rem;">
                         <li>GitHub Pages not enabled for this repository</li>
                         <li>Repository is private</li>
                         <li>Deployment in progress</li>
                     </ul>
-                    <a href="${liveUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem;">Try Opening Directly</a>
+                    <a href="${liveUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.75rem 1.5rem; background: #D97757; color: #fff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem;">Try Opening Directly</a>
                 </div>
                 <iframe id="demo-iframe" src="${liveUrl}" style="width: 100%; height: 100%; border: none;" frameborder="0" allowfullscreen onerror="document.getElementById('demo-error').style.display='block'; document.getElementById('demo-iframe').style.display='none';"></iframe>
             </div>
@@ -4088,15 +4088,15 @@ function showProjectDetailsModal(title, description, tech, github, live) {
         <div style="background: #fff; border-radius: 12px; width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
             <div style="padding: 2rem;">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
-                    <h3 style="color: #1a1a1a; font-size: 1.8rem; font-weight: 700; margin: 0;">${title}</h3>
+                    <h3 style="color: #141413; font-size: 1.8rem; font-weight: 700; margin: 0;">${title}</h3>
                     <button class="close-project-details-modal" style="background: none; border: none; font-size: 2rem; color: #666; cursor: pointer; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;">×</button>
                 </div>
                 <p style="color: #666; line-height: 1.8; margin-bottom: 1.5rem; font-size: 1rem;">${description}</p>
                 <div style="margin-bottom: 1.5rem;">
-                    <h4 style="color: #1a1a1a; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">Technologies Used</h4>
+                    <h4 style="color: #141413; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem;">Technologies Used</h4>
                     <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                         ${tech.split(', ').map(t => `
-                            <span style="padding: 0.5rem 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; color: #2171d6; font-size: 0.9rem; font-weight: 500;">
+                            <span style="padding: 0.5rem 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; color: #D97757; font-size: 0.9rem; font-weight: 500;">
                                 ${t}
                             </span>
                         `).join('')}
@@ -4111,7 +4111,7 @@ function showProjectDetailsModal(title, description, tech, github, live) {
                     ` : ''}
                     ${github ? `
                         <a href="${github}" target="_blank" rel="noopener noreferrer" 
-                           style="padding: 1rem 2rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                           style="padding: 1rem 2rem; background: #D97757; border: 1px solid #BD5D3A; border-radius: 8px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                             📂 View on GitHub
                         </a>
                     ` : `

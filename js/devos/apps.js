@@ -8,48 +8,48 @@ const apps = {
         icon: '👨‍💻',
         content: `
             <div style="max-width: 700px;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1rem; color: #141413; font-weight: 700;">
                     Ryan James Indangan
                 </h1>
-                <p style="font-size: 1.2rem; color: #2171d6; margin-bottom: 2rem; font-weight: 500;">
+                <p style="font-size: 1.2rem; color: #D97757; margin-bottom: 2rem; font-weight: 500;">
                     AI Software Engineer · Full-Stack Developer · Certified CTO
                 </p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                    <div style="padding: 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #2171d6;"><span id="yearsExp">8</span>+</div>
-                        <div style="font-size: 0.9rem; color: #1a1a1a;">Years Experience</div>
+                    <div style="padding: 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #D97757;"><span id="yearsExp">8</span>+</div>
+                        <div style="font-size: 0.9rem; color: #141413;">Years Experience</div>
                     </div>
-                    <div style="padding: 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: #2171d6;">50+</div>
-                        <div style="font-size: 0.9rem; color: #1a1a1a;">Projects Delivered</div>
+                    <div style="padding: 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 6px; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #D97757;">50+</div>
+                        <div style="font-size: 0.9rem; color: #141413;">Projects Delivered</div>
                     </div>
                     <div style="padding: 1rem; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; text-align: center;">
                         <div style="font-size: 2rem; font-weight: bold; color: #f57c00;">12</div>
-                        <div style="font-size: 0.9rem; color: #1a1a1a;">Team Members Led</div>
+                        <div style="font-size: 0.9rem; color: #141413;">Team Members Led</div>
                     </div>
                 </div>
 
-                <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
-                    I'm an <strong style="color: #2171d6;">AI Software Engineer</strong> and full-stack developer specializing in document intelligence, machine learning, and LLM-powered systems — backed by deep expertise in the LAMP stack,
+                <p style="line-height: 1.8; margin-bottom: 1rem; color: #141413;">
+                    I'm an <strong style="color: #D97757;">AI Software Engineer</strong> and full-stack developer specializing in document intelligence, machine learning, and LLM-powered systems — backed by deep expertise in the LAMP stack,
                     PHP frameworks (CodeIgniter, Laravel), and modern frontend libraries including React, Vue, and Angular.
                 </p>
                 
-                <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
-                    With over <strong style="color: #2171d6;"><span id="yearsExp2">8</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
+                <p style="line-height: 1.8; margin-bottom: 1rem; color: #141413;">
+                    With over <strong style="color: #D97757;"><span id="yearsExp2">8</span> years</strong> of experience, I've led senior development teams, built scalable applications, 
                     and leveraged AWS for cloud infrastructure. My approach combines strong technical hands-on expertise 
                     with strategic thinking to deliver results in Agile environments.
                 </p>
                 
-                <p style="line-height: 1.8; margin-bottom: 1rem; color: #1a1a1a;">
-                    I specialize in <strong style="color: #2171d6;">AI-integrated development</strong>, applying cutting-edge AI tools 
+                <p style="line-height: 1.8; margin-bottom: 1rem; color: #141413;">
+                    I specialize in <strong style="color: #D97757;">AI-integrated development</strong>, applying cutting-edge AI tools 
                     to improve efficiency, enhance quality assurance, and scale solutions while maintaining code 
                     quality and best practices.
                 </p>
 
-                <div style="margin-top: 2rem; padding: 1.5rem; background: #e8f4f8; border-left: 3px solid #2171d6; border-radius: 6px;">
-                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
-                    <p style="color: #1a1a1a; line-height: 1.6;">
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #F5F4EF; border-left: 3px solid #D97757; border-radius: 6px;">
+                    <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
+                    <p style="color: #141413; line-height: 1.6;">
                         Built an end-to-end, AI-powered bank-statement extraction and underwriting pipeline at Alliance Global Solutions (Alternative Funding Group) — combining OCR, computer vision, ML-based watermark removal, and local LLM workflows — and co-founded GO Models, a suite of AI companion apps. Earlier, led 12 developers across 3 teams at GlobalX Digital Corporation, reviving a stalled project to deliver an enhanced Version 2 in 2 months.
                     </p>
                 </div>
@@ -62,7 +62,7 @@ const apps = {
         icon: '🛠️',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Tech Stack & Expertise</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #141413; font-weight: 700;">Tech Stack & Expertise</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createSkillCategory('🤖 AI & Machine Learning', ['Document Intelligence', 'OCR (Tesseract, OpenCV)', 'PDF Processing (PyMuPDF, pdfplumber)', 'Computer Vision', 'Watermark Removal (RandomForest/scikit-learn)', 'LLM Integration (Ollama, vLLM, OpenAI APIs)', 'Feature Engineering', 'End-to-end AI Pipeline Design'])}
@@ -88,7 +88,7 @@ const apps = {
         icon: '💼',
         content: `
             <div style="max-width: 800px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Journey</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #141413; font-weight: 700;">Professional Journey</h2>
 
                 ${createExperienceCard(
                     'AI Workflow Engineer',
@@ -276,13 +276,13 @@ const apps = {
         content: `
             <div style="max-width: 1200px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0;">Interactive Project Showcase</h2>
+                    <h2 style="font-size: 2rem; color: #141413; font-weight: 700; margin: 0;">Interactive Project Showcase</h2>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <button class="project-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
-                        <button class="project-filter-btn" data-filter="react" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">React</button>
-                        <button class="project-filter-btn" data-filter="laravel" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Laravel</button>
-                        <button class="project-filter-btn" data-filter="node" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Node.js</button>
-                        <button class="project-filter-btn" data-filter="ai" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
+                        <button class="project-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #D97757; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
+                        <button class="project-filter-btn" data-filter="react" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">React</button>
+                        <button class="project-filter-btn" data-filter="laravel" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Laravel</button>
+                        <button class="project-filter-btn" data-filter="node" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Node.js</button>
+                        <button class="project-filter-btn" data-filter="ai" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
                     </div>
                 </div>
                 
@@ -356,7 +356,7 @@ const apps = {
         icon: '🎓',
         content: `
             <div style="max-width: 900px;">
-                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Credentials</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #141413; font-weight: 700;">Professional Credentials</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createCertCard(
@@ -367,15 +367,15 @@ const apps = {
                         'assets/certificates/cto-certificate.pdf'
                     )}
                     
-                    <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
-                        <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
+                    <div style="padding: 1.5rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-left: 3px solid #D97757; border-radius: 8px;">
+                        <h3 style="color: #141413; margin-bottom: 0.5rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
                         <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Hacker-X • Started Sep 2024 • Completed Nov 2025</p>
-                        <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
+                        <p style="color: #141413; line-height: 1.6; margin-bottom: 1.5rem;">
                             Comprehensive cybersecurity training covering penetration testing, vulnerability assessment, network security, and ethical hacking practices. Completed the full 21-module course series.
                         </p>
                         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
                             <button class="view-cert-btn" data-cert="assets/certificates/Hacker-X/hacker-x-final-certificate.jpg" data-title="Hacker-X Final Certificate" data-type="image"
-                                    style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                                    style="padding: 0.75rem 1.5rem; background: #D97757; color: #fff; border: 1px solid #BD5D3A; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
                                 👁️ View Certificate
                             </button>
                             <a href="assets/certificates/Hacker-X/hacker-x-final-certificate.jpg" download 
@@ -384,7 +384,7 @@ const apps = {
                             </a>
                         </div>
                         
-                        <h4 style="color: #1a1a1a; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Course Modules (21 Modules)</h4>
+                        <h4 style="color: #141413; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 700;">Course Modules (21 Modules)</h4>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
                             ${createCertModuleBadge('1. Know the OS', 'assets/certificates/Hacker-X/1-know-the-os.jpg')}
                             ${createCertModuleBadge('2. Hack the Mac', 'assets/certificates/Hacker-X/2-hack-the-mac.jpg')}
@@ -575,27 +575,27 @@ const apps = {
         title: 'Snake Game',
         icon: '🐍',
         content: `
-            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);">
-                <div style="padding: 1.25rem; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)); border-bottom: 1px solid rgba(100, 255, 218, 0.2); backdrop-filter: blur(10px);">
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: linear-gradient(135deg, #0a0a0a 0%, #141413 100%);">
+                <div style="padding: 1.25rem; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)); border-bottom: 1px solid rgba(217, 119, 87, 0.2); backdrop-filter: blur(10px);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                         <div>
-                            <h3 style="color: #64ffda; margin: 0; font-size: 1.3rem; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);">🐍 Snake Game</h3>
+                            <h3 style="color: #D97757; margin: 0; font-size: 1.3rem; text-shadow: 0 0 10px rgba(217, 119, 87, 0.5);">🐍 Snake Game</h3>
                             <p style="color: #94a3b8; margin: 0.25rem 0 0 0; font-size: 0.85rem;">Arrow keys / WASD • Space to pause</p>
                         </div>
                         <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
-                            <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.1); border-radius: 8px; border: 1px solid rgba(100, 255, 218, 0.2);">
+                            <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(217, 119, 87, 0.1); border-radius: 8px; border: 1px solid rgba(217, 119, 87, 0.2);">
                                 <div style="color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">Score</div>
-                                <div id="snakeScore" style="color: #64ffda; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);">0</div>
+                                <div id="snakeScore" style="color: #D97757; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(217, 119, 87, 0.5);">0</div>
                             </div>
                             <div style="text-align: center; padding: 0.5rem 1rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.2);">
                                 <div style="color: #94a3b8; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px;">High</div>
                                 <div id="snakeHighScore" style="color: #fbbf24; font-size: 1.8rem; font-weight: bold; text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);">0</div>
                             </div>
                             <div style="display: flex; gap: 0.5rem;">
-                                <button id="snakeStartBtn" style="padding: 0.6rem 1.5rem; background: linear-gradient(135deg, #64ffda, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3); transition: transform 0.2s;">
+                                <button id="snakeStartBtn" style="padding: 0.6rem 1.5rem; background: linear-gradient(135deg, #D97757, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(217, 119, 87, 0.3); transition: transform 0.2s;">
                                     Start
                                 </button>
-                                <button id="snakePauseBtn" style="padding: 0.6rem 1.5rem; background: rgba(100, 255, 218, 0.1); color: #64ffda; border: 1px solid rgba(100, 255, 218, 0.3); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
+                                <button id="snakePauseBtn" style="padding: 0.6rem 1.5rem; background: rgba(217, 119, 87, 0.1); color: #D97757; border: 1px solid rgba(217, 119, 87, 0.3); border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; display: none;">
                                     Pause
                                 </button>
                             </div>
@@ -603,11 +603,11 @@ const apps = {
                     </div>
                 </div>
                 <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 1rem;">
-                    <canvas id="snakeCanvas" style="border: 3px solid #64ffda; border-radius: 12px; background: #0a0a0a; box-shadow: 0 0 30px rgba(100, 255, 218, 0.4), inset 0 0 30px rgba(100, 255, 218, 0.1);"></canvas>
-                    <div id="snakeGameOver" style="position: absolute; background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)); padding: 3rem; border-radius: 16px; text-align: center; display: none; border: 2px solid #64ffda; box-shadow: 0 0 40px rgba(100, 255, 218, 0.5); backdrop-filter: blur(10px);">
-                        <h3 style="color: #64ffda; margin: 0 0 1rem 0; font-size: 2rem; text-shadow: 0 0 20px rgba(100, 255, 218, 0.8);">Game Over!</h3>
-                        <p style="color: #e2e8f0; margin: 0 0 1.5rem 0; font-size: 1.1rem;">Final Score: <span id="finalScore" style="color: #64ffda; font-weight: bold; font-size: 1.5rem;">0</span></p>
-                        <button id="snakeRestartBtn" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #64ffda, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; box-shadow: 0 4px 15px rgba(100, 255, 218, 0.4);">
+                    <canvas id="snakeCanvas" style="border: 3px solid #D97757; border-radius: 12px; background: #0a0a0a; box-shadow: 0 0 30px rgba(217, 119, 87, 0.4), inset 0 0 30px rgba(217, 119, 87, 0.1);"></canvas>
+                    <div id="snakeGameOver" style="position: absolute; background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95)); padding: 3rem; border-radius: 16px; text-align: center; display: none; border: 2px solid #D97757; box-shadow: 0 0 40px rgba(217, 119, 87, 0.5); backdrop-filter: blur(10px);">
+                        <h3 style="color: #D97757; margin: 0 0 1rem 0; font-size: 2rem; text-shadow: 0 0 20px rgba(217, 119, 87, 0.8);">Game Over!</h3>
+                        <p style="color: #e2e8f0; margin: 0 0 1.5rem 0; font-size: 1.1rem;">Final Score: <span id="finalScore" style="color: #D97757; font-weight: bold; font-size: 1.5rem;">0</span></p>
+                        <button id="snakeRestartBtn" style="padding: 0.75rem 2rem; background: linear-gradient(135deg, #D97757, #22d3ee); color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; box-shadow: 0 4px 15px rgba(217, 119, 87, 0.4);">
                             Play Again
                         </button>
                     </div>
@@ -621,7 +621,7 @@ const apps = {
         icon: '📄',
         content: `
             <div style="max-width: 800px; text-align: center;">
-                <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem; color: #1a1a1a; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Resume / CV</h2>
+                <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem; color: #141413; font-weight: 700; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Resume / CV</h2>
                 <p style="color: #4a5568; margin-bottom: 2.5rem; font-size: 1.1rem; font-weight: 500;">
                     Preview or download my concise résumé or my full curriculum vitae (CV)
                 </p>
@@ -629,27 +629,27 @@ const apps = {
                 <div style="display: grid; gap: 1.25rem; margin-bottom: 2.5rem;">
                     <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
                         <button class="view-cert-btn" data-cert="assets/certificates/Ryan James Indangan Resume 2026.pdf" data-title="Resume - Ryan James Indangan" data-type="pdf"
-                                    style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #2171d6, #1e90ff); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(33, 113, 214, 0.3);"
-                                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(33, 113, 214, 0.4)';"
-                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(33, 113, 214, 0.3)';">
+                                    style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #D97757, #E0916F); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(217, 119, 87, 0.3);"
+                                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(217, 119, 87, 0.4)';"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(217, 119, 87, 0.3)';">
                                 👁️ Preview Resume
                             </button>
                             <a href="assets/certificates/Ryan James Indangan Resume 2026.pdf" download="Ryan-James-Indangan-Resume-2026.pdf"
-                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #2171d6; border-radius: 12px; color: #2171d6; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(33, 113, 214, 0.2);"
-                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(33, 113, 214, 0.3)';"
-                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(33, 113, 214, 0.2)';">
+                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #D97757; border-radius: 12px; color: #D97757; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(217, 119, 87, 0.2);"
+                           onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(217, 119, 87, 0.3)';"
+                           onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(217, 119, 87, 0.2)';">
                             📥 Download PDF Resume
                         </a>
                     </div>
                     <div style="display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;">
                         <button class="view-cert-btn" data-cert="assets/certificates/Ryan James Indangan CV 2026.pdf" data-title="Curriculum Vitae - Ryan James Indangan" data-type="pdf"
-                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #16365c, #1f3a5f); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(22, 54, 92, 0.3);"
+                                style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #BD5D3A, #1f3a5f); border: none; border-radius: 12px; color: #ffffff; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(22, 54, 92, 0.3);"
                                 onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(22, 54, 92, 0.4)';"
                                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(22, 54, 92, 0.3)';">
                             👁️ Preview Full CV
                         </button>
                         <a href="assets/certificates/Ryan James Indangan CV 2026.pdf" download="Ryan-James-Indangan-CV-2026.pdf"
-                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #16365c; border-radius: 12px; color: #16365c; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(22, 54, 92, 0.2);"
+                           style="flex: 1; min-width: 220px; padding: 1.5rem 2rem; background: linear-gradient(135deg, #ffffff, #f7fafc); border: 2px solid #BD5D3A; border-radius: 12px; color: #BD5D3A; cursor: pointer; font-size: 1.1rem; font-weight: 600; transition: all 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem; box-shadow: 0 2px 8px rgba(22, 54, 92, 0.2);"
                            onmouseover="this.style.transform='translateY(-2px)'; this.style.background='linear-gradient(135deg, #f7fafc, #edf2f7)'; this.style.boxShadow='0 4px 12px rgba(22, 54, 92, 0.3)';"
                            onmouseout="this.style.transform='translateY(0)'; this.style.background='linear-gradient(135deg, #ffffff, #f7fafc)'; this.style.boxShadow='0 2px 8px rgba(22, 54, 92, 0.2)';">
                             📥 Download PDF CV
@@ -664,31 +664,31 @@ const apps = {
                 </div>
 
                 <div style="padding: 2.5rem; background: linear-gradient(135deg, #f7fafc, #edf2f7); border: 2px solid #e2e8f0; border-radius: 16px; text-align: left; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
-                    <h3 style="color: #1a1a1a; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #2171d6; padding-bottom: 0.75rem;">Quick Stats</h3>
+                    <h3 style="color: #141413; margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 700; border-bottom: 2px solid #D97757; padding-bottom: 0.75rem;">Quick Stats</h3>
                     <div style="color: #2d3748; line-height: 2.5; font-size: 1.05rem;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">📅</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Experience:</strong> <span style="color: #2171d6; font-weight: 600;" id="yearsExp3">8</span>+ years</div>
+                            <div><strong style="color: #141413; font-weight: 600;">Experience:</strong> <span style="color: #D97757; font-weight: 600;" id="yearsExp3">8</span>+ years</div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🎓</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Education:</strong> <span style="color: #4a5568;">BS Information Technology</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Education:</strong> <span style="color: #4a5568;">BS Information Technology</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certification:</strong> <span style="color: #2171d6; font-weight: 600;">Certified CTO</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Certification:</strong> <span style="color: #D97757; font-weight: 600;">Certified CTO</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">AI Software Engineer · Full-Stack Developer · Certified CTO</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">AI Software Engineer · Full-Stack Developer · Certified CTO</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🌍</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Location:</strong> <span style="color: #4a5568;">Metro Manila, Philippines</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Location:</strong> <span style="color: #4a5568;">Metro Manila, Philippines</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">✉️</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Email:</strong> <span style="color: #2171d6; font-weight: 500;">ryanjamesfranciscoindangan@yahoo.com</span></div>
+                            <div><strong style="color: #141413; font-weight: 600;">Email:</strong> <span style="color: #D97757; font-weight: 500;">ryanjamesfranciscoindangan@yahoo.com</span></div>
                         </div>
                     </div>
                 </div>
@@ -720,11 +720,11 @@ const apps = {
                 </div>
                 <div style="padding: 0.75rem; background: linear-gradient(135deg, #1e2442, #2d1b69); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 1rem;">
                     <a href="https://youtu.be/yK9YYBwnw3M" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(217, 119, 87, 0.2); border: 1px solid #D97757; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         🔗 Open in YouTube
                     </a>
                     <a href="https://github.com/ryanjamesindangan/crypto-checkout-simulator" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #E0916F; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
                 </div>
@@ -756,11 +756,11 @@ const apps = {
                 </div>
                 <div style="padding: 0.75rem; background: linear-gradient(135deg, #1e2442, #2d1b69); border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; gap: 1rem;">
                     <a href="https://youtu.be/hEIBbsilfEI" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(100, 255, 218, 0.2); border: 1px solid #64ffda; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(217, 119, 87, 0.2); border: 1px solid #D97757; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         🔗 Open in YouTube
                     </a>
                     <a href="https://github.com/ryanjamesindangan/supplier-order-management-rjfi" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #3399ff; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
+                       style="padding: 0.5rem 1rem; background: rgba(124, 58, 237, 0.2); border: 1px solid #E0916F; border-radius: 6px; color: #5eb3ff; text-decoration: none; font-size: 0.9rem;">
                         📂 View Source Code
                     </a>
                 </div>
@@ -773,7 +773,7 @@ const apps = {
         icon: '<img src="assets/clippy/clippy-on-yellow-paper.png" alt="Clippy" class="clippy-icon">',
         content: `
             <div style="max-width: 1200px;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Document Intelligence Lab</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #141413; font-weight: 700;">Document Intelligence Lab</h2>
                 <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
                     Interactive demos showcasing AI/ML capabilities in Document Intelligence, OCR, and Computer Vision.
                 </p>
@@ -781,16 +781,16 @@ const apps = {
                 <!-- Interactive Demos Section -->
                 <div style="display: grid; gap: 2rem; margin-bottom: 2rem;">
                     <!-- OCR Demo -->
-                    <div style="padding: 2rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #2171d6; border-radius: 12px;">
-                        <h3 style="color: #1a1a1a; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">🔍 Interactive OCR Demo</h3>
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #f5f5f5); border: 1px solid #DAD9D2; border-left: 4px solid #D97757; border-radius: 12px;">
+                        <h3 style="color: #141413; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">🔍 Interactive OCR Demo</h3>
                         <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
                             Upload an image with text to see real-time OCR text extraction using Tesseract.js
                         </p>
                         <div id="ocrDemoContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                             <div>
-                                <label style="display: block; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">Upload Image</label>
+                                <label style="display: block; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">Upload Image</label>
                                 <input type="file" id="ocrImageInput" accept="image/*" style="display: none;">
-                                <button id="ocrUploadBtn" style="width: 100%; padding: 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
+                                <button id="ocrUploadBtn" style="width: 100%; padding: 1rem; background: #D97757; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">
                                     📤 Choose Image
                                 </button>
                                 <div id="ocrImagePreview" style="margin-top: 1rem; min-height: 200px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
@@ -801,26 +801,26 @@ const apps = {
                                 </div>
                             </div>
                             <div>
-                                <label style="display: block; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">Extracted Text</label>
+                                <label style="display: block; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">Extracted Text</label>
                                 <button id="ocrProcessBtn" style="width: 100%; padding: 1rem; background: #4caf50; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem;" disabled>
                                     🔍 Process OCR
                                 </button>
                                 <div id="ocrProgress" style="display: none; margin-bottom: 1rem; padding: 0.75rem; background: #fff8e1; border: 1px solid #ffe082; border-radius: 6px; color: #f57c00; font-size: 0.85rem;">
                                     Processing... <span id="ocrProgressText">0%</span>
                                 </div>
-                                <div id="ocrResult" style="min-height: 200px; padding: 1rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #1a1a1a; white-space: pre-wrap; overflow-y: auto; max-height: 300px; word-wrap: break-word; overflow-wrap: break-word;">
+                                <div id="ocrResult" style="min-height: 200px; padding: 1rem; background: #f0f0f0; border: 1px solid #DAD9D2; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #141413; white-space: pre-wrap; overflow-y: auto; max-height: 300px; word-wrap: break-word; overflow-wrap: break-word;">
                                     Extracted text will appear here...
                                 </div>
                             </div>
                         </div>
-                        <div style="padding: 1rem; background: #e8f4f8; border-radius: 6px; font-size: 0.85rem; color: #2171d6;">
+                        <div style="padding: 1rem; background: #F5F4EF; border-radius: 6px; font-size: 0.85rem; color: #D97757;">
                             <strong>💡 Tip:</strong> For best results, use clear images with high contrast text. The OCR engine works best with printed text.
                         </div>
                     </div>
                     
                     <!-- Pipeline Visualization -->
-                    <div style="padding: 2rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #4caf50; border-radius: 12px;">
-                        <h3 style="color: #1a1a1a; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">📊 Document Intelligence Pipeline</h3>
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #f5f5f5); border: 1px solid #DAD9D2; border-left: 4px solid #4caf50; border-radius: 12px;">
+                        <h3 style="color: #141413; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">📊 Document Intelligence Pipeline</h3>
                         <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
                             Interactive visualization of the end-to-end document processing pipeline
                         </p>
@@ -833,15 +833,15 @@ const apps = {
                     </div>
                     
                     <!-- Watermark Removal Comparison -->
-                    <div style="padding: 2rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #7b1fa2; border-radius: 12px;">
-                        <h3 style="color: #1a1a1a; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">💧 Watermark Removal Demo</h3>
+                    <div style="padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #f5f5f5); border: 1px solid #DAD9D2; border-left: 4px solid #7b1fa2; border-radius: 12px;">
+                        <h3 style="color: #141413; font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">💧 Watermark Removal Demo</h3>
                         <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
                             Visual comparison of documents before and after ML-based watermark removal
                         </p>
                         <div id="watermarkDemoContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                             <div>
-                                <h4 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;">Before (With Watermark)</h4>
-                                <div id="watermarkBefore" style="min-height: 250px; background: #f0f0f0; border: 2px solid #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; position: relative;">
+                                <h4 style="color: #141413; margin-bottom: 0.5rem; font-weight: 600;">Before (With Watermark)</h4>
+                                <div id="watermarkBefore" style="min-height: 250px; background: #f0f0f0; border: 2px solid #DAD9D2; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999; position: relative;">
                                     <div style="text-align: center;">
                                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
                                         <div>Sample document with watermark</div>
@@ -850,8 +850,8 @@ const apps = {
                                 </div>
                             </div>
                             <div>
-                                <h4 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;">After (Watermark Removed)</h4>
-                                <div id="watermarkAfter" style="min-height: 250px; background: #f0f0f0; border: 2px solid #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
+                                <h4 style="color: #141413; margin-bottom: 0.5rem; font-weight: 600;">After (Watermark Removed)</h4>
+                                <div id="watermarkAfter" style="min-height: 250px; background: #f0f0f0; border: 2px solid #DAD9D2; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #999;">
                                     <div style="text-align: center;">
                                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
                                         <div>Click "Process" to see result</div>
@@ -913,16 +913,16 @@ const apps = {
                     )}
                 </div>
                 
-                <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border-left: 4px solid #2171d6; border-radius: 8px;">
-                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">🚀 Try It Out</h3>
-                    <p style="color: #1a1a1a; margin-bottom: 1rem;">
+                <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border-left: 4px solid #D97757; border-radius: 8px;">
+                    <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600;">🚀 Try It Out</h3>
+                    <p style="color: #141413; margin-bottom: 1rem;">
                         Open the Terminal and try these AI commands:
                     </p>
-                    <div style="background: #1a1a1a; padding: 1rem; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
-                        <div style="color: #64ffda;">$ ai-about</div>
-                        <div style="color: #64ffda;">$ ocr-demo</div>
-                        <div style="color: #64ffda;">$ extract-doc</div>
-                        <div style="color: #64ffda;">$ llm-status</div>
+                    <div style="background: #141413; padding: 1rem; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+                        <div style="color: #D97757;">$ ai-about</div>
+                        <div style="color: #D97757;">$ ocr-demo</div>
+                        <div style="color: #D97757;">$ extract-doc</div>
+                        <div style="color: #D97757;">$ llm-status</div>
                     </div>
                 </div>
             </div>
@@ -934,7 +934,7 @@ const apps = {
         icon: '⭐',
         content: `
             <div style="max-width: 1000px;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">Client Testimonials & Recommendations</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #141413; font-weight: 700;">Client Testimonials & Recommendations</h2>
                 <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
                     Here's what clients and colleagues say about working with me. These testimonials showcase my commitment to quality, 
                     technical expertise, and collaborative approach.
@@ -992,18 +992,18 @@ const apps = {
                     
                     <!-- Carousel Navigation -->
                     <div class="testimonials-nav" style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 2rem;">
-                        <button class="testimonial-nav-btn testimonial-prev" style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">← Previous</button>
+                        <button class="testimonial-nav-btn testimonial-prev" style="padding: 0.75rem 1.5rem; background: #D97757; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">← Previous</button>
                         <div class="testimonial-dots" style="display: flex; gap: 0.5rem;">
                             <!-- Dots will be generated by JavaScript -->
                         </div>
-                        <button class="testimonial-nav-btn testimonial-next" style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">Next →</button>
+                        <button class="testimonial-nav-btn testimonial-next" style="padding: 0.75rem 1.5rem; background: #D97757; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">Next →</button>
                     </div>
                 </div>
                 
                 <!-- External Links -->
-                <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border-left: 4px solid #2171d6; border-radius: 8px;">
-                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">📊 View More Reviews</h3>
-                    <p style="color: #1a1a1a; margin-bottom: 1.5rem; line-height: 1.6;">
+                <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border-left: 4px solid #D97757; border-radius: 8px;">
+                    <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600;">📊 View More Reviews</h3>
+                    <p style="color: #141413; margin-bottom: 1.5rem; line-height: 1.6;">
                         Check out more testimonials and recommendations on my professional profiles:
                     </p>
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
@@ -1026,7 +1026,7 @@ const apps = {
         icon: '📊',
         content: `
             <div style="max-width: 1000px;">
-                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #1a1a1a; font-weight: 700;">GitHub Statistics & Activity</h2>
+                <h2 style="font-size: 2rem; margin-bottom: 1rem; color: #141413; font-weight: 700;">GitHub Statistics & Activity</h2>
                 <p style="color: #666; margin-bottom: 2rem; line-height: 1.6;">
                     Real-time statistics from my GitHub profile, showcasing active development and community engagement.
                 </p>
@@ -1034,7 +1034,7 @@ const apps = {
                 <!-- Profile badges & rankings (rendered live by GitHub stats services) -->
                 <div style="display: grid; gap: 1rem; margin-bottom: 2.5rem;">
                     <div>
-                        <h3 style="color: #1a1a1a; font-size: 1.15rem; font-weight: 700; margin: 0 0 0.75rem;">🏆 Achievement Ranks</h3>
+                        <h3 style="color: #141413; font-size: 1.15rem; font-weight: 700; margin: 0 0 0.75rem;">🏆 Achievement Ranks</h3>
                         <div id="githubTrophies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: 0.75rem;"></div>
                     </div>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; align-items: start;">
@@ -1057,23 +1057,23 @@ const apps = {
                 <div id="githubStatsError" style="display: none; text-align: center; padding: 3rem; background: #fee; border: 1px solid #fcc; border-radius: 8px; color: #c33;">
                     <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
                     <p style="margin-bottom: 1rem;">Failed to load GitHub statistics.</p>
-                    <button onclick="loadGitHubStats()" style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Retry</button>
+                    <button onclick="loadGitHubStats()" style="padding: 0.75rem 1.5rem; background: #D97757; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Retry</button>
                 </div>
                 
                 <!-- Stats Content -->
                 <div id="githubStatsContent" style="display: none;">
                     <!-- User Stats -->
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: bold; color: #2171d6; margin-bottom: 0.5rem;" id="githubPublicRepos">-</div>
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #D97757; margin-bottom: 0.5rem;" id="githubPublicRepos">-</div>
                             <div style="color: #666; font-size: 0.9rem;">Public Repositories</div>
                         </div>
-                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: bold; color: #2171d6; margin-bottom: 0.5rem;" id="githubFollowers">-</div>
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #D97757; margin-bottom: 0.5rem;" id="githubFollowers">-</div>
                             <div style="color: #666; font-size: 0.9rem;">Followers</div>
                         </div>
-                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
-                            <div style="font-size: 2.5rem; font-weight: bold; color: #2171d6; margin-bottom: 0.5rem;" id="githubFollowing">-</div>
+                        <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border: 1px solid #d0e8f0; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #D97757; margin-bottom: 0.5rem;" id="githubFollowing">-</div>
                             <div style="color: #666; font-size: 0.9rem;">Following</div>
                         </div>
                         <div class="github-stat-card" style="padding: 1.5rem; background: linear-gradient(135deg, #fff8e1, #fffde7); border: 1px solid #ffe082; border-radius: 8px; text-align: center;">
@@ -1084,7 +1084,7 @@ const apps = {
                     
                     <!-- Top Repositories -->
                     <div style="margin-bottom: 2rem;">
-                        <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">⭐ Top Repositories</h3>
+                        <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">⭐ Top Repositories</h3>
                         <div id="githubTopRepos" style="display: grid; gap: 1rem;">
                             <!-- Repositories will be loaded here -->
                         </div>
@@ -1092,16 +1092,16 @@ const apps = {
                     
                     <!-- Recent Activity -->
                     <div style="margin-bottom: 2rem;">
-                        <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">🔄 Recent Activity</h3>
+                        <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">🔄 Recent Activity</h3>
                         <div id="githubRecentActivity" style="display: grid; gap: 0.75rem;">
                             <!-- Activity will be loaded here -->
                         </div>
                     </div>
                     
                     <!-- External Link -->
-                    <div style="padding: 1.5rem; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); border-left: 4px solid #2171d6; border-radius: 8px; text-align: center;">
+                    <div style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); border-left: 4px solid #D97757; border-radius: 8px; text-align: center;">
                         <a href="https://github.com/ryanjamesindangan" target="_blank" rel="noopener noreferrer" 
-                           style="padding: 1rem 2rem; background: #2171d6; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                           style="padding: 1rem 2rem; background: #D97757; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                             🔗 View Full GitHub Profile
                         </a>
                     </div>
@@ -1116,15 +1116,15 @@ const apps = {
         content: `
             <div style="max-width: 1200px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0;">Technical Blog & Articles</h2>
+                    <h2 style="font-size: 2rem; color: #141413; font-weight: 700; margin: 0;">Technical Blog & Articles</h2>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <input type="text" id="blogSearchInput" placeholder="Search articles..." 
-                               style="padding: 0.5rem 1rem; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 0.9rem; min-width: 200px;">
-                        <button class="blog-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
-                        <button class="blog-filter-btn" data-filter="tutorial" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Tutorials</button>
-                        <button class="blog-filter-btn" data-filter="case-study" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Case Studies</button>
-                        <button class="blog-filter-btn" data-filter="ai-ml" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
-                        <button class="blog-filter-btn" data-filter="technical" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Technical</button>
+                               style="padding: 0.5rem 1rem; border: 1px solid #DAD9D2; border-radius: 6px; font-size: 0.9rem; min-width: 200px;">
+                        <button class="blog-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #D97757; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
+                        <button class="blog-filter-btn" data-filter="tutorial" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Tutorials</button>
+                        <button class="blog-filter-btn" data-filter="case-study" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Case Studies</button>
+                        <button class="blog-filter-btn" data-filter="ai-ml" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
+                        <button class="blog-filter-btn" data-filter="technical" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #141413; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Technical</button>
                     </div>
                 </div>
                 
@@ -1369,7 +1369,7 @@ export default DocumentProcessor;</code></pre>
         icon: '🥚',
         content: `
             <div style="max-width: 800px;">
-                <h1 style="font-size: 2rem; margin-bottom: 1.5rem; color: #1a1a1a; font-weight: 700;">
+                <h1 style="font-size: 2rem; margin-bottom: 1.5rem; color: #141413; font-weight: 700;">
                     🥚 Easter Eggs & Hidden Features
                 </h1>
                 <p style="line-height: 1.8; margin-bottom: 2rem; color: #666;">
@@ -1383,19 +1383,19 @@ export default DocumentProcessor;</code></pre>
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">🎮</div>
                             <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">
                                     Konami Code
                                 </h3>
                                 <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
                                     The classic cheat code from retro gaming! Type this sequence anywhere on the page:
                                 </p>
-                                <div style="background: #1a1a1a; color: #fff; padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 1.1rem; text-align: center; margin-bottom: 1rem;">
+                                <div style="background: #141413; color: #fff; padding: 1rem; border-radius: 6px; font-family: monospace; font-size: 1.1rem; text-align: center; margin-bottom: 1rem;">
                                     ↑ ↑ ↓ ↓ ← → ← → B A
                                 </div>
                                 <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
                                     <strong>What happens:</strong> Confetti falls from the sky, rainbow effects appear, and a celebration notification!
                                 </p>
-                                <button class="try-konami-btn" style="padding: 0.75rem 1.5rem; background: #ffc107; border: none; border-radius: 6px; color: #1a1a1a; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                                <button class="try-konami-btn" style="padding: 0.75rem 1.5rem; background: #ffc107; border: none; border-radius: 6px; color: #141413; font-weight: 600; cursor: pointer; transition: all 0.2s;">
                                     🎯 Try It Now (Click to simulate)
                                 </button>
                             </div>
@@ -1407,28 +1407,28 @@ export default DocumentProcessor;</code></pre>
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">⌨️</div>
                             <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">
                                     Keyboard Shortcuts
                                 </h3>
                                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + D</kbd>
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #141413; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + D</kbd>
                                         <span style="flex: 1; color: #666;">Developer mode - Shows console messages</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + M</kbd>
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #141413; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + M</kbd>
                                         <span style="flex: 1; color: #666;">Matrix mode - Green rain effect overlay</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + S</kbd>
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #141413; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Ctrl + Shift + S</kbd>
                                         <span style="flex: 1; color: #666;">Quick launch Snake game</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Win + D</kbd>
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #141413; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Win + D</kbd>
                                         <span style="flex: 1; color: #666;">Show desktop (minimize all windows)</span>
                                     </div>
                                     <div style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.5); border-radius: 6px;">
-                                        <kbd style="padding: 0.5rem 0.75rem; background: #1a1a1a; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Alt + F4</kbd>
+                                        <kbd style="padding: 0.5rem 0.75rem; background: #141413; color: #fff; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">Alt + F4</kbd>
                                         <span style="flex: 1; color: #666;">Close active window</span>
                                     </div>
                                 </div>
@@ -1441,7 +1441,7 @@ export default DocumentProcessor;</code></pre>
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">🔍</div>
                             <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">
                                     Secret Click Counter
                                 </h3>
                                 <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
@@ -1459,7 +1459,7 @@ export default DocumentProcessor;</code></pre>
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">💻</div>
                             <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">
                                     Console Secrets
                                 </h3>
                                 <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
@@ -1477,7 +1477,7 @@ export default DocumentProcessor;</code></pre>
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">🖱️</div>
                             <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">
                                     Desktop Context Menu
                                 </h3>
                                 <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
@@ -1500,7 +1500,7 @@ export default DocumentProcessor;</code></pre>
                         <div style="display: flex; align-items: start; gap: 1rem; margin-bottom: 1rem;">
                             <div style="font-size: 2.5rem;">🤖</div>
                             <div style="flex: 1;">
-                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600;">
+                                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #141413; font-weight: 600;">
                                     AI Assistant Features
                                 </h3>
                                 <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">
@@ -1626,7 +1626,7 @@ function getBlogPosts() {
 // ===========================
 function createBlogPostCard(post) {
     const categoryColors = {
-        'tutorial': { bg: '#e8f4f8', border: '#d0e8f0', text: '#2171d6' },
+        'tutorial': { bg: '#F5F4EF', border: '#d0e8f0', text: '#D97757' },
         'case-study': { bg: '#fff8e1', border: '#ffe082', text: '#f57c00' },
         'ai-ml': { bg: '#f3e5f5', border: '#ce93d8', text: '#7b1fa2' },
         'technical': { bg: '#e0f2f1', border: '#80cbc4', text: '#00695c' }
@@ -1642,7 +1642,7 @@ function createBlogPostCard(post) {
     
     return `
         <div class="blog-post-card" data-category="${post.category}" data-post-id="${post.id}" 
-             style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
+             style="padding: 0; background: #F5F4EF; border: 1px solid #DAD9D2; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
             ${post.featured ? `
                 <div style="position: absolute; top: 1rem; right: 1rem; background: #ffb900; color: #fff; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; z-index: 1;">
                     ⭐ Featured
@@ -1657,18 +1657,18 @@ function createBlogPostCard(post) {
                     <span style="color: #999; font-size: 0.75rem;">•</span>
                     <span style="color: #999; font-size: 0.75rem;">${post.readTime}</span>
                 </div>
-                <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">${post.title}</h3>
+                <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700; line-height: 1.4;">${post.title}</h3>
                 <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${post.excerpt}</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                     ${post.tags.slice(0, 3).map(tag => `
-                        <span style="padding: 0.25rem 0.5rem; background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 4px; color: #666; font-size: 0.75rem;">
+                        <span style="padding: 0.25rem 0.5rem; background: #f0f0f0; border: 1px solid #DAD9D2; border-radius: 4px; color: #666; font-size: 0.75rem;">
                             ${tag}
                         </span>
                     `).join('')}
                     ${post.tags.length > 3 ? `<span style="color: #999; font-size: 0.75rem; padding: 0.25rem 0.5rem;">+${post.tags.length - 3} more</span>` : ''}
                 </div>
                 <button class="read-more-btn" data-post-id="${post.id}" 
-                        style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; font-size: 0.9rem;">
+                        style="padding: 0.75rem 1.5rem; background: #D97757; border: 1px solid #BD5D3A; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; font-size: 0.9rem;">
                     Read Article →
                 </button>
             </div>
@@ -1717,9 +1717,9 @@ function initializeBlogFilters() {
         document.querySelectorAll('.blog-filter-btn').forEach(b => {
             const on = b === btn;
             b.classList.toggle('active', on);
-            b.style.background = on ? '#2171d6' : '#f0f0f0';
-            b.style.color = on ? '#fff' : '#1a1a1a';
-            b.style.border = on ? 'none' : '1px solid #e0e0e0';
+            b.style.background = on ? '#D97757' : '#f0f0f0';
+            b.style.color = on ? '#fff' : '#141413';
+            b.style.border = on ? 'none' : '1px solid #DAD9D2';
         });
         applyBlogFilters();
     });
@@ -1745,8 +1745,8 @@ function openBlogPostModal(post) {
     overlay.innerHTML =
         `<div class="blog-modal" style="background:#fff;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;border-radius:16px;padding:28px 26px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);">
             <button class="blog-modal-close" aria-label="Close" style="position:absolute;top:14px;right:14px;border:none;background:#f0f0f0;width:36px;height:36px;border-radius:9px;cursor:pointer;font-size:1.2rem;line-height:1;">×</button>
-            <div style="color:#2171d6;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;">${post.category}</div>
-            <h2 style="margin:.45rem 2rem .55rem 0;color:#1a1a1a;font-size:1.5rem;line-height:1.25;">${post.title}</h2>
+            <div style="color:#D97757;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;">${post.category}</div>
+            <h2 style="margin:.45rem 2rem .55rem 0;color:#141413;font-size:1.5rem;line-height:1.25;">${post.title}</h2>
             <div style="color:#999;font-size:.84rem;margin-bottom:1.1rem;">${formatBlogDate(post.date)} &nbsp;·&nbsp; ${post.readTime || ''}</div>
             <p style="color:#333;line-height:1.75;font-size:1rem;">${post.excerpt}</p>
             <div style="margin:1.1rem 0;display:flex;flex-wrap:wrap;gap:.5rem;">${tags}</div>
@@ -1773,11 +1773,11 @@ function initializeBlogPostModals() {
 // Helper functions to create UI components
 function createSkillCategory(title, skills) {
     return `
-        <div style="padding: 1.5rem; background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px;">
-            <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">${title}</h3>
+        <div style="padding: 1.5rem; background: #f5f5f5; border: 1px solid #DAD9D2; border-radius: 8px;">
+            <h3 style="color: #D97757; margin-bottom: 1rem; font-weight: 600; font-size: 1.1rem;">${title}</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${skills.map(skill => `
-                    <span style="padding: 0.5rem 1rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #1a1a1a; font-size: 0.9rem; font-weight: 500;">
+                    <span style="padding: 0.5rem 1rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #141413; font-size: 0.9rem; font-weight: 500;">
                         ${skill}
                     </span>
                 `).join('')}
@@ -1788,16 +1788,16 @@ function createSkillCategory(title, skills) {
 
 function createExperienceCard(title, company, dates, location, responsibilities, tech) {
     return `
-        <div style="padding: 1.5rem; background: #fafafa; border-left: 3px solid #2171d6; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #e0e0e0;">
-            <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
-            <div style="color: #2171d6; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
+        <div style="padding: 1.5rem; background: #F5F4EF; border-left: 3px solid #D97757; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid #DAD9D2;">
+            <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
+            <div style="color: #D97757; font-weight: 600; margin-bottom: 0.25rem;">${company}</div>
             <div style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">${dates} • ${location}</div>
-            <ul style="color: #1a1a1a; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem;">
+            <ul style="color: #141413; line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem;">
                 ${responsibilities.map(resp => `<li style="margin-bottom: 0.5rem;">${resp}</li>`).join('')}
             </ul>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
+                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -1808,12 +1808,12 @@ function createExperienceCard(title, company, dates, location, responsibilities,
 
 function createProjectCard(title, description, tech, link, demoApp) {
     return `
-        <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px;">
-            <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">${title}</h3>
-            <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
+        <div style="padding: 1.5rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-radius: 8px;">
+            <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 700;">${title}</h3>
+            <p style="color: #141413; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
+                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -1821,13 +1821,13 @@ function createProjectCard(title, description, tech, link, demoApp) {
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                 ${demoApp ? `
                     <button class="open-demo-btn" data-demo="${demoApp}"
-                       style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: #D97757; border: 1px solid #BD5D3A; border-radius: 6px; color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;">
                         🎬 Watch Demo Video
                     </button>
                 ` : ''}
                 ${link ? `
                     <a href="${link}" target="_blank" rel="noopener noreferrer" 
-                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #2171d6; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #D97757; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
                         📂 View on GitHub
                     </a>
                 ` : !demoApp ? `
@@ -1843,22 +1843,22 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
     const categoryAttr = category || 'all';
     
     return `
-        <div class="project-card" data-category="${categoryAttr}" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
+        <div class="project-card" data-category="${categoryAttr}" data-tech="${techLower}" style="padding: 0; background: #F5F4EF; border: 1px solid #DAD9D2; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
             ${screenshot ? `
-                <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                     <img src="${screenshot}" alt="${title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
                 </div>
             ` : `
-                <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); display: flex; align-items: center; justify-content: center; font-size: 4rem; opacity: 0.6;">
+                <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #F5F4EF, #E8E6DC); display: flex; align-items: center; justify-content: center; font-size: 4rem; opacity: 0.6;">
                     ${title.split(' ')[0]}
                 </div>
             `}
             <div style="padding: 1.5rem;">
-                <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700;">${title}</h3>
+                <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700;">${title}</h3>
                 <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${description}</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
                     ${tech.map(t => `
-                        <span class="tech-tag" style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
+                        <span class="tech-tag" style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
                             ${t}
                         </span>
                     `).join('')}
@@ -1872,14 +1872,14 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
                     ` : ''}
                     ${githubLink ? `
                         <a href="${githubLink}" target="_blank" rel="noopener noreferrer" 
-                           style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                           style="padding: 0.75rem 1.5rem; background: #D97757; border: 1px solid #BD5D3A; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
                             📂 View Code
                         </a>
                     ` : `
                         <span style="color: #999; font-size: 0.85rem; padding: 0.75rem; display: inline-flex; align-items: center; gap: 0.5rem;">🔒 Private Repository</span>
                     `}
                     <button class="project-details-btn" data-title="${title}" data-description="${description}" data-tech="${tech.join(', ')}" data-github="${githubLink || ''}" data-live="${liveDemoLink || ''}"
-                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #1a1a1a; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                       style="padding: 0.75rem 1.5rem; background: #f0f0f0; border: 1px solid #d0d0d0; border-radius: 6px; color: #141413; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
                         ℹ️ Details
                     </button>
                 </div>
@@ -1891,14 +1891,14 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
 function createCertCard(title, issuer, date, description, link) {
     const isPDF = link && link.endsWith('.pdf');
     return `
-        <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
-            <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
+        <div style="padding: 1.5rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-left: 3px solid #D97757; border-radius: 8px;">
+            <h3 style="color: #141413; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
             <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">${issuer} • ${date}</p>
-            <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
+            <p style="color: #141413; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                 ${link ? `
                     <button class="view-cert-btn" data-cert="${link}" data-title="${title}" data-type="${isPDF ? 'pdf' : 'image'}"
-                            style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                            style="padding: 0.75rem 1.5rem; background: #D97757; color: #fff; border: 1px solid #BD5D3A; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
                         👁️ View Certificate
                     </button>
                     <a href="${link}" download 
@@ -1922,9 +1922,9 @@ function createModuleBadge(name) {
 function createCertModuleBadge(name, certPath) {
     return `
         <button class="view-cert-btn" data-cert="${certPath}" data-title="${name}" data-type="image"
-                style="padding: 0.75rem 1rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; color: #1a1a1a;">
+                style="padding: 0.75rem 1rem; background: #F5F4EF; border: 1px solid #DAD9D2; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; text-align: center; color: #141413;">
             <span style="font-size: 1.5rem;">🔐</span>
-            <span style="font-size: 0.85rem; font-weight: 600; color: #1a1a1a;">${name}</span>
+            <span style="font-size: 0.85rem; font-weight: 600; color: #141413;">${name}</span>
             <span style="font-size: 0.75rem; color: #666;">Click to view</span>
         </button>
     `;
@@ -1948,18 +1948,18 @@ function createContactItem(icon, label, value, link) {
 
 function createAIFeatureCard(title, description, features, tech) {
     return `
-        <div style="padding: 1.5rem; background: linear-gradient(135deg, #fafafa, #f5f5f5); border: 1px solid #e0e0e0; border-left: 4px solid #2171d6; border-radius: 8px;">
-            <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
+        <div style="padding: 1.5rem; background: linear-gradient(135deg, #F5F4EF, #f5f5f5); border: 1px solid #DAD9D2; border-left: 4px solid #D97757; border-radius: 8px;">
+            <h3 style="color: #141413; font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 700;">${title}</h3>
             <p style="color: #666; margin-bottom: 1rem; line-height: 1.6;">${description}</p>
             <div style="margin-bottom: 1rem;">
-                <h4 style="color: #2171d6; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Key Features:</h4>
-                <ul style="color: #1a1a1a; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 1rem;">
+                <h4 style="color: #D97757; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Key Features:</h4>
+                <ul style="color: #141413; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 1rem;">
                     ${features.map(feature => `<li style="margin-bottom: 0.25rem; font-size: 0.9rem;">${feature}</li>`).join('')}
                 </ul>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                 ${tech.map(t => `
-                    <span style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">
+                    <span style="padding: 0.25rem 0.75rem; background: #F5F4EF; border: 1px solid #d0e8f0; border-radius: 4px; color: #D97757; font-size: 0.85rem; font-weight: 500;">
                         ${t}
                     </span>
                 `).join('')}
@@ -1973,21 +1973,21 @@ function createTestimonialCard(name, role, company, rating, text, source, source
     const sourceIcon = source === 'LinkedIn' ? '💼' : source === 'Upwork' ? '🎯' : '⭐';
     
     return `
-        <div class="testimonial-card" style="padding: 2rem; background: linear-gradient(135deg, #ffffff, #f8f9fa); border: 1px solid #e0e0e0; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-height: 280px; display: flex; flex-direction: column;">
+        <div class="testimonial-card" style="padding: 2rem; background: linear-gradient(135deg, #ffffff, #f8f9fa); border: 1px solid #DAD9D2; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); min-height: 280px; display: flex; flex-direction: column;">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                ${avatar ? `<img src="${avatar}" alt="${name}" loading="lazy" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #2171d6;">` : `<div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #2171d6, #1a5fb8); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold;">${name.charAt(0)}</div>`}
+                ${avatar ? `<img src="${avatar}" alt="${name}" loading="lazy" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #D97757;">` : `<div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #D97757, #BD5D3A); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: bold;">${name.charAt(0)}</div>`}
                 <div style="flex: 1;">
-                    <h3 style="color: #1a1a1a; font-size: 1.1rem; margin-bottom: 0.25rem; font-weight: 700;">${name}</h3>
+                    <h3 style="color: #141413; font-size: 1.1rem; margin-bottom: 0.25rem; font-weight: 700;">${name}</h3>
                     <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.25rem;">${role}</p>
                     <p style="color: #999; font-size: 0.85rem;">${company}</p>
                 </div>
             </div>
             <div style="margin-bottom: 1rem; font-size: 1.2rem; color: #ffa500;">${stars}</div>
-            <p style="color: #1a1a1a; line-height: 1.8; font-size: 0.95rem; flex: 1; font-style: italic; margin-bottom: 1rem;">"${text}"</p>
+            <p style="color: #141413; line-height: 1.8; font-size: 0.95rem; flex: 1; font-style: italic; margin-bottom: 1rem;">"${text}"</p>
             ${sourceLink ? `
-                <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid #DAD9D2;">
                     <a href="${sourceLink}" target="_blank" rel="noopener noreferrer" 
-                       style="display: inline-flex; align-items: center; gap: 0.5rem; color: #2171d6; text-decoration: none; font-size: 0.85rem; font-weight: 600;">
+                       style="display: inline-flex; align-items: center; gap: 0.5rem; color: #D97757; text-decoration: none; font-size: 0.85rem; font-weight: 600;">
                         ${sourceIcon} View on ${source}
                     </a>
                 </div>
@@ -2003,14 +2003,14 @@ function createPipelineFlowchart() {
     return `
         <div style="display: flex; flex-direction: column; gap: 1rem; position: relative;">
             <!-- Step 1: Document Input -->
-            <div class="pipeline-step" data-step="1" style="padding: 1rem; background: #e8f4f8; border: 2px solid #2171d6; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
+            <div class="pipeline-step" data-step="1" style="padding: 1rem; background: #F5F4EF; border: 2px solid #D97757; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
-                <div style="font-weight: 600; color: #2171d6; margin-bottom: 0.25rem;">Document Input</div>
+                <div style="font-weight: 600; color: #D97757; margin-bottom: 0.25rem;">Document Input</div>
                 <div style="font-size: 0.85rem; color: #666;">PDF/Image Upload</div>
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
             
             <!-- Step 2: Preprocessing -->
             <div class="pipeline-step" data-step="2" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
@@ -2020,7 +2020,7 @@ function createPipelineFlowchart() {
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
             
             <!-- Step 3: Extraction -->
             <div class="pipeline-step" data-step="3" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
@@ -2030,7 +2030,7 @@ function createPipelineFlowchart() {
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
             
             <!-- Step 4: Validation -->
             <div class="pipeline-step" data-step="4" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">
@@ -2040,7 +2040,7 @@ function createPipelineFlowchart() {
             </div>
             
             <!-- Arrow -->
-            <div style="text-align: center; color: #2171d6; font-size: 1.5rem;">↓</div>
+            <div style="text-align: center; color: #D97757; font-size: 1.5rem;">↓</div>
             
             <!-- Step 5: Output -->
             <div class="pipeline-step" data-step="5" style="padding: 1rem; background: #f0f0f0; border: 2px solid #ccc; border-radius: 8px; text-align: center; transition: all 0.3s ease;">

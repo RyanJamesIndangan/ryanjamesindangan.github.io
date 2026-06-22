@@ -5,15 +5,16 @@
 class WallpaperSelector {
     constructor() {
         this.wallpapers = [
-            { name: 'Default', url: 'assets/background.jpg', gradient: 'linear-gradient(135deg, rgba(13, 17, 23, 0.4) 0%, rgba(26, 29, 41, 0.3) 50%, rgba(13, 17, 23, 0.4) 100%)' },
-            { name: 'Windows XP Classic', url: 'assets/themes/windows-xp-classic-landscape-4089x2726-10769.jpg', gradient: 'linear-gradient(135deg, rgba(13, 17, 23, 0.2) 0%, rgba(26, 29, 41, 0.1) 50%, rgba(13, 17, 23, 0.2) 100%)' },
-            { name: 'Windows 7 Official', url: 'assets/themes/windows-7-official-3840x2160-13944.jpg', gradient: 'linear-gradient(135deg, rgba(13, 17, 23, 0.2) 0%, rgba(26, 29, 41, 0.1) 50%, rgba(13, 17, 23, 0.2) 100%)' },
-            { name: 'Windows Server 2003', url: 'assets/themes/microsoft-windows-server-2003-2880x1800-17236.png', gradient: 'linear-gradient(135deg, rgba(13, 17, 23, 0.2) 0%, rgba(26, 29, 41, 0.1) 50%, rgba(13, 17, 23, 0.2) 100%)' },
-            { name: 'Windows 10 Blue', url: 'assets/themes/windows-10-microsoft-windows-blue-2560x1918-1554.jpg', gradient: 'linear-gradient(135deg, rgba(13, 17, 23, 0.2) 0%, rgba(26, 29, 41, 0.1) 50%, rgba(13, 17, 23, 0.2) 100%)' },
-            { name: 'Windows 11 Blue', url: 'assets/themes/windows-11-blue-aesthetic-5120x2880-17495.png', gradient: 'linear-gradient(135deg, rgba(13, 17, 23, 0.2) 0%, rgba(26, 29, 41, 0.1) 50%, rgba(13, 17, 23, 0.2) 100%)' },
-            { name: 'Blue Theme', url: null, gradient: 'linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(59, 130, 246, 0.4) 50%, rgba(30, 58, 138, 0.6) 100%)' },
-            { name: 'Purple Theme', url: null, gradient: 'linear-gradient(135deg, rgba(88, 28, 135, 0.6) 0%, rgba(147, 51, 234, 0.4) 50%, rgba(88, 28, 135, 0.6) 100%)' },
-            { name: 'AI Theme', url: null, gradient: 'linear-gradient(135deg, rgba(20, 30, 48, 0.7) 0%, rgba(30, 41, 59, 0.5) 50%, rgba(15, 23, 42, 0.7) 100%)' }
+            // Default = theme-aware "Claude paper" (null gradient -> CSS [data-theme] rules drive it).
+            { name: 'Claude Paper (Auto)', url: null, gradient: null },
+            { name: 'Warm Ivory', url: null, gradient: 'radial-gradient(1100px 760px at 78% -12%, #FBF6EE 0%, transparent 60%), linear-gradient(160deg, #FAF9F5 0%, #F3F1E9 55%, #ECE8DC 100%)' },
+            { name: 'Clay', url: null, gradient: 'radial-gradient(900px 600px at 75% -10%, #E8A283 0%, transparent 55%), linear-gradient(160deg, #D97757 0%, #C2643F 55%, #A14E2F 100%)' },
+            { name: 'Warm Dusk', url: null, gradient: 'radial-gradient(1000px 700px at 78% -10%, rgba(217,119,87,0.16) 0%, transparent 55%), linear-gradient(160deg, #2A2825 0%, #1F1E1B 60%, #181614 100%)' },
+            { name: 'Sand', url: null, gradient: 'linear-gradient(160deg, #E4D3BD 0%, #C9B091 50%, #9C7E5C 100%)' },
+            // Windows nostalgia themes (optional — warm overlay so they sit with the theme)
+            { name: 'Windows 7 Official', url: 'assets/themes/windows-7-official-3840x2160-13944.jpg', gradient: 'linear-gradient(135deg, rgba(60, 50, 40, 0.25) 0%, rgba(60, 50, 40, 0.12) 50%, rgba(60, 50, 40, 0.25) 100%)' },
+            { name: 'Windows XP Classic', url: 'assets/themes/windows-xp-classic-landscape-4089x2726-10769.jpg', gradient: 'linear-gradient(135deg, rgba(60, 50, 40, 0.25) 0%, rgba(60, 50, 40, 0.12) 50%, rgba(60, 50, 40, 0.25) 100%)' },
+            { name: 'Windows 11', url: 'assets/themes/windows-11-blue-aesthetic-5120x2880-17495.png', gradient: 'linear-gradient(135deg, rgba(60, 50, 40, 0.25) 0%, rgba(60, 50, 40, 0.12) 50%, rgba(60, 50, 40, 0.25) 100%)' }
         ];
         
         // Get saved wallpaper index, validate it, and default to 0 if invalid
@@ -77,6 +78,16 @@ class WallpaperSelector {
             }
             localStorage.setItem('selectedWallpaper', '0');
             this.currentWallpaper = 0;
+            return;
+        }
+
+        // Theme-aware "Auto" wallpaper: clear the inline bg so the CSS
+        // [data-theme] .wallpaper rules (warm ivory / warm dusk) drive it.
+        if (!selected.url && !selected.gradient) {
+            wallpaper.style.removeProperty('background');
+            wallpaper.style.removeProperty('transition');
+            localStorage.setItem('selectedWallpaper', index.toString());
+            this.currentWallpaper = index;
             return;
         }
 
@@ -153,8 +164,10 @@ class WallpaperSelector {
                     let previewStyle = '';
                     if (wp.url) {
                         previewStyle = `background: ${wp.gradient}, url('${wp.url}') center center / cover no-repeat;`;
-                    } else {
+                    } else if (wp.gradient) {
                         previewStyle = `background: ${wp.gradient};`;
+                    } else {
+                        previewStyle = `background: linear-gradient(160deg, #FAF9F5 0%, #E8E6DC 100%);`;
                     }
                     
                     return `

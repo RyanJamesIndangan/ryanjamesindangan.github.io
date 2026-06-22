@@ -324,8 +324,8 @@ function drawGame() {
     
     // Glow
     snakeGame.ctx.shadowBlur = 15;
-    snakeGame.ctx.shadowColor = '#64ffda';
-    snakeGame.ctx.fillStyle = '#64ffda';
+    snakeGame.ctx.shadowColor = '#D97757';
+    snakeGame.ctx.fillStyle = '#D97757';
     snakeGame.ctx.beginPath();
     snakeGame.ctx.arc(foodX, foodY, foodRadius, 0, 2 * Math.PI);
     snakeGame.ctx.fill();
