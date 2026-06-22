@@ -71,7 +71,7 @@ function initializeOCRDemo() {
             
             // Show confidence
             const confidenceInfo = document.createElement('div');
-            confidenceInfo.style.cssText = 'margin-top: 0.5rem; padding: 0.5rem; background: #F5F4EF; border-radius: 4px; font-size: 0.8rem; color: #A84B2A;';
+            confidenceInfo.style.cssText = 'margin-top: 0.5rem; padding: 0.5rem; background: #F5F4EF; border-radius: 4px; font-size: 0.8rem; color: #D97757;';
             confidenceInfo.textContent = `Confidence: ${Math.round(confidence)}%`;
             resultDiv.appendChild(confidenceInfo);
             
@@ -185,7 +185,7 @@ function initializeWatermarkDemo() {
                 <div style="text-align: center; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                     <div>
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
-                        <div style="font-weight: 600; color: #788C5D; margin-bottom: 0.25rem;">Watermark Removed</div>
+                        <div style="font-weight: 600; color: #4caf50; margin-bottom: 0.25rem;">Watermark Removed</div>
                         <div style="font-size: 0.85rem; color: #666;">ML Detection: Text Watermark</div>
                     </div>
                 </div>

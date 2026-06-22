@@ -5,7 +5,7 @@
 
 html.mobile-shell, html.mobile-shell body {
   margin: 0; padding: 0; height: 100%; overflow: hidden;
-  background: #1F1E1B; -webkit-text-size-adjust: 100%;
+  background: #0a0f1e; -webkit-text-size-adjust: 100%;
 }
 
 /* Hide all desktop chrome on phones */
@@ -66,7 +66,7 @@ html.mobile-shell #mobileShell {
 .ms-w-name { font-weight: 700; font-size: .95rem; margin-top: auto; }
 .ms-w-title { font-size: .72rem; opacity: .9; }
 .ms-w-status { background: rgba(255,255,255,.82); color: #1c1c1e; }
-.ms-w-h { font-size: .6rem; font-weight: 700; letter-spacing: .8px; color: #788C5D; }
+.ms-w-h { font-size: .6rem; font-weight: 700; letter-spacing: .8px; color: #e0245e; }
 .ms-w-big { font-size: 1.25rem; font-weight: 800; margin-top: 6px; }
 .ms-w-sub { font-size: .72rem; color: #6b6b70; margin-top: auto; }
 
@@ -101,9 +101,6 @@ html.mobile-shell #mobileShell {
 .ms-page-dots { display: flex; gap: 7px; justify-content: center; padding: 16px 0 4px; margin-top: auto; }
 .ms-page-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.4); }
 .ms-page-dots i.on { background: rgba(255,255,255,.95); }
-/* iOS light sand wallpaper -> dark dots so the paging affordance stays visible */
-.os-ios .ms-page-dots i { background: rgba(20,20,19,.30); }
-.os-ios .ms-page-dots i.on { background: rgba(20,20,19,.80); }
 
 /* ---------------- Dock ---------------- */
 .ms-dock { flex: 0 0 auto; display: flex; justify-content: space-around; align-items: center; }
@@ -133,14 +130,14 @@ html.mobile-shell #mobileShell {
   flex: 0 0 auto; display: flex; align-items: center; justify-content: center;
   height: calc(env(safe-area-inset-bottom) + 22px); padding-bottom: 7px; z-index: 6;
 }
-.ms-home-indicator span { display: block; width: 140px; height: 5px; border-radius: 3px; background: #FAF9F5; opacity: .6; }
+.ms-home-indicator span { display: block; width: 140px; height: 5px; border-radius: 3px; background: #000; opacity: .32; }
 
 /* ============================================================
    Full-screen "app" sheets (reused apps[].content)
    ============================================================ */
 .ms-sheet {
   position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column;
-  background: #F5F4EF; transform: scale(.92); opacity: 0; transform-origin: 50% 62%;
+  background: #eef1f5; transform: scale(.92); opacity: 0; transform-origin: 50% 62%;
   transition: transform .32s cubic-bezier(.2,.8,.2,1), opacity .24s ease; visibility: hidden;
 }
 .ms-sheet.open { transform: none; opacity: 1; visibility: visible; }
@@ -151,11 +148,10 @@ html.mobile-shell #mobileShell {
 .ms-sheet-head {
   flex: 0 0 auto; display: flex; align-items: center; gap: .6rem;
   padding: calc(env(safe-area-inset-top) + 12px) 12px 12px;
-  background: linear-gradient(135deg, #A84B2C, #B8542F); color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,.28);
+  background: linear-gradient(135deg, #BD5D3A, #D97757); color: #fff;
 }
 .ms-sheet-head .ms-back {
-  background: rgba(255,255,255,.24); border: 1px solid rgba(255,255,255,.35); color: #fff; cursor: pointer;
+  background: rgba(255,255,255,.16); border: none; color: #fff; cursor: pointer;
   height: 38px; min-width: 38px; border-radius: 10px; padding: 0 12px; font-weight: 700; font-size: .95rem;
 }
 .ms-sheet-head .ms-sheet-title { font-weight: 700; font-size: 1.05rem; }
@@ -173,9 +169,9 @@ html.mobile-shell #githubTrophies { grid-template-columns: repeat(auto-fit, minm
 /* Content that themes via CSS variables (e.g. Contact) was built for a dark
    context; pin light-theme values so it stays readable on the light sheet. */
 html.mobile-shell .ms-sheet-body {
-  --text-primary: #141413; --text-secondary: #5C5A53;
-  --bg-tertiary: #E8E6DC; --bg-secondary: #F5F4EF;
-  --glass-bg: #FAF9F5; --glass-border: #DAD9D2;
+  --text-primary: #1a2230; --text-secondary: #55657a;
+  --bg-tertiary: #ffffff; --bg-secondary: #f4f6f9;
+  --glass-bg: #ffffff; --glass-border: #e3e8ef;
 }
 
 /* Clippy chat reuses the existing widget, full-screen on phones */
@@ -216,7 +212,7 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
     linear-gradient(160deg, #D6C3A6, #9C7E5C);
 }
 .os-ios .ms-statusbar { color: #1a1410; }
-.os-ios .ms-app-lbl { color: #141413; text-shadow: 0 1px 2px rgba(255,255,255,.5); }
+.os-ios .ms-app-lbl { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.6), 0 0 2px rgba(0,0,0,.35); }
 .os-ios .ms-app-ico { border-radius: 14px; }              /* iOS squircle */
 .os-ios .ms-dock {
   margin: 0 10px; padding: 12px 10px;
@@ -257,7 +253,7 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
   color: #c9ccd1; font-size: .6rem; font-weight: 600;
 }
 .ms-qs-tile .ms-qs-ico { font-size: 1.3rem; }
-.ms-qs-tile.on { background: #E8B79E; color: #141413; }
+.ms-qs-tile.on { background: #E8B79E; color: #0b1b34; }
 .ms-bright { display: flex; align-items: center; gap: 10px; padding: 4px 4px 16px; }
 .ms-bright span { font-size: 1.1rem; }
 .ms-bright-range { flex: 1; accent-color: #E8B79E; height: 6px; }
@@ -277,7 +273,7 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 .ms-ccgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .ms-cc-conn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; place-items: center; background: rgba(255,255,255,.16); border-radius: 24px; padding: 14px; }
 .ms-cc-round { width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255,255,255,.22); color: #fff; font-size: 1.1rem; }
-.ms-cc-round.on { background: #788C5D; }
+.ms-cc-round.on { background: #34c759; }
 .ms-cc-round[data-toggle="wifi"].on, .ms-cc-round[data-toggle="bt"].on { background: #D97757; }
 .ms-cc-stack { display: flex; flex-direction: column; gap: 12px; }
 .ms-cc-sq { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 5px; border: none; cursor: pointer; background: rgba(255,255,255,.16); border-radius: 24px; padding: 14px; color: #fff; font-size: .74rem; font-weight: 600; }
@@ -315,6 +311,6 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 .os-ios .ms-search-row .ms-app-ico { border-radius: 11px; }
 /* Android search look (Material light) */
 .os-android .ms-search { background: #ffffff; color: #1f2430; }
-.os-android .ms-search-bar { border-bottom: 1px solid #DAD9D2; padding: 6px 4px 12px; }
+.os-android .ms-search-bar { border-bottom: 1px solid #e3e8ef; padding: 6px 4px 12px; }
 .os-android .ms-search-cancel { color: #1f6feb; }
 .os-android .ms-search-row .ms-app-ico { border-radius: 50%; }

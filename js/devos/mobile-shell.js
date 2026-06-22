@@ -23,31 +23,29 @@
   function appTitle(id) { return appData(id).title || id; }
 
   // Portfolio sections styled as crafted phone apps (id, label, gradient).
-  // Warm "Claude" icon palette — varied (real-phone feel) but all in warm
-  // tones: clay, amber, olive, rose, warm browns. No cold blue/teal/purple.
   var HOME_APPS = [
-    { id: 'about',         label: 'About',      grad: 'linear-gradient(145deg,#E08A6E,#D97757)' },
-    { id: 'experience',    label: 'Experience', grad: 'linear-gradient(145deg,#E0A35A,#C57E2A)' },
-    { id: 'projects',      label: 'Projects',   grad: 'linear-gradient(145deg,#C2643F,#A14E2F)' },
-    { id: 'skills',        label: 'Skills',     grad: 'linear-gradient(145deg,#F0B450,#E08A1D)' },
-    { id: 'certifications',label: 'Certs',      grad: 'linear-gradient(145deg,#E8927A,#C75B4A)' },
-    { id: 'github-stats',  label: 'GitHub',     grad: 'linear-gradient(145deg,#5A5048,#2A2520)' },
-    { id: 'ai-lab',        label: 'AI Lab',     grad: 'linear-gradient(145deg,#9BAE78,#788C5D)' },
-    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#F0C24D,#D99A1E)' },
-    { id: 'blog',          label: 'Blog',       grad: 'linear-gradient(145deg,#F08A66,#D9603A)' },
-    { id: 'terminal',      label: 'Terminal',   grad: 'linear-gradient(145deg,#3A332C,#1B1714)' },
-    { id: 'snake',         label: 'Snake',      grad: 'linear-gradient(145deg,#9BAE78,#6E8050)' },
-    { id: 'code-snippets', label: 'Snippets',   grad: 'linear-gradient(145deg,#C98E6A,#A86A45)' },
-    { id: 'analytics',     label: 'Analytics',  grad: 'linear-gradient(145deg,#D9A05B,#B57A2E)' },
-    { id: 'easter-eggs',   label: 'Secrets',    grad: 'linear-gradient(145deg,#E8A0A8,#CC6E7A)' },
-    { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#C9BBA6,#9C8E78)' },
-    { id: '__os',          label: OS === 'ios' ? 'Android' : 'iOS', grad: OS === 'ios' ? 'linear-gradient(145deg,#B6C49A,#788C5D)' : 'linear-gradient(145deg,#C9BBA6,#8A7458)' }
+    { id: 'about',         label: 'About',      grad: 'linear-gradient(145deg,#4f9cff,#1d6fe0)' },
+    { id: 'experience',    label: 'Experience', grad: 'linear-gradient(145deg,#22b8e6,#0e86c4)' },
+    { id: 'projects',      label: 'Projects',   grad: 'linear-gradient(145deg,#9b6cff,#6d3bdb)' },
+    { id: 'skills',        label: 'Skills',     grad: 'linear-gradient(145deg,#ffb24d,#f08a1d)' },
+    { id: 'certifications',label: 'Certs',      grad: 'linear-gradient(145deg,#ff6b81,#e11d48)' },
+    { id: 'github-stats',  label: 'GitHub',     grad: 'linear-gradient(145deg,#485063,#1b1f2a)' },
+    { id: 'ai-lab',        label: 'AI Lab',     grad: 'linear-gradient(145deg,#2dd4a7,#0ea371)' },
+    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#ffd24d,#f1a811)' },
+    { id: 'blog',          label: 'Blog',       grad: 'linear-gradient(145deg,#ff7a59,#e0492f)' },
+    { id: 'terminal',      label: 'Terminal',   grad: 'linear-gradient(145deg,#2b3340,#11151d)' },
+    { id: 'snake',         label: 'Snake',      grad: 'linear-gradient(145deg,#46d66b,#1ba345)' },
+    { id: 'code-snippets', label: 'Snippets',   grad: 'linear-gradient(145deg,#7c83ff,#4f46e5)' },
+    { id: 'analytics',     label: 'Analytics',  grad: 'linear-gradient(145deg,#2bd4c0,#0f9e95)' },
+    { id: 'easter-eggs',   label: 'Secrets',    grad: 'linear-gradient(145deg,#ff8ec2,#e1559a)' },
+    { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#8090a8,#475569)' },
+    { id: '__os',          label: OS === 'ios' ? 'Android' : 'iOS', grad: OS === 'ios' ? 'linear-gradient(145deg,#3ddc84,#0f9d58)' : 'linear-gradient(145deg,#aab0bb,#5b6370)' }
   ];
   var DOCK_APPS = [
-    { id: 'resume',   label: 'Résumé',  grad: 'linear-gradient(145deg,#E08A6E,#D97757)' },
-    { id: 'contact',  label: 'Contact', grad: 'linear-gradient(145deg,#9BAE78,#788C5D)' },
+    { id: 'resume',   label: 'Résumé',  grad: 'linear-gradient(145deg,#5aa0ff,#2f6fe6)' },
+    { id: 'contact',  label: 'Contact', grad: 'linear-gradient(145deg,#49d96b,#1ea34a)' },
     { id: '__chat',   label: 'Clippy',  grad: 'linear-gradient(145deg,#ffffff,#eef0f3)', img: 'assets/clippy/clippy-on-yellow-paper.png', badge: '1' },
-    { id: '__github', label: 'GitHub',  grad: 'linear-gradient(145deg,#5A5048,#2A2520)' }
+    { id: '__github', label: 'GitHub',  grad: 'linear-gradient(145deg,#485063,#15181f)' }
   ];
 
   // ---- SVG bits ---------------------------------------------------------

@@ -37,7 +37,7 @@ function copyCodeToClipboard(code, button) {
         navigator.clipboard.writeText(code).then(() => {
             const originalText = button.textContent;
             button.textContent = '✓ Copied!';
-            button.style.background = '#788C5D';
+            button.style.background = '#4caf50';
             
             setTimeout(() => {
                 button.textContent = originalText;
@@ -67,7 +67,7 @@ function fallbackCopyCode(code, button) {
         document.execCommand('copy');
         const originalText = button.textContent;
         button.textContent = '✓ Copied!';
-        button.style.background = '#788C5D';
+        button.style.background = '#4caf50';
         
         setTimeout(() => {
             button.textContent = originalText;
@@ -116,14 +116,14 @@ function runJavaScriptCode(code, container) {
         // Display result
         if (result !== undefined) {
             const resultStr = typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result);
-            outputDiv.innerHTML = `<div style="color: #788C5D; margin-bottom: 0.5rem;"><strong>Result:</strong></div><pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(resultStr)}</pre>`;
+            outputDiv.innerHTML = `<div style="color: #4caf50; margin-bottom: 0.5rem;"><strong>Result:</strong></div><pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(resultStr)}</pre>`;
             if (logs.length > 0) {
                 outputDiv.innerHTML += `<div style="color: #666; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #e0e0e0;"><strong>Console:</strong></div><pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(logs.join('\n'))}</pre>`;
             }
         } else if (logs.length > 0) {
             outputDiv.innerHTML = `<div style="color: #666;"><strong>Console Output:</strong></div><pre style="margin: 0; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(logs.join('\n'))}</pre>`;
         } else {
-            outputDiv.innerHTML = '<div style="color: #788C5D;">✓ Code executed successfully (no output)</div>';
+            outputDiv.innerHTML = '<div style="color: #4caf50;">✓ Code executed successfully (no output)</div>';
         }
     } catch (error) {
         outputDiv.innerHTML = `<div style="color: #ef4444;"><strong>Error:</strong> ${escapeHtml(error.message)}</div>`;

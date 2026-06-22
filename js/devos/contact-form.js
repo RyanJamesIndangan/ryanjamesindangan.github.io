@@ -94,7 +94,7 @@ function showFormStatus(statusDiv, message, type) {
     } else if (type === 'success') {
         statusDiv.style.background = 'rgba(76, 175, 80, 0.1)';
         statusDiv.style.border = '1px solid rgba(76, 175, 80, 0.3)';
-        statusDiv.style.color = '#788C5D';
+        statusDiv.style.color = '#4caf50';
     } else {
         statusDiv.style.background = 'var(--glass-bg)';
         statusDiv.style.border = '1px solid var(--glass-border)';
