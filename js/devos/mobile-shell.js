@@ -138,6 +138,61 @@
     openSheet(id);
   }
 
+  // Real-phone dismiss gestures on a sheet: pull-down-to-dismiss (the sheet
+  // presents as a card) and left-edge swipe-back. Both resolve to history.back()
+  // so they reuse the existing popstate -> closeSheet path. Touch-only.
+  function enableSheetGestures(sheet) {
+    var head = sheet.querySelector('.ms-sheet-head');
+    var body = sheet.querySelector('.ms-sheet-body');
+    var startX = 0, startY = 0, dx = 0, dy = 0, mode = null, fromTop = false, edge = false;
+
+    function paint() {
+      if (mode === 'v') {
+        sheet.style.transform = 'translateY(' + dy + 'px)';
+        sheet.style.opacity = String(Math.max(0.35, 1 - dy / 750));
+      } else if (mode === 'h') {
+        sheet.style.transform = 'translateX(' + dx + 'px)';
+        sheet.style.opacity = String(Math.max(0.35, 1 - dx / 750));
+      }
+    }
+    function reset(snap) {
+      sheet.style.transition = '';
+      if (snap) { sheet.style.transform = ''; sheet.style.opacity = ''; }
+      mode = null; dx = 0; dy = 0;
+    }
+    function onStart(e) {
+      if (e.touches.length !== 1 || sheet.querySelector('.blog-modal-overlay')) return;
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+      edge = startX <= 24;
+      fromTop = (head && head.contains(e.target)) || (body && body.scrollTop <= 0);
+      mode = null; dx = 0; dy = 0;
+      sheet.style.transition = 'none';
+    }
+    function onMove(e) {
+      if (e.touches.length !== 1) return;
+      var ddx = e.touches[0].clientX - startX, ddy = e.touches[0].clientY - startY;
+      if (mode === null) {
+        if (Math.abs(ddx) < 6 && Math.abs(ddy) < 6) return;
+        if (edge && ddx > 0 && Math.abs(ddx) > Math.abs(ddy)) mode = 'h';
+        else if (fromTop && ddy > 0 && Math.abs(ddy) > Math.abs(ddx)) mode = 'v';
+        else { mode = 'none'; sheet.style.transition = ''; }
+      }
+      if (mode === 'none') return;
+      e.preventDefault();
+      dx = Math.max(0, ddx); dy = Math.max(0, ddy);
+      paint();
+    }
+    function onEnd() {
+      if (mode === 'v' && dy > 110) { sheet.style.transform = 'translateY(100%)'; sheet.style.opacity = '0'; reset(false); history.back(); }
+      else if (mode === 'h' && dx > 90) { sheet.style.transform = 'translateX(100%)'; sheet.style.opacity = '0'; reset(false); history.back(); }
+      else reset(true);
+    }
+    sheet.addEventListener('touchstart', onStart, { passive: true });
+    sheet.addEventListener('touchmove', onMove, { passive: false });
+    sheet.addEventListener('touchend', onEnd, { passive: true });
+    sheet.addEventListener('touchcancel', onEnd, { passive: true });
+  }
+
   // ---- Full-screen "app" sheets ----------------------------------------
   function openSheet(id) {
     if (sheetOpen) closeSheet(true);
@@ -152,6 +207,7 @@
       '<div class="ms-sheet-body">' + appContent(id) + '</div>';
     document.body.appendChild(sheet);
     sheet.querySelector('.ms-back').addEventListener('click', function () { history.back(); });
+    enableSheetGestures(sheet);
     requestAnimationFrame(function () { sheet.classList.add('open'); });
     runInit(id);
     document.dispatchEvent(new CustomEvent('appOpened', { detail: { appId: id } }));
