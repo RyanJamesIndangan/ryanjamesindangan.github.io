@@ -67,7 +67,7 @@ class EasterEggs {
     }
     
     createConfetti() {
-        const colors = ['#D97757', '#4ade80', '#fbbf24', '#f87171', '#a78bfa', '#60a5fa'];
+        const colors = ['#64ffda', '#4ade80', '#fbbf24', '#f87171', '#a78bfa', '#60a5fa'];
         const confettiCount = 50;
         
         for (let i = 0; i < confettiCount; i++) {
@@ -149,7 +149,7 @@ class EasterEggs {
                 if (window.showNotification) {
                     window.showNotification('👨‍💻 Developer mode activated! Check console for details.', 'info', 3000);
                 }
-                console.log('%c👨‍💻 Developer Mode', 'font-size: 20px; font-weight: bold; color: #D97757;');
+                console.log('%c👨‍💻 Developer Mode', 'font-size: 20px; font-weight: bold; color: #64ffda;');
                 console.log('%cPortfolio built with vanilla JavaScript, no frameworks!', 'font-size: 14px; color: #4ade80;');
                 console.log('%cCheck out the code: https://github.com/ryanjamesindangan/ryanjamesindangan.github.io', 'font-size: 12px; color: #60a5fa;');
             }
@@ -246,7 +246,7 @@ class EasterEggs {
     
     initConsoleMessage() {
         // Show a friendly message in console
-        console.log('%c👋 Hello Developer!', 'font-size: 24px; font-weight: bold; color: #D97757;');
+        console.log('%c👋 Hello Developer!', 'font-size: 24px; font-weight: bold; color: #64ffda;');
         console.log('%cWelcome to Ryan\'s Portfolio!', 'font-size: 16px; color: #4ade80;');
         console.log('%cBuilt with vanilla JavaScript, CSS3, and lots of ❤️', 'font-size: 12px; color: #60a5fa;');
         console.log('%cTry the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', 'font-size: 12px; color: #fbbf24;');

@@ -61,7 +61,7 @@ html.mobile-shell #mobileShell {
   min-height: 118px; color: #fff; display: flex; flex-direction: column;
   box-shadow: 0 6px 18px rgba(0,0,0,.18);
 }
-.ms-w-profile { background: linear-gradient(150deg, #8a4f38, #c2643f); }
+.ms-w-profile { background: linear-gradient(150deg, #2e4a78, #5478b0); }
 .ms-w-profile img { width: 40px; height: 40px; border-radius: 11px; background: #fff; padding: 2px; }
 .ms-w-name { font-weight: 700; font-size: .95rem; margin-top: auto; }
 .ms-w-title { font-size: .72rem; opacity: .9; }
@@ -148,7 +148,7 @@ html.mobile-shell #mobileShell {
 .ms-sheet-head {
   flex: 0 0 auto; display: flex; align-items: center; gap: .6rem;
   padding: calc(env(safe-area-inset-top) + 12px) 12px 12px;
-  background: linear-gradient(135deg, #BD5D3A, #D97757); color: #fff;
+  background: linear-gradient(135deg, #16365c, #2171d6); color: #fff;
 }
 .ms-sheet-head .ms-back {
   background: rgba(255,255,255,.16); border: none; color: #fff; cursor: pointer;
@@ -192,9 +192,9 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 .os-android #mobileShell {
   font-family: "Roboto", "Google Sans", system-ui, "Segoe UI", sans-serif;
   background:
-    radial-gradient(120% 80% at 12% 8%, #43342a 0%, transparent 48%),
-    radial-gradient(110% 75% at 92% 96%, #4a3b2c 0%, transparent 55%),
-    linear-gradient(160deg, #2A2825, #1B1A17);
+    radial-gradient(120% 80% at 12% 8%, #244a8c 0%, transparent 48%),
+    radial-gradient(110% 75% at 92% 96%, #145048 0%, transparent 55%),
+    linear-gradient(160deg, #0c1428, #070b16);
 }
 .os-android .ms-statusbar { color: #fff; }
 .os-android .ms-app-lbl { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65); }
@@ -208,8 +208,8 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 .os-ios #mobileShell {
   font-family: -apple-system, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
   background:
-    radial-gradient(120% 90% at 18% 12%, #E4D3BD 0%, #C9B091 42%, #9C7E5C 78%),
-    linear-gradient(160deg, #D6C3A6, #9C7E5C);
+    radial-gradient(120% 90% at 18% 12%, #dccab4 0%, #b69d83 42%, #8a7058 78%),
+    linear-gradient(160deg, #cbb699, #8f7257);
 }
 .os-ios .ms-statusbar { color: #1a1410; }
 .os-ios .ms-app-lbl { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.6), 0 0 2px rgba(0,0,0,.35); }
@@ -253,10 +253,10 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
   color: #c9ccd1; font-size: .6rem; font-weight: 600;
 }
 .ms-qs-tile .ms-qs-ico { font-size: 1.3rem; }
-.ms-qs-tile.on { background: #E8B79E; color: #0b1b34; }
+.ms-qs-tile.on { background: #aecbfa; color: #0b1b34; }
 .ms-bright { display: flex; align-items: center; gap: 10px; padding: 4px 4px 16px; }
 .ms-bright span { font-size: 1.1rem; }
-.ms-bright-range { flex: 1; accent-color: #E8B79E; height: 6px; }
+.ms-bright-range { flex: 1; accent-color: #aecbfa; height: 6px; }
 .ms-notif { display: flex; flex-direction: column; gap: 8px; }
 .ms-notif-card { display: flex; gap: 12px; align-items: center; text-align: left; border: none; cursor: pointer; background: rgba(255,255,255,.07); border-radius: 18px; padding: 12px; color: #e8eaed; }
 .ms-notif-ico { font-size: 1.45rem; flex: 0 0 auto; }
@@ -274,7 +274,7 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 .ms-cc-conn { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; place-items: center; background: rgba(255,255,255,.16); border-radius: 24px; padding: 14px; }
 .ms-cc-round { width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255,255,255,.22); color: #fff; font-size: 1.1rem; }
 .ms-cc-round.on { background: #34c759; }
-.ms-cc-round[data-toggle="wifi"].on, .ms-cc-round[data-toggle="bt"].on { background: #D97757; }
+.ms-cc-round[data-toggle="wifi"].on, .ms-cc-round[data-toggle="bt"].on { background: #0a84ff; }
 .ms-cc-stack { display: flex; flex-direction: column; gap: 12px; }
 .ms-cc-sq { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 5px; border: none; cursor: pointer; background: rgba(255,255,255,.16); border-radius: 24px; padding: 14px; color: #fff; font-size: .74rem; font-weight: 600; }
 .ms-cc-sq-ico { font-size: 1.35rem; }

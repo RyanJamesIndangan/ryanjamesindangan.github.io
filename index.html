@@ -60,9 +60,9 @@
     <link rel="icon" type="image/png" sizes="96x96" href="assets/favicon-96x96.png">
     
     <!-- Microsoft Tiles -->
-    <meta name="msapplication-TileColor" content="#D97757">
+    <meta name="msapplication-TileColor" content="#2171d6">
     <meta name="msapplication-TileImage" content="assets/ms-icon-144x144.png">
-    <meta name="theme-color" content="#D97757">
+    <meta name="theme-color" content="#2171d6">
     
     <!-- SEO: Open Graph Meta Tags -->
     <meta property="og:type" content="website">
@@ -107,8 +107,8 @@
     <link rel="preload" href="assets/background.jpg" as="image" type="image/jpeg">
     
     <!-- Performance: Optimized Font Loading -->
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
     
     <!-- SEO: Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -231,8 +231,9 @@
                 <p class="boot-text">Welcome</p>
             </div>
             <div class="boot-windows-logo">
-                <svg class="boot-spark" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 C 12.6 9.4, 14.6 11.4, 22 12 C 14.6 12.6, 12.6 14.6, 12 22 C 11.4 14.6, 9.4 12.6, 2 12 C 9.4 11.4, 11.4 9.4, 12 2 Z" fill="#FAF9F5"/></svg>
-                <span class="windows-text">Portfolio OS</span>
+                <div class="windows-flag"></div>
+                <span class="windows-text">Windows</span>
+                <span class="windows-version">Portfolio OS</span>
             </div>
         </div>
     </div>
@@ -375,9 +376,64 @@
         <nav class="taskbar" role="navigation" aria-label="Taskbar">
             <div class="taskbar-start">
                 <button class="start-button" id="startButton" aria-label="Open Start Menu" aria-expanded="false" aria-controls="startMenu" aria-haspopup="true">
-                    <!-- Anthropic-style spark mark (replaces the Windows flag) -->
                     <svg class="windows-flag-start" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 1.5 C 12.7 9.6, 14.4 11.3, 22.5 12 C 14.4 12.7, 12.7 14.4, 12 22.5 C 11.3 14.4, 9.6 12.7, 1.5 12 C 9.6 11.3, 11.3 9.6, 12 1.5 Z" fill="#FAF9F5"/>
+                        <defs>
+                            <!-- Top highlight gradient -->
+                            <linearGradient id="topHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.6" />
+                                <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.2" />
+                                <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+                            </linearGradient>
+                            <!-- Bottom shadow gradient -->
+                            <linearGradient id="bottomShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#000000;stop-opacity:0" />
+                                <stop offset="100%" style="stop-color:#000000;stop-opacity:0.3" />
+                            </linearGradient>
+                            <!-- Left highlight gradient -->
+                            <linearGradient id="leftHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+                                <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+                            </linearGradient>
+                            <!-- Right shadow gradient -->
+                            <linearGradient id="rightShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#000000;stop-opacity:0" />
+                                <stop offset="100%" style="stop-color:#000000;stop-opacity:0.2" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <!-- White background rectangle with 3D effect -->
+                        <rect x="3" y="3" width="18" height="18" rx="2" fill="#ffffff" 
+                              stroke="rgba(255,255,255,0.8)" stroke-width="0.5"/>
+                        
+                        <!-- Top-left pane - Blue -->
+                        <rect x="3.5" y="3.5" width="8.5" height="8.5" fill="#00A1F1"/>
+                        <rect x="3.5" y="3.5" width="8.5" height="8.5" fill="url(#topHighlight)"/>
+                        <rect x="3.5" y="3.5" width="8.5" height="8.5" fill="url(#leftHighlight)"/>
+                        
+                        <!-- Top-right pane - Green -->
+                        <rect x="12" y="3.5" width="8.5" height="8.5" fill="#7CBB00"/>
+                        <rect x="12" y="3.5" width="8.5" height="8.5" fill="url(#topHighlight)"/>
+                        <rect x="12" y="3.5" width="8.5" height="8.5" fill="url(#rightShadow)"/>
+                        
+                        <!-- Bottom-left pane - Red/Orange -->
+                        <rect x="3.5" y="12" width="8.5" height="8.5" fill="#F65314"/>
+                        <rect x="3.5" y="12" width="8.5" height="8.5" fill="url(#bottomShadow)"/>
+                        <rect x="3.5" y="12" width="8.5" height="8.5" fill="url(#leftHighlight)"/>
+                        
+                        <!-- Bottom-right pane - Yellow -->
+                        <rect x="12" y="12" width="8.5" height="8.5" fill="#FFBB00"/>
+                        <rect x="12" y="12" width="8.5" height="8.5" fill="url(#bottomShadow)"/>
+                        <rect x="12" y="12" width="8.5" height="8.5" fill="url(#rightShadow)"/>
+                        
+                        <!-- Vertical separator line -->
+                        <line x1="12" y1="3" x2="12" y2="21" stroke="rgba(255,255,255,0.6)" stroke-width="0.5"/>
+                        
+                        <!-- Horizontal separator line -->
+                        <line x1="3" y1="12" x2="21" y2="12" stroke="rgba(255,255,255,0.6)" stroke-width="0.5"/>
+                        
+                        <!-- Outer shadow/glow -->
+                        <rect x="3" y="3" width="18" height="18" rx="2" fill="none" 
+                              stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/>
                     </svg>
                 </button>
             </div>

@@ -7,57 +7,53 @@
    =================================== */
 
 :root {
-    /* Anthropic "Claude" warm palette — Dark (default / dark-preference) */
-    --primary: #D97757;        /* clay / terracotta accent */
-    --secondary: #BD5D3A;      /* clay-dark companion */
-    --accent: #E0916F;         /* warm focus/highlight (clay-light on dark) */
-    --success: #8FA876;        /* olive (lightened for dark) */
-    --bg-primary: #1F1E1B;     /* warm near-black canvas */
-    --bg-secondary: #2A2825;   /* warm surface */
-    --bg-tertiary: #353230;    /* warm inset */
-    --text-primary: #FAF9F5;   /* ivory, never pure white */
-    --text-secondary: #C9C6BC; /* warm light gray */
-    --glass-bg: rgba(31, 30, 27, 0.55);
-    --glass-border: rgba(218, 217, 210, 0.18);
-    --shadow: rgba(20, 20, 19, 0.45);
-    --windows-blue: #D97757;   /* OS accent -> clay */
-    --windows-hover: #E0916F;
-    --brand: #D97757;          /* single confident accent */
-    --brand-dark: #BD5D3A;
-
+    /* Windows 7 Inspired Colors - Dark Mode (Default) */
+    --primary: #3399ff;
+    --secondary: #0078d7;
+    --accent: #ffb900;
+    --success: #00cc6a;
+    --bg-primary: #1a1d29;
+    --bg-secondary: #252837;
+    --bg-tertiary: #2d3142;
+    --text-primary: #ffffff;
+    --text-secondary: #b8c1db;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --shadow: rgba(0, 0, 0, 0.5);
+    --windows-blue: #0078d7;
+    --windows-hover: #1e90ff;
+    
     /* Spacing */
     --taskbar-height: 40px;
     --window-header-height: 32px;
-    --border-radius: 10px;     /* softer, Claude-friendly rounding */
+    --border-radius: 8px;
     --gap: 16px;
-
-    /* Animations — calm, never bouncy */
-    --transition-fast: 0.16s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-medium: 0.24s cubic-bezier(0.32, 0.72, 0, 1);
-    --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-
+    
+    /* Animations */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
     /* Theme Transition */
     --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Light Mode Theme — the warm "Claude" hero look (cream + clay) */
+/* Light Mode Theme */
 [data-theme="light"] {
-    --primary: #D97757;
-    --secondary: #BD5D3A;
-    --accent: #CC785C;         /* legacy "Crail" — warm focus ring on cream */
-    --success: #788C5D;        /* olive */
-    --bg-primary: #FAF9F5;     /* Anthropic ivory page */
-    --bg-secondary: #F5F4EF;   /* Claude cream surface */
-    --bg-tertiary: #E8E6DC;    /* oat inset */
-    --text-primary: #141413;   /* warm near-black */
-    --text-secondary: #5C5A53; /* warm slate, passes AA on cream */
-    --glass-bg: rgba(245, 244, 239, 0.72);
-    --glass-border: #DAD9D2;   /* warm sand hairline */
-    --shadow: rgba(60, 50, 40, 0.10);
-    --windows-blue: #D97757;
-    --windows-hover: #BD5D3A;
-    --brand: #D97757;
-    --brand-dark: #BD5D3A;
+    --primary: #0066cc;
+    --secondary: #0052a3;
+    --accent: #cc8800;
+    --success: #00a855;
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e8e8e8;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --glass-bg: rgba(0, 0, 0, 0.05);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --shadow: rgba(0, 0, 0, 0.15);
+    --windows-blue: #0066cc;
+    --windows-hover: #0052a3;
 }
 
 * {
@@ -67,7 +63,7 @@
 }
 
 body {
-    font-family: 'Hanken Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     overflow: hidden;
@@ -114,10 +110,10 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, 
-        #D97757 0%, 
-        #D97757 30%,
-        #BD5D3A 60%,
-        #9C4A2A 100%);
+        #0078d7 0%, 
+        #0066cc 30%,
+        #0052a3 60%,
+        #004080 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -361,23 +357,16 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Warm "paper" desktop. Default (dark theme) = warm near-black wash. */
-    background:
-        radial-gradient(1000px 700px at 78% -10%, rgba(217, 119, 87, 0.10) 0%, transparent 55%),
-        linear-gradient(160deg, #232019 0%, #1F1E1B 55%, #181614 100%);
+    background: 
+        linear-gradient(135deg, rgba(13, 17, 23, 0.4) 0%, rgba(26, 29, 41, 0.3) 50%, rgba(13, 17, 23, 0.4) 100%),
+        url('../assets/background.jpg') center center / cover no-repeat;
     z-index: 0;
+    filter: blur(0.5px);
     /* Performance: Optimize background rendering */
     will-change: transform;
     contain: layout style paint;
     /* Allow clicks to pass through to desktop */
     pointer-events: none;
-}
-
-/* Light theme = the warm ivory "Claude paper" desktop. */
-[data-theme="light"] .wallpaper {
-    background:
-        radial-gradient(1100px 760px at 78% -12%, #FBF6EE 0%, transparent 60%),
-        linear-gradient(160deg, #FAF9F5 0%, #F3F1E9 55%, #ECE8DC 100%);
 }
 
 .wallpaper::before {
@@ -388,8 +377,8 @@ body {
     width: 100%;
     height: 100%;
     background: 
-        radial-gradient(ellipse at 30% 40%, rgba(217, 119, 87, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 60%, rgba(224, 145, 111, 0.1) 0%, transparent 50%);
+        radial-gradient(ellipse at 30% 40%, rgba(0, 120, 215, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(51, 153, 255, 0.1) 0%, transparent 50%);
     animation: auroraShift 25s ease-in-out infinite alternate;
 }
 
@@ -400,7 +389,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(180deg, transparent 0%, rgba(60, 50, 40, 0.06) 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
 }
 
 @keyframes auroraShift {
@@ -519,12 +508,12 @@ body {
 /* Selection Box (Rubber Band) */
 .selection-box {
     position: fixed;
-    border: 1px solid rgba(224, 145, 111, 0.8);
-    background: rgba(224, 145, 111, 0.2);
+    border: 1px solid rgba(51, 153, 255, 0.8);
+    background: rgba(51, 153, 255, 0.2);
     pointer-events: none;
     z-index: 999;
     backdrop-filter: blur(2px);
-    box-shadow: 0 0 10px rgba(224, 145, 111, 0.4);
+    box-shadow: 0 0 10px rgba(51, 153, 255, 0.4);
 }
 
 .desktop-icon span {
@@ -534,12 +523,6 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 0, 0, 0.5);
     font-weight: 500;
     transition: var(--theme-transition);
-}
-
-/* On the light ivory desktop, dark icon labels with a soft cream halo stay legible. */
-[data-theme="light"] .desktop-icon span {
-    color: #141413;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75), 0 0 2px rgba(255, 255, 255, 0.9);
 }
 
 /* Recycle Bin Icon Styling - Windows 7 Style */
@@ -562,7 +545,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 1.4rem;
-    color: #D97757;
+    color: #0066cc;
     opacity: 0.85;
     z-index: 3;
     text-shadow: 
@@ -667,7 +650,7 @@ body {
         0 4px 16px var(--shadow),
         inset 0 1px 0 var(--glass-border),
         inset 0 -1px 0 var(--shadow),
-        0 0 30px rgba(217, 119, 87, 0.2);
+        0 0 30px rgba(100, 181, 246, 0.2);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -686,7 +669,7 @@ body {
         0 6px 24px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-        0 0 40px rgba(217, 119, 87, 0.3);
+        0 0 40px rgba(100, 181, 246, 0.3);
 }
 
 .window.minimized {
@@ -719,7 +702,7 @@ body {
     box-shadow: 
         0 1px 0 rgba(255, 255, 255, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        0 0 15px rgba(217, 119, 87, 0.15);
+        0 0 15px rgba(100, 181, 246, 0.15);
     position: relative;
 }
 
@@ -879,7 +862,7 @@ body {
 }
 
 .window-content a {
-    color: #D97757;
+    color: #2171d6;
 }
 
 .window-content a:hover {
@@ -932,7 +915,7 @@ body {
 
 /* Hover effect for better visibility */
 .resize-handle:hover {
-    background: rgba(217, 119, 87, 0.3);
+    background: rgba(33, 113, 214, 0.3);
 }
 
 /* Edge handles - thin but clickable */
@@ -1057,12 +1040,12 @@ body {
     padding: 0;
     width: 40px;
     height: 36px;
-    background: radial-gradient(circle at 30% 30%,
-        rgba(255, 255, 255, 0.35) 0%,
-        rgba(255, 255, 255, 0.18) 25%,
-        rgba(217, 119, 87, 0.92) 50%,
-        rgba(194, 100, 63, 0.95) 70%,
-        rgba(161, 78, 47, 0.98) 100%);
+    background: radial-gradient(circle at 30% 30%, 
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.15) 25%,
+        rgba(70, 130, 200, 0.85) 50%,
+        rgba(50, 110, 180, 0.90) 70%,
+        rgba(40, 90, 160, 0.95) 100%);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     color: #fff;
@@ -1073,7 +1056,7 @@ body {
         inset 0 1px 2px rgba(255, 255, 255, 0.4),
         inset 0 -1px 2px rgba(0, 0, 0, 0.3),
         0 1px 3px rgba(0, 0, 0, 0.3),
-        0 0 15px rgba(217, 119, 87, 0.3);
+        0 0 15px rgba(70, 130, 200, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -1487,7 +1470,7 @@ body {
         0 8px 32px rgba(0, 0, 0, 0.6),
         inset 0 1px 0 rgba(255, 255, 255, 0.5),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-        0 0 20px rgba(217, 119, 87, 0.2);
+        0 0 20px rgba(100, 181, 246, 0.2);
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
@@ -1677,14 +1660,14 @@ body {
 
 .app-tile:hover {
     background: linear-gradient(to right,
-        rgba(217, 119, 87, 0.15) 0%,
-        rgba(217, 119, 87, 0.1) 100%);
-    border: 1px solid rgba(217, 119, 87, 0.3);
+        rgba(0, 120, 215, 0.15) 0%,
+        rgba(0, 120, 215, 0.1) 100%);
+    border: 1px solid rgba(0, 120, 215, 0.3);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .app-tile:active {
-    background: rgba(217, 119, 87, 0.2);
+    background: rgba(0, 120, 215, 0.2);
 }
 
 .start-menu-search {
@@ -1754,10 +1737,10 @@ body {
 
 .menu-link:hover {
     background: linear-gradient(to right,
-        rgba(217, 119, 87, 0.15) 0%,
-        rgba(217, 119, 87, 0.08) 100%);
+        rgba(0, 120, 215, 0.15) 0%,
+        rgba(0, 120, 215, 0.08) 100%);
     color: #1a1a1a;
-    box-shadow: inset 0 0 0 1px rgba(217, 119, 87, 0.25);
+    box-shadow: inset 0 0 0 1px rgba(0, 120, 215, 0.25);
 }
 
 .start-menu-footer {
@@ -1782,7 +1765,7 @@ body {
 }
 
 .shutdown-btn:hover {
-    background: rgba(217, 119, 87, 0.15);
+    background: rgba(0, 120, 215, 0.15);
 }
 
 .shutdown-btn .arrow {
@@ -2593,7 +2576,7 @@ body {
 
 .cert-download-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(217, 119, 87, 0.3);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -2745,12 +2728,12 @@ body {
         rgba(255, 255, 255, 1) 0%,
         rgba(248, 248, 248, 1) 50%,
         rgba(240, 240, 240, 1) 100%);
-    border-color: rgba(217, 119, 87, 0.6);
+    border-color: rgba(100, 181, 246, 0.6);
     box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.9),
         inset 0 -1px 0 rgba(0, 0, 0, 0.15),
         0 1px 2px rgba(255, 255, 255, 0.6),
-        0 0 4px rgba(217, 119, 87, 0.3);
+        0 0 4px rgba(100, 181, 246, 0.3);
 }
 
 .dialog-btn:active {
@@ -2765,7 +2748,7 @@ body {
 
 .dialog-btn-primary {
     background: linear-gradient(to bottom,
-        rgba(217, 119, 87, 0.9) 0%,
+        rgba(100, 181, 246, 0.9) 0%,
         rgba(64, 169, 255, 0.9) 50%,
         rgba(53, 122, 189, 0.9) 100%);
     color: #fff;
@@ -2775,7 +2758,7 @@ body {
 
 .dialog-btn-primary:hover {
     background: linear-gradient(to bottom,
-        rgba(224, 145, 111, 0.95) 0%,
+        rgba(120, 201, 255, 0.95) 0%,
         rgba(84, 179, 255, 0.95) 50%,
         rgba(73, 142, 209, 0.95) 100%);
     border-color: rgba(73, 142, 209, 0.9);
@@ -2783,7 +2766,7 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.3),
         inset 0 -1px 0 rgba(0, 0, 0, 0.2),
         0 1px 2px rgba(255, 255, 255, 0.4),
-        0 0 8px rgba(217, 119, 87, 0.5);
+        0 0 8px rgba(100, 181, 246, 0.5);
 }
 
 .dialog-btn-primary:active {
@@ -2813,11 +2796,11 @@ body {
         rgba(25, 32, 58, 0.98) 100%);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(217, 119, 87, 0.3);
+    border: 1px solid rgba(100, 255, 218, 0.3);
     border-radius: 16px;
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(217, 119, 87, 0.2),
+        0 0 20px rgba(100, 255, 218, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     z-index: 500;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2840,7 +2823,7 @@ body {
     justify-content: space-between;
     gap: 0.75rem;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid rgba(217, 119, 87, 0.2);
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
     flex-shrink: 0;
     position: relative;
     overflow: visible;
@@ -2897,7 +2880,7 @@ body {
     right: 0;
     background: rgba(20, 25, 35, 0.98);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(217, 119, 87, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     border-radius: 8px;
     padding: 0.5rem;
     min-width: 180px;
@@ -2934,8 +2917,8 @@ body {
 }
 
 .ai-menu-item:hover {
-    background: rgba(217, 119, 87, 0.1);
-    color: #D97757;
+    background: rgba(100, 255, 218, 0.1);
+    color: #64ffda;
 }
 
 .ai-menu-item:active {
@@ -2944,14 +2927,14 @@ body {
 
 .ai-menu-divider {
     height: 1px;
-    background: rgba(217, 119, 87, 0.2);
+    background: rgba(100, 255, 218, 0.2);
     margin: 0.5rem 0;
 }
 
 .ai-menu-item.active {
-    background: rgba(217, 119, 87, 0.15);
+    background: rgba(100, 255, 218, 0.15);
     font-weight: 600;
-    color: #D97757;
+    color: #64ffda;
 }
 
 .ai-menu-section {
@@ -2997,7 +2980,7 @@ body {
     right: 0;
     background: rgba(20, 25, 35, 0.98);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(217, 119, 87, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     border-radius: 8px;
     padding: 0.75rem;
     min-width: 250px;
@@ -3030,7 +3013,7 @@ body {
 .ai-search-input {
     flex: 1;
     background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(217, 119, 87, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     border-radius: 6px;
     padding: 0.5rem 0.75rem;
     color: #fff;
@@ -3040,8 +3023,8 @@ body {
 }
 
 .ai-search-input:focus {
-    border-color: #D97757;
-    box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.1);
+    border-color: #64ffda;
+    box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
 }
 
 .ai-search-close {
@@ -3074,9 +3057,9 @@ body {
 
 .search-results-count {
     font-size: 0.75rem;
-    color: rgba(217, 119, 87, 0.7);
+    color: rgba(100, 255, 218, 0.7);
     padding: 0.25rem 0.5rem;
-    background: rgba(217, 119, 87, 0.1);
+    background: rgba(100, 255, 218, 0.1);
     border-radius: 4px;
     white-space: nowrap;
     flex-shrink: 0;
@@ -3090,12 +3073,12 @@ body {
     gap: 0.5rem;
     margin-top: 0.5rem;
     padding-top: 0.5rem;
-    border-top: 1px solid rgba(217, 119, 87, 0.1);
+    border-top: 1px solid rgba(100, 255, 218, 0.1);
 }
 
 .ai-reaction-btn {
-    background: rgba(217, 119, 87, 0.1);
-    border: 1px solid rgba(217, 119, 87, 0.2);
+    background: rgba(100, 255, 218, 0.1);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     border-radius: 20px;
     padding: 0.25rem 0.5rem;
     font-size: 0.9rem;
@@ -3107,28 +3090,28 @@ body {
 }
 
 .ai-reaction-btn:hover {
-    background: rgba(217, 119, 87, 0.2);
+    background: rgba(100, 255, 218, 0.2);
     transform: scale(1.1);
 }
 
 .ai-reaction-btn.active {
-    background: rgba(217, 119, 87, 0.3);
-    border-color: #D97757;
-    box-shadow: 0 0 8px rgba(217, 119, 87, 0.3);
+    background: rgba(100, 255, 218, 0.3);
+    border-color: #64ffda;
+    box-shadow: 0 0 8px rgba(100, 255, 218, 0.3);
 }
 
 /* Search highlights */
 .search-highlight {
-    background: rgba(217, 119, 87, 0.3);
-    color: #D97757;
+    background: rgba(100, 255, 218, 0.3);
+    color: #64ffda;
     padding: 0.1em 0.2em;
     border-radius: 3px;
     font-weight: 600;
 }
 
 .ai-message.search-match {
-    background: rgba(217, 119, 87, 0.05);
-    border-left: 3px solid #D97757;
+    background: rgba(100, 255, 218, 0.05);
+    border-left: 3px solid #64ffda;
     padding-left: 0.5rem;
 }
 
@@ -3700,7 +3683,7 @@ body {
 
 .clippy-radio-option:hover,
 .clippy-checkbox-option:hover {
-    color: #D97757;
+    color: #2171d6;
 }
 
 .clippy-radio-option input[type="radio"],
@@ -3711,7 +3694,7 @@ body {
     flex-shrink: 0;
     width: 16px;
     height: 16px;
-    accent-color: #D97757;
+    accent-color: #2171d6;
 }
 
 .clippy-radio-option span,
@@ -3729,9 +3712,9 @@ body {
 
 .clippy-suggestion-ok {
     padding: 0.5rem 1.5rem;
-    background: #D97757;
+    background: #2171d6;
     color: #fff;
-    border: 1px solid #BD5D3A;
+    border: 1px solid #1a5fb8;
     border-radius: 6px;
     font-size: 0.9rem;
     font-weight: 600;
@@ -3741,9 +3724,9 @@ body {
 }
 
 .clippy-suggestion-ok:hover {
-    background: #BD5D3A;
+    background: #1a5fb8;
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(217, 119, 87, 0.3);
+    box-shadow: 0 2px 8px rgba(33, 113, 214, 0.3);
 }
 
 .clippy-suggestion-ok:active {
@@ -3804,7 +3787,7 @@ body {
     
     .clippy-radio-option:hover,
     .clippy-checkbox-option:hover {
-        color: #D97757;
+        color: #64ffda;
     }
     
     .clippy-suggestion-pointer {
@@ -3837,7 +3820,7 @@ body {
 }
 
 .ai-assistant-title {
-    color: #D97757;
+    color: #64ffda;
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
@@ -3879,12 +3862,12 @@ body {
 }
 
 .ai-chat-messages::-webkit-scrollbar-thumb {
-    background: rgba(217, 119, 87, 0.3);
+    background: rgba(100, 255, 218, 0.3);
     border-radius: 3px;
 }
 
 .ai-chat-messages::-webkit-scrollbar-thumb:hover {
-    background: rgba(217, 119, 87, 0.5);
+    background: rgba(100, 255, 218, 0.5);
 }
 
 .ai-message {
@@ -3906,8 +3889,8 @@ body {
     justify-content: center;
     font-size: 1.25rem;
     flex-shrink: 0;
-    background: rgba(217, 119, 87, 0.2);
-    border: 1px solid rgba(217, 119, 87, 0.3);
+    background: rgba(100, 255, 218, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.3);
     overflow: hidden;
 }
 
@@ -3934,7 +3917,7 @@ body {
     padding: 0.75rem 1rem;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
-    border: 1px solid rgba(217, 119, 87, 0.1);
+    border: 1px solid rgba(100, 255, 218, 0.1);
     white-space: pre-wrap;
     word-wrap: break-word;
 }
@@ -3959,12 +3942,12 @@ body {
     gap: 0.5rem;
     margin-top: 0.75rem;
     padding-top: 0.75rem;
-    border-top: 1px solid rgba(217, 119, 87, 0.1);
+    border-top: 1px solid rgba(100, 255, 218, 0.1);
 }
 
 .ai-quick-reply-btn {
-    background: rgba(217, 119, 87, 0.15);
-    border: 1px solid rgba(217, 119, 87, 0.3);
+    background: rgba(100, 255, 218, 0.15);
+    border: 1px solid rgba(100, 255, 218, 0.3);
     color: rgba(255, 255, 255, 0.9);
     padding: 0.5rem 0.75rem;
     border-radius: 16px;
@@ -3976,23 +3959,23 @@ body {
 }
 
 .ai-quick-reply-btn:hover {
-    background: rgba(217, 119, 87, 0.25);
-    border-color: rgba(217, 119, 87, 0.5);
+    background: rgba(100, 255, 218, 0.25);
+    border-color: rgba(100, 255, 218, 0.5);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(217, 119, 87, 0.2);
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.2);
 }
 
 .ai-quick-reply-btn:active {
     transform: translateY(0);
-    background: rgba(217, 119, 87, 0.2);
+    background: rgba(100, 255, 218, 0.2);
 }
 
 /* Chat Action Buttons (Open App buttons) */
 .chat-action-btn {
     display: inline-block;
-    background: linear-gradient(135deg, rgba(217, 119, 87, 0.2) 0%, rgba(217, 119, 87, 0.15) 100%);
-    border: 1px solid rgba(217, 119, 87, 0.4);
-    color: #D97757;
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.2) 0%, rgba(100, 255, 218, 0.15) 100%);
+    border: 1px solid rgba(100, 255, 218, 0.4);
+    color: #64ffda;
     padding: 0.4rem 0.8rem;
     border-radius: 6px;
     font-size: 0.85rem;
@@ -4004,10 +3987,10 @@ body {
 }
 
 .chat-action-btn:hover {
-    background: linear-gradient(135deg, rgba(217, 119, 87, 0.3) 0%, rgba(217, 119, 87, 0.25) 100%);
-    border-color: rgba(217, 119, 87, 0.6);
+    background: linear-gradient(135deg, rgba(100, 255, 218, 0.3) 0%, rgba(100, 255, 218, 0.25) 100%);
+    border-color: rgba(100, 255, 218, 0.6);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(217, 119, 87, 0.3);
+    box-shadow: 0 2px 8px rgba(100, 255, 218, 0.3);
 }
 
 .chat-action-btn:active {
@@ -4026,13 +4009,13 @@ body {
     gap: 4px;
     padding: 0.75rem 1rem !important;
     background: rgba(0, 0, 0, 0.3) !important;
-    border: 1px solid rgba(217, 119, 87, 0.1) !important;
+    border: 1px solid rgba(100, 255, 218, 0.1) !important;
 }
 
 .ai-typing-dot {
     width: 8px;
     height: 8px;
-    background: rgba(217, 119, 87, 0.6);
+    background: rgba(100, 255, 218, 0.6);
     border-radius: 50%;
     animation: typingPulse 1.4s ease-in-out infinite;
 }
@@ -4060,7 +4043,7 @@ body {
     display: flex;
     gap: 0.5rem;
     padding: 1rem;
-    border-top: 1px solid rgba(217, 119, 87, 0.2);
+    border-top: 1px solid rgba(100, 255, 218, 0.2);
     background: rgba(0, 0, 0, 0.2);
     flex-shrink: 0;
     align-items: center;
@@ -4070,9 +4053,9 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(217, 119, 87, 0.1);
-    border: 1px solid rgba(217, 119, 87, 0.3);
-    color: #D97757;
+    background: rgba(100, 255, 218, 0.1);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    color: #64ffda;
     font-size: 1.25rem;
     cursor: pointer;
     display: flex;
@@ -4083,7 +4066,7 @@ body {
 }
 
 .ai-voice-btn:hover {
-    background: rgba(217, 119, 87, 0.2);
+    background: rgba(100, 255, 218, 0.2);
     transform: scale(1.1);
 }
 
@@ -4107,7 +4090,7 @@ body {
 .ai-chat-input {
     flex: 1;
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(217, 119, 87, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     border-radius: 20px;
     padding: 0.75rem 1rem;
     color: rgba(255, 255, 255, 0.95);
@@ -4117,7 +4100,7 @@ body {
 }
 
 .ai-chat-input:focus {
-    border-color: rgba(217, 119, 87, 0.5);
+    border-color: rgba(100, 255, 218, 0.5);
     background: rgba(255, 255, 255, 0.15);
 }
 
@@ -4129,7 +4112,7 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #D97757 0%, #4ade80 100%);
+    background: linear-gradient(135deg, #64ffda 0%, #4ade80 100%);
     border: none;
     color: #1a1a1a;
     font-size: 1.25rem;
@@ -4147,7 +4130,7 @@ body {
 
 .ai-send-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(217, 119, 87, 0.4);
+    box-shadow: 0 4px 12px rgba(100, 255, 218, 0.4);
 }
 
 .ai-send-btn:active {
@@ -4168,11 +4151,11 @@ body {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #D97757 0%, #4ade80 100%);
+    background: linear-gradient(135deg, #64ffda 0%, #4ade80 100%);
     border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: 
         0 4px 16px rgba(0, 0, 0, 0.4),
-        0 0 20px rgba(217, 119, 87, 0.4),
+        0 0 20px rgba(100, 255, 218, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
     cursor: pointer;
     display: none;
@@ -4191,7 +4174,7 @@ body {
     transform: scale(1.1);
     box-shadow: 
         0 6px 20px rgba(0, 0, 0, 0.4),
-        0 0 30px rgba(217, 119, 87, 0.5);
+        0 0 30px rgba(100, 255, 218, 0.5);
 }
 
 .ai-toggle-icon {
@@ -4275,7 +4258,7 @@ body {
         rgba(25, 32, 58, 0.98) 100%);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(217, 119, 87, 0.3);
+    border-top: 1px solid rgba(100, 255, 218, 0.3);
     border-radius: 20px 20px 0 0;
     box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
     z-index: 10000;
@@ -4358,7 +4341,7 @@ body {
     gap: 0.75rem;
     padding: 1.5rem 1rem;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(217, 119, 87, 0.2);
+    border: 1px solid rgba(100, 255, 218, 0.2);
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -4367,7 +4350,7 @@ body {
 
 .mobile-app-item:active {
     transform: scale(0.95);
-    background: rgba(217, 119, 87, 0.1);
+    background: rgba(100, 255, 218, 0.1);
 }
 
 .mobile-app-icon {
@@ -4438,8 +4421,8 @@ body {
 .search-result-item:hover,
 .search-result-item[data-highlight="true"] {
     background: linear-gradient(to right,
-        rgba(217, 119, 87, 0.1) 0%,
-        rgba(217, 119, 87, 0.05) 100%);
+        rgba(0, 120, 215, 0.1) 0%,
+        rgba(0, 120, 215, 0.05) 100%);
 }
 
 .search-result-icon {
@@ -4547,7 +4530,7 @@ body {
             0 4px 16px rgba(0, 0, 0, 0.3),
             inset 0 1px 0 rgba(255, 255, 255, 0.7),
             inset 0 -1px 0 rgba(0, 0, 0, 0.15),
-            0 0 30px rgba(217, 119, 87, 0.2);
+            0 0 30px rgba(100, 181, 246, 0.2);
     }
     50% {
         box-shadow: 
@@ -4555,7 +4538,7 @@ body {
             0 6px 24px rgba(0, 0, 0, 0.4),
             inset 0 1px 0 rgba(255, 255, 255, 0.8),
             inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-            0 0 50px rgba(217, 119, 87, 0.4);
+            0 0 50px rgba(100, 181, 246, 0.4);
     }
 }
 
@@ -4739,15 +4722,15 @@ body {
 
 .wallpaper-option:hover {
     background: rgba(255, 255, 255, 0.8);
-    border-color: rgba(217, 119, 87, 0.5);
+    border-color: rgba(0, 120, 215, 0.5);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .wallpaper-option.active {
-    border-color: #D97757;
-    background: rgba(217, 119, 87, 0.1);
-    box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.2);
+    border-color: #0078d7;
+    background: rgba(0, 120, 215, 0.1);
+    box-shadow: 0 0 0 2px rgba(0, 120, 215, 0.2);
 }
 
 .wallpaper-preview {
@@ -4780,11 +4763,11 @@ body {
     background: linear-gradient(to bottom,
         rgba(30, 36, 66, 0.98) 0%,
         rgba(25, 32, 58, 0.98) 100%);
-    border-color: rgba(217, 119, 87, 0.3);
+    border-color: rgba(100, 255, 218, 0.3);
 }
 
 [data-theme="dark"] .wallpaper-menu-header {
-    border-bottom-color: rgba(217, 119, 87, 0.2);
+    border-bottom-color: rgba(100, 255, 218, 0.2);
 }
 
 [data-theme="dark"] .wallpaper-menu-header h3 {
@@ -4802,18 +4785,18 @@ body {
 
 [data-theme="dark"] .wallpaper-option {
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(217, 119, 87, 0.2);
+    border-color: rgba(100, 255, 218, 0.2);
 }
 
 [data-theme="dark"] .wallpaper-option:hover {
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(217, 119, 87, 0.4);
+    border-color: rgba(100, 255, 218, 0.4);
 }
 
 [data-theme="dark"] .wallpaper-option.active {
-    border-color: #D97757;
-    background: rgba(217, 119, 87, 0.1);
-    box-shadow: 0 0 0 2px rgba(217, 119, 87, 0.2);
+    border-color: #64ffda;
+    background: rgba(100, 255, 218, 0.1);
+    box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
 }
 
 [data-theme="dark"] .wallpaper-name {
@@ -4865,7 +4848,7 @@ body {
     scroll-behavior: smooth;
     padding: 1rem 0;
     scrollbar-width: thin;
-    scrollbar-color: #D97757 #f0f0f0;
+    scrollbar-color: #2171d6 #f0f0f0;
 }
 
 .testimonials-carousel::-webkit-scrollbar {
@@ -4878,12 +4861,12 @@ body {
 }
 
 .testimonials-carousel::-webkit-scrollbar-thumb {
-    background: #D97757;
+    background: #2171d6;
     border-radius: 4px;
 }
 
 .testimonials-carousel::-webkit-scrollbar-thumb:hover {
-    background: #BD5D3A;
+    background: #1a5fb8;
 }
 
 .testimonial-card {
@@ -4909,7 +4892,7 @@ body {
 
 .testimonial-nav-btn {
     padding: 0.75rem 1.5rem;
-    background: #D97757;
+    background: #2171d6;
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -4920,7 +4903,7 @@ body {
 }
 
 .testimonial-nav-btn:hover {
-    background: #BD5D3A;
+    background: #1a5fb8;
     transform: scale(1.05);
 }
 
@@ -4957,7 +4940,7 @@ body {
 }
 
 .testimonial-dot.active {
-    background: #D97757;
+    background: #2171d6;
     transform: scale(1.2);
 }
 
@@ -5063,8 +5046,8 @@ body {
 
 #blogSearchInput:focus {
     outline: none;
-    border-color: #D97757;
-    box-shadow: 0 0 0 3px rgba(217, 119, 87, 0.1);
+    border-color: #2171d6;
+    box-shadow: 0 0 0 3px rgba(33, 113, 214, 0.1);
 }
 
 .read-more-btn:hover {
@@ -5223,7 +5206,7 @@ body {
 
 .pipeline-step.active {
     background: #e8f4f8 !important;
-    border-color: #D97757 !important;
+    border-color: #2171d6 !important;
     transform: scale(1.05);
 }
 
@@ -5375,7 +5358,7 @@ body {
 
 .social-share-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(224, 145, 111, 0.4);
+    box-shadow: 0 4px 12px rgba(51, 153, 255, 0.4);
 }
 
 .social-share-btn.linkedin {
@@ -5422,7 +5405,7 @@ body {
 }
 
 .performance-metrics h3 {
-    color: #D97757;
+    color: #2171d6;
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -5441,7 +5424,7 @@ body {
 .metric-value {
     font-size: 2rem;
     font-weight: bold;
-    color: #D97757;
+    color: #2171d6;
     margin-bottom: 0.25rem;
 }
 
@@ -5522,7 +5505,7 @@ body {
     background: var(--windows-hover);
     border-color: var(--windows-blue);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(217, 119, 87, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 120, 215, 0.3);
 }
 
 .social-share-btn .share-icon {
@@ -5633,7 +5616,7 @@ body {
     background: var(--windows-hover);
     border-color: var(--windows-blue);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(217, 119, 87, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 120, 215, 0.3);
 }
 
 .share-btn .share-icon {
@@ -5859,33 +5842,13 @@ body {
 }
 
 /* ===================================
-   Claude editorial typography — serif display for headings & titles
-   (Fraunces), warm sans (Hanken Grotesk) for body/UI via body{}.
-   Terminal/code keep their monospace stack.
-   =================================== */
-.window-title,
-.ms-sheet-title,
-.boot-logo h1,
-.start-menu-header,
-.window-content h1, .window-content h2, .window-content h3, .window-content h4,
-.ms-sheet-body h1, .ms-sheet-body h2, .ms-sheet-body h3 {
-    font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
-    letter-spacing: -0.01em;
-}
-/* Keep code/terminal monospace even if they contain headings */
-.terminal-content h1, .terminal-content h2, .terminal-content h3,
-.code-snippet-container *, pre, code, .terminal-output, .terminal-input {
-    font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace !important;
-}
-
-/* ===================================
    Accessibility — global focus + motion
    =================================== */
 
 /* Visible keyboard focus for every interactive control (mouse clicks stay clean
    thanks to :focus-visible). The skip-link keeps its own stronger style. */
 :focus-visible {
-    outline: 2px solid #D97757;
+    outline: 2px solid #2171d6;
     outline-offset: 2px;
     border-radius: 3px;
 }
@@ -5895,7 +5858,7 @@ body {
 .window-btn:focus-visible {
     outline: 2px solid #ffffff;
     outline-offset: 1px;
-    box-shadow: 0 0 0 4px rgba(217, 119, 87, 0.65);
+    box-shadow: 0 0 0 4px rgba(33, 113, 214, 0.65);
 }
 
 /* Honor prefers-reduced-motion site-wide: neutralize transitions/animations
@@ -5908,57 +5871,4 @@ body {
         scroll-behavior: auto !important;
     }
 }
-
-/* ===================================
-   Claude warm reskin — AI assistant chat widget (was dark navy + teal)
-   =================================== */
-.ai-assistant-widget {
-    background: linear-gradient(135deg, #F5F4EF 0%, #EFEDE5 100%) !important;
-    border: 1px solid #DAD9D2 !important;
-    box-shadow: 0 8px 32px rgba(60, 50, 40, 0.20), 0 2px 8px rgba(20, 20, 19, 0.06) !important;
-}
-.ai-assistant-widget-header {
-    background: linear-gradient(135deg, #BD5D3A 0%, #D97757 100%);
-    border-bottom: 1px solid rgba(218, 217, 210, 0.35) !important;
-}
-.ai-assistant-title { color: #FAF9F5 !important; }
-.ai-status-indicator, .ai-assistant-widget-header .ai-status { color: rgba(255, 255, 255, 0.85) !important; }
-.ai-assistant-close, .ai-minimize-btn, .ai-menu-btn { color: rgba(255, 255, 255, 0.9) !important; }
-.ai-chat-container, .ai-chat-messages { background: #F5F4EF !important; }
-.ai-message-text {
-    background: #FFFFFF !important;
-    color: #141413 !important;
-    border: 1px solid #E6E3DA !important;
-}
-.ai-message-user .ai-message-text {
-    background: #D97757 !important;
-    color: #FAF9F5 !important;
-    border-color: #BD5D3A !important;
-}
-.ai-message-avatar {
-    background: rgba(217, 119, 87, 0.16) !important;
-    border: 1px solid rgba(217, 119, 87, 0.30) !important;
-}
-.ai-message-user .ai-message-avatar {
-    background: rgba(189, 93, 58, 0.16) !important;
-    border-color: rgba(189, 93, 58, 0.30) !important;
-}
-.ai-message-time { color: #8A887F !important; }
-.ai-quick-reply-btn {
-    background: rgba(217, 119, 87, 0.10) !important;
-    color: #A84B2A !important;
-    border: 1px solid rgba(217, 119, 87, 0.35) !important;
-}
-.ai-quick-reply-btn:hover { background: rgba(217, 119, 87, 0.18) !important; }
-.ai-typing-text { color: #8A887F !important; }
-.ai-typing-dot { background: #D97757 !important; }
-.ai-chat-input-container { background: #EFEDE5 !important; border-top: 1px solid #DAD9D2 !important; }
-.ai-chat-input {
-    background: #FFFFFF !important;
-    color: #141413 !important;
-    border: 1px solid #DAD9D2 !important;
-}
-.ai-chat-input::placeholder { color: #8A887F !important; }
-.ai-send-btn { background: #D97757 !important; color: #FAF9F5 !important; }
-.ai-send-btn:hover { background: #BD5D3A !important; }
 
