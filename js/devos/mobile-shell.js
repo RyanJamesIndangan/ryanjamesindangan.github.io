@@ -89,6 +89,9 @@
       case 'github-stats': g('loadGitHubStats', 'initializeGitHubStats'); break;
       case 'ai-lab':       g('initializeOCRDemo', 'initializePipelineVisualization', 'initializeWatermarkDemo'); break;
       case 'blog':         g('initializeBlogFilters', 'initializeBlogSearch', 'initializeBlogPostModals'); break;
+      case 'easter-eggs':  g('initializeEasterEggsApp'); break;
+      // analytics / code-snippets / contact init themselves via the 'appOpened'
+      // event (dispatched by openSheet), so they don't need a case here.
     }
   }
 

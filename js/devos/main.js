@@ -952,29 +952,13 @@ function openApp(appId, position = null) {
     }
 }
 
-// Initialize Easter Eggs App
+// Initialize Easter Eggs App — document-delegated (bind once) so the buttons
+// work whether the app is in a desktop window OR a mobile sheet.
 function initializeEasterEggsApp() {
-    // Find the easter-eggs window
-    const easterEggsWindow = window.windowManager?.windows.get('easter-eggs');
-    if (!easterEggsWindow) {
-        console.warn('Easter Eggs window not found, retrying...');
-        setTimeout(initializeEasterEggsApp, 200);
-        return;
-    }
-    
-    // Find the window content container
-    const windowContent = easterEggsWindow.querySelector('.window-content');
-    if (!windowContent) {
-        console.warn('Easter Eggs window content not found, retrying...');
-        setTimeout(initializeEasterEggsApp, 200);
-        return;
-    }
-    
-    // Try Konami Code button - search within the window content
-    const tryKonamiBtn = windowContent.querySelector('.try-konami-btn');
-    if (tryKonamiBtn && !tryKonamiBtn.dataset.initialized) {
-        tryKonamiBtn.dataset.initialized = 'true';
-        tryKonamiBtn.addEventListener('click', (e) => {
+    if (initializeEasterEggsApp._bound) return;
+    initializeEasterEggsApp._bound = true;
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.try-konami-btn')) {
             e.preventDefault();
             e.stopPropagation();
             if (window.easterEggs) {
@@ -983,27 +967,17 @@ function initializeEasterEggsApp() {
             } else {
                 showNotification('⚠️ Easter Eggs system not initialized', 'warning', 2000);
             }
-        });
-    } else if (!tryKonamiBtn) {
-        console.warn('Try Konami button not found in Easter Eggs app');
-    }
-    
-    // Console hint button - search within the window content
-    const consoleHintBtn = windowContent.querySelector('.open-console-hint-btn');
-    if (consoleHintBtn && !consoleHintBtn.dataset.initialized) {
-        consoleHintBtn.dataset.initialized = 'true';
-        consoleHintBtn.addEventListener('click', (e) => {
+            return;
+        }
+        if (e.target.closest('.open-console-hint-btn')) {
             e.preventDefault();
             e.stopPropagation();
             showNotification('💡 Open browser console (F12) to see the hint!', 'info', 4000);
-            // Also log it to console if available
             if (console && console.log) {
                 console.log('%cTry the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', 'font-size: 12px; color: #fbbf24;');
             }
-        });
-    } else if (!consoleHintBtn) {
-        console.warn('Console hint button not found in Easter Eggs app');
-    }
+        }
+    });
 }
 
 // ===========================
