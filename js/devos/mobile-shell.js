@@ -23,7 +23,8 @@
   function appTitle(id) { return appData(id).title || id; }
 
   // Portfolio sections styled as crafted phone apps (id, label, gradient).
-  var HOME_APPS = [
+  // Page 1 (Home) = portfolio-core apps; Page 2 (More) = utilities / fun / switches.
+  var HOME_PAGE_APPS = [
     { id: 'about',         label: 'About',      grad: 'linear-gradient(145deg,#4f9cff,#1d6fe0)' },
     { id: 'experience',    label: 'Experience', grad: 'linear-gradient(145deg,#22b8e6,#0e86c4)' },
     { id: 'projects',      label: 'Projects',   grad: 'linear-gradient(145deg,#9b6cff,#6d3bdb)' },
@@ -31,7 +32,9 @@
     { id: 'certifications',label: 'Certs',      grad: 'linear-gradient(145deg,#ff6b81,#e11d48)' },
     { id: 'github-stats',  label: 'GitHub',     grad: 'linear-gradient(145deg,#485063,#1b1f2a)' },
     { id: 'ai-lab',        label: 'AI Lab',     grad: 'linear-gradient(145deg,#2dd4a7,#0ea371)' },
-    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#ffd24d,#f1a811)' },
+    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#ffd24d,#f1a811)' }
+  ];
+  var MORE_APPS = [
     { id: 'blog',          label: 'Blog',       grad: 'linear-gradient(145deg,#ff7a59,#e0492f)' },
     { id: 'terminal',      label: 'Terminal',   grad: 'linear-gradient(145deg,#2b3340,#11151d)' },
     { id: 'snake',         label: 'Snake',      grad: 'linear-gradient(145deg,#46d66b,#1ba345)' },
@@ -41,6 +44,7 @@
     { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#8090a8,#475569)' },
     { id: '__os',          label: OS === 'ios' ? 'Android' : 'iOS', grad: OS === 'ios' ? 'linear-gradient(145deg,#3ddc84,#0f9d58)' : 'linear-gradient(145deg,#aab0bb,#5b6370)' }
   ];
+  var HOME_APPS = HOME_PAGE_APPS.concat(MORE_APPS);   // combined list (search uses this)
   var DOCK_APPS = [
     { id: 'resume',   label: 'Résumé',  grad: 'linear-gradient(145deg,#5aa0ff,#2f6fe6)' },
     { id: 'contact',  label: 'Contact', grad: 'linear-gradient(145deg,#49d96b,#1ea34a)' },
@@ -279,16 +283,22 @@
   }
 
   function bottomHTML() {
+    // Page dots track the home pages (the glance page has no dot). One per home page.
+    var dots = '<div class="ms-dots" role="tablist" aria-label="Home pages">' +
+      '<button class="ms-dot on" type="button" role="tab" aria-selected="true" aria-label="Home page" tabindex="0"></button>' +
+      '<button class="ms-dot" type="button" role="tab" aria-selected="false" aria-label="More apps page" tabindex="0"></button>' +
+      '</div>';
     var dock = '<div class="ms-dock">' + DOCK_APPS.map(iconHTML).join('') + '</div>';
     if (OS === 'android') {
-      return dock +
+      return dots + dock +
         '<div class="ms-navbar">' +
           '<button class="ms-nav-back" type="button" aria-label="Back">' + NAV_BACK + '</button>' +
           '<button class="ms-nav-home" type="button" aria-label="Home">' + NAV_HOME + '</button>' +
           '<button class="ms-nav-recents" type="button" aria-label="Recents">' + NAV_RECENTS + '</button>' +
         '</div>';
     }
-    return '<button class="ms-ios-search" type="button">' + MAG_SVG + '<span>Search</span></button>' +
+    return dots +
+           '<button class="ms-ios-search" type="button">' + MAG_SVG + '<span>Search</span></button>' +
            dock +
            '<div class="ms-home-indicator" aria-hidden="true"><span></span></div>';
   }
@@ -446,6 +456,107 @@
     }, { passive: true });
   }
 
+  // ---- Live weather (Open-Meteo — free, no key, CORS-enabled) -----------
+  var WMO = {
+    0: ['Clear', '☀️'], 1: ['Mainly clear', '🌤️'], 2: ['Partly cloudy', '⛅'], 3: ['Overcast', '☁️'],
+    45: ['Fog', '🌫️'], 48: ['Rime fog', '🌫️'], 51: ['Light drizzle', '🌦️'], 53: ['Drizzle', '🌦️'], 55: ['Drizzle', '🌦️'],
+    56: ['Freezing drizzle', '🌧️'], 57: ['Freezing drizzle', '🌧️'], 61: ['Light rain', '🌧️'], 63: ['Rain', '🌧️'], 65: ['Heavy rain', '🌧️'],
+    66: ['Freezing rain', '🌧️'], 67: ['Freezing rain', '🌧️'], 71: ['Light snow', '🌨️'], 73: ['Snow', '🌨️'], 75: ['Heavy snow', '❄️'],
+    77: ['Snow grains', '🌨️'], 80: ['Showers', '🌦️'], 81: ['Showers', '🌧️'], 82: ['Heavy showers', '⛈️'],
+    85: ['Snow showers', '🌨️'], 86: ['Snow showers', '❄️'], 95: ['Thunderstorm', '⛈️'], 96: ['Thunderstorm', '⛈️'], 99: ['Thunderstorm', '⛈️']
+  };
+  function wmo(code) { return WMO[code] || ['—', '🌡️']; }
+  var DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  function fetchWeather() {
+    try {
+      var c = JSON.parse(localStorage.getItem('ms-weather') || 'null');
+      if (c && c.ts && (Date.now() - c.ts) < 1800000 && c.data) return Promise.resolve(c.data);
+    } catch (e) {}
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=14.65&longitude=120.97' +
+      '&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min' +
+      '&timezone=Asia%2FManila&forecast_days=5';
+    return fetch(url).then(function (r) { if (!r.ok) throw new Error('weather ' + r.status); return r.json(); })
+      .then(function (d) { try { localStorage.setItem('ms-weather', JSON.stringify({ ts: Date.now(), data: d })); } catch (e) {} return d; });
+  }
+  function applyWeather() {
+    fetchWeather().then(function (d) {
+      var cur = d.current || {}, day = d.daily || {};
+      var t = Math.round(cur.temperature_2m), cw = wmo(cur.weather_code);
+      var nowTxt = (isFinite(t) ? t + '°' : '—') + ' ' + cw[1];
+      qsa('[data-wx-now]').forEach(function (el) { el.textContent = nowTxt; });
+      qsa('[data-wx-label]').forEach(function (el) { el.textContent = cw[0]; });
+      var times = day.time || [], codes = day.weather_code || [], hi = day.temperature_2m_max || [], lo = day.temperature_2m_min || [];
+      var rows = '';
+      for (var i = 0; i < Math.min(5, times.length); i++) {
+        var dd = new Date(times[i] + 'T00:00:00'), w = wmo(codes[i]);
+        rows += '<div class="ms-wx-day"><span class="ms-wx-dn">' + (i === 0 ? 'Today' : DOW[dd.getDay()]) + '</span>' +
+          '<span class="ms-wx-ic">' + w[1] + '</span>' +
+          '<span class="ms-wx-hl">' + Math.round(hi[i]) + '° <em>' + Math.round(lo[i]) + '°</em></span></div>';
+      }
+      qsa('[data-wx-days]').forEach(function (el) { el.innerHTML = rows; });
+    }).catch(function () {
+      qsa('[data-wx-now]').forEach(function (el) { el.textContent = '🌡️'; });
+      qsa('[data-wx-label]').forEach(function (el) { el.textContent = 'Weather unavailable'; });
+      qsa('[data-wx-days]').forEach(function (el) { el.innerHTML = '<div class="ms-wx-day" style="opacity:.6">Couldn’t reach the weather service.</div>'; });
+    });
+  }
+  function qsa(sel) { return Array.prototype.slice.call(document.querySelectorAll('#mobileShell ' + sel)); }
+  function yearsExp() { return new Date().getFullYear() - 2018; }
+
+  // Weather tile body shared by iOS Today widget + Android Discover card.
+  function wxTile() {
+    return '<div class="ms-wx-top"><div><div class="ms-wx-loc">Caloocan City</div>' +
+      '<div class="ms-wx-now" data-wx-now>—</div></div><div class="ms-wx-cap" data-wx-label>Loading…</div></div>' +
+      '<div class="ms-wx-days" data-wx-days></div>';
+  }
+
+  // iOS "Today View" — a vertically-scrolling column of widgets.
+  function todayHTML() {
+    var date = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    return '<div class="ms-today">' +
+      '<div class="ms-today-h">Today</div><div class="ms-today-date">' + date + '</div>' +
+      '<button class="ms-tw ms-tw-stack" data-app="contact" type="button">' +
+        '<img class="ms-tw-ava" src="assets/clippy/clippy-on-yellow-paper.png" alt="">' +
+        '<div class="ms-tw-stackbody"><div class="ms-tw-name">Ryan James Indangan</div>' +
+        '<div class="ms-tw-sub">AI Software Engineer · Caloocan City, PH</div>' +
+        '<div class="ms-tw-avail">🟢 Open to work · Remote</div></div></button>' +
+      '<div class="ms-tw ms-tw-wx">' + wxTile() + '</div>' +
+      '<div class="ms-tw-row">' +
+        '<button class="ms-tw ms-tw-sm" data-app="experience" type="button"><div class="ms-tw-big">' + yearsExp() + '+</div><div class="ms-tw-lbl">Years experience</div></button>' +
+        '<button class="ms-tw ms-tw-sm" data-app="projects" type="button"><div class="ms-tw-big">50+</div><div class="ms-tw-lbl">Projects shipped</div></button>' +
+      '</div>' +
+      '<button class="ms-tw ms-tw-line" data-app="resume" type="button"><span class="ms-tw-ic">📄</span><div><div class="ms-tw-name">Résumé 2026</div><div class="ms-tw-sub">Tap to view my latest résumé</div></div></button>' +
+      '<button class="ms-tw ms-tw-line" data-app="github-stats" type="button"><span class="ms-tw-ic">📈</span><div><div class="ms-tw-name">GitHub activity</div><div class="ms-tw-sub">Repositories & contributions</div></div></button>' +
+      '<div class="ms-today-edit">Edit</div>' +
+      '</div>';
+  }
+
+  // Android "At a Glance" — pinned date + weather strip atop each home page.
+  function atGlanceHTML() {
+    var date = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    return '<div class="ms-glance"><span class="ms-glance-date">' + date + '</span>' +
+      '<span class="ms-glance-wx" data-wx-now>—</span></div>';
+  }
+
+  // Android "Discover" feed — a column of Material cards (the -1 page).
+  function discoverHTML() {
+    function card(app, ic, t, s) {
+      return '<button class="ms-disc-card ms-disc-item" data-app="' + app + '" type="button">' +
+        '<span class="ms-disc-ic">' + ic + '</span><div><div class="ms-disc-t">' + t + '</div>' +
+        '<div class="ms-disc-s">' + s + '</div></div></button>';
+    }
+    return '<div class="ms-discover">' +
+      '<div class="ms-disc-head"><span class="ms-disc-g">' + GOOGLE_G + '</span><span>Discover</span></div>' +
+      '<div class="ms-disc-card ms-disc-wx">' + wxTile() + '</div>' +
+      card('contact', '🟢', 'Open to work', 'Caloocan City, PH · Remote — available for new roles') +
+      card('experience', '💼', yearsExp() + '+ years building software', 'From web systems to AI workflow engineering') +
+      card('projects', '🚀', '50+ projects shipped', 'Document intelligence, OCR & LLM integrations') +
+      card('github-stats', '📈', 'Latest on GitHub', 'Repositories, contributions and activity') +
+      card('resume', '📄', 'Résumé 2026', 'Tap to view my latest résumé') +
+      '</div>';
+  }
+
   // ---- Build ------------------------------------------------------------
   function build() {
     if (built) return;
@@ -454,24 +565,117 @@
     var shell = document.createElement('div');
     shell.id = 'mobileShell';
     shell.className = 'ms-home-screen';
+
+    // Three swipeable pages like a real phone:
+    //   [Glance/Today (iOS) | Discover (Android)]  →  [Home apps]  →  [More apps]
+    var homePageA = '<div class="ms-springboard">' + HOME_PAGE_APPS.map(iconHTML).join('') + '</div>';
+    var homePageB = '<div class="ms-springboard">' + MORE_APPS.map(iconHTML).join('') + '</div>';
+    var pagesHTML;
+    if (OS === 'android') {
+      pagesHTML =
+        '<section class="ms-page ms-page-glance" aria-label="Discover">' + discoverHTML() + '</section>' +
+        '<section class="ms-page ms-page-home" aria-label="Home">' + atGlanceHTML() + topHTML() + homePageA + '</section>' +
+        '<section class="ms-page ms-page-more" aria-label="More apps">' + atGlanceHTML() + homePageB + '</section>';
+    } else {
+      pagesHTML =
+        '<section class="ms-page ms-page-glance ms-page-today" aria-label="Today">' + todayHTML() + '</section>' +
+        '<section class="ms-page ms-page-home" aria-label="Home">' + homePageA + '</section>' +
+        '<section class="ms-page ms-page-more" aria-label="More apps">' + homePageB + '</section>';
+    }
+    var HOME_INDEX = 1;
     shell.innerHTML =
       '<div class="ms-statusbar"><span class="ms-sb-time">--:--</span><span class="ms-sb-icons">' + SB_ICONS + '</span></div>' +
-      '<div class="ms-home">' +
-        topHTML() +
-        '<div class="ms-springboard">' + HOME_APPS.map(iconHTML).join('') + '</div>' +
-        (OS === 'ios' ? '<div class="ms-page-dots"><i class="on"></i></div>' : '') +
-      '</div>' +
+      '<div class="ms-home"><div class="ms-pager" aria-roledescription="carousel">' + pagesHTML + '</div></div>' +
       bottomHTML();
     document.body.appendChild(shell);
 
-    // Delegated taps: app icons / dock / search → launch; Android nav → back/home.
+    // --- Horizontal pager engine ---
+    var pager = shell.querySelector('.ms-pager');
+    var nPages = shell.querySelectorAll('.ms-page').length;     // 3
+    var homeCount = nPages - 1;                                  // 2 home/app pages (index 1..2)
+    var dotsWrap = shell.querySelector('.ms-dots');
+    var dotEls = dotsWrap ? Array.prototype.slice.call(dotsWrap.querySelectorAll('.ms-dot')) : [];
+    var activeIndex = HOME_INDEX;
+    var suppressClick = false;
+    function vw() { return shell.querySelector('.ms-home').clientWidth || window.innerWidth; }
+    function paintDots() {
+      var pos = activeIndex - 1;                                 // index 0 = glance, has no dot
+      shell.classList.toggle('ms-on-glance', activeIndex === 0);
+      if (!dotsWrap) return;
+      var show = pos >= 0 && pos < homeCount;
+      dotsWrap.style.visibility = show ? '' : 'hidden';
+      dotEls.forEach(function (d, i) { d.classList.toggle('on', i === pos); d.setAttribute('aria-selected', String(i === pos)); });
+    }
+    function setPage(i, animate) {
+      activeIndex = Math.max(0, Math.min(nPages - 1, i));
+      pager.style.transition = (animate === false) ? 'none' : '';
+      pager.style.transform = 'translateX(' + (-activeIndex * 100) + '%)';
+      paintDots();
+      try { document.dispatchEvent(new CustomEvent('pageChanged', { detail: { index: activeIndex } })); } catch (e) {}
+    }
+    window.MobileShellPager = { set: setPage, home: function () { setPage(HOME_INDEX); } };
+    setPage(HOME_INDEX, false);
+
+    var sx = 0, sy = 0, mode = null, base = 0, moved = false, t0 = 0;
+    var home = shell.querySelector('.ms-home');
+    function busy() { return sheetOpen || (Search && Search.isOpen()) || (ControlCenter && ControlCenter.isOpen()); }
+    home.addEventListener('touchstart', function (e) {
+      if (e.touches.length !== 1 || busy()) { mode = 'x'; return; }
+      var t = e.touches[0];
+      if (t.clientY <= 72) { mode = 'x'; return; }               // leave the top edge to control center
+      sx = t.clientX; sy = t.clientY; mode = null; moved = false; base = -activeIndex * vw(); t0 = Date.now();
+      pager.style.transition = 'none';
+    }, { passive: true });
+    home.addEventListener('touchmove', function (e) {
+      if (mode === 'x' || e.touches.length !== 1) return;
+      var ddx = e.touches[0].clientX - sx, ddy = e.touches[0].clientY - sy;
+      if (mode === null) {
+        if (Math.abs(ddx) < 8 && Math.abs(ddy) < 8) return;
+        mode = Math.abs(ddx) > Math.abs(ddy) ? 'h' : 'v';
+        if (mode === 'v') { pager.style.transition = ''; return; }   // let the page scroll vertically
+      }
+      if (mode !== 'h') return;
+      e.preventDefault(); moved = true;
+      var px = base + ddx, min = -(nPages - 1) * vw(), max = 0;
+      if (px > max) px = max + (px - max) * 0.35;                 // rubber-band at the ends
+      if (px < min) px = min + (px - min) * 0.35;
+      pager.style.transform = 'translateX(' + px + 'px)';
+    }, { passive: false });
+    home.addEventListener('touchend', function (e) {
+      if (mode !== 'h') { mode = null; return; }
+      var ddx = e.changedTouches[0].clientX - sx, dt = Date.now() - t0, th = vw() * 0.22;
+      var flick = Math.abs(ddx) > 50 && dt < 250;
+      pager.style.transition = '';
+      if ((ddx <= -th || (flick && ddx < 0)) && activeIndex < nPages - 1) setPage(activeIndex + 1);
+      else if ((ddx >= th || (flick && ddx > 0)) && activeIndex > 0) setPage(activeIndex - 1);
+      else setPage(activeIndex);                                 // spring back
+      if (moved) { suppressClick = true; setTimeout(function () { suppressClick = false; }, 80); }
+      haptic(6); mode = null;
+    }, { passive: true });
+    window.addEventListener('resize', function () { setPage(activeIndex, false); });
+
+    // Tap a dot to jump; arrow keys page when the dots are focused.
+    if (dotsWrap) {
+      dotsWrap.addEventListener('click', function (e) {
+        var d = e.target.closest('.ms-dot'); if (!d) return;
+        var idx = dotEls.indexOf(d); if (idx >= 0) setPage(idx + 1);
+      });
+      dotsWrap.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') setPage(activeIndex - 1);
+        else if (e.key === 'ArrowRight') setPage(activeIndex + 1);
+      });
+    }
+
+    // Delegated taps: app icons / dock / glance cards / search → launch; Android nav → back/home.
     shell.addEventListener('click', function (e) {
+      if (suppressClick) return;
       if (e.target.closest('.ms-gsearch, .ms-ios-search')) { if (Search) Search.open(); return; }
       var nav = e.target.closest('.ms-nav-back, .ms-nav-home');
       if (nav) {
         if (Search && Search.isOpen()) { Search.close(); return; }
         if (ControlCenter && ControlCenter.isOpen()) { ControlCenter.close(); return; }
-        if (sheetOpen) history.back();
+        if (sheetOpen) { history.back(); return; }
+        if (nav.classList.contains('ms-nav-home')) setPage(HOME_INDEX);   // Home always returns to the main page
         return;
       }
       var app = e.target.closest('.ms-home [data-app], .ms-dock [data-app]');
@@ -494,6 +698,9 @@
     // Swipe-down quick settings / control center + tap-to-search.
     initControlCenter(shell);
     initSearch(shell);
+
+    // Live 5-day weather into the glance/today widgets (Open-Meteo, cached ~30 min).
+    applyWeather();
 
     // Live status-bar + control-center clock.
     (function tickClock() {

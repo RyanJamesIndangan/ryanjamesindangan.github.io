@@ -37,11 +37,18 @@ html.mobile-shell #mobileShell {
 .ms-sb-svg { height: 12px; width: auto; display: block; fill: currentColor; }
 .ms-sb-time { letter-spacing: .2px; font-variant-numeric: tabular-nums; }
 
-/* ---------------- Home (scrollable springboard area) ---------------- */
-.ms-home {
-  flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: 8px 18px 6px; display: flex; flex-direction: column;
+/* ---------------- Home (horizontal pager viewport) ---------------- */
+.ms-home { flex: 1 1 auto; position: relative; overflow: hidden; }
+.ms-pager {
+  display: flex; height: 100%; width: 100%;
+  transition: transform .34s cubic-bezier(.22, .61, .36, 1); will-change: transform;
 }
+.ms-page {
+  flex: 0 0 100%; width: 100%; height: 100%;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  padding: 8px 18px 6px;
+}
+.ms-page-home, .ms-page-more { display: flex; flex-direction: column; }
 
 /* Android Google search bar */
 .ms-gsearch {
@@ -314,3 +321,85 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 .os-android .ms-search-bar { border-bottom: 1px solid #e3e8ef; padding: 6px 4px 12px; }
 .os-android .ms-search-cancel { color: #1f6feb; }
 .os-android .ms-search-row .ms-app-ico { border-radius: 50%; }
+
+/* ============================================================
+   Swipeable home pages — dots, Today View, Discover, At a Glance
+   ============================================================ */
+
+/* Page-indicator dots (in the fixed bottom region, above the dock) */
+.ms-dots { display: flex; gap: 8px; justify-content: center; align-items: center; padding: 8px 0 4px; min-height: 22px; }
+.ms-dot {
+  width: 7px; height: 7px; padding: 0; border: none; border-radius: 50%; cursor: pointer;
+  background: rgba(255,255,255,.4); transition: background .2s, transform .2s;
+  position: relative;
+}
+.ms-dot::after { content: ""; position: absolute; inset: -14px; }   /* 35px hit target */
+.ms-dot.on { background: rgba(255,255,255,.95); transform: scale(1.15); }
+.os-ios .ms-dot { background: rgba(20,20,19,.28); }
+.os-ios .ms-dot.on { background: rgba(20,20,19,.8); }
+
+/* On the glance page the dock/search/home-indicator step aside (kept in flow) */
+.ms-home-screen.ms-on-glance .ms-dock,
+.ms-home-screen.ms-on-glance .ms-ios-search,
+.ms-home-screen.ms-on-glance .ms-home-indicator { opacity: 0; visibility: hidden; }
+
+/* ---- iOS Today View (glance page, index 0) ---- */
+.ms-page-today { color: #fff; }
+.ms-today { display: flex; flex-direction: column; gap: 14px; padding-bottom: 12px; }
+.ms-today-h { font-size: 1.9rem; font-weight: 800; letter-spacing: -.5px; margin-top: 4px; }
+.ms-today-date { font-size: .95rem; opacity: .85; margin: -10px 0 4px; }
+.ms-tw {
+  width: 100%; text-align: left; border: none; cursor: pointer; color: #fff;
+  background: rgba(255,255,255,.18); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  border-radius: 20px; padding: 15px 16px; box-shadow: 0 6px 18px rgba(0,0,0,.18);
+}
+.ms-tw-stack { display: flex; align-items: center; gap: 13px; }
+.ms-tw-ava { width: 46px; height: 46px; border-radius: 13px; background: #fff; padding: 2px; flex: none; }
+.ms-tw-name { font-weight: 700; font-size: 1rem; }
+.ms-tw-sub { font-size: .76rem; opacity: .85; margin-top: 1px; }
+.ms-tw-avail { font-size: .76rem; margin-top: 5px; font-weight: 600; }
+.ms-tw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ms-tw-sm { text-align: center; }
+.ms-tw-big { font-size: 2.1rem; font-weight: 800; line-height: 1; }
+.ms-tw-lbl { font-size: .74rem; opacity: .85; margin-top: 6px; }
+.ms-tw-line { display: flex; align-items: center; gap: 13px; }
+.ms-tw-ic { font-size: 1.5rem; flex: none; }
+.ms-today-edit { align-self: center; font-size: .85rem; opacity: .7; padding: 8px; }
+
+/* ---- Weather tile (shared: iOS widget + Android Discover card) ---- */
+.ms-wx-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.ms-wx-loc { font-size: .8rem; opacity: .85; }
+.ms-wx-now { font-size: 1.9rem; font-weight: 700; line-height: 1.1; }
+.ms-wx-cap { font-size: .8rem; opacity: .9; text-align: right; max-width: 45%; padding-top: 4px; }
+.ms-wx-days { display: flex; justify-content: space-between; gap: 4px; }
+.ms-wx-day { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: .72rem; flex: 1 1 0; }
+.ms-wx-dn { opacity: .85; }
+.ms-wx-ic { font-size: 1.15rem; }
+.ms-wx-hl { font-weight: 700; font-size: .68rem; white-space: nowrap; }
+.ms-wx-hl em { opacity: .6; font-style: normal; }
+
+/* ---- Android At a Glance strip (top of each home page) ---- */
+.ms-glance { display: flex; align-items: center; justify-content: space-between; color: #fff; padding: 2px 4px 12px; }
+.ms-glance-date { font-size: 1.05rem; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.ms-glance-wx { font-size: 1.05rem; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+
+/* ---- Android Discover feed (glance page, index 0) ---- */
+.os-android .ms-page-glance { background: #11151d; }
+.ms-discover { display: flex; flex-direction: column; gap: 12px; padding: 6px 0 16px; }
+.ms-disc-head { display: flex; align-items: center; gap: 8px; color: #e8eaed; font-size: 1.15rem; font-weight: 600; padding: 4px 2px 2px; }
+.ms-disc-g { width: 22px; height: 22px; display: inline-flex; }
+.ms-disc-g svg { width: 22px; height: 22px; }
+.ms-disc-card {
+  width: 100%; text-align: left; border: none; cursor: pointer;
+  background: #1e232c; color: #e8eaed; border-radius: 18px; padding: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.3);
+}
+.ms-disc-wx { color: #e8eaed; }
+.ms-disc-item { display: flex; align-items: center; gap: 14px; }
+.ms-disc-ic { font-size: 1.6rem; flex: none; }
+.ms-disc-t { font-weight: 600; font-size: 1rem; }
+.ms-disc-s { font-size: .82rem; opacity: .7; margin-top: 2px; line-height: 1.35; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-pager { transition: none !important; }
+}
