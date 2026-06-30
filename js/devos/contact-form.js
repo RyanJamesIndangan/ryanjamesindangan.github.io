@@ -40,28 +40,43 @@ function handleContactFormSubmit(e) {
     // Disable submit button
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
-    
-    // Since we're on GitHub Pages (static hosting), we can't actually send emails
-    // Instead, we'll create a mailto link with the form data
-    const mailtoLink = createMailtoLink(formData);
-    
-    // Show success message and open mailto
-    showFormStatus(statusDiv, 'Opening your email client...', 'success');
-    
-    // Open mailto link
-    window.location.href = mailtoLink;
-    
-    // Reset form after a delay
-    setTimeout(() => {
-        form.reset();
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message 📤';
-        statusDiv.style.display = 'none';
-        
-        if (window.showNotification) {
-            window.showNotification('Form data prepared! Please send the email from your email client.', 'info', 5000);
-        }
-    }, 2000);
+    showFormStatus(statusDiv, 'Sending your message…', 'info');
+
+    // Deliver straight to the inbox via FormSubmit (free, no backend — works on
+    // GitHub Pages). The very first submission triggers a one-time activation
+    // email to the owner; after that it's delivered automatically.
+    fetch('https://formsubmit.co/ajax/ryanjamesfranciscoindangan@yahoo.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject,
+            message: formData.message,
+            _subject: `Portfolio contact: ${formData.subject}`,
+            _template: 'table',
+            _captcha: 'false'
+        })
+    })
+        .then((r) => r.json())
+        .then((data) => {
+            if (data && (data.success === true || data.success === 'true')) {
+                showFormStatus(statusDiv, "✅ Thanks! Your message has been sent — I'll get back to you soon.", 'success');
+                form.reset();
+                if (window.showNotification) window.showNotification('Message sent! 📨', 'success', 4000);
+            } else {
+                throw new Error((data && data.message) || 'Send failed');
+            }
+        })
+        .catch(() => {
+            // Graceful fallback: open the visitor's email client pre-filled.
+            showFormStatus(statusDiv, "Couldn't send directly — opening your email app instead…", 'error');
+            window.location.href = createMailtoLink(formData);
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message 📤';
+        });
 }
 
 function createMailtoLink(formData) {
