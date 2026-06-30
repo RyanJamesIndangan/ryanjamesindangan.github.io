@@ -7,6 +7,12 @@ html.mobile-shell, html.mobile-shell body {
   margin: 0; padding: 0; height: 100%; overflow: hidden;
   background: #0a0f1e; -webkit-text-size-adjust: 100%;
 }
+/* Scale the ROOT font-size with the viewport so every rem-based size (the
+   reused app content is ~all rem) is zoom-invariant. On browsers that lay
+   out at a wide viewport (e.g. 980px) and zoom out to fit, rem text would
+   otherwise render tiny inside an opened app. 4.07vw == 16px at a 393px
+   screen, so the normal phone look is preserved. */
+html.mobile-shell { font-size: max(16px, 4.07vw); }
 
 /* Hide all desktop chrome on phones */
 html.mobile-shell #bootScreen,
@@ -17,7 +23,8 @@ html.mobile-shell .start-button,
 html.mobile-shell .context-menu,
 html.mobile-shell .selection-box,
 html.mobile-shell #desktopClippy,
-html.mobile-shell .desktop-clippy { display: none !important; }
+html.mobile-shell .desktop-clippy,
+html.mobile-shell .skip-to-content { display: none !important; }
 html.mobile-shell .ai-assistant-toggle { display: none !important; }
 
 /* Shell scaffold (wallpaper set per-OS below) */
@@ -166,7 +173,7 @@ html.mobile-shell #mobileShell {
   height: 38px; min-width: 38px; border-radius: 10px; padding: 0 12px; font-weight: 700; font-size: .95rem;
 }
 .ms-sheet-head .ms-sheet-title { font-weight: 700; font-size: 1.05rem; }
-.ms-sheet-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px); font-size: 16px; }
+.ms-sheet-body { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(env(safe-area-inset-bottom) + 24px); font-size: 1rem; }
 
 /* Content normalization for reused desktop-window content */
 .ms-sheet-body [style*="max-width"] { max-width: none !important; width: auto !important; }
