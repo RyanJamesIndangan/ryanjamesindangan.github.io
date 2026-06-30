@@ -10,10 +10,17 @@
           var p = new URLSearchParams(location.search);
           var forceDesktop = p.get('desktop') === '1' || localStorage.getItem('forceDesktopMode') === 'true';
           var forceMobile = p.get('mobile') === '1';
-          var narrow = window.matchMedia('(max-width: 768px)').matches;
-          var touch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window);
-          var isMobile = forceMobile || (!forceDesktop && narrow && touch);
           var ua = navigator.userAgent || '';
+          // Detect a PHONE robustly. Do NOT rely on the layout-viewport width
+          // (max-width:768px): some Android browsers lay out at a 980px desktop
+          // width, which reads as "not narrow" and wrongly loaded the DESKTOP
+          // site on real phones. Use the real screen size + touch + UA instead.
+          var touch = window.matchMedia('(pointer: coarse)').matches || ('ontouchstart' in window) || (navigator.maxTouchPoints || 0) > 0;
+          var narrow = window.matchMedia('(max-width: 768px)').matches;
+          var sc = window.screen || {};
+          var minSide = Math.min(sc.width || 9999, sc.height || 9999);   // shorter screen edge, in CSS px
+          var phoneUA = /android|iphone|ipod|iemobile|blackberry|opera mini|mobile|silk|kindle/i.test(ua);
+          var isMobile = forceMobile || (!forceDesktop && touch && (narrow || minSide <= 560 || phoneUA));
           var os = p.get('os'); // ?os=ios / ?os=android override (for testing)
           if (os !== 'ios' && os !== 'android') {
             // Only treat as iOS when it's clearly an Apple device (incl. iPad
