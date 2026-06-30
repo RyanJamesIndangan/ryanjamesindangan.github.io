@@ -730,6 +730,28 @@
     if (params.get('cc') === '1' && ControlCenter) ControlCenter.open();
     if (params.get('search') === '1' && Search) Search.open();
     if (params.get('chat') === '1') openChat();
+
+    // Diagnostic overlay (?msdebug=1): shows the real viewport metrics so
+    // device-specific sizing issues can be read off directly.
+    if (params.get('msdebug') === '1') {
+      var dbg = document.createElement('div');
+      dbg.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:99999;background:rgba(0,0,0,.88);color:#5f5;font:12px/1.5 monospace;padding:10px;white-space:pre-wrap;pointer-events:none;';
+      var draw = function () {
+        var vv = window.visualViewport || {};
+        var ico = shell.querySelector('.ms-springboard .ms-app-ico');
+        dbg.textContent =
+          'OS=' + OS + '  isMobile=' + (window.DeviceMode && window.DeviceMode.isMobile()) + '\n' +
+          'innerW=' + window.innerWidth + '  docClientW=' + document.documentElement.clientWidth + '\n' +
+          'visualVP=' + Math.round(vv.width || 0) + '  scale=' + (vv.scale || 1).toFixed(2) + '\n' +
+          'screen=' + screen.width + 'x' + screen.height + '  DPR=' + window.devicePixelRatio + '\n' +
+          'mockW=' + Math.round(shell.getBoundingClientRect().width) + '  iconW=' + (ico ? Math.round(ico.getBoundingClientRect().width) : '?') + '\n' +
+          'vp=' + (document.querySelector('meta[name="viewport"]') || {}).getAttribute('content');
+      };
+      draw();
+      document.body.appendChild(dbg);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', draw);
+      window.addEventListener('resize', draw);
+    }
   }
 
   function start() { try { build(); } catch (e) { console.error('[mobile-shell] build failed', e); } }

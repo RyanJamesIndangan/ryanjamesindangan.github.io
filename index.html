@@ -27,13 +27,14 @@
           window.DeviceMode = { isMobile: function () { return isMobile; }, os: os };
           if (isMobile) {
             document.documentElement.classList.add('mobile-shell', 'os-' + os);
-            // Lay the phone mock out at a FIXED 400px design width and let the
-            // browser scale it to fill the screen. This makes it look identical
-            // on every device and fixes high-DPR Android browsers (e.g. Mi
-            // Browser) that report a too-wide device-width, which made the
-            // fixed-size icons render tiny. Also disables pinch-zoom.
+            // Pin the layout to the real device width at 1:1 zoom (no zoom-out)
+            // so the fixed-position phone mock FILLS the screen, and disable
+            // pinch-zoom. The home screen is sized in vw, so it scales to fill
+            // whatever width the device reports. (A fixed width=400 was tried
+            // but some Android browsers don't scale it up to fill the screen,
+            // leaving the mock small in a corner.)
             var vp = document.querySelector('meta[name="viewport"]');
-            if (vp) vp.setAttribute('content', 'width=400, user-scalable=no, viewport-fit=cover');
+            if (vp) vp.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
           }
         } catch (e) { window.DeviceMode = { isMobile: function () { return false; }, os: 'android' }; }
       })();
@@ -223,7 +224,7 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/devos.css">
-    <link rel="stylesheet" href="css/mobile-shell.css?v=20260630d">
+    <link rel="stylesheet" href="css/mobile-shell.css?v=20260630e">
 </head>
 <body>
     <!-- Skip to Main Content Link (Accessibility) -->
@@ -662,7 +663,7 @@
     <script src="js/devos/clippy.js" defer></script>
     <script src="js/devos/clippy-suggestions.js" defer></script>
     <script src="js/devos/main.js" defer></script>
-    <script src="js/devos/mobile-shell.js?v=20260630d" defer></script>
+    <script src="js/devos/mobile-shell.js?v=20260630e" defer></script>
 </body>
 </html>
 
