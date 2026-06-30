@@ -208,8 +208,11 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
     linear-gradient(160deg, #0c1428, #070b16);
 }
 .os-android .ms-statusbar { color: #fff; }
-.os-android .ms-app-lbl { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65); }
-.os-android .ms-app-ico { border-radius: 50%; }          /* Pixel adaptive icons = circles */
+.os-android .ms-app-lbl { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65); font-size: clamp(.74rem, 3.4vw, 1.18rem); }
+/* Pixel adaptive icons are circles AND chunkier than iOS squircles — a circle
+   reads smaller than a square of the same width, so size Android up. */
+.os-android .ms-app-ico { width: clamp(66px, 18.5vw, 140px); height: clamp(66px, 18.5vw, 140px); border-radius: 50%; }
+.os-android .ms-springboard { gap: clamp(20px, 5.4vw, 40px) clamp(2px, 1vw, 10px); }
 .os-android .ms-dock { padding: 6px 14px 4px; }
 .os-android .ms-page-dots i { background: rgba(255,255,255,.4); }
 
