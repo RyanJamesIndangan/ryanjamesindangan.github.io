@@ -29,12 +29,12 @@ html.mobile-shell #mobileShell {
 /* ---------------- Status bar ---------------- */
 .ms-statusbar {
   flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
-  padding: env(safe-area-inset-top) clamp(16px, 5.6vw, 40px) 0;
-  min-height: calc(env(safe-area-inset-top) + clamp(28px, 7.6vw, 50px));
-  font-size: clamp(13px, 3.6vw, 23px); font-weight: 600; z-index: 7;
+  padding: env(safe-area-inset-top) max(16px, 5.6vw) 0;
+  min-height: calc(env(safe-area-inset-top) + max(28px, 7.6vw));
+  font-size: max(13px, 3.6vw); font-weight: 600; z-index: 7;
 }
-.ms-sb-icons { display: inline-flex; align-items: center; gap: clamp(5px, 1.6vw, 9px); }
-.ms-sb-svg { height: clamp(11px, 3vw, 18px); width: auto; display: block; fill: currentColor; }
+.ms-sb-icons { display: inline-flex; align-items: center; gap: max(5px, 1.6vw); }
+.ms-sb-svg { height: max(11px, 3vw); width: auto; display: block; fill: currentColor; }
 .ms-sb-time { letter-spacing: .2px; font-variant-numeric: tabular-nums; }
 
 /* ---------------- Home (horizontal pager viewport) ---------------- */
@@ -48,20 +48,20 @@ html.mobile-shell #mobileShell {
 .ms-page {
   flex: 0 0 100%; width: 100%; height: 100%;
   overflow-y: auto; -webkit-overflow-scrolling: touch;
-  padding: clamp(6px, 2vw, 14px) clamp(14px, 4.6vw, 30px) 6px;
+  padding: max(6px, 2vw) max(14px, 4.6vw) 6px;
 }
 .ms-page-home, .ms-page-more { display: flex; flex-direction: column; }
 
 /* Android Google search bar */
 .ms-gsearch {
-  display: flex; align-items: center; gap: clamp(8px, 2.4vw, 14px); width: 100%;
+  display: flex; align-items: center; gap: max(8px, 2.4vw); width: 100%;
   background: rgba(255,255,255,.96); border: none; border-radius: 28px; cursor: pointer;
-  padding: clamp(11px, 3.2vw, 18px) clamp(14px, 4vw, 24px); margin: clamp(4px, 1.5vw, 10px) 0 clamp(16px, 5vw, 30px); box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  padding: max(11px, 3.2vw) max(14px, 4vw); margin: max(4px, 1.5vw) 0 max(16px, 5vw); box-shadow: 0 2px 10px rgba(0,0,0,.25);
 }
-.ms-gsearch .ms-g svg { width: clamp(20px, 5.6vw, 30px); height: clamp(20px, 5.6vw, 30px); display: block; }
-.ms-gsearch-ph { flex: 1 1 auto; text-align: left; color: #5f6368; font-size: clamp(.95rem, 4vw, 1.35rem); }
-.ms-gtools { display: inline-flex; align-items: center; gap: clamp(12px, 3.4vw, 20px); }
-.ms-gtools svg { width: clamp(20px, 5.6vw, 30px); height: clamp(20px, 5.6vw, 30px); display: block; }
+.ms-gsearch .ms-g svg { width: max(20px, 5.6vw); height: max(20px, 5.6vw); display: block; }
+.ms-gsearch-ph { flex: 1 1 auto; text-align: left; color: #5f6368; font-size: max(.95rem, 4vw); }
+.ms-gtools { display: inline-flex; align-items: center; gap: max(12px, 3.4vw); }
+.ms-gtools svg { width: max(20px, 5.6vw); height: max(20px, 5.6vw); display: block; }
 
 /* iOS widgets */
 .ms-widgets { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 8px 0 20px; }
@@ -82,14 +82,14 @@ html.mobile-shell #mobileShell {
 /* App icon grid (springboard). Sizes use vw so the icons scale to fill the
    actual viewport — high-DPR Android browsers report a wide CSS width, which
    made fixed-px icons look tiny. clamp() keeps them sane on any width. */
-.ms-springboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 4.6vw, 34px) clamp(2px, 1vw, 10px); }
+.ms-springboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: max(16px, 4.6vw) max(2px, 1vw); }
 .ms-app {
   background: none; border: none; cursor: pointer; padding: 0;
-  display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1.9vw, 12px);
+  display: flex; flex-direction: column; align-items: center; gap: max(6px, 1.9vw);
 }
 .ms-app:active { transform: scale(.92); }
 .ms-app-ico {
-  width: clamp(54px, 15vw, 116px); height: clamp(54px, 15vw, 116px); position: relative; display: flex; align-items: center; justify-content: center;
+  width: max(54px, 15vw); height: max(54px, 15vw); position: relative; display: flex; align-items: center; justify-content: center;
   color: #fff; box-shadow: 0 5px 12px rgba(0,0,0,.32);
 }
 .ms-app-ico svg { width: 56%; height: 56%; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -98,13 +98,13 @@ html.mobile-shell #mobileShell {
 .ms-app-img img { width: 100%; height: 100%; object-fit: contain; }
 .ms-app-img::after { display: none; }
 .ms-badge {
-  position: absolute; top: -4px; right: -4px; min-width: clamp(17px, 4.6vw, 26px); height: clamp(17px, 4.6vw, 26px); padding: 0 5px;
-  border-radius: 9px; background: #ff3b30; color: #fff; font-size: clamp(11px, 3vw, 16px); font-weight: 700;
+  position: absolute; top: -4px; right: -4px; min-width: max(17px, 4.6vw); height: max(17px, 4.6vw); padding: 0 5px;
+  border-radius: 9px; background: #ff3b30; color: #fff; font-size: max(11px, 3vw); font-weight: 700;
   display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px rgba(0,0,0,.12);
   font-family: -apple-system, system-ui, sans-serif;
 }
 .ms-app-lbl {
-  font-size: clamp(.66rem, 3vw, 1.05rem); font-weight: 500; max-width: clamp(64px, 22vw, 130px); overflow: hidden;
+  font-size: max(.66rem, 3vw); font-weight: 500; max-width: max(64px, 22vw); overflow: hidden;
   text-overflow: ellipsis; white-space: nowrap;
 }
 
@@ -131,10 +131,10 @@ html.mobile-shell #mobileShell {
 .ms-ios-search {
   flex: 0 0 auto; align-self: center; display: inline-flex; align-items: center; gap: 6px;
   background: rgba(255,255,255,.28); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  border: none; cursor: pointer; color: #1c1c1e; font-size: clamp(.88rem, 3.6vw, 1.2rem); font-weight: 500;
-  padding: clamp(9px, 2.6vw, 15px) clamp(16px, 4.6vw, 28px); border-radius: 18px; margin: 4px 0 10px; min-height: 40px;
+  border: none; cursor: pointer; color: #1c1c1e; font-size: max(.88rem, 3.6vw); font-weight: 500;
+  padding: max(9px, 2.6vw) max(16px, 4.6vw); border-radius: 18px; margin: 4px 0 10px; min-height: 40px;
 }
-.ms-ios-search svg { width: clamp(15px, 4vw, 22px); height: clamp(15px, 4vw, 22px); display: block; }
+.ms-ios-search svg { width: max(15px, 4vw); height: max(15px, 4vw); display: block; }
 
 /* Home indicator (iOS) */
 .ms-home-indicator {
@@ -208,11 +208,11 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
     linear-gradient(160deg, #0c1428, #070b16);
 }
 .os-android .ms-statusbar { color: #fff; }
-.os-android .ms-app-lbl { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65); font-size: clamp(.74rem, 3.4vw, 1.18rem); }
+.os-android .ms-app-lbl { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,.65); font-size: max(.74rem, 3.4vw); }
 /* Pixel adaptive icons are circles AND chunkier than iOS squircles — a circle
    reads smaller than a square of the same width, so size Android up. */
-.os-android .ms-app-ico { width: clamp(66px, 18.5vw, 140px); height: clamp(66px, 18.5vw, 140px); border-radius: 50%; }
-.os-android .ms-springboard { gap: clamp(20px, 5.4vw, 40px) clamp(2px, 1vw, 10px); }
+.os-android .ms-app-ico { width: max(66px, 18.5vw); height: max(66px, 18.5vw); border-radius: 50%; }
+.os-android .ms-springboard { gap: max(20px, 5.4vw) max(2px, 1vw); }
 .os-android .ms-dock { padding: 6px 14px 4px; }
 .os-android .ms-page-dots i { background: rgba(255,255,255,.4); }
 
@@ -353,59 +353,59 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 /* ---- iOS Today View (glance page, index 0) ---- */
 .ms-page-today { color: #fff; }
 .ms-today { display: flex; flex-direction: column; gap: 14px; padding-bottom: 12px; }
-.ms-today-h { font-size: 1.9rem; font-weight: 800; letter-spacing: -.5px; margin-top: 4px; }
-.ms-today-date { font-size: .95rem; opacity: .85; margin: -10px 0 4px; }
+.ms-today-h { font-size: max(1.5rem, 7.7vw); font-weight: 800; letter-spacing: -.5px; margin-top: 4px; }
+.ms-today-date { font-size: max(.85rem, 3.9vw); opacity: .85; margin: -10px 0 4px; }
 .ms-tw {
   width: 100%; text-align: left; border: none; cursor: pointer; color: #fff;
   background: rgba(255,255,255,.18); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
-  border-radius: 20px; padding: 15px 16px; box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  border-radius: 20px; padding: max(15px, 3.8vw) max(16px, 4.1vw); box-shadow: 0 6px 18px rgba(0,0,0,.18);
 }
-.ms-tw-stack { display: flex; align-items: center; gap: 13px; }
-.ms-tw-ava { width: 46px; height: 46px; border-radius: 13px; background: #fff; padding: 2px; flex: none; }
-.ms-tw-name { font-weight: 700; font-size: 1rem; }
-.ms-tw-sub { font-size: .76rem; opacity: .85; margin-top: 1px; }
-.ms-tw-avail { font-size: .76rem; margin-top: 5px; font-weight: 600; }
+.ms-tw-stack { display: flex; align-items: center; gap: max(13px, 3.3vw); }
+.ms-tw-ava { width: max(46px, 11.7vw); height: max(46px, 11.7vw); border-radius: 13px; background: #fff; padding: 2px; flex: none; }
+.ms-tw-name { font-weight: 700; font-size: max(.9rem, 4.07vw); }
+.ms-tw-sub { font-size: max(.7rem, 3.1vw); opacity: .85; margin-top: 1px; }
+.ms-tw-avail { font-size: max(.7rem, 3.1vw); margin-top: 5px; font-weight: 600; }
 .ms-tw-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .ms-tw-sm { text-align: center; }
-.ms-tw-big { font-size: 2.1rem; font-weight: 800; line-height: 1; }
-.ms-tw-lbl { font-size: .74rem; opacity: .85; margin-top: 6px; }
-.ms-tw-line { display: flex; align-items: center; gap: 13px; }
-.ms-tw-ic { font-size: 1.5rem; flex: none; }
-.ms-today-edit { align-self: center; font-size: .85rem; opacity: .7; padding: 8px; }
+.ms-tw-big { font-size: max(1.7rem, 8.5vw); font-weight: 800; line-height: 1; }
+.ms-tw-lbl { font-size: max(.68rem, 3vw); opacity: .85; margin-top: 6px; }
+.ms-tw-line { display: flex; align-items: center; gap: max(13px, 3.3vw); }
+.ms-tw-ic { font-size: max(1.3rem, 6.1vw); flex: none; }
+.ms-today-edit { align-self: center; font-size: max(.78rem, 3.45vw); opacity: .7; padding: 8px; }
 
 /* ---- Weather tile (shared: iOS widget + Android Discover card) ---- */
 .ms-wx-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
-.ms-wx-loc { font-size: .8rem; opacity: .85; }
-.ms-wx-now { font-size: 1.9rem; font-weight: 700; line-height: 1.1; }
-.ms-wx-cap { font-size: .8rem; opacity: .9; text-align: right; max-width: 45%; padding-top: 4px; }
+.ms-wx-loc { font-size: max(.74rem, 3.25vw); opacity: .85; }
+.ms-wx-now { font-size: max(1.5rem, 7.7vw); font-weight: 700; line-height: 1.1; }
+.ms-wx-cap { font-size: max(.74rem, 3.25vw); opacity: .9; text-align: right; max-width: 45%; padding-top: 4px; }
 .ms-wx-days { display: flex; justify-content: space-between; gap: 4px; }
-.ms-wx-day { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: .72rem; flex: 1 1 0; }
+.ms-wx-day { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: max(.66rem, 2.9vw); flex: 1 1 0; }
 .ms-wx-dn { opacity: .85; }
-.ms-wx-ic { font-size: 1.15rem; }
-.ms-wx-hl { font-weight: 700; font-size: .68rem; white-space: nowrap; }
+.ms-wx-ic { font-size: max(1rem, 4.65vw); }
+.ms-wx-hl { font-weight: 700; font-size: max(.62rem, 2.75vw); white-space: nowrap; }
 .ms-wx-hl em { opacity: .6; font-style: normal; }
 
 /* ---- Android At a Glance strip (top of each home page) ---- */
 .ms-glance { display: flex; align-items: center; justify-content: space-between; color: #fff; padding: 2px 4px 12px; }
-.ms-glance-date { font-size: 1.05rem; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
-.ms-glance-wx { font-size: 1.05rem; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.ms-glance-date { font-size: max(.92rem, 4.25vw); font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.ms-glance-wx { font-size: max(.92rem, 4.25vw); font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
 
 /* ---- Android Discover feed (glance page, index 0) ---- */
 .os-android .ms-page-glance { background: #11151d; }
 .ms-discover { display: flex; flex-direction: column; gap: 12px; padding: 6px 0 16px; }
-.ms-disc-head { display: flex; align-items: center; gap: 8px; color: #e8eaed; font-size: 1.15rem; font-weight: 600; padding: 4px 2px 2px; }
+.ms-disc-head { display: flex; align-items: center; gap: 8px; color: #e8eaed; font-size: max(1rem, 4.65vw); font-weight: 600; padding: 4px 2px 2px; }
 .ms-disc-g { width: 22px; height: 22px; display: inline-flex; }
 .ms-disc-g svg { width: 22px; height: 22px; }
 .ms-disc-card {
   width: 100%; text-align: left; border: none; cursor: pointer;
-  background: #1e232c; color: #e8eaed; border-radius: 18px; padding: 16px;
+  background: #1e232c; color: #e8eaed; border-radius: 18px; padding: max(16px, 4.1vw);
   box-shadow: 0 2px 10px rgba(0,0,0,.3);
 }
 .ms-disc-wx { color: #e8eaed; }
-.ms-disc-item { display: flex; align-items: center; gap: 14px; }
-.ms-disc-ic { font-size: 1.6rem; flex: none; }
-.ms-disc-t { font-weight: 600; font-size: 1rem; }
-.ms-disc-s { font-size: .82rem; opacity: .7; margin-top: 2px; line-height: 1.35; }
+.ms-disc-item { display: flex; align-items: center; gap: max(14px, 3.6vw); }
+.ms-disc-ic { font-size: max(1.4rem, 6.5vw); flex: none; }
+.ms-disc-t { font-weight: 600; font-size: max(.9rem, 4.07vw); }
+.ms-disc-s { font-size: max(.74rem, 3.35vw); opacity: .7; margin-top: 2px; line-height: 1.35; }
 
 @media (prefers-reduced-motion: reduce) {
   .ms-pager { transition: none !important; }
