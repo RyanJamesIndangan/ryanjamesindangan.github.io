@@ -7,6 +7,19 @@ html.mobile-shell, html.mobile-shell body {
   margin: 0; padding: 0; height: 100%; overflow: hidden;
   background: #0a0f1e; -webkit-text-size-adjust: 100%;
 }
+/* Roaming Clippy pet (mobile) */
+.ms-clippy {
+  position: fixed; z-index: 58; left: 0; top: 60%;
+  width: max(58px, 15vw); height: max(58px, 15vw); padding: 0; border: none;
+  background: rgba(255,255,255,.94); border-radius: 50%; cursor: pointer; overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,.38);
+  transition: left 2s cubic-bezier(.4,0,.2,1), top 2s cubic-bezier(.4,0,.2,1), opacity .4s ease, transform .25s ease;
+}
+.ms-clippy img { width: 100%; height: 100%; object-fit: contain; padding: max(5px, 1.4vw); }
+.ms-clippy:active { transform: scale(.88); }
+.ms-clippy.hide { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .ms-clippy { transition: opacity .3s ease; } }
+
 /* Scale the ROOT font-size with the viewport so every rem-based size (the
    reused app content is ~all rem) is zoom-invariant. On browsers that lay
    out at a wide viewport (e.g. 980px) and zoom out to fit, rem text would
@@ -128,10 +141,10 @@ html.mobile-shell #mobileShell {
 /* Android 3-button nav bar */
 .ms-navbar {
   flex: 0 0 auto; display: flex; justify-content: space-around; align-items: center;
-  padding: 6px 36px calc(env(safe-area-inset-bottom) + 6px); z-index: 6;
+  padding: max(6px, 1.6vw) max(36px, 9vw) calc(env(safe-area-inset-bottom) + max(6px, 1.6vw)); z-index: 6;
 }
-.ms-navbar button { background: none; border: none; cursor: pointer; padding: 8px; color: #fff; opacity: .92; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; }
-.ms-navbar svg { width: 19px; height: 19px; display: block; fill: currentColor; }
+.ms-navbar button { background: none; border: none; cursor: pointer; padding: max(8px, 2.2vw); color: #fff; opacity: .92; min-width: max(44px, 12vw); min-height: max(44px, 12vw); display: flex; align-items: center; justify-content: center; }
+.ms-navbar svg { width: max(22px, 6vw); height: max(22px, 6vw); display: block; fill: currentColor; }
 .ms-navbar .ms-nav-back svg { fill: #fff; }
 
 /* iOS Spotlight search pill */
@@ -148,7 +161,7 @@ html.mobile-shell #mobileShell {
   flex: 0 0 auto; display: flex; align-items: center; justify-content: center;
   height: calc(env(safe-area-inset-bottom) + 22px); padding-bottom: 7px; z-index: 6;
 }
-.ms-home-indicator span { display: block; width: 140px; height: 5px; border-radius: 3px; background: #000; opacity: .32; }
+.ms-home-indicator span { display: block; width: max(135px, 36vw); height: max(5px, 1.4vw); border-radius: 3px; background: #000; opacity: .32; }
 
 /* ============================================================
    Full-screen "app" sheets (reused apps[].content)
@@ -341,13 +354,13 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
    ============================================================ */
 
 /* Page-indicator dots (in the fixed bottom region, above the dock) */
-.ms-dots { display: flex; gap: 8px; justify-content: center; align-items: center; padding: 8px 0 4px; min-height: 22px; }
+.ms-dots { display: flex; gap: max(8px, 2.2vw); justify-content: center; align-items: center; padding: max(8px, 2vw) 0 4px; min-height: max(22px, 6vw); }
 .ms-dot {
-  width: 7px; height: 7px; padding: 0; border: none; border-radius: 50%; cursor: pointer;
+  width: max(8px, 2.1vw); height: max(8px, 2.1vw); padding: 0; border: none; border-radius: 50%; cursor: pointer;
   background: rgba(255,255,255,.4); transition: background .2s, transform .2s;
   position: relative;
 }
-.ms-dot::after { content: ""; position: absolute; inset: -14px; }   /* 35px hit target */
+.ms-dot::after { content: ""; position: absolute; inset: -14px; }   /* enlarge hit target */
 .ms-dot.on { background: rgba(255,255,255,.95); transform: scale(1.15); }
 .os-ios .ms-dot { background: rgba(20,20,19,.28); }
 .os-ios .ms-dot.on { background: rgba(20,20,19,.8); }

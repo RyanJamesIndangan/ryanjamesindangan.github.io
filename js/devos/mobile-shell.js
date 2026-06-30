@@ -142,6 +142,41 @@
     if (typeof window.showAIAssistant === 'function') window.showAIAssistant();
     else { var w = document.getElementById('aiAssistantWidget'); if (w) w.classList.remove('hidden'); }
   }
+  function chatIsOpen() { var w = document.getElementById('aiAssistantWidget'); return !!(w && !w.classList.contains('hidden')); }
+  function closeChat() {
+    if (typeof window.closeAIAssistant === 'function') window.closeAIAssistant();
+    else { var w = document.getElementById('aiAssistantWidget'); if (w) w.classList.add('hidden'); }
+  }
+
+  // A small roaming Clippy on the home screen — the mobile version of the
+  // desktop pet (the full desktop Clippy is hard-wired to the desktop). He
+  // drifts to a new spot now and then; tap him to open the chat.
+  var mobileClippy = null;
+  function initMobileClippy() {
+    if (mobileClippy) return;
+    var c = document.createElement('button');
+    c.className = 'ms-clippy'; c.type = 'button';
+    c.setAttribute('aria-label', 'Chat with Clippy');
+    c.innerHTML = '<img src="assets/clippy/clippy-on-yellow-paper.png" alt="">';
+    document.body.appendChild(c);
+    mobileClippy = c;
+    c.addEventListener('click', function (e) { e.stopPropagation(); haptic(8); openChat(); });
+    function busy() { return chatIsOpen() || sheetOpen || (Search && Search.isOpen()) || (ControlCenter && ControlCenter.isOpen()); }
+    function roam() {
+      var hidden = busy();
+      c.classList.toggle('hide', hidden);
+      if (hidden) return;
+      var sz = c.offsetWidth || 64;
+      var vw = Math.max(1, window.innerWidth), vh = Math.max(1, window.innerHeight);
+      c.style.left = Math.round(14 + Math.random() * Math.max(1, vw - sz - 28)) + 'px';
+      c.style.top = Math.round(vh * 0.16 + Math.random() * Math.max(1, vh * 0.52)) + 'px';
+    }
+    // Start tucked near the bottom-right, then drift periodically.
+    c.style.left = Math.max(14, window.innerWidth - 92) + 'px';
+    c.style.top = Math.round(window.innerHeight * 0.62) + 'px';
+    setTimeout(roam, 1600);
+    setInterval(roam, 7000);
+  }
 
   function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
 
@@ -686,6 +721,7 @@
       if (nav) {
         if (Search && Search.isOpen()) { Search.close(); return; }
         if (ControlCenter && ControlCenter.isOpen()) { ControlCenter.close(); return; }
+        if (chatIsOpen()) { closeChat(); return; }
         if (sheetOpen) { history.back(); return; }
         if (nav.classList.contains('ms-nav-home')) setPage(HOME_INDEX);   // Home always returns to the main page
         return;
@@ -694,9 +730,11 @@
       if (app) launch(app.getAttribute('data-app'), app);
     });
 
-    // Keep the chat widget closed until summoned.
+    // The chat widget lives inside #desktop, which the shell hides
+    // (display:none) — move it onto <body> so it can show full-screen on a
+    // phone. Keep it closed until summoned.
     var widget = document.getElementById('aiAssistantWidget');
-    if (widget) widget.classList.add('hidden');
+    if (widget) { document.body.appendChild(widget); widget.classList.add('hidden'); }
 
     // Let desktop openApp() route into the shell, and allow Escape to dismiss overlays.
     window.MobileShell = { open: openSheet };
@@ -704,6 +742,7 @@
       if (e.key !== 'Escape') return;
       if (Search && Search.isOpen()) Search.close();
       else if (ControlCenter && ControlCenter.isOpen()) ControlCenter.close();
+      else if (chatIsOpen()) closeChat();
       else if (sheetOpen) history.back();
     });
 
@@ -713,6 +752,9 @@
 
     // Live 5-day weather into the glance/today widgets (Open-Meteo, cached ~30 min).
     applyWeather();
+
+    // Roaming Clippy pet (tap to chat).
+    initMobileClippy();
 
     // Live status-bar + control-center clock.
     (function tickClock() {
