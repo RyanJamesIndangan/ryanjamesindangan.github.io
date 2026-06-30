@@ -72,9 +72,51 @@ function initializeSnakeGame() {
     
     // Keyboard controls
     document.addEventListener('keydown', handleSnakeKeyPress);
-    
+
+    // Touch controls — swipe up/down/left/right on the board (mobile).
+    initSnakeTouch(canvas);
+
     // Draw initial state
     drawGame();
+}
+
+// Apply a direction change with the same 180-degree-turn prevention as the keys.
+function setSnakeDirection(x, y) {
+    if (!snakeGame.gameRunning || snakeGame.gamePaused) return;
+    if (y === -1 && snakeGame.dy !== 1) snakeGame.nextDirection = { x: 0, y: -1 };
+    else if (y === 1 && snakeGame.dy !== -1) snakeGame.nextDirection = { x: 0, y: 1 };
+    else if (x === -1 && snakeGame.dx !== 1) snakeGame.nextDirection = { x: -1, y: 0 };
+    else if (x === 1 && snakeGame.dx !== -1) snakeGame.nextDirection = { x: 1, y: 0 };
+}
+
+// Swipe-to-steer on the game board. stopPropagation keeps the swipe from
+// triggering the mobile sheet's pull-to-dismiss / edge-back gestures.
+function initSnakeTouch(canvas) {
+    if (!canvas || canvas._snakeTouchBound) return;
+    canvas._snakeTouchBound = true;
+    canvas.style.touchAction = 'none';
+    let sx = 0, sy = 0, active = false;
+    canvas.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        sx = e.touches[0].clientX; sy = e.touches[0].clientY; active = true;
+        e.stopPropagation();
+    }, { passive: true });
+    canvas.addEventListener('touchmove', (e) => {
+        if (!active) return;
+        e.preventDefault(); e.stopPropagation();
+    }, { passive: false });
+    canvas.addEventListener('touchend', (e) => {
+        if (!active) return; active = false;
+        e.stopPropagation();
+        const t = e.changedTouches[0];
+        const dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) < 16 && Math.abs(dy) < 16) {        // a tap starts the game
+            if (!snakeGame.gameRunning) startGame();
+            return;
+        }
+        if (Math.abs(dx) > Math.abs(dy)) setSnakeDirection(dx > 0 ? 1 : -1, 0);
+        else setSnakeDirection(0, dy > 0 ? 1 : -1);
+    }, { passive: true });
 }
 
 function handleSnakeKeyPress(e) {
