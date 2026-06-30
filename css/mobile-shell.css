@@ -38,9 +38,11 @@ html.mobile-shell #mobileShell {
 .ms-sb-time { letter-spacing: .2px; font-variant-numeric: tabular-nums; }
 
 /* ---------------- Home (horizontal pager viewport) ---------------- */
-.ms-home { flex: 1 1 auto; position: relative; overflow: hidden; }
+.ms-home { flex: 1 1 auto; position: relative; overflow: hidden; min-height: 0; }
+/* Absolute-positioned so each page gets a real height on iOS Safari
+   (a height:100% chain through a flex column collapses there). */
 .ms-pager {
-  display: flex; height: 100%; width: 100%;
+  position: absolute; inset: 0; display: flex;
   transition: transform .34s cubic-bezier(.22, .61, .36, 1); will-change: transform;
 }
 .ms-page {

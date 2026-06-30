@@ -12,6 +12,15 @@
   'use strict';
   if (!(window.DeviceMode && window.DeviceMode.isMobile())) return;
 
+  // A real phone home screen doesn't pinch-zoom. iOS Safari ignores the
+  // viewport user-scalable=no, so also kill the gesture/multi-touch events.
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('touchmove', function (e) {
+    if (e.touches && e.touches.length > 1) e.preventDefault();   // pinch
+  }, { passive: false });
+
   var OS = (window.DeviceMode.os === 'android') ? 'android' : 'ios';
   var apps = window.apps || {};
   var built = false, sheetOpen = false;
@@ -23,7 +32,7 @@
   function appTitle(id) { return appData(id).title || id; }
 
   // Portfolio sections styled as crafted phone apps (id, label, gradient).
-  // Page 1 (Home) = portfolio-core apps; Page 2 (More) = utilities / fun / switches.
+  // Page 1 (Home) = the portfolio apps (fills the grid); Page 2 (More) = utilities / switches.
   var HOME_PAGE_APPS = [
     { id: 'about',         label: 'About',      grad: 'linear-gradient(145deg,#4f9cff,#1d6fe0)' },
     { id: 'experience',    label: 'Experience', grad: 'linear-gradient(145deg,#22b8e6,#0e86c4)' },
@@ -32,13 +41,13 @@
     { id: 'certifications',label: 'Certs',      grad: 'linear-gradient(145deg,#ff6b81,#e11d48)' },
     { id: 'github-stats',  label: 'GitHub',     grad: 'linear-gradient(145deg,#485063,#1b1f2a)' },
     { id: 'ai-lab',        label: 'AI Lab',     grad: 'linear-gradient(145deg,#2dd4a7,#0ea371)' },
-    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#ffd24d,#f1a811)' }
-  ];
-  var MORE_APPS = [
+    { id: 'testimonials',  label: 'Reviews',    grad: 'linear-gradient(145deg,#ffd24d,#f1a811)' },
     { id: 'blog',          label: 'Blog',       grad: 'linear-gradient(145deg,#ff7a59,#e0492f)' },
     { id: 'terminal',      label: 'Terminal',   grad: 'linear-gradient(145deg,#2b3340,#11151d)' },
     { id: 'snake',         label: 'Snake',      grad: 'linear-gradient(145deg,#46d66b,#1ba345)' },
-    { id: 'code-snippets', label: 'Snippets',   grad: 'linear-gradient(145deg,#7c83ff,#4f46e5)' },
+    { id: 'code-snippets', label: 'Snippets',   grad: 'linear-gradient(145deg,#7c83ff,#4f46e5)' }
+  ];
+  var MORE_APPS = [
     { id: 'analytics',     label: 'Analytics',  grad: 'linear-gradient(145deg,#2bd4c0,#0f9e95)' },
     { id: 'easter-eggs',   label: 'Secrets',    grad: 'linear-gradient(145deg,#ff8ec2,#e1559a)' },
     { id: '__desktop',     label: 'Desktop',    grad: 'linear-gradient(145deg,#8090a8,#475569)' },
