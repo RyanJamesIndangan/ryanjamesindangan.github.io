@@ -151,31 +151,51 @@
   // A small roaming Clippy on the home screen — the mobile version of the
   // desktop pet (the full desktop Clippy is hard-wired to the desktop). He
   // drifts to a new spot now and then; tap him to open the chat.
+  // Animated Clippy GIFs (the same assets the desktop pet uses).
+  var CLIPPY_IDLE = [
+    'assets/clippy/idle/clippy-animation-when-idle-have-a-coffee-in-his-hand.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-saying-are-you-there.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-clicking-laptop-fast.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-driking-beer.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-removing-glass-a-bit-to-look-at-user.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-saying-im-here.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-shaking-around.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-sleepy-in-front-of-laptop.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-smelling-mug-of-coffee.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-stuck-in-traffic.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-talking-to-flask.gif',
+    'assets/clippy/idle/clippy-animation-when-idle-with-sun-and-have-sun-glasses.gif'
+  ];
+  var CLIPPY_HELLO = 'assets/clippy/deterministic/clippy-animation-saying-hello-there.gif';
+  function clippyIdleGif() { return CLIPPY_IDLE[Math.floor(Math.random() * CLIPPY_IDLE.length)]; }
+
   var mobileClippy = null;
   function initMobileClippy() {
     if (mobileClippy) return;
     var c = document.createElement('button');
     c.className = 'ms-clippy'; c.type = 'button';
     c.setAttribute('aria-label', 'Chat with Clippy');
-    c.innerHTML = '<img src="assets/clippy/clippy-on-yellow-paper.png" alt="">';
+    c.innerHTML = '<img alt="" src="' + CLIPPY_HELLO + '">';   // greet on first appearance
     document.body.appendChild(c);
     mobileClippy = c;
-    c.addEventListener('click', function (e) { e.stopPropagation(); haptic(8); openChat(); });
+    var img = c.querySelector('img');
+    c.addEventListener('click', function (e) { e.stopPropagation(); haptic(8); img.src = CLIPPY_HELLO; openChat(); });
     function busy() { return chatIsOpen() || sheetOpen || (Search && Search.isOpen()) || (ControlCenter && ControlCenter.isOpen()); }
     function roam() {
       var hidden = busy();
       c.classList.toggle('hide', hidden);
       if (hidden) return;
+      img.src = clippyIdleGif();    // play a fresh idle animation on each move
       var sz = c.offsetWidth || 64;
       var vw = Math.max(1, window.innerWidth), vh = Math.max(1, window.innerHeight);
       c.style.left = Math.round(14 + Math.random() * Math.max(1, vw - sz - 28)) + 'px';
       c.style.top = Math.round(vh * 0.16 + Math.random() * Math.max(1, vh * 0.52)) + 'px';
     }
-    // Start tucked near the bottom-right, then drift periodically.
+    // Start tucked near the bottom-right, greet, then drift + re-animate.
     c.style.left = Math.max(14, window.innerWidth - 92) + 'px';
     c.style.top = Math.round(window.innerHeight * 0.62) + 'px';
-    setTimeout(roam, 1600);
-    setInterval(roam, 7000);
+    setTimeout(roam, 2600);    // let the hello animation play first
+    setInterval(roam, 8000);
   }
 
   function haptic(ms) { try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {} }
