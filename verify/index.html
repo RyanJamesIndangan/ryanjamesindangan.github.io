@@ -2,72 +2,141 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify a Certificate | Ryan James Indangan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Certificate Verification · Ryan James Indangan</title>
     <meta name="description" content="Verify the authenticity of a certificate issued at Ryan James Indangan's Practical Prompting for Everyday Work workshop. Cryptographically checked in your browser — no data leaves this page.">
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#0078d7; --primary-2:#3399ff; --gold:#c9a227;
+            --ink:#17273f; --muted:#5b6b7f;
+        }
+        html,body{height:100%}
         body{
-            font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
-            background:linear-gradient(135deg,#1a1d29 0%,#252837 100%);
-            color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
+            font-family:'Segoe UI','Inter',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
+            overflow:hidden; color:var(--ink);
+            background:
+                linear-gradient(135deg,rgba(13,17,23,.55),rgba(26,29,41,.4) 50%,rgba(13,17,23,.62)),
+                url('../assets/background.jpg') center center / cover no-repeat fixed,
+                linear-gradient(135deg,#1a1d29,#252837);
+            display:flex; align-items:center; justify-content:center; padding:24px;
         }
-        .card{
-            width:100%;max-width:640px;padding:2.5rem;
-            background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-            border:1px solid rgba(255,255,255,0.15);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.5);
+        /* aurora shimmer, like the desktop wallpaper */
+        body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:
+            radial-gradient(ellipse at 30% 40%,rgba(0,120,215,.18) 0%,transparent 50%),
+            radial-gradient(ellipse at 70% 60%,rgba(51,153,255,.12) 0%,transparent 50%);
+            animation:aurora 25s ease-in-out infinite alternate}
+        @keyframes aurora{from{transform:translate(0,0)}to{transform:translate(-2%,1.5%)}}
+
+        /* ---- The OS window (desktop) ---- */
+        .os-window{
+            position:relative; z-index:1; width:min(720px,96vw); max-height:90vh;
+            display:flex; flex-direction:column; overflow:hidden;
+            background:rgba(255,255,255,.14);
+            backdrop-filter:blur(14px) saturate(180%); -webkit-backdrop-filter:blur(14px) saturate(180%);
+            border:1px solid rgba(255,255,255,.35); border-radius:8px;
+            box-shadow:0 24px 64px rgba(0,0,0,.5),0 6px 20px rgba(0,0,0,.4),
+                inset 0 1px 0 rgba(255,255,255,.4),0 0 40px rgba(100,181,246,.18);
         }
-        .brandrow{display:flex;align-items:center;gap:.6rem;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#8b97b5;margin-bottom:1.6rem}
-        .brandrow .dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#64ffda,#4ade80)}
-        .status-icon{font-size:3.4rem;line-height:1;margin-bottom:.8rem;text-align:center}
-        .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.42rem 1rem;border-radius:999px;font-weight:700;font-size:.82rem;letter-spacing:.03em;text-transform:uppercase}
-        .badge.ok{background:rgba(74,222,128,.14);border:1px solid rgba(74,222,128,.45);color:#8ff0b6}
-        .badge.bad{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4);color:#ff9d9d}
-        .badge.wait{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#cdd6ee}
+        .os-statusbar{display:none}
+        .os-titlebar{
+            flex:0 0 auto; height:34px; display:flex; align-items:center; justify-content:space-between;
+            padding:0 4px 0 10px; cursor:default;
+            background:linear-gradient(to bottom,rgba(245,250,255,.94),rgba(224,238,255,.86));
+            border-bottom:1px solid rgba(255,255,255,.6);
+        }
+        .os-title{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#14202e;text-shadow:0 1px 0 rgba(255,255,255,.85)}
+        .os-title .ico{font-size:15px}
+        .os-back{display:none}
+        .os-controls{display:flex;gap:2px}
+        .os-btn{width:42px;height:26px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#20303f;text-decoration:none;
+            border:1px solid rgba(150,160,175,.4);border-radius:3px;cursor:pointer;
+            background:linear-gradient(to bottom,rgba(255,255,255,.75),rgba(224,230,240,.55));
+            box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+        .os-btn:hover{background:linear-gradient(to bottom,#fff,rgba(234,240,248,.75))}
+        .os-btn.close:hover{background:linear-gradient(to bottom,#e81123,#a00d1a);color:#fff;border-color:rgba(0,0,0,.15)}
+
+        .os-body{
+            flex:1 1 auto; overflow:auto; padding:32px 32px 36px;
+            background:linear-gradient(to bottom,rgba(255,255,255,.95),rgba(245,249,252,.93));
+        }
+        .os-body::-webkit-scrollbar{width:14px}
+        .os-body::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,#c3ccd8,#a9b4c2);border:1px solid #97a3b3;border-radius:2px}
+
+        /* ---- content ---- */
         .center{text-align:center}
-        h1{font-size:1.7rem;margin:.9rem 0 .3rem;font-weight:750}
-        .sub{color:#b8c1db;font-size:1rem;line-height:1.55}
-        .cert-title{font-size:.86rem;letter-spacing:.16em;text-transform:uppercase;color:#64ffda;margin:1.9rem 0 .4rem;text-align:center}
-        .name{
-            font-size:2.4rem;font-weight:800;text-align:center;line-height:1.15;
-            background:linear-gradient(135deg,#64ffda 0%,#4ade80 100%);
-            -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-            word-break:break-word;margin-bottom:.3rem;
-        }
-        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-top:1.8rem}
-        .detail{padding:1rem 1.15rem;background:rgba(20,23,34,.35)}
-        .detail .k{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#8b97b5;margin-bottom:.28rem}
-        .detail .v{font-size:1.02rem;font-weight:650;color:#eef2ff;word-break:break-word}
-        .detail.full{grid-column:1 / -1}
-        .mono{font-family:'SF Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;letter-spacing:.02em}
-        .foot{margin-top:1.7rem;padding-top:1.3rem;border-top:1px solid rgba(255,255,255,.1);color:#8b97b5;font-size:.82rem;line-height:1.6;text-align:center}
-        .foot b{color:#b8c1db;font-weight:650}
-        .paste{margin-top:1.5rem}
-        .paste label{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#8b97b5;margin-bottom:.5rem}
-        .paste input{width:100%;font:inherit;font-size:.95rem;color:#eef2ff;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:.8rem .9rem}
-        .paste input:focus{outline:none;border-color:#64ffda}
-        .btn{margin-top:.8rem;width:100%;font:inherit;font-weight:700;font-size:.98rem;color:#10241d;background:linear-gradient(135deg,#64ffda 0%,#4ade80 100%);border:none;border-radius:10px;padding:.85rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
-        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(100,255,218,.3)}
-        .home{display:inline-block;margin-top:1.4rem;color:#64ffda;text-decoration:none;font-weight:600;font-size:.9rem}
+        .seal{font-size:3.3rem;line-height:1;text-align:center;margin-bottom:.5rem}
+        .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.42rem 1.05rem;border-radius:999px;font-weight:800;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+        .badge.ok{background:rgba(10,161,90,.13);border:1px solid rgba(10,161,90,.5);color:#0a7a45}
+        .badge.bad{background:rgba(220,40,50,.1);border:1px solid rgba(220,40,50,.45);color:#b3252f}
+        .badge.wait{background:rgba(0,120,215,.1);border:1px solid rgba(0,120,215,.4);color:#0a5aa0}
+        .kicker{text-align:center;font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--primary);margin:1.8rem 0 .35rem;font-weight:800}
+        .name{text-align:center;font-family:Georgia,'Times New Roman',serif;font-size:2.15rem;font-weight:800;color:#0b4c93;line-height:1.15;word-break:break-word;margin-bottom:.2rem}
+        .grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(15,40,70,.14);border:1px solid rgba(15,40,70,.14);border-radius:8px;overflow:hidden;margin-top:1.6rem}
+        .cell{padding:.95rem 1.1rem;background:rgba(255,255,255,.82)}
+        .cell .k{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.28rem}
+        .cell .v{font-size:1.02rem;font-weight:700;color:#17273f;word-break:break-word}
+        .cell.full{grid-column:1 / -1}
+        .mono{font-family:'JetBrains Mono',Consolas,ui-monospace,monospace;letter-spacing:.02em}
+        .note{margin-top:1.6rem;padding-top:1.25rem;border-top:1px solid rgba(15,40,70,.12);color:var(--muted);font-size:.84rem;line-height:1.6;text-align:center}
+        .note b{color:#2a4460;font-weight:700}
+        h1{font-size:1.45rem;margin:.85rem 0 .35rem;text-align:center;color:#17273f}
+        .sub{color:var(--muted);text-align:center;font-size:.98rem;line-height:1.55}
+        .paste{margin-top:1.4rem}
+        .paste label{display:block;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem;font-weight:800}
+        .paste input{width:100%;font:inherit;font-size:.95rem;color:#17273f;background:#fff;border:1px solid rgba(15,40,70,.25);border-radius:8px;padding:.78rem .85rem}
+        .paste input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,120,215,.15)}
+        .btn{margin-top:.75rem;width:100%;font:inherit;font-weight:800;font-size:.98rem;color:#fff;cursor:pointer;
+            background:linear-gradient(to bottom,#2b90ea,#0078d7);border:1px solid #0a67ba;border-radius:8px;padding:.82rem}
+        .btn:hover{background:linear-gradient(to bottom,#3f9ef0,#0a84e0)}
+        .home{display:inline-block;margin-top:1.25rem;color:var(--primary);text-decoration:none;font-weight:800;font-size:.9rem}
         .home:hover{text-decoration:underline}
-        .spin{display:inline-block;width:1.05em;height:1.05em;border:2px solid rgba(255,255,255,.25);border-top-color:#64ffda;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+        .spin{display:inline-block;width:1.05em;height:1.05em;border:2px solid rgba(0,120,215,.25);border-top-color:#0078d7;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
         @keyframes sp{to{transform:rotate(360deg)}}
-        .hide{display:none!important}
-        @media(max-width:520px){.card{padding:1.6rem}.name{font-size:1.9rem}.detail-grid{grid-template-columns:1fr}h1{font-size:1.4rem}}
+
+        /* ---- Mobile: iOS/Android app-screen ---- */
+        @media (max-width:768px){
+            body{padding:0;display:block;background:#0a0f1e}
+            body::before{opacity:.4}
+            .os-window{width:100vw;height:100vh;height:100dvh;max-height:none;border-radius:0;border:none;
+                background:#eef1f5;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none}
+            .os-statusbar{display:flex;flex:0 0 auto;align-items:center;justify-content:space-between;
+                padding:calc(env(safe-area-inset-top) + 7px) 20px 5px;background:#16365c;color:#fff;font-size:13px;font-weight:600}
+            .os-statusbar .r{display:inline-flex;gap:7px;align-items:center}
+            .os-titlebar{height:auto;justify-content:flex-start;gap:6px;padding:11px 12px calc(11px);
+                background:linear-gradient(135deg,#16365c,#2171d6);border-bottom:none}
+            .os-title{color:#fff;text-shadow:none;font-size:1.05rem;font-weight:700}
+            .os-title .ico{font-size:1.2rem}
+            .os-controls{display:none}
+            .os-back{display:inline-flex;align-items:center;gap:.25rem;background:rgba(255,255,255,.18);border:none;color:#fff;
+                height:34px;border-radius:9px;padding:0 12px;font-weight:700;font-size:.9rem;text-decoration:none}
+            .os-body{padding:22px 18px calc(env(safe-area-inset-bottom) + 42px);background:#eef1f5}
+            .name{font-size:1.85rem}
+            .grid{grid-template-columns:1fr}
+        }
     </style>
 </head>
 <body>
-    <div class="card" id="card">
-        <div class="brandrow"><span class="dot"></span>Certificate Verification · Ryan James Indangan</div>
-        <div id="body">
+    <div class="os-window" role="dialog" aria-label="Certificate Verification">
+        <div class="os-statusbar" aria-hidden="true"><span class="l" id="clk">9:41</span><span class="r"><span>📶</span><span>🔋</span></span></div>
+        <div class="os-titlebar">
+            <a class="os-back" href="/">‹ Desktop</a>
+            <div class="os-title"><span class="ico">🎓</span><span>Certificate Verification</span></div>
+            <div class="os-controls">
+                <span class="os-btn" title="Minimize" aria-hidden="true">─</span>
+                <span class="os-btn" title="Maximize" aria-hidden="true">▢</span>
+                <a class="os-btn close" href="/" title="Back to desktop" aria-label="Back to desktop">✕</a>
+            </div>
+        </div>
+        <div class="os-body" id="content">
             <div class="center"><span class="badge wait"><span class="spin"></span> Checking…</span></div>
         </div>
     </div>
 
 <script>
-// ---- Public verification key (Ed25519, SPKI base64). Safe to publish — this can only VERIFY, never sign. ----
+// ---- Public verification key (Ed25519, SPKI base64). Safe to publish — it can only VERIFY, never sign. ----
 var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAH3O4taojbajXKKgqEmGiy4V48/9hZADjFnzfxgJWLHI=";
 var EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
 
@@ -82,19 +151,16 @@ function extractToken(raw){
   if(!raw)return '';
   if(raw.indexOf('#')>=0)raw=raw.split('#').pop();
   else if(raw.indexOf('?')>=0){try{var u=new URL(raw);raw=u.searchParams.get('c')||u.searchParams.get('token')||raw;}catch(e){var m=raw.match(/[?&](?:c|token)=([^&]+)/);if(m)raw=m[1];}}
-  raw=raw.trim().replace(/^#/,'');
-  return raw;
+  return raw.trim().replace(/^#/,'');
 }
-
 async function sha256Hex(bytes){var h=await crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
 async function certId(token){var hex=(await sha256Hex(new TextEncoder().encode(token))).toUpperCase();return 'RJI-'+hex.slice(0,5)+'-'+hex.slice(5,10);}
 
 async function verifyToken(token){
   var parts=token.split('.');
   if(parts.length!==2||!parts[0]||!parts[1])return {ok:false,reason:'format'};
-  var payloadB64=parts[0], sigB64=parts[1];
-  // decode payload first (so we can show details even if the browser can't run the crypto)
-  var payload;try{payload=JSON.parse(b64uToText(payloadB64));}catch(e){return {ok:false,reason:'format'};}
+  var payloadB64=parts[0], sigB64=parts[1], payload;
+  try{payload=JSON.parse(b64uToText(payloadB64));}catch(e){return {ok:false,reason:'format'};}
   if(!crypto.subtle||!crypto.subtle.importKey)return {ok:false,reason:'nosubtle',payload:payload};
   var key;
   try{key=await crypto.subtle.importKey('spki',bytesFromB64(PUBKEY_SPKI_B64),{name:'Ed25519'},false,['verify']);}
@@ -106,46 +172,44 @@ async function verifyToken(token){
   return {ok:true,payload:payload,id:await certId(token)};
 }
 
-function render(html){document.getElementById('body').innerHTML=html;}
+function render(html){document.getElementById('content').innerHTML=html;}
+var homeLink='<a class="home" href="/">← Back to Ryan’s desktop</a>';
 
 function renderGenuine(r){
   render(
-    '<div class="status-icon">🎓</div>'+
+    '<div class="seal">🎓</div>'+
     '<div class="center"><span class="badge ok">✓ Genuine Certificate</span></div>'+
-    '<div class="cert-title">Certificate of Participation</div>'+
+    '<div class="kicker">Certificate of Participation</div>'+
     '<div class="name">'+esc(r.payload.n)+'</div>'+
-    '<div class="detail-grid">'+
-      '<div class="detail"><div class="k">Date Issued</div><div class="v">'+esc(r.payload.d)+'</div></div>'+
-      '<div class="detail"><div class="k">Certificate ID</div><div class="v mono">'+esc(r.id)+'</div></div>'+
-      '<div class="detail full"><div class="k">Workshop</div><div class="v">'+esc(EVENT)+'</div></div>'+
+    '<div class="grid">'+
+      '<div class="cell"><div class="k">Date Issued</div><div class="v">'+esc(r.payload.d)+'</div></div>'+
+      '<div class="cell"><div class="k">Certificate ID</div><div class="v mono">'+esc(r.id)+'</div></div>'+
+      '<div class="cell full"><div class="k">Workshop</div><div class="v">'+esc(EVENT)+'</div></div>'+
     '</div>'+
-    '<div class="foot">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued by <b>Ryan James Indangan</b> and has not been altered. No data left this page.'+
-    '<br><a class="home" href="/">← ryanjamesindangan.github.io</a></div>'
+    '<div class="note">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued by <b>Ryan James Indangan</b> and has not been altered. No data left this page.<br>'+homeLink+'</div>'
   );
 }
-
 function renderProblem(title,msg,showPaste){
   render(
-    '<div class="status-icon">⚠️</div>'+
+    '<div class="seal">⚠️</div>'+
     '<div class="center"><span class="badge bad">Not verified</span></div>'+
-    '<h1 class="center">'+esc(title)+'</h1>'+
-    '<p class="sub center">'+msg+'</p>'+
+    '<h1>'+esc(title)+'</h1>'+
+    '<p class="sub">'+msg+'</p>'+
     (showPaste?pasteBox():'')+
-    '<div class="foot"><a class="home" href="/">← ryanjamesindangan.github.io</a></div>'
+    '<div class="note">'+homeLink+'</div>'
   );
+  if(showPaste)wirePaste();
 }
-
 function renderLanding(){
   render(
-    '<div class="status-icon">🔎</div>'+
-    '<h1 class="center">Verify a certificate</h1>'+
-    '<p class="sub center">Scan the QR on the certificate, or paste its verification link below. The check runs entirely in your browser.</p>'+
+    '<div class="seal">🔎</div>'+
+    '<h1>Verify a certificate</h1>'+
+    '<p class="sub">Scan the QR on the certificate, or paste its verification link below. The check runs entirely in your browser.</p>'+
     pasteBox()+
-    '<div class="foot">Issued at <b>'+esc(EVENT)+'</b>.<br><a class="home" href="/">← ryanjamesindangan.github.io</a></div>'
+    '<div class="note">Issued at <b>'+esc(EVENT)+'</b>.<br>'+homeLink+'</div>'
   );
   wirePaste();
 }
-
 function pasteBox(){
   return '<div class="paste"><label for="tok">Certificate link or code</label>'+
     '<input id="tok" type="text" placeholder="Paste the verify link from the certificate…" autocomplete="off" spellcheck="false">'+
@@ -171,13 +235,14 @@ async function check(){
     return;
   }
   if(r.reason==='invalid'){
-    renderProblem('This certificate could not be verified','The signature doesn’t match. The link may have been copied incompletely or the certificate may have been altered. Check you pasted the <b>whole</b> link, then try again.',true);
+    renderProblem('This certificate could not be verified','The signature doesn’t match. The link may have been copied incompletely, or the certificate may have been altered. Check you pasted the <b>whole</b> link, then try again.',true);
   }else{
     renderProblem('That doesn’t look like a certificate link','We couldn’t read a certificate from that link. Paste the full verification link exactly as it appears on the certificate.',true);
   }
-  wirePaste();
 }
 
+// tiny touch of realism: live clock in the mobile status bar
+(function(){try{var c=document.getElementById('clk');if(c){var d=new Date();var h=d.getHours(),m=d.getMinutes();c.textContent=((h%12)||12)+':'+(m<10?'0':'')+m;}}catch(e){}})();
 window.addEventListener('hashchange',check);
 check();
 </script>
