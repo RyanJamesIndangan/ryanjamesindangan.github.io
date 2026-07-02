@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify a Certificate | Ryan James Indangan</title>
-    <meta name="description" content="Verify the authenticity of a certificate issued at Ryan James Indangan's AI Tools for Productivity workshop. Cryptographically checked in your browser — no data leaves this page.">
+    <meta name="description" content="Verify the authenticity of a certificate issued at Ryan James Indangan's Practical Prompting for Everyday Work workshop. Cryptographically checked in your browser — no data leaves this page.">
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <style>
@@ -69,7 +69,7 @@
 <script>
 // ---- Public verification key (Ed25519, SPKI base64). Safe to publish — this can only VERIFY, never sign. ----
 var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAH3O4taojbajXKKgqEmGiy4V48/9hZADjFnzfxgJWLHI=";
-var EVENT = "AI Tools for Productivity — REAP × Rex Group HR";
+var EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
 
 function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
 function b64uToBytes(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return bytesFromB64(s);}
