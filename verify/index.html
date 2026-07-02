@@ -160,14 +160,14 @@
 <script src="sig.js"></script>
 <script>
 // ---- Public verification key (Ed25519, SPKI base64). Safe to publish — it can only VERIFY, never sign. ----
-var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEApfh4QknzK4YlUCbplwqcceaHXiqjOWX50PHFt1bQabk=";
+var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAwZEggYQU+bz+Td/tJR/LWaFaJ1EQRmITNrlrkHVD4r8=";
 // v2 tokens carry their own event name (payload.e); v1 tokens predate that and fall back to this.
 var LEGACY_EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
 // Workshops certificates can come from (shown on the landing view).
 var EVENTS = [
   { t: "Practical Prompting for Everyday Work", d: "Hands-on workshop · Rex Knowledge Center, Quezon City, Philippines" },
   { t: "Ahead of the Race: Using AI to Build, Work, and Stand Out", d: "Hands-on workshop · Blue Ville Subdivision, Novaliches, Quezon City" },
-  { t: "AI Masterclass", d: "Online workshop · participants from multiple companies" }
+  { t: "AI Masterclass", d: "Online workshop · participants from international companies, including Fortune 500" }
 ];
 
 function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
@@ -241,7 +241,7 @@ function certMeta(e){
     loc:'Blue Ville Subdivision · Novaliches, Quezon City, Philippines'};
   if(e.indexOf('AI Masterclass')===0)return{kick:'AI MASTERCLASS · ONLINE WORKSHOP',
     b1:'for successfully completing “AI Masterclass” — an online workshop',
-    b2:'for professionals across different companies.',
+    b2:'for professionals from international companies.',
     loc:'Conducted online'};
   var t=e.split(' · ')[0];
   return{kick:e.toUpperCase(),b1:'for successfully completing the workshop',b2:'“'+t+'”',loc:''};
