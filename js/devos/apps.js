@@ -33,7 +33,7 @@ const apps = {
                     🔎 Open the Verifier
                 </button>
                 <p style="color:#888; font-size:.82rem; margin-top:1.4rem; line-height:1.5;">
-                    Issued at my &ldquo;Practical Prompting for Everyday Work&rdquo; workshop. Verification is private &mdash; no attendee list is published anywhere.
+                    Covers my workshops &mdash; &ldquo;Practical Prompting for Everyday Work&rdquo;, &ldquo;Ahead of the Race: Using AI to Build, Work, and Stand Out&rdquo;, and &ldquo;AI Masterclass&rdquo;. Verification is private &mdash; no attendee list is published anywhere.
                 </p>
             </div>
         `

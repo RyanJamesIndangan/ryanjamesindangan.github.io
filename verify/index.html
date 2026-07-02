@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Certificate Verification · Ryan James Indangan</title>
-    <meta name="description" content="Verify the authenticity of a certificate issued at Ryan James Indangan's Practical Prompting for Everyday Work workshop. Cryptographically checked in your browser — no data leaves this page.">
+    <meta name="description" content="Verify the authenticity of a certificate issued at Ryan James Indangan's AI workshops. Cryptographically checked in your browser — no data leaves this page.">
     <meta name="robots" content="noindex">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <style>
@@ -138,7 +138,14 @@
 <script>
 // ---- Public verification key (Ed25519, SPKI base64). Safe to publish — it can only VERIFY, never sign. ----
 var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAH3O4taojbajXKKgqEmGiy4V48/9hZADjFnzfxgJWLHI=";
-var EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
+// v2 tokens carry their own event name (payload.e); v1 tokens predate that and fall back to this.
+var LEGACY_EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
+// Workshops certificates can come from (shown on the landing view).
+var EVENTS = [
+  "Practical Prompting for Everyday Work · Hands-on Workshop",
+  "Ahead of the Race: Using AI to Build, Work, and Stand Out",
+  "AI Masterclass"
+];
 
 function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
 function b64uToBytes(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return bytesFromB64(s);}
@@ -184,7 +191,7 @@ function renderGenuine(r){
     '<div class="grid">'+
       '<div class="cell"><div class="k">Date Issued</div><div class="v">'+esc(r.payload.d)+'</div></div>'+
       '<div class="cell"><div class="k">Certificate ID</div><div class="v mono">'+esc(r.id)+'</div></div>'+
-      '<div class="cell full"><div class="k">Workshop</div><div class="v">'+esc(EVENT)+'</div></div>'+
+      '<div class="cell full"><div class="k">Workshop</div><div class="v">'+esc(r.payload.e||LEGACY_EVENT)+'</div></div>'+
     '</div>'+
     '<div class="note">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued by <b>Ryan James Indangan</b> and has not been altered. No data left this page.<br>'+homeLink+'</div>'
   );
@@ -206,7 +213,7 @@ function renderLanding(){
     '<h1>Verify a certificate</h1>'+
     '<p class="sub">Scan the QR on the certificate, or paste its verification link below. The check runs entirely in your browser.</p>'+
     pasteBox()+
-    '<div class="note">Issued at <b>'+esc(EVENT)+'</b>.<br>'+homeLink+'</div>'
+    '<div class="note">Verifies certificates from Ryan&rsquo;s workshops:<br><b>'+EVENTS.map(esc).join('</b><br><b>')+'</b><br>'+homeLink+'</div>'
   );
   wirePaste();
 }
