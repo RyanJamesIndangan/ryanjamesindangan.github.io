@@ -562,7 +562,21 @@ class PortfolioChatbot {
         if (knowledgeResult) {
             return knowledgeResult;
         }
-        
+
+        // Workshop certificate verification (a participant checking a cert Ryan issued them). Placed EARLY so
+        // specific verify-triggers win over generic greeting / "how do I…" blocks below.
+        if (this.matches(message, ['verify', 'verified', 'verification', 'authentic', 'genuine', 'tamper', 'is my certificate', 'is this certificate', 'is the certificate real', 'certificate real', 'verify certificate', 'verify my certificate', 'check my certificate', 'qr code', 'scan the qr', 'totoo ba ang cert', 'paano i-verify', 'i-verify', 'legit ba'])) {
+            return {
+                text: `Certificates from Ryan's **"Practical Prompting for Everyday Work"** workshop are cryptographically verifiable ✅\n\nYour certificate has a **QR code** and a **verify link** with a Certificate ID (like RJI-XXXXX-XXXXX).\n\n🔎 **To verify:** scan the QR, or open the link — it launches Ryan's **Certificate Verifier**, which instantly confirms it's genuine (showing the name, date, and ID). Each cert is signed with an **Ed25519** digital signature and checked right in your browser — impossible to fake, and nothing is stored.\n\nYou can also open **ryanjamesindangan.github.io/verify** and paste your link there.`,
+                suggestions: [
+                    "Where's the QR code?",
+                    "Is it tamper-proof?",
+                    "What certifications does Ryan have?",
+                    "What can you do?"
+                ]
+            };
+        }
+
         // Context-aware responses (only if message is generic/asking for help)
         // Exclude specific "what is" questions from context-aware responses
         const isSpecificWhatIs = (this.matches(message, ['what is', 'what\'s', 'explain']) && 
@@ -681,8 +695,8 @@ class PortfolioChatbot {
                 ]
             };
         }
-        // Greetings
-        if (this.matches(message, ['hi', 'hello', 'hey', 'greetings'])) {
+        // Greetings — word-boundary match so short tokens like 'hi' don't fire inside "this"/"his"
+        if (/(?:^|[^a-z])(?:hi|hey|hello|hiya|greetings|good (?:morning|afternoon|evening))(?:[^a-z]|$)/.test(message)) {
             const greeting = this.userName 
                 ? `Hello ${this.userName}! 👋 Nice to see you again! I'm Ryan's AI Assistant. How can I help you today?`
                 : "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?";
