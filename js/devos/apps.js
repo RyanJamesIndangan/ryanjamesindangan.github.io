@@ -3,6 +3,41 @@
 // ===========================
 
 const apps = {
+    'verify-certificate': {
+        title: 'Verify a Certificate',
+        icon: '🪪',
+        content: `
+            <div style="max-width: 720px;">
+                <h2 style="font-size: 2rem; margin-bottom: 0.4rem; color:#1a1a1a; font-weight:700;">🪪 Verify a Certificate</h2>
+                <p style="color:#555; line-height:1.6; margin-bottom:1.4rem;">
+                    Certificates from my workshops are <b>cryptographically signed</b> (Ed25519). Confirm one is genuine in seconds &mdash; the check runs entirely in your browser, and nothing is stored.
+                </p>
+                <div style="display:grid; gap:1rem; margin-bottom:1.3rem;">
+                    <div style="padding:1.05rem 1.2rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
+                        <b style="color:#1a1a1a;">&#9312; Scan the QR</b>
+                        <p style="color:#555; margin:.3rem 0 0; font-size:.92rem;">There's a <b>QR code</b> on the certificate &mdash; scan it with your phone camera and it opens the Verifier.</p>
+                    </div>
+                    <div style="padding:1.05rem 1.2rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
+                        <b style="color:#1a1a1a;">&#9313; Or paste the verify link</b>
+                        <p style="color:#555; margin:.3rem 0 .6rem; font-size:.92rem;">Copy the verification link from the certificate (or its PDF) and paste it here:</p>
+                        <input id="vcInput" type="text" placeholder="https://ryanjamesindangan.github.io/verify/#…" autocomplete="off" spellcheck="false"
+                            style="width:100%; box-sizing:border-box; padding:.7rem .8rem; border:1px solid #cbd5e1; border-radius:8px; font:inherit; font-size:.88rem; color:#1a1a1a;">
+                        <button onclick="(function(){var el=document.getElementById('vcInput');var v=(el.value||'').trim();if(!v){el.focus();return;}var t=v.indexOf('#')>=0?v.split('#').pop():v;window.open('/verify/#'+t.replace(/^#/,''),'_blank');})()"
+                            style="margin-top:.65rem; padding:.65rem 1.4rem; background:#2171d6; color:#fff; border:1px solid #1a5fb8; border-radius:8px; cursor:pointer; font-weight:700;">
+                            Verify &rarr;
+                        </button>
+                    </div>
+                </div>
+                <button onclick="window.open('/verify/','_blank')"
+                    style="padding:.65rem 1.4rem; background:#eef1f5; color:#1a1a1a; border:1px solid #ccd3dc; border-radius:8px; cursor:pointer; font-weight:600;">
+                    🔎 Open the Verifier
+                </button>
+                <p style="color:#888; font-size:.82rem; margin-top:1.4rem; line-height:1.5;">
+                    Issued at my &ldquo;Practical Prompting for Everyday Work&rdquo; workshop. Verification is private &mdash; no attendee list is published anywhere.
+                </p>
+            </div>
+        `
+    },
     about: {
         title: 'About Me',
         icon: '👨‍💻',
