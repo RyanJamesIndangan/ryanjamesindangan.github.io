@@ -91,6 +91,14 @@
         .btn{margin-top:.75rem;width:100%;font:inherit;font-weight:800;font-size:.98rem;color:#fff;cursor:pointer;
             background:linear-gradient(to bottom,#2b90ea,#0078d7);border:1px solid #0a67ba;border-radius:8px;padding:.82rem}
         .btn:hover{background:linear-gradient(to bottom,#3f9ef0,#0a84e0)}
+        .wslist{margin:.9rem auto .3rem;max-width:480px;text-align:left}
+        .ws{display:flex;gap:.6rem;align-items:flex-start;padding:.5rem .15rem;border-bottom:1px solid rgba(15,40,70,.08)}
+        .ws:last-child{border-bottom:none}
+        .ws .wdot{color:var(--primary);font-size:.7rem;line-height:1.7}
+        .ws .wt{font-weight:700;color:#17273f;font-size:.92rem;line-height:1.35}
+        .ws .wd{color:var(--muted);font-size:.78rem;margin-top:.12rem}
+        .certwrap{margin-top:1.5rem;border:1px solid rgba(15,40,70,.18);border-radius:6px;overflow:hidden;background:#fffdf6;box-shadow:0 6px 22px rgba(15,40,70,.12)}
+        .certwrap svg{display:block;width:100%;height:auto}
         .home{display:inline-block;margin-top:1.25rem;color:var(--primary);text-decoration:none;font-weight:800;font-size:.9rem}
         .home:hover{text-decoration:underline}
         .spin{display:inline-block;width:1.05em;height:1.05em;border:2px solid rgba(0,120,215,.25);border-top-color:#0078d7;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
@@ -135,16 +143,18 @@
         </div>
     </div>
 
+<script src="qrcode.min.js"></script>
+<script src="sig.js"></script>
 <script>
 // ---- Public verification key (Ed25519, SPKI base64). Safe to publish — it can only VERIFY, never sign. ----
-var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAH3O4taojbajXKKgqEmGiy4V48/9hZADjFnzfxgJWLHI=";
+var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEApfh4QknzK4YlUCbplwqcceaHXiqjOWX50PHFt1bQabk=";
 // v2 tokens carry their own event name (payload.e); v1 tokens predate that and fall back to this.
 var LEGACY_EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
 // Workshops certificates can come from (shown on the landing view).
 var EVENTS = [
-  "Practical Prompting for Everyday Work · Hands-on Workshop",
-  "Ahead of the Race: Using AI to Build, Work, and Stand Out",
-  "AI Masterclass"
+  { t: "Practical Prompting for Everyday Work", d: "Hands-on workshop · Rex Knowledge Center, Quezon City, Philippines" },
+  { t: "Ahead of the Race: Using AI to Build, Work, and Stand Out", d: "Talk" },
+  { t: "AI Masterclass", d: "Workshop" }
 ];
 
 function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
@@ -193,8 +203,91 @@ function renderGenuine(r){
       '<div class="cell"><div class="k">Certificate ID</div><div class="v mono">'+esc(r.id)+'</div></div>'+
       '<div class="cell full"><div class="k">Workshop</div><div class="v">'+esc(r.payload.e||LEGACY_EVENT)+'</div></div>'+
     '</div>'+
+    '<div class="certwrap" id="certwrap"></div>'+
+    '<button class="btn" id="dlcert">⬇ Download certificate (PNG)</button>'+
     '<div class="note">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued by <b>Ryan James Indangan</b> and has not been altered. No data left this page.<br>'+homeLink+'</div>'
   );
+  buildCertSvg(r);
+  var dl=document.getElementById('dlcert');
+  if(dl)dl.addEventListener('click',function(){downloadCert(r.payload.n);});
+}
+
+/* ---- The certificate itself, re-rendered from the verified token (same design as issued) ---- */
+var REAP_EVENT="Practical Prompting for Everyday Work · Hands-on Workshop";
+function certMeta(e){
+  if(e===REAP_EVENT)return{kick:'PRACTICAL PROMPTING FOR EVERYDAY WORK · HANDS-ON WORKSHOP',
+    b1:'for successfully completing “Practical Prompting for Everyday Work” — a hands-on',
+    b2:'workshop on directing AI tools at work, safely and effectively.',
+    loc:'Rex Knowledge Center · Quezon City, Philippines'};
+  var t=String(e).split(' · ')[0];
+  return{kick:String(e).toUpperCase(),b1:'for successfully completing the workshop',b2:'“'+t+'”',loc:''};
+}
+function buildCertSvg(r){
+  var wrap=document.getElementById('certwrap');if(!wrap)return;
+  var m=certMeta(r.payload.e||LEGACY_EVENT);
+  var sig=(typeof SIG_B64==='string'&&SIG_B64.length>100)
+    ? '<image x="657" y="540" width="176" height="123" xlink:href="data:image/png;base64,'+SIG_B64+'" href="data:image/png;base64,'+SIG_B64+'" preserveAspectRatio="xMidYMid meet"/>'
+    : '<text x="745" y="634" text-anchor="middle" font-family="cursive" font-size="42" fill="#1a2f5a">Ryan</text>';
+  var qrHref=makeQr();
+  var qr=qrHref?'<image x="473" y="548" width="104" height="104" xlink:href="'+qrHref+'" href="'+qrHref+'" preserveAspectRatio="xMidYMid meet"/>':'';
+  wrap.innerHTML=
+  '<svg id="certSvg" viewBox="0 0 1050 743" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" font-family="Segoe UI,Arial,sans-serif" role="img" aria-label="Certificate of Completion">'+
+    '<rect x="0" y="0" width="1050" height="743" fill="#fffdf6"/>'+
+    '<rect x="22" y="22" width="1006" height="699" fill="none" stroke="#0d8f86" stroke-width="6"/>'+
+    '<rect x="34" y="34" width="982" height="675" fill="none" stroke="#c9a227" stroke-width="1.5"/>'+
+    '<g fill="none" stroke="#c9a227" stroke-width="4"><path d="M48 88 L48 48 L88 48"/><path d="M962 48 L1002 48 L1002 88"/><path d="M48 655 L48 695 L88 695"/><path d="M962 695 L1002 695 L1002 655"/></g>'+
+    '<g transform="translate(469,50) scale(0.96)"><path d="M48 96 L34 148 L49 137 L57 149 L62 100 Z" fill="#0a6f68"/><path d="M72 96 L86 148 L71 137 L63 149 L58 100 Z" fill="#0d8f86"/><circle cx="60" cy="56" r="41" fill="#c9a227"/><circle cx="60" cy="56" r="41" fill="none" stroke="#a8851d" stroke-width="1.4"/><circle cx="60" cy="56" r="34" fill="#0d8f86"/><circle cx="60" cy="56" r="29" fill="none" stroke="#efe0a8" stroke-width="1.6" stroke-dasharray="1.2 4.2" stroke-linecap="round"/><path d="M60 38 L64.2 50.2 L77.1 50.4 L66.9 58.2 L70.6 70.6 L60 63.2 L49.4 70.6 L53.1 58.2 L42.9 50.4 L55.8 50.2 Z" fill="#f3e6b0"/></g>'+
+    '<text id="ckick" x="525" y="250" text-anchor="middle" font-size="17" font-weight="700" letter-spacing="5" fill="#0a6f68">'+esc(m.kick)+'</text>'+
+    '<text x="525" y="306" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" font-size="49" font-weight="800" fill="#142436">Certificate of Completion</text>'+
+    '<line x1="436" y1="333" x2="496" y2="333" stroke="#c9a227" stroke-width="1.5"/><path d="M517 326 l8 7 -8 7 -8 -7 z" fill="#c9a227"/><line x1="554" y1="333" x2="614" y2="333" stroke="#c9a227" stroke-width="1.5"/>'+
+    '<text x="525" y="375" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" font-style="italic" font-size="21" fill="#6b7c91">This certificate is proudly presented to</text>'+
+    '<text id="cnm" x="525" y="445" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" font-size="58" font-weight="800" fill="#0a6f68">'+esc(r.payload.n)+'</text>'+
+    '<line id="cnl" x1="305" y1="464" x2="745" y2="464" stroke="#e7d6a0" stroke-width="2"/>'+
+    '<text x="525" y="512" text-anchor="middle" font-size="21" fill="#3c5067"><tspan x="525" dy="0">'+esc(m.b1)+'</tspan><tspan x="525" dy="28">'+esc(m.b2)+'</tspan></text>'+
+    '<line x1="175" y1="650" x2="435" y2="650" stroke="#142436" stroke-width="1.5"/>'+
+    '<text x="305" y="642" text-anchor="middle" font-size="20" font-weight="800" fill="#142436">'+esc(r.payload.d)+'</text>'+
+    '<text x="305" y="669" text-anchor="middle" font-size="12.5" letter-spacing="2" fill="#6b7c91">DATE ISSUED</text>'+
+    (m.loc?'<text x="305" y="690" text-anchor="middle" font-size="10.5" fill="#8a99a8">'+esc(m.loc)+'</text>':'')+
+    '<line x1="615" y1="650" x2="875" y2="650" stroke="#142436" stroke-width="1.5"/>'+sig+
+    '<text x="745" y="672" text-anchor="middle" font-family="Georgia,\'Times New Roman\',serif" font-size="17" font-weight="800" fill="#142436">Ryan James F. Indangan</text>'+
+    '<text x="745" y="691" text-anchor="middle" font-size="12" letter-spacing="2" fill="#6b7c91">FACILITATOR</text>'+
+    qr+
+    '<text x="525" y="670" text-anchor="middle" font-size="9.5" letter-spacing="1.4" fill="#6b7c91">SCAN OR TAP TO VERIFY</text>'+
+    '<text x="525" y="687" text-anchor="middle" font-size="11.5" font-weight="800" fill="#0a6f68">ID  '+esc(r.id)+'</text>'+
+    '<text x="525" y="703" text-anchor="middle" font-size="8.6" letter-spacing="0.2" fill="#9aa6b2">Private professional-development workshop · not a government-accredited qualification</text>'+
+  '</svg>';
+  fitSvgText('cnm',700,58,36,'cnl');
+  fitSvgText('ckick',940,17,11,null);
+}
+function fitSvgText(id,maxw,fs0,fsMin,lineId){
+  var el=document.getElementById(id);if(!el)return;
+  el.setAttribute('font-size',fs0);
+  var w=0;try{w=el.getComputedTextLength();}catch(e){}
+  if(w>maxw){
+    var nf=Math.max(fsMin,Math.floor(fs0*maxw/w));
+    el.setAttribute('font-size',nf);
+    if(el.getAttribute('letter-spacing'))el.setAttribute('letter-spacing','2');
+    try{w=el.getComputedTextLength();}catch(e){}
+  }
+  if(lineId){var pad=30,x1=Math.min(305,Math.round(525-w/2-pad)),x2=Math.max(745,Math.round(525+w/2+pad));var ln=document.getElementById(lineId);if(ln){ln.setAttribute('x1',x1);ln.setAttribute('x2',x2);}}
+}
+function makeQr(){
+  try{
+    if(typeof qrcode!=='function')return '';
+    var url=location.origin+location.pathname+'#'+extractToken(location.hash);
+    var q=qrcode(0,'L');q.addData(url);q.make();return q.createDataURL(6,2);
+  }catch(e){return '';}
+}
+function downloadCert(name){
+  var svg=document.getElementById('certSvg');if(!svg)return;
+  var xml=new XMLSerializer().serializeToString(svg);
+  var img=new Image();
+  img.onload=function(){
+    var c=document.createElement('canvas');c.width=2100;c.height=1486;
+    var g=c.getContext('2d');g.fillStyle='#fffdf6';g.fillRect(0,0,c.width,c.height);g.drawImage(img,0,0,c.width,c.height);
+    try{var a=document.createElement('a');a.download='Certificate of Completion - '+name+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();}catch(e){}
+  };
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);
 }
 function renderProblem(title,msg,showPaste){
   render(
@@ -213,7 +306,9 @@ function renderLanding(){
     '<h1>Verify a certificate</h1>'+
     '<p class="sub">Scan the QR on the certificate, or paste its verification link below. The check runs entirely in your browser.</p>'+
     pasteBox()+
-    '<div class="note">Verifies certificates from Ryan&rsquo;s workshops:<br><b>'+EVENTS.map(esc).join('</b><br><b>')+'</b><br>'+homeLink+'</div>'
+    '<div class="note">Verifies certificates from <b>Ryan&rsquo;s workshops</b>:'+
+    '<div class="wslist">'+EVENTS.map(function(w){return '<div class="ws"><span class="wdot">&#9670;</span><div><div class="wt">'+esc(w.t)+'</div>'+(w.d?'<div class="wd">'+esc(w.d)+'</div>':'')+'</div></div>';}).join('')+'</div>'+
+    homeLink+'</div>'
   );
   wirePaste();
 }
