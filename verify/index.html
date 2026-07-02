@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify a Certificate | Ryan James Indangan</title>
+    <meta name="description" content="Verify the authenticity of a certificate issued at Ryan James Indangan's AI Tools for Productivity workshop. Cryptographically checked in your browser — no data leaves this page.">
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;
+            background:linear-gradient(135deg,#1a1d29 0%,#252837 100%);
+            color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;
+        }
+        .card{
+            width:100%;max-width:640px;padding:2.5rem;
+            background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,0.15);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.5);
+        }
+        .brandrow{display:flex;align-items:center;gap:.6rem;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#8b97b5;margin-bottom:1.6rem}
+        .brandrow .dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#64ffda,#4ade80)}
+        .status-icon{font-size:3.4rem;line-height:1;margin-bottom:.8rem;text-align:center}
+        .badge{display:inline-flex;align-items:center;gap:.5rem;padding:.42rem 1rem;border-radius:999px;font-weight:700;font-size:.82rem;letter-spacing:.03em;text-transform:uppercase}
+        .badge.ok{background:rgba(74,222,128,.14);border:1px solid rgba(74,222,128,.45);color:#8ff0b6}
+        .badge.bad{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.4);color:#ff9d9d}
+        .badge.wait{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#cdd6ee}
+        .center{text-align:center}
+        h1{font-size:1.7rem;margin:.9rem 0 .3rem;font-weight:750}
+        .sub{color:#b8c1db;font-size:1rem;line-height:1.55}
+        .cert-title{font-size:.86rem;letter-spacing:.16em;text-transform:uppercase;color:#64ffda;margin:1.9rem 0 .4rem;text-align:center}
+        .name{
+            font-size:2.4rem;font-weight:800;text-align:center;line-height:1.15;
+            background:linear-gradient(135deg,#64ffda 0%,#4ade80 100%);
+            -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+            word-break:break-word;margin-bottom:.3rem;
+        }
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;margin-top:1.8rem}
+        .detail{padding:1rem 1.15rem;background:rgba(20,23,34,.35)}
+        .detail .k{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:#8b97b5;margin-bottom:.28rem}
+        .detail .v{font-size:1.02rem;font-weight:650;color:#eef2ff;word-break:break-word}
+        .detail.full{grid-column:1 / -1}
+        .mono{font-family:'SF Mono',ui-monospace,'Cascadia Mono',Consolas,monospace;letter-spacing:.02em}
+        .foot{margin-top:1.7rem;padding-top:1.3rem;border-top:1px solid rgba(255,255,255,.1);color:#8b97b5;font-size:.82rem;line-height:1.6;text-align:center}
+        .foot b{color:#b8c1db;font-weight:650}
+        .paste{margin-top:1.5rem}
+        .paste label{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#8b97b5;margin-bottom:.5rem}
+        .paste input{width:100%;font:inherit;font-size:.95rem;color:#eef2ff;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:.8rem .9rem}
+        .paste input:focus{outline:none;border-color:#64ffda}
+        .btn{margin-top:.8rem;width:100%;font:inherit;font-weight:700;font-size:.98rem;color:#10241d;background:linear-gradient(135deg,#64ffda 0%,#4ade80 100%);border:none;border-radius:10px;padding:.85rem;cursor:pointer;transition:transform .2s,box-shadow .2s}
+        .btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(100,255,218,.3)}
+        .home{display:inline-block;margin-top:1.4rem;color:#64ffda;text-decoration:none;font-weight:600;font-size:.9rem}
+        .home:hover{text-decoration:underline}
+        .spin{display:inline-block;width:1.05em;height:1.05em;border:2px solid rgba(255,255,255,.25);border-top-color:#64ffda;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
+        @keyframes sp{to{transform:rotate(360deg)}}
+        .hide{display:none!important}
+        @media(max-width:520px){.card{padding:1.6rem}.name{font-size:1.9rem}.detail-grid{grid-template-columns:1fr}h1{font-size:1.4rem}}
+    </style>
+</head>
+<body>
+    <div class="card" id="card">
+        <div class="brandrow"><span class="dot"></span>Certificate Verification · Ryan James Indangan</div>
+        <div id="body">
+            <div class="center"><span class="badge wait"><span class="spin"></span> Checking…</span></div>
+        </div>
+    </div>
+
+<script>
+// ---- Public verification key (Ed25519, SPKI base64). Safe to publish — this can only VERIFY, never sign. ----
+var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAH3O4taojbajXKKgqEmGiy4V48/9hZADjFnzfxgJWLHI=";
+var EVENT = "AI Tools for Productivity — REAP × Rex Group HR";
+
+function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
+function b64uToBytes(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return bytesFromB64(s);}
+function b64uToText(s){return new TextDecoder().decode(b64uToBytes(s));}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+// Pull the token from the URL (#hash preferred — never sent to a server), a ?query, or pasted text.
+function extractToken(raw){
+  raw=String(raw||'').trim();
+  if(!raw)return '';
+  if(raw.indexOf('#')>=0)raw=raw.split('#').pop();
+  else if(raw.indexOf('?')>=0){try{var u=new URL(raw);raw=u.searchParams.get('c')||u.searchParams.get('token')||raw;}catch(e){var m=raw.match(/[?&](?:c|token)=([^&]+)/);if(m)raw=m[1];}}
+  raw=raw.trim().replace(/^#/,'');
+  return raw;
+}
+
+async function sha256Hex(bytes){var h=await crypto.subtle.digest('SHA-256',bytes);return Array.from(new Uint8Array(h)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');}
+async function certId(token){var hex=(await sha256Hex(new TextEncoder().encode(token))).toUpperCase();return 'RJI-'+hex.slice(0,5)+'-'+hex.slice(5,10);}
+
+async function verifyToken(token){
+  var parts=token.split('.');
+  if(parts.length!==2||!parts[0]||!parts[1])return {ok:false,reason:'format'};
+  var payloadB64=parts[0], sigB64=parts[1];
+  // decode payload first (so we can show details even if the browser can't run the crypto)
+  var payload;try{payload=JSON.parse(b64uToText(payloadB64));}catch(e){return {ok:false,reason:'format'};}
+  if(!crypto.subtle||!crypto.subtle.importKey)return {ok:false,reason:'nosubtle',payload:payload};
+  var key;
+  try{key=await crypto.subtle.importKey('spki',bytesFromB64(PUBKEY_SPKI_B64),{name:'Ed25519'},false,['verify']);}
+  catch(e){return {ok:false,reason:'unsupported',payload:payload};}
+  var ok=false;
+  try{ok=await crypto.subtle.verify({name:'Ed25519'},key,b64uToBytes(sigB64),new TextEncoder().encode(payloadB64));}
+  catch(e){return {ok:false,reason:'unsupported',payload:payload};}
+  if(!ok)return {ok:false,reason:'invalid',payload:payload};
+  return {ok:true,payload:payload,id:await certId(token)};
+}
+
+function render(html){document.getElementById('body').innerHTML=html;}
+
+function renderGenuine(r){
+  render(
+    '<div class="status-icon">🎓</div>'+
+    '<div class="center"><span class="badge ok">✓ Genuine Certificate</span></div>'+
+    '<div class="cert-title">Certificate of Participation</div>'+
+    '<div class="name">'+esc(r.payload.n)+'</div>'+
+    '<div class="detail-grid">'+
+      '<div class="detail"><div class="k">Date Issued</div><div class="v">'+esc(r.payload.d)+'</div></div>'+
+      '<div class="detail"><div class="k">Certificate ID</div><div class="v mono">'+esc(r.id)+'</div></div>'+
+      '<div class="detail full"><div class="k">Workshop</div><div class="v">'+esc(EVENT)+'</div></div>'+
+    '</div>'+
+    '<div class="foot">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued by <b>Ryan James Indangan</b> and has not been altered. No data left this page.'+
+    '<br><a class="home" href="/">← ryanjamesindangan.github.io</a></div>'
+  );
+}
+
+function renderProblem(title,msg,showPaste){
+  render(
+    '<div class="status-icon">⚠️</div>'+
+    '<div class="center"><span class="badge bad">Not verified</span></div>'+
+    '<h1 class="center">'+esc(title)+'</h1>'+
+    '<p class="sub center">'+msg+'</p>'+
+    (showPaste?pasteBox():'')+
+    '<div class="foot"><a class="home" href="/">← ryanjamesindangan.github.io</a></div>'
+  );
+}
+
+function renderLanding(){
+  render(
+    '<div class="status-icon">🔎</div>'+
+    '<h1 class="center">Verify a certificate</h1>'+
+    '<p class="sub center">Scan the QR on the certificate, or paste its verification link below. The check runs entirely in your browser.</p>'+
+    pasteBox()+
+    '<div class="foot">Issued at <b>'+esc(EVENT)+'</b>.<br><a class="home" href="/">← ryanjamesindangan.github.io</a></div>'
+  );
+  wirePaste();
+}
+
+function pasteBox(){
+  return '<div class="paste"><label for="tok">Certificate link or code</label>'+
+    '<input id="tok" type="text" placeholder="Paste the verify link from the certificate…" autocomplete="off" spellcheck="false">'+
+    '<button class="btn" id="go">Verify</button></div>';
+}
+function wirePaste(){
+  var go=document.getElementById('go'),inp=document.getElementById('tok');
+  if(!go)return;
+  var run=function(){var t=extractToken(inp.value);if(!t){inp.focus();return;}location.hash=t;check();};
+  go.addEventListener('click',run);
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')run();});
+}
+
+async function check(){
+  var token=extractToken(location.hash);
+  if(!token){renderLanding();return;}
+  render('<div class="center"><span class="badge wait"><span class="spin"></span> Checking…</span></div>');
+  var r;
+  try{r=await verifyToken(token);}catch(e){r={ok:false,reason:'format'};}
+  if(r.ok){renderGenuine(r);return;}
+  if(r.reason==='unsupported'||r.reason==='nosubtle'){
+    renderProblem('Open in a modern browser','This browser can’t run the security check. Please open this link in an up-to-date <b>Chrome, Edge, Safari</b> or <b>Firefox</b> to verify.',false);
+    return;
+  }
+  if(r.reason==='invalid'){
+    renderProblem('This certificate could not be verified','The signature doesn’t match. The link may have been copied incompletely or the certificate may have been altered. Check you pasted the <b>whole</b> link, then try again.',true);
+  }else{
+    renderProblem('That doesn’t look like a certificate link','We couldn’t read a certificate from that link. Paste the full verification link exactly as it appears on the certificate.',true);
+  }
+  wirePaste();
+}
+
+window.addEventListener('hashchange',check);
+check();
+</script>
+</body>
+</html>
