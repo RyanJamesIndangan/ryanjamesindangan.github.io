@@ -153,8 +153,8 @@ var LEGACY_EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
 // Workshops certificates can come from (shown on the landing view).
 var EVENTS = [
   { t: "Practical Prompting for Everyday Work", d: "Hands-on workshop · Rex Knowledge Center, Quezon City, Philippines" },
-  { t: "Ahead of the Race: Using AI to Build, Work, and Stand Out", d: "Talk" },
-  { t: "AI Masterclass", d: "Workshop" }
+  { t: "Ahead of the Race: Using AI to Build, Work, and Stand Out", d: "Hands-on workshop · Blue Ville Subdivision, Novaliches, Quezon City" },
+  { t: "AI Masterclass", d: "Online workshop · participants from multiple companies" }
 ];
 
 function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
@@ -215,12 +215,21 @@ function renderGenuine(r){
 /* ---- The certificate itself, re-rendered from the verified token (same design as issued) ---- */
 var REAP_EVENT="Practical Prompting for Everyday Work · Hands-on Workshop";
 function certMeta(e){
+  e=String(e||'');
   if(e===REAP_EVENT)return{kick:'PRACTICAL PROMPTING FOR EVERYDAY WORK · HANDS-ON WORKSHOP',
     b1:'for successfully completing “Practical Prompting for Everyday Work” — a hands-on',
     b2:'workshop on directing AI tools at work, safely and effectively.',
     loc:'Rex Knowledge Center · Quezon City, Philippines'};
-  var t=String(e).split(' · ')[0];
-  return{kick:String(e).toUpperCase(),b1:'for successfully completing the workshop',b2:'“'+t+'”',loc:''};
+  if(e.indexOf('Ahead of the Race')===0)return{kick:'AHEAD OF THE RACE: USING AI TO BUILD, WORK, AND STAND OUT',
+    b1:'for successfully completing “Ahead of the Race: Using AI to Build, Work,',
+    b2:'and Stand Out” — a hands-on workshop.',
+    loc:'Blue Ville Subdivision · Novaliches, Quezon City, Philippines'};
+  if(e.indexOf('AI Masterclass')===0)return{kick:'AI MASTERCLASS · ONLINE WORKSHOP',
+    b1:'for successfully completing “AI Masterclass” — an online workshop',
+    b2:'for professionals across different companies.',
+    loc:'Conducted online'};
+  var t=e.split(' · ')[0];
+  return{kick:e.toUpperCase(),b1:'for successfully completing the workshop',b2:'“'+t+'”',loc:''};
 }
 function buildCertSvg(r){
   var wrap=document.getElementById('certwrap');if(!wrap)return;
