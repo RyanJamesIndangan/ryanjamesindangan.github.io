@@ -99,6 +99,10 @@
         .ws .wd{color:var(--muted);font-size:.78rem;margin-top:.12rem}
         .certwrap{margin-top:1.5rem;border:1px solid rgba(15,40,70,.18);border-radius:6px;overflow:hidden;background:#fffdf6;box-shadow:0 6px 22px rgba(15,40,70,.12)}
         .certwrap svg{display:block;width:100%;height:auto}
+        .dlrow{display:flex;gap:.6rem}
+        .dlrow .btn{flex:1;min-width:0}
+        .btn.alt{background:#fff;color:#0a5aa0;border:1px solid rgba(0,120,215,.45)}
+        .btn.alt:hover{background:#f2f8fe}
         .home{display:inline-block;margin-top:1.25rem;color:var(--primary);text-decoration:none;font-weight:800;font-size:.9rem}
         .home:hover{text-decoration:underline}
         .spin{display:inline-block;width:1.05em;height:1.05em;border:2px solid rgba(0,120,215,.25);border-top-color:#0078d7;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px}
@@ -213,12 +217,14 @@ function renderGenuine(r){
       '<div class="cell full"><div class="k">Workshop</div><div class="v">'+esc(r.payload.e||LEGACY_EVENT)+'</div></div>'+
     '</div>'+
     '<div class="certwrap" id="certwrap"></div>'+
-    '<button class="btn" id="dlcert">⬇ Download certificate (PNG)</button>'+
+    '<div class="dlrow"><button class="btn" id="dlpdf">⬇ Download PDF</button><button class="btn alt" id="dlcert">⬇ Download PNG</button></div>'+
     '<div class="note">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued by <b>Ryan James Indangan</b> and has not been altered. No data left this page.<br>'+homeLink+'</div>'
   );
   buildCertSvg(r);
   var dl=document.getElementById('dlcert');
   if(dl)dl.addEventListener('click',function(){downloadCert(r.payload.n);});
+  var dp=document.getElementById('dlpdf');
+  if(dp)dp.addEventListener('click',function(){downloadCertPdf(r.payload.n,dp);});
 }
 
 /* ---- The certificate itself, re-rendered from the verified token (same design as issued) ---- */
@@ -296,16 +302,49 @@ function makeQr(){
     var q=qrcode(0,'L');q.addData(url);q.make();return q.createDataURL(6,2);
   }catch(e){return '';}
 }
-function downloadCert(name){
-  var svg=document.getElementById('certSvg');if(!svg)return;
+function rasterizeCert(cb){
+  var svg=document.getElementById('certSvg');if(!svg)return cb(null);
   var xml=new XMLSerializer().serializeToString(svg);
   var img=new Image();
   img.onload=function(){
     var c=document.createElement('canvas');c.width=2100;c.height=1486;
     var g=c.getContext('2d');g.fillStyle='#fffdf6';g.fillRect(0,0,c.width,c.height);g.drawImage(img,0,0,c.width,c.height);
-    try{var a=document.createElement('a');a.download='Certificate of Completion - '+name+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();}catch(e){}
+    cb(c);
   };
+  img.onerror=function(){cb(null);};
   img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);
+}
+function downloadCert(name){
+  rasterizeCert(function(c){
+    if(!c)return;
+    try{var a=document.createElement('a');a.download='Certificate of Completion - '+name+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();}catch(e){}
+  });
+}
+// PDF: real one-tap .pdf via jsPDF (self-hosted, MIT), lazy-loaded only when the button is used.
+function ensureJsPdf(cb){
+  if(window.jspdf&&window.jspdf.jsPDF)return cb(true);
+  var s=document.createElement('script');s.src='jspdf.umd.min.js';
+  s.onload=function(){cb(!!(window.jspdf&&window.jspdf.jsPDF));};
+  s.onerror=function(){cb(false);};
+  document.head.appendChild(s);
+}
+function downloadCertPdf(name,btn){
+  var old=btn?btn.textContent:'';if(btn){btn.disabled=true;btn.textContent='Preparing PDF…';}
+  var done=function(){if(btn){btn.disabled=false;btn.textContent=old;}};
+  ensureJsPdf(function(ok){
+    if(!ok){done();alert('Could not load the PDF engine — please use the PNG download instead.');return;}
+    rasterizeCert(function(c){
+      if(!c){done();return;}
+      try{
+        // page size = the certificate itself (1050x743pt landscape), so the PDF IS the cert edge-to-edge.
+        // JPEG @0.92 inside the PDF: visually identical on this flat-colour design, ~25x smaller than PNG.
+        var doc=new window.jspdf.jsPDF({orientation:'landscape',unit:'pt',format:[1050,743]});
+        doc.addImage(c.toDataURL('image/jpeg',0.92),'JPEG',0,0,1050,743);
+        doc.save('Certificate of Completion - '+name+'.pdf');
+      }catch(e){alert('PDF failed — please use the PNG download instead.');}
+      done();
+    });
+  });
 }
 function renderProblem(title,msg,showPaste){
   render(
