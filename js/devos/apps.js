@@ -1940,20 +1940,20 @@ function createCertCard(title, issuer, date, description, link, verifyUrl) {
             <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">${issuer} • ${date}</p>
             <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1rem;">${description}</p>
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                ${verifyUrl ? `
+                    <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.85rem 1.6rem; background: #1a1a1a; color: #fff; border: 1px solid #1a1a1a; border-radius: 8px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; box-shadow: 0 3px 10px rgba(0,0,0,0.25);">
+                        ✅ Verify Certificate on ${issuer} <span style="opacity:.75; font-weight:600;">↗</span>
+                    </a>
+                ` : ''}
                 ${link ? `
-                    <button class="view-cert-btn" data-cert="${link}" data-title="${title}" data-type="${isPDF ? 'pdf' : 'image'}"
+                    <button class="view-cert-btn" data-cert="${link}" data-title="${title}" data-type="${isPDF ? 'pdf' : 'image'}" data-verify="${verifyUrl || ''}"
                             style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
                         👁️ View Certificate
                     </button>
                     <a href="${link}" download
                        style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
                         📥 Download
-                    </a>
-                ` : ''}
-                ${verifyUrl ? `
-                    <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer"
-                       style="padding: 0.75rem 1.5rem; background: #fff; color: #2171d6; border: 1px solid #2171d6; border-radius: 6px; text-decoration: none; font-weight: 600;">
-                        🔗 Verify
                     </a>
                 ` : ''}
             </div>

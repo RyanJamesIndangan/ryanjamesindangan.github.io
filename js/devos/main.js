@@ -2101,10 +2101,16 @@ function initializeCertificateModal() {
     }
 
     // Open modal function
-    function openModal(certPath, title, type) {
+    function openModal(certPath, title, type, verifyUrl) {
         lastCertFocus = document.activeElement;
         modalTitle.textContent = title;
         modalBody.innerHTML = '';
+        // Verify button shown INSIDE the viewer (so it's reachable while viewing).
+        const verifyBtn = verifyUrl ? `
+            <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer"
+               style="padding: 0.55rem 1.35rem; background: #1a1a1a; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
+                ✅ Verify Certificate ↗
+            </a>` : '';
         
         // Reset container to CSS defaults so flexbox re-centers it
         const container = modal.querySelector('.cert-modal-container');
@@ -2136,6 +2142,7 @@ function initializeCertificateModal() {
                             📄 PDF Document • Use the buttons below for more options
                         </p>
                         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            ${verifyBtn}
                             <a href="${encodedPath}" target="_blank" rel="noopener noreferrer"
                                style="padding: 0.5rem 1.25rem; background: var(--windows-blue); color: #fff; border-radius: 6px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;">
                                 🔗 Open in New Tab
@@ -2149,7 +2156,8 @@ function initializeCertificateModal() {
                 </div>
             `;
         } else {
-            modalBody.innerHTML = `<img src="${encodedPath}" alt="${title}" loading="lazy" />`;
+            modalBody.innerHTML = `<img src="${encodedPath}" alt="${title}" loading="lazy" />` +
+                (verifyBtn ? `<div style="text-align:center; margin-top: 0.85rem;">${verifyBtn}</div>` : '');
         }
         
         downloadBtn.href = encodedPath;
@@ -2230,10 +2238,11 @@ function initializeCertificateModal() {
             const certPath = btn.dataset.cert;
             const title = btn.dataset.title;
             const type = btn.dataset.type;
-            
+            const verifyUrl = btn.dataset.verify;
+
             if (certPath && title && type) {
                 e.preventDefault();
-                openModal(certPath, title, type);
+                openModal(certPath, title, type, verifyUrl);
             }
         }
     });
