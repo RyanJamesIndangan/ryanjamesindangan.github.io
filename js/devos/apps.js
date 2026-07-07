@@ -395,6 +395,15 @@ const apps = {
                 
                 <div style="display: grid; gap: 1.5rem;">
                     ${createCertCard(
+                        '✳️ Claude Code in Action',
+                        'Anthropic',
+                        'Issued Jul 2026',
+                        'Official Anthropic Certificate of Completion for the "Claude Code in Action" course — hands-on training in agentic coding with Claude Code: driving multi-step development, tool use, and shipping AI-assisted software workflows in practice.',
+                        'assets/certificates/claude-code-in-action-anthropic.pdf',
+                        'https://verify.skilljar.com/c/usugbinq3tyu'
+                    )}
+
+                    ${createCertCard(
                         '👨‍💼 Certified Chief Technology Officer',
                         'IMTF',
                         'Issued Jul 2023',
@@ -1923,7 +1932,7 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
     `;
 }
 
-function createCertCard(title, issuer, date, description, link) {
+function createCertCard(title, issuer, date, description, link, verifyUrl) {
     const isPDF = link && link.endsWith('.pdf');
     return `
         <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
@@ -1936,9 +1945,15 @@ function createCertCard(title, issuer, date, description, link) {
                             style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
                         👁️ View Certificate
                     </button>
-                    <a href="${link}" download 
+                    <a href="${link}" download
                        style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
                         📥 Download
+                    </a>
+                ` : ''}
+                ${verifyUrl ? `
+                    <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.75rem 1.5rem; background: #fff; color: #2171d6; border: 1px solid #2171d6; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                        🔗 Verify
                     </a>
                 ` : ''}
             </div>
