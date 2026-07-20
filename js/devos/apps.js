@@ -83,7 +83,7 @@ const apps = {
                 </p>
 
                 <div style="margin-top: 2rem; padding: 1.5rem; background: #e8f4f8; border-left: 3px solid #2171d6; border-radius: 6px;">
-                    <h3 style="color: #2171d6; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
+                    <h3 style="color: #1a5fb8; margin-bottom: 1rem; font-weight: 600;">🏆 Recent Achievement</h3>
                     <p style="color: #1a1a1a; line-height: 1.6;">
                         Built an end-to-end, AI-powered bank-statement extraction and underwriting pipeline at Alliance Global Solutions (Alternative Funding Group) — combining OCR, computer vision, ML-based watermark removal, and local LLM workflows — and co-founded GO Models, a suite of AI companion apps. Earlier, led 12 developers across 3 teams at GlobalX Digital Corporation, reviving a stalled project to deliver an enhanced Version 2 in 2 months.
                     </p>
@@ -326,7 +326,7 @@ const apps = {
                 </div>
                 
                 <div style="padding: 1.5rem; background: linear-gradient(135deg, #12233d, #1c3a5e); border-radius: 12px; margin-bottom: 2rem; color: #fff;">
-                    <h3 style="margin: 0 0 0.5rem; font-size: 1.35rem; font-weight: 700;">🏥 Health Technology</h3>
+                    <h3 style="margin: 0 0 0.5rem; font-size: 1.35rem; font-weight: 700; color: #ffffff;">🏥 Health Technology</h3>
                     <p style="margin: 0 0 1rem; color: #cfe0f2; line-height: 1.65; font-size: 0.92rem;">
                         Production clinical research platforms — clinical data management, trial business development,
                         and AI research intelligence — built end to end and running in production today.
