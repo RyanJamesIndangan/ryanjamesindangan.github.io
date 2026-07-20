@@ -3791,6 +3791,239 @@ function initializeTestimonialsCarousel() {
 }
 
 // ===========================
+// Demo Requests + Walkthrough Videos
+// ===========================
+
+// Document-delegated so it also covers cards rendered later (mobile app sheets,
+// filtered re-renders). Bound once — calling this repeatedly is a no-op.
+function initializeDemoRequests() {
+    if (initializeDemoRequests._bound) return;
+    initializeDemoRequests._bound = true;
+
+    document.addEventListener('click', (e) => {
+        const facade = e.target.closest('.ht-video-facade');
+        if (facade) {
+            playWalkthroughVideo(facade);
+            return;
+        }
+
+        const demoBtn = e.target.closest('.request-demo-btn');
+        if (demoBtn) {
+            openDemoRequestModal(demoBtn.dataset.system || '');
+        }
+    });
+}
+
+// Swap the click-to-play poster for the real player. Loading the iframe only on
+// click keeps YouTube off the critical path (and off the wire entirely for
+// visitors who never press play).
+function playWalkthroughVideo(facade) {
+    const id = facade.dataset.youtube;
+    if (!id) return;
+
+    const frame = document.createElement('iframe');
+    frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&modestbranding=1`;
+    frame.title = `${facade.dataset.title || 'Project'} walkthrough`;
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    frame.allowFullscreen = true;
+    frame.setAttribute('style', 'width: 100%; aspect-ratio: 16 / 9; border: 0; display: block; background: #0b1220;');
+
+    facade.replaceWith(frame);
+}
+
+function openDemoRequestModal(systemName) {
+    // Never stack two modals.
+    const existing = document.getElementById('demoRequestModal');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'demoRequestModal';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Request a demo');
+    overlay.style.cssText = `
+        position: fixed; inset: 0; z-index: 100000;
+        background: rgba(8, 14, 24, 0.62);
+        display: flex; align-items: center; justify-content: center;
+        padding: 1rem; overflow-y: auto;
+    `;
+
+    overlay.innerHTML = `
+        <div style="background: #fff; border-radius: 14px; max-width: 520px; width: 100%; max-height: 92vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+            <div style="padding: 1.5rem 1.5rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+                <div>
+                    <h2 style="margin: 0 0 0.35rem; font-size: 1.35rem; color: #1a1a1a; font-weight: 700;">📅 Request a Demo</h2>
+                    <p style="margin: 0; color: #666; font-size: 0.9rem; line-height: 1.55;">
+                        I'll walk you through it personally over a screen share — no sales pitch.
+                    </p>
+                </div>
+                <button id="demoModalClose" aria-label="Close" style="background: #f0f0f0; border: 1px solid #e0e0e0; border-radius: 8px; width: 34px; height: 34px; font-size: 1.1rem; cursor: pointer; color: #333; flex-shrink: 0; line-height: 1;">×</button>
+            </div>
+            <form id="demoRequestForm" style="padding: 1.25rem 1.5rem 1.5rem; display: grid; gap: 0.85rem;">
+                <label style="display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #333;">
+                    Interested in
+                    <input id="demoSystem" name="system" readonly
+                           style="padding: 0.7rem; border: 1px solid #e0e0e0; border-radius: 8px; background: #f7f9fb; color: #444; font-size: 0.95rem; font-family: inherit;">
+                </label>
+                <label style="display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #333;">
+                    Your name *
+                    <input id="demoName" name="name" required autocomplete="name"
+                           style="padding: 0.7rem; border: 1px solid #d5d5d5; border-radius: 8px; font-size: 0.95rem; font-family: inherit;">
+                </label>
+                <label style="display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #333;">
+                    Email *
+                    <input id="demoEmail" name="email" type="email" required autocomplete="email"
+                           style="padding: 0.7rem; border: 1px solid #d5d5d5; border-radius: 8px; font-size: 0.95rem; font-family: inherit;">
+                </label>
+                <label style="display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #333;">
+                    Company <span style="font-weight: 400; color: #999;">(optional)</span>
+                    <input id="demoCompany" name="company" autocomplete="organization"
+                           style="padding: 0.7rem; border: 1px solid #d5d5d5; border-radius: 8px; font-size: 0.95rem; font-family: inherit;">
+                </label>
+                <label style="display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #333;">
+                    What would you like to see? <span style="font-weight: 400; color: #999;">(optional)</span>
+                    <textarea id="demoMessage" name="message" rows="3"
+                              style="padding: 0.7rem; border: 1px solid #d5d5d5; border-radius: 8px; font-size: 0.95rem; font-family: inherit; resize: vertical;"></textarea>
+                </label>
+                <div id="demoFormStatus" style="display: none;"></div>
+                <button type="submit" id="demoSubmitBtn"
+                        style="padding: 0.9rem; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; font-family: inherit;">
+                    Send Request 📤
+                </button>
+            </form>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    // Assign as a property, not markup — the system name is untrusted for HTML.
+    overlay.querySelector('#demoSystem').value = systemName || 'General demo';
+
+    // Own the back gesture while this dialog is up. We push a history entry so
+    // Android's back button closes THIS dialog; without it the mobile shell's
+    // popstate handler would dismiss the app sheet behind us and leave the
+    // dialog stranded over the home screen.
+    window.__backOwnedByOverlay = true;
+    history.pushState({ demoModal: true }, '');
+
+    const closeNow = () => {
+        overlay.remove();
+        document.removeEventListener('keydown', onKey);
+    };
+    // Fires for both routes: back pressed while open, and the history.back()
+    // that a manual close uses to consume our pushed entry.
+    const onPop = () => {
+        window.removeEventListener('popstate', onPop);
+        window.__backOwnedByOverlay = false;
+        if (document.body.contains(overlay)) closeNow();
+    };
+    const close = () => {
+        closeNow();
+        history.back();
+    };
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
+
+    window.addEventListener('popstate', onPop);
+    overlay.querySelector('#demoModalClose').addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', onKey);
+
+    overlay.querySelector('#demoRequestForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitDemoRequest(overlay, close);
+    });
+
+    setTimeout(() => overlay.querySelector('#demoName').focus(), 60);
+}
+
+function submitDemoRequest(overlay, close) {
+    const statusDiv = overlay.querySelector('#demoFormStatus');
+    const btn = overlay.querySelector('#demoSubmitBtn');
+
+    const data = {
+        system: overlay.querySelector('#demoSystem').value,
+        name: overlay.querySelector('#demoName').value.trim(),
+        email: overlay.querySelector('#demoEmail').value.trim(),
+        company: overlay.querySelector('#demoCompany').value.trim(),
+        message: overlay.querySelector('#demoMessage').value.trim()
+    };
+
+    if (!data.name || !data.email) {
+        showDemoStatus(statusDiv, 'Please add your name and email.', 'error');
+        return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+        showDemoStatus(statusDiv, 'Please enter a valid email address.', 'error');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    showDemoStatus(statusDiv, 'Sending your request…', 'info');
+
+    // Same free FormSubmit pipeline the contact form uses — delivers straight to
+    // the inbox, no backend required on GitHub Pages.
+    fetch('https://formsubmit.co/ajax/ryanjamesfranciscoindangan@yahoo.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            company: data.company || '—',
+            interested_in: data.system,
+            message: data.message || '(no message)',
+            _subject: `🔔 DEMO REQUEST: ${data.system}`,
+            _template: 'table',
+            _captcha: 'false'
+        })
+    })
+        .then((r) => r.json())
+        .then((res) => {
+            if (res && (res.success === true || res.success === 'true')) {
+                showDemoStatus(statusDiv, "✅ Request sent! I'll get back to you shortly to schedule a walkthrough.", 'success');
+                if (window.showNotification) window.showNotification('Demo request sent! 📨', 'success', 4000);
+                setTimeout(close, 2600);
+            } else {
+                throw new Error('Send failed');
+            }
+        })
+        .catch(() => {
+            const body = encodeURIComponent(
+                `Hi Ryan,\n\nI'd like a demo of: ${data.system}\n\n` +
+                `Name: ${data.name}\nEmail: ${data.email}\nCompany: ${data.company || '—'}\n\n${data.message}`
+            );
+            showDemoStatus(statusDiv, "Couldn't send directly — opening your email app instead…", 'error');
+            window.location.href = `mailto:ryanjamesfranciscoindangan@yahoo.com?subject=${encodeURIComponent('Demo request: ' + data.system)}&body=${body}`;
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.textContent = 'Send Request 📤';
+        });
+}
+
+function showDemoStatus(el, message, type) {
+    if (!el) return;
+    el.style.display = 'block';
+    el.textContent = message;
+    el.style.cssText += 'padding: 0.8rem; border-radius: 8px; font-size: 0.88rem; line-height: 1.5;';
+    if (type === 'error') {
+        el.style.background = 'rgba(239, 68, 68, 0.1)';
+        el.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        el.style.color = '#c62828';
+    } else if (type === 'success') {
+        el.style.background = 'rgba(76, 175, 80, 0.12)';
+        el.style.border = '1px solid rgba(76, 175, 80, 0.35)';
+        el.style.color = '#2e7d43';
+    } else {
+        el.style.background = '#f2f5f8';
+        el.style.border = '1px solid #e0e0e0';
+        el.style.color = '#444';
+    }
+}
+
+initializeDemoRequests();
+
+// ===========================
 // Project Filters
 // ===========================
 function initializeProjectFilters() {

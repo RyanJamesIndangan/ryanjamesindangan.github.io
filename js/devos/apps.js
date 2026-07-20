@@ -131,12 +131,15 @@ const apps = {
                     'May 2026 - Present',
                     'Remote • Independent Contractor',
                     [
-                        'Engaged through HireOverseas and deployed to Core Clinical Trials to lead development of a custom Clinical Data Management System (CDMS)',
-                        'Driving the migration of clinical operations off Salesforce to a tailored web application, eliminating licensing overhead and matching the organization\'s exact workflows',
-                        'Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time',
-                        'Designing AI-assisted workflows and data pipelines to streamline clinical data capture, validation, and reporting'
+                        'Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across three production health-technology systems',
+                        '<strong>CDMS</strong> — architected and shipped a custom Clinical Data Management System to AWS, migrating clinical operations off Salesforce to match the organization\'s exact workflows; models studies → sites → investigators with a tamper-evident hash-chained audit trail, role-based access and 2FA',
+                        '<strong>BD Pipeline</strong> — built the trial business-development engine: spreadsheet ingestion with non-destructive upserts, live ClinicalTrials.gov status sync with phase-change flags, SEC and news lead discovery, a shared lead-tracking CRM, and AI-assisted outreach with duplicate-contact guards',
+                        '<strong>Core Research Intelligence</strong> — designed a reversible AI enrichment layer producing 570 cited, confidence-rated research briefs across every priority trial and market signal, without ever mutating source records',
+                        '<strong>TrialPulse</strong> — delivered a marketing and demo platform with a custom CMS engine (edit history, one-click revert, sandboxed preview) so non-technical staff can safely edit the live site',
+                        '<strong>Corporate site rework</strong> — rebuilt the organization\'s public website from the ground up on a new enterprise design system',
+                        'Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time'
                     ],
-                    ['Clinical Data Management', 'Salesforce Migration', 'Web App Development', 'AI Workflow Automation', 'Process Automation', 'Python', 'JavaScript']
+                    ['Clinical Data Management', 'ClinicalTrials.gov API', 'Laravel', 'Filament', 'AWS', 'MySQL', 'Claude API', 'Salesforce Migration', 'AI Workflow Automation']
                 )}
 
                 ${createExperienceCard(
@@ -314,6 +317,7 @@ const apps = {
                     <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0;">Interactive Project Showcase</h2>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button class="project-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
+                        <button class="project-filter-btn" data-filter="healthtech" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🏥 Health Tech</button>
                         <button class="project-filter-btn" data-filter="react" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">React</button>
                         <button class="project-filter-btn" data-filter="laravel" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Laravel</button>
                         <button class="project-filter-btn" data-filter="node" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Node.js</button>
@@ -321,7 +325,116 @@ const apps = {
                     </div>
                 </div>
                 
+                <div style="padding: 1.5rem; background: linear-gradient(135deg, #12233d, #1c3a5e); border-radius: 12px; margin-bottom: 2rem; color: #fff;">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 1.35rem; font-weight: 700;">🏥 Health Technology</h3>
+                    <p style="margin: 0 0 1rem; color: #cfe0f2; line-height: 1.65; font-size: 0.92rem;">
+                        Production clinical research platforms — clinical data management, trial business development,
+                        and AI research intelligence — built end to end and running in production today.
+                        These are client systems holding live trial data, so they aren't publicly browsable;
+                        I walk through them personally on request.
+                    </p>
+                    <button class="request-demo-btn" data-system="Health Technology platforms"
+                            style="padding: 0.8rem 1.6rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; box-shadow: 0 3px 10px rgba(0,0,0,0.25);">
+                        📅 Request a Demo
+                    </button>
+                </div>
+
                 <div id="projectsContainer" style="display: grid; gap: 2rem;">
+                    ${createHealthTechCard({
+                        title: '🧬 CDMS — Clinical Data Management System',
+                        status: 'Live in production',
+                        role: 'Lead developer · HireOverseas, deployed to Core Clinical Trials',
+                        icon: '🧬',
+                        description: 'A custom clinical data management platform that replaced a Salesforce-based workflow for a US clinical research organization — built to match how they actually operate instead of bending their process to fit off-the-shelf software.',
+                        highlights: [
+                            'Models the real clinical hierarchy: studies → sites → investigators, not a flattened CRM object',
+                            'Tamper-evident audit trail with a hash-chained verification job that flags any altered record',
+                            'Role-based access, two-factor auth, and encrypted application settings',
+                            'Deployed on AWS with automated migrations, daily snapshots and point-in-time recovery'
+                        ],
+                        tech: ['Laravel', 'Filament', 'PHP 8.3', 'MySQL', 'AWS Elastic Beanstalk', 'RDS'],
+                        confidential: true
+                    })}
+
+                    ${createHealthTechCard({
+                        title: '📈 BD Pipeline — Trial Business Development',
+                        status: 'Live in production',
+                        role: 'Architect & developer',
+                        icon: '📈',
+                        description: 'The business development engine inside the CDMS — it turns scattered spreadsheets, public registry data and market signals into a single ranked pipeline of clinical trials the organization can bid to run.',
+                        highlights: [
+                            'Ingests study-tracker spreadsheets with defensive parsing and idempotent upserts that never clobber existing data',
+                            'Live ClinicalTrials.gov status sync that flags when a tracked study advances to its next phase',
+                            'Surfaces new opportunities from SEC filings and news signals alongside registry trials',
+                            'Lead-tracking CRM — contact log, comments and owner-aware follow-up reminders — shared across every lead surface',
+                            'AI-assisted outreach drafting with duplicate-contact guards so the same person is never approached twice'
+                        ],
+                        tech: ['Laravel', 'Filament', 'MySQL', 'ClinicalTrials.gov API', 'Claude API', 'PhpSpreadsheet'],
+                        confidential: true
+                    })}
+
+                    ${createHealthTechCard({
+                        title: '🔬 Core Research Intelligence',
+                        status: 'Shipped',
+                        role: 'Designer & developer',
+                        icon: '🔬',
+                        description: 'An AI research-enrichment layer that compiles background briefs on trials, sponsor companies and market signals — each one with cited sources, a confidence rating, and an explicit note on what could not be verified.',
+                        highlights: [
+                            '570 briefs generated across every priority trial and market signal in the system, each web-researched with real citations',
+                            'Additive by design — enrichment never mutates the source record it describes',
+                            'Fully reversible: feature-flag it off, or clear by batch, type or single record',
+                            'Surfaced dozens of trials whose registry status had gone stale as a side effect'
+                        ],
+                        tech: ['Claude', 'Laravel', 'MySQL', 'Polymorphic schema', 'Batch tooling'],
+                        confidential: true
+                    })}
+
+                    ${createHealthTechCard({
+                        title: '💓 TrialPulse',
+                        status: 'Live',
+                        role: 'Full-stack developer',
+                        icon: '💓',
+                        description: 'A marketing and demo platform for a clinical research site, with a custom CMS engine built so a non-technical designer can safely edit the live site herself.',
+                        highlights: [
+                            'Custom CMS with full edit history and one-click revert — nothing can be permanently broken',
+                            'Sandboxed preview so changes are reviewed before they reach the public site',
+                            'Demo-request pipeline that emails the team the moment a visitor enquires',
+                            'Fully responsive, deployed to AWS'
+                        ],
+                        tech: ['Laravel', 'Blade', 'MySQL', 'AWS'],
+                        confidential: true
+                    })}
+
+                    ${createHealthTechCard({
+                        title: '🏢 Core Clinical Trials — Site Rework',
+                        status: 'In delivery',
+                        role: 'Full-stack developer',
+                        icon: '🏢',
+                        description: 'A ground-up rebuild of the organization\'s public website, replacing a dated template with an enterprise design system built from the executive team\'s design direction.',
+                        highlights: [
+                            'Rebuilt from scratch rather than patched — new layout system, typography and component set',
+                            'Responsive across phone, tablet and desktop',
+                            'Staged behind a private preview so the live domain stays untouched until it is fully vetted'
+                        ],
+                        tech: ['Laravel', 'Blade', 'Responsive CSS'],
+                        confidential: true
+                    })}
+
+                    ${createHealthTechCard({
+                        title: '🤖 LastResortAI',
+                        status: 'Personal project',
+                        role: 'Creator',
+                        icon: '🤖',
+                        description: 'My personal team of AI agents — a multi-agent development crew that plans, builds, reviews and deploys systems fast. It is the harness behind how the platforms above get shipped at the pace they do.',
+                        highlights: [
+                            'Specialist agents chained plan → build → adversarial review → deploy, rather than one model doing everything',
+                            'Persistent project memory so hard-won context survives across sessions instead of being re-explained',
+                            'Multi-pass verification sweeps that hunt bugs before code reaches production',
+                            'Used to take real systems from requirement to deployed in a fraction of the usual time'
+                        ],
+                        tech: ['Claude', 'Claude Code', 'Agent SDK', 'Node.js', 'Multi-agent orchestration']
+                    })}
+
                     ${createEnhancedProjectCard(
                         '💳 Crypto Checkout Simulator',
                         'Full-stack cryptocurrency payment processing simulation with real-time exchange rates and transaction tracking. Features secure wallet integration, multi-currency support, and live transaction monitoring.',
@@ -394,14 +507,27 @@ const apps = {
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Credentials</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
-                    ${createCertCard(
-                        '✳️ Claude Code in Action',
-                        'Anthropic',
-                        'Issued Jul 2026',
-                        'Official Anthropic Certificate of Completion for the "Claude Code in Action" course — hands-on training in agentic coding with Claude Code: driving multi-step development, tool use, and shipping AI-assisted software workflows in practice.',
-                        'assets/certificates/claude-code-in-action-anthropic.pdf',
-                        'https://verify.skilljar.com/c/usugbinq3tyu'
-                    )}
+                    <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+                        <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">✳️ Anthropic — Claude Certifications</h3>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Anthropic • Issued Jul 2026 • 2 certificates</p>
+                        <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
+                            Official Anthropic Certificates of Completion covering practical work with Claude and Claude Code — from core fundamentals through agentic, AI-assisted software development.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                            ${createCertSubCard(
+                                '✳️ Claude Code in Action',
+                                'Certificate of Completion • Jul 2026',
+                                'assets/certificates/claude-code-in-action-anthropic.pdf',
+                                'https://verify.skilljar.com/c/usugbinq3tyu'
+                            )}
+                            ${createCertSubCard(
+                                '✳️ Claude 101',
+                                'Certificate of Completion • Jul 2026',
+                                'assets/certificates/claude-101-anthropic.pdf',
+                                'https://verify.skilljar.com/c/ggyq4opwistp'
+                            )}
+                        </div>
+                    </div>
 
                     ${createCertCard(
                         '👨‍💼 Certified Chief Technology Officer',
@@ -1932,6 +2058,87 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
     `;
 }
 
+// ---------------------------------------------------------------------------
+// Health Technology showcase card
+//
+// Each system can carry a walkthrough video. Two ways to add one — nothing else
+// needs changing, the card lights up on its own the moment a value is set:
+//   youtube: 'VIDEO_ID'             → unlisted YouTube clip (free, no repo bloat)
+//   video:   'assets/demos/foo.mp4' → self-hosted clip committed to the repo
+// Until a video exists the slot shows a "request a live demo" prompt instead, so
+// the card never looks broken while footage is still being recorded.
+//
+// IMPORTANT: these are client production systems holding real trial and business
+// development data. Any recording must use sanitized or demo data — never a live
+// client screen, and never a public link to an internal deployment.
+// ---------------------------------------------------------------------------
+function createHealthTechCard(p) {
+    const techLower = (p.tech || []).map(t => t.toLowerCase()).join(' ');
+    const thumb = p.youtube ? `https://i.ytimg.com/vi/${p.youtube}/hqdefault.jpg` : '';
+
+    let media;
+    if (p.youtube) {
+        media = `
+            <div class="ht-video-facade" data-youtube="${p.youtube}" data-title="${p.title}"
+                 style="position: relative; width: 100%; aspect-ratio: 16 / 9; background: #0b1220 center/cover no-repeat url('${thumb}'); cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                <div style="position: absolute; inset: 0; background: rgba(6, 12, 24, 0.35);"></div>
+                <div style="position: relative; width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #0b1220; box-shadow: 0 6px 20px rgba(0,0,0,0.35);">▶</div>
+                <span style="position: absolute; bottom: 0.75rem; left: 0.9rem; color: #fff; font-weight: 700; font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.6);">Watch the walkthrough</span>
+            </div>`;
+    } else if (p.video) {
+        media = `
+            <video controls preload="metadata" playsinline style="width: 100%; aspect-ratio: 16 / 9; background: #0b1220; display: block;">
+                <source src="${p.video}" type="video/mp4">
+            </video>`;
+    } else {
+        media = `
+            <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #12233d, #1c3a5e); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: 1rem;">
+                <div style="font-size: 2.6rem; opacity: 0.9;">${p.icon || '🎬'}</div>
+                <div style="color: #dce9f7; font-weight: 700; font-size: 0.95rem;">Walkthrough video coming soon</div>
+                <button class="request-demo-btn" data-system="${p.title}"
+                        style="margin-top: 0.35rem; padding: 0.6rem 1.2rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem;">
+                    📅 Request a live demo
+                </button>
+            </div>`;
+    }
+
+    return `
+        <div class="project-card" data-category="healthtech" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; position: relative;">
+            ${media}
+            <div style="padding: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem;">
+                    <h3 style="color: #1a1a1a; font-size: 1.25rem; margin: 0; font-weight: 700;">${p.title}</h3>
+                    ${p.status ? `<span style="padding: 0.2rem 0.6rem; background: #e8f7ec; border: 1px solid #bfe6c9; border-radius: 999px; color: #2e7d43; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em;">${p.status}</span>` : ''}
+                </div>
+                ${p.role ? `<p style="color: #2171d6; font-size: 0.82rem; font-weight: 600; margin: 0 0 0.6rem;">${p.role}</p>` : ''}
+                <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${p.description}</p>
+                ${p.highlights && p.highlights.length ? `
+                    <ul style="margin: 0 0 1rem 1.1rem; padding: 0; color: #444; font-size: 0.87rem; line-height: 1.65;">
+                        ${p.highlights.map(h => `<li>${h}</li>`).join('')}
+                    </ul>` : ''}
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
+                    ${(p.tech || []).map(t => `
+                        <span class="tech-tag" style="padding: 0.25rem 0.75rem; background: #e8f4f8; border: 1px solid #d0e8f0; border-radius: 4px; color: #2171d6; font-size: 0.85rem; font-weight: 500;">${t}</span>
+                    `).join('')}
+                </div>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    ${p.liveLink ? `
+                        <a href="${p.liveLink}" target="_blank" rel="noopener noreferrer"
+                           style="padding: 0.75rem 1.5rem; background: #4caf50; border: 1px solid #45a049; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                            🌐 Visit Site
+                        </a>` : ''}
+                    <button class="request-demo-btn" data-system="${p.title}"
+                            style="padding: 0.75rem 1.5rem; background: #1a1a1a; border: 1px solid #1a1a1a; border-radius: 6px; color: #fff; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                        📅 Request a Demo
+                    </button>
+                    ${p.confidential ? `
+                        <span style="color: #999; font-size: 0.82rem; padding: 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem;">🔒 Client system — walkthrough on request</span>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function createCertCard(title, issuer, date, description, link, verifyUrl) {
     const isPDF = link && link.endsWith('.pdf');
     return `
@@ -1954,6 +2161,33 @@ function createCertCard(title, issuer, date, description, link, verifyUrl) {
                     <a href="${link}" download
                        style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
                         📥 Download
+                    </a>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// A compact certificate tile used inside a grouped credential category
+// (e.g. the Anthropic certificates). View opens the viewer; Verify opens the
+// issuer's public verification page.
+function createCertSubCard(name, subtitle, certPath, verifyUrl) {
+    const isPDF = certPath && certPath.endsWith('.pdf');
+    return `
+        <div style="padding: 1rem; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+                <div style="font-weight: 700; color: #1a1a1a; font-size: 0.98rem;">${name}</div>
+                <div style="color: #666; font-size: 0.8rem; margin-top: 0.15rem;">${subtitle}</div>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="view-cert-btn" data-cert="${certPath}" data-title="${name}" data-type="${isPDF ? 'pdf' : 'image'}" data-verify="${verifyUrl || ''}"
+                        style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">
+                    👁️ View
+                </button>
+                ${verifyUrl ? `
+                    <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer"
+                       style="padding: 0.5rem 1rem; background: #1a1a1a; color: #fff; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.35rem;">
+                        ✅ Verify ↗
                     </a>
                 ` : ''}
             </div>

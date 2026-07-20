@@ -90,16 +90,27 @@
   <h2 class="section">Professional Summary</h2>
   <p class="summary">
     AI Software Engineer, full-stack developer, and Certified CTO with 8+ years of experience spanning AI/ML
-    engineering, end-to-end product development, and technical leadership. Designs and ships document-intelligence
-    and LLM-powered systems — OCR, computer vision, ML-based extraction, watermark removal, and underwriting
-    automation — alongside secure, scalable web platforms across the LAMP and modern JavaScript stacks. Has
-    delivered for financial services (Alternative Funding Group), clinical research (Core Clinical Trials),
-    government and United Nations initiatives, and 50+ international clients as a Top Rated freelancer. A startup
-    co-founder who has led cross-functional teams of up to 12 engineers from architecture through deployment,
-    pairing deep hands-on engineering with strategic, business-aligned thinking.
+    engineering, end-to-end product development, and technical leadership. Builds <strong>health-technology
+    platforms</strong> — clinical data management, clinical-trial business development, and AI research
+    intelligence — and ships document-intelligence and LLM-powered systems — OCR, computer vision, ML-based
+    extraction, watermark removal, and underwriting automation — alongside secure, scalable web platforms across
+    the LAMP and modern JavaScript stacks. Has delivered for clinical research (Core Clinical Trials), financial
+    services (Alternative Funding Group), government and United Nations initiatives, and 50+ international clients
+    as a Top Rated freelancer. A startup co-founder who has led cross-functional teams of up to 12 engineers from
+    architecture through deployment, pairing deep hands-on engineering with strategic, business-aligned thinking.
   </p>
 
   <h2 class="section">Technical Skills</h2>
+  <div class="strength-group">
+    <span class="label">Health Technology &amp; Clinical Research</span>
+    <ul class="tight">
+      <li>Clinical data management systems: study/site/investigator modelling, data capture, validation, and reporting</li>
+      <li>Clinical-trial business development: pipeline tracking, opportunity scoring, registry-driven lead discovery</li>
+      <li>ClinicalTrials.gov integration — live status synchronisation, phase-change detection, registry reconciliation</li>
+      <li>Regulated-data practices: tamper-evident hash-chained audit trails, role-based access, 2FA, reversible data layers</li>
+      <li>AI research intelligence — cited, confidence-rated background briefs generated over trial and market data</li>
+    </ul>
+  </div>
   <div class="strength-group">
     <span class="label">AI &amp; Machine Learning</span>
     <ul class="tight">
@@ -156,8 +167,34 @@
     </div>
     <div class="job-meta">Remote <span class="tag">Independent Contractor</span></div>
     <ul>
-      <li>Engaged through HireOverseas and deployed to Core Clinical Trials to lead development of a custom Clinical Data Management System (CDMS).</li>
-      <li>Driving the migration of clinical operations off Salesforce to a tailored web application, eliminating licensing overhead and matching the organization's exact workflows.</li>
+      <li>Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across three production health-technology systems, taking each from requirements to live deployment.</li>
+      <li><strong>CDMS (Clinical Data Management System)</strong> — architected and shipped a custom clinical data platform on AWS (Elastic Beanstalk, RDS), migrating clinical operations off Salesforce to a tailored web application that eliminates licensing overhead and matches the organization's exact workflows.
+        <ul class="tight">
+          <li>Models the real clinical hierarchy — studies → sites → investigators — rather than forcing the domain into a generic CRM object.</li>
+          <li>Tamper-evident audit trail with a hash-chained daily verification job that flags any altered record.</li>
+          <li>Role-based access control, two-factor authentication, and encrypted application settings.</li>
+          <li>Automated migrations on deploy, scheduled jobs and queue workers, daily snapshots with point-in-time recovery.</li>
+        </ul>
+      </li>
+      <li><strong>BD Pipeline</strong> — the clinical-trial business-development engine within the CDMS, turning scattered spreadsheets, public registry data, and market signals into a single ranked pipeline of trials the organization can bid to run.
+        <ul class="tight">
+          <li>Study-tracker spreadsheet ingestion with defensive parsing and idempotent, null-skipping upserts that never clobber existing data.</li>
+          <li>Live ClinicalTrials.gov status synchronisation that flags when a tracked study advances to its next phase.</li>
+          <li>Opportunity discovery from SEC filings and news signals alongside registry trials.</li>
+          <li>Polymorphic lead-tracking CRM — contact log, comments, and owner-aware follow-up reminders — shared across every lead surface.</li>
+          <li>AI-assisted outreach drafting with cross-source duplicate-contact guards so the same person is never approached twice.</li>
+        </ul>
+      </li>
+      <li><strong>Core Research Intelligence</strong> — a reversible AI enrichment layer within the CDMS producing background briefs on trials, sponsor companies, and market signals.
+        <ul class="tight">
+          <li>570 briefs generated across every priority trial and market signal, each web-researched with real cited sources, a confidence rating, and explicit notes on what could not be verified.</li>
+          <li>Additive by design — enrichment never mutates the source record it describes.</li>
+          <li>Fully reversible: feature-flagged off, or cleared by batch, type, or individual record.</li>
+          <li>Surfaced dozens of trials whose registry status had silently gone stale as a side effect.</li>
+        </ul>
+      </li>
+      <li><strong>TrialPulse</strong> — delivered a marketing and demo platform with a custom CMS engine featuring full edit history, one-click revert, and sandboxed preview, so non-technical staff can safely edit the live site themselves; includes a demo-request pipeline that notifies the team on enquiry.</li>
+      <li><strong>Corporate site rework</strong> — rebuilt the organization's public website from the ground up on a new enterprise design system, fully responsive and staged behind a private preview so the live domain stayed untouched until vetted.</li>
       <li>Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time.</li>
       <li>Designing AI-assisted workflows and data pipelines to streamline clinical data capture, validation, and reporting.</li>
     </ul>
@@ -360,6 +397,21 @@
     </ul>
   </div>
 
+  <h2 class="section">Selected Projects</h2>
+  <div class="job">
+    <div class="job-head">
+      <span class="job-title">LastResortAI — <span class="role">Creator</span></span>
+      <span class="job-dates">2026 – Present</span>
+    </div>
+    <ul>
+      <li>A personal team of AI agents — a multi-agent development crew that plans, builds, reviews, and deploys systems at speed.</li>
+      <li>Specialist agents chained plan → build → adversarial review → deploy, rather than a single model attempting everything in one pass.</li>
+      <li>Persistent project memory so hard-won context survives across sessions instead of being re-explained each time.</li>
+      <li>Multi-pass verification sweeps that surface defects before code reaches production.</li>
+      <li>Built with Claude, Claude Code, and the Claude Agent SDK; used to take real production systems from requirement to deployment in a fraction of the usual time.</li>
+    </ul>
+  </div>
+
   <h2 class="section">Awards &amp; Achievements</h2>
   <ul class="tight">
     <li>Top Rated Freelancer on Upwork — 100% Job Success Score across 50+ delivered projects.</li>
@@ -372,6 +424,8 @@
   <h2 class="section">Certifications</h2>
   <ul class="tight">
     <li>Certified Chief Technology Officer, Information Technology — Institute of Management, Technology and Finance (IMTF).</li>
+    <li>Claude Code in Action — Anthropic (2026). Verify: verify.skilljar.com/c/usugbinq3tyu</li>
+    <li>Claude 101 — Anthropic (2026). Verify: verify.skilljar.com/c/ggyq4opwistp</li>
     <li>Ethical Hacking Course (Hacker X) — Database Hacking, Bringing Down a Website, Make Your Data Safe, Hacking Passwords.</li>
   </ul>
 

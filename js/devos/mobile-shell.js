@@ -324,7 +324,13 @@
     if (immediate) s.remove();
     else setTimeout(function () { s.remove(); }, 300);
   }
-  window.addEventListener('popstate', function () { if (sheetOpen) closeSheet(); });
+  window.addEventListener('popstate', function () {
+    // A dialog layered above the sheet (e.g. the demo request form) owns the
+    // back gesture while it is up — otherwise Android back would dismiss the app
+    // underneath and leave the dialog floating over the home screen.
+    if (window.__backOwnedByOverlay) return;
+    if (sheetOpen) closeSheet();
+  });
 
   // ---- Home-screen regions ---------------------------------------------
   function topHTML() {
@@ -760,6 +766,9 @@
     window.MobileShell = { open: openSheet };
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
+      // A dialog layered above the shell handles its own Escape; without this we
+      // would also fire history.back() and pop the sheet's entry along with it.
+      if (window.__backOwnedByOverlay) return;
       if (Search && Search.isOpen()) Search.close();
       else if (ControlCenter && ControlCenter.isOpen()) ControlCenter.close();
       else if (chatIsOpen()) closeChat();
