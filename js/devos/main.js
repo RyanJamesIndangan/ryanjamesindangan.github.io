@@ -2302,10 +2302,10 @@ function initializeAIAssistant() {
         const initialGreeting = {
             text: userName 
                 ? `Hello${userName}! 👋 Welcome back! I'm Ryan's AI Assistant. How can I help you today?`
-                : "Hello! 👋 I'm Ryan's AI Assistant. I can help you learn about his skills, experience, projects, and AI/ML expertise. What would you like to know?",
+                : "Hello! 👋 I'm Ryan's AI Assistant. I can tell you about his skills, experience, projects, AI/ML work — and the AI workshops he's invited to teach. What would you like to know?",
             suggestions: [
                 "What are your skills?",
-                "Tell me about your AI work",
+                "Does he run AI workshops?",
                 "Show me your experience",
                 "What projects have you built?"
             ]
@@ -3074,7 +3074,7 @@ function clearChat() {
             : "Hello! 👋 Chat cleared. I'm Ryan's AI Assistant. What would you like to know?",
         suggestions: [
             "What are your skills?",
-            "Tell me about your AI work",
+            "Does he run AI workshops?",
             "Show me your experience",
             "What projects have you built?"
         ]

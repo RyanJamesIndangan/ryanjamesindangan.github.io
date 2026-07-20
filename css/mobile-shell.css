@@ -76,7 +76,7 @@ html.mobile-shell #mobileShell {
 .ms-gsearch {
   display: flex; align-items: center; gap: max(8px, 2.4vw); width: 100%;
   background: rgba(255,255,255,.96); border: none; border-radius: 28px; cursor: pointer;
-  padding: max(11px, 3.2vw) max(14px, 4vw); margin: max(4px, 1.5vw) 0 max(16px, 5vw); box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  padding: max(11px, 3.2vw) max(14px, 4vw); margin: max(4px, 1.5vw) 0 max(12px, 3vw); box-shadow: 0 2px 10px rgba(0,0,0,.25);
 }
 .ms-gsearch .ms-g svg { width: max(20px, 5.6vw); height: max(20px, 5.6vw); display: block; }
 .ms-gsearch-ph { flex: 1 1 auto; text-align: left; color: #5f6368; font-size: max(.95rem, 4vw); }
@@ -102,10 +102,14 @@ html.mobile-shell #mobileShell {
 /* App icon grid (springboard). Sizes use vw so the icons scale to fill the
    actual viewport — high-DPR Android browsers report a wide CSS width, which
    made fixed-px icons look tiny. clamp() keeps them sane on any width. */
-.ms-springboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: max(16px, 4.6vw) max(2px, 1vw); }
+/* Row gap is deliberately tighter than it looks like it should be: 3 rows of
+   icons + labels + the search bar overflowed a 778px-tall viewport by ~25px,
+   which pushed the last row's LABELS below the fold. Icon size is left alone —
+   it is the one thing that must not shrink. */
+.ms-springboard { display: grid; grid-template-columns: repeat(4, 1fr); gap: max(13px, 3.2vw) max(2px, 1vw); }
 .ms-app {
   background: none; border: none; cursor: pointer; padding: 0;
-  display: flex; flex-direction: column; align-items: center; gap: max(6px, 1.9vw);
+  display: flex; flex-direction: column; align-items: center; gap: max(5px, 1.5vw);
 }
 .ms-app:active { transform: scale(.92); }
 .ms-app-ico {
@@ -129,7 +133,7 @@ html.mobile-shell #mobileShell {
 }
 
 /* iOS page dots */
-.ms-page-dots { display: flex; gap: 7px; justify-content: center; padding: 16px 0 4px; margin-top: auto; }
+.ms-page-dots { display: flex; gap: 7px; justify-content: center; padding: 8px 0 4px; margin-top: auto; }
 .ms-page-dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.4); }
 .ms-page-dots i.on { background: rgba(255,255,255,.95); }
 
@@ -232,9 +236,22 @@ html.mobile-shell #certificateModal .cert-modal-container { width: 96vw !importa
 /* Pixel adaptive icons are circles AND chunkier than iOS squircles — a circle
    reads smaller than a square of the same width, so size Android up. */
 .os-android .ms-app-ico { width: max(66px, 18.5vw); height: max(66px, 18.5vw); border-radius: 50%; }
-.os-android .ms-springboard { gap: max(20px, 5.4vw) max(2px, 1vw); }
+/* Tighter than it reads: Android's icons are the largest of the two skins, so
+   three rows + labels are what overflow the page and clip the bottom labels. */
+.os-android .ms-springboard { gap: max(13px, 3.4vw) max(2px, 1vw); }
 .os-android .ms-dock { padding: 6px 14px 4px; }
 .os-android .ms-page-dots i { background: rgba(255,255,255,.4); }
+
+/* Short viewports — small phones, or browsers whose chrome eats the window —
+   genuinely cannot fit three rows of full-size Android icons AND their labels.
+   Shrinking the icon is the lesser evil here: a half-clipped label is
+   unreadable, a slightly smaller icon is still perfectly legible. */
+@media (max-height: 700px) {
+  .os-android .ms-app-ico { width: max(54px, 15vw); height: max(54px, 15vw); }
+  .os-android .ms-springboard { gap: max(9px, 2.4vw) max(2px, 1vw); }
+  .ms-springboard { gap: max(9px, 2.4vw) max(2px, 1vw); }
+  .ms-gsearch { margin-bottom: max(8px, 2.2vw); }
+}
 
 /* ============================================================
    iOS (Cupertino) skin

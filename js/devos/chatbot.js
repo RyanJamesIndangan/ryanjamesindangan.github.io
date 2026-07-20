@@ -244,6 +244,7 @@ class PortfolioChatbot {
             if (text.includes('experience') || text.includes('work') || text.includes('job')) topics.add('experience');
             if (text.includes('project') || text.includes('portfolio') || text.includes('showcase')) topics.add('projects');
             if (text.includes('certificate') || text.includes('credential')) topics.add('certifications');
+            if (text.includes('workshop') || text.includes('speak') || text.includes('teach') || text.includes('training')) topics.add('workshops');
             if (text.includes('contact') || text.includes('email') || text.includes('hire')) topics.add('contact');
         });
         
@@ -346,6 +347,18 @@ class PortfolioChatbot {
             'project': 'projects',
             'showcase': 'projects',
             'portfolio': 'projects',
+            // Workshop/verifier entries sit above the certification ones: the partial-match
+            // fallback below iterates in insertion order, and 'certificate verifier'
+            // contains 'certificate', which would otherwise route to Certifications.
+            'speaking & workshops': 'workshops',
+            'speaking and workshops': 'workshops',
+            'workshops': 'workshops',
+            'workshop': 'workshops',
+            'speaking': 'workshops',
+            'verify a certificate': 'verify-certificate',
+            'certificate verifier': 'verify-certificate',
+            'verifier': 'verify-certificate',
+            'verify': 'verify-certificate',
             'certifications': 'certifications',
             'certification': 'certifications',
             'certificate': 'certifications',
@@ -561,6 +574,36 @@ class PortfolioChatbot {
         const knowledgeResult = this.handleGeneralKnowledge(message);
         if (knowledgeResult) {
             return knowledgeResult;
+        }
+
+        // "Why is there a certificate verifier on a portfolio site?" — a curious VISITOR,
+        // not an attendee. Must precede the attendee-facing verify block below, which
+        // matches on 'verify' alone and would otherwise swallow the question.
+        if (this.matches(message, ['why']) &&
+            this.matches(message, ['verify', 'verifier', 'certificate thing', 'cert thing', 'verify cert', 'certificate app'])) {
+            return {
+                text: `Good question 🙂 It's there because **Ryan teaches AI**.\n\nHe's invited by companies and institutions to run **hands-on AI workshops**, and everyone who completes one gets a certificate. The Verifier is how an attendee — or their employer — proves that certificate is genuine.\n\nEach one is signed with an **Ed25519** digital signature, so it can't be faked or edited. The check runs entirely in your browser: nothing is uploaded, and **no attendee list is ever published**.\n\n[Open Speaking & Workshops] to see the sessions he runs.`,
+                suggestions: [
+                    "What workshops does he run?",
+                    "Can he speak at my company?",
+                    "How do I verify my certificate?",
+                    "What certifications does Ryan have?"
+                ]
+            };
+        }
+
+        // Speaking / workshops / teaching — Ryan is invited to teach AI at companies.
+        // Sits above the verify block so "do you run workshops" isn't read as a cert check.
+        if (this.matches(message, ['workshop', 'workshops', 'speaking', 'speaker', 'speak at', 'speak to', 'talk at', 'keynote', 'do you teach', 'can you teach', 'does he teach', 'teaching', 'teaches', 'trainer', 'training', 'seminar', 'masterclass', 'lecture', 'facilitator', 'invite you', 'invite him', 'book you', 'book him', 'hire you to speak', 'corporate training', 'ai training', 'guest speaker', 'mentor'])) {
+            return {
+                text: `Yes — Ryan is invited by companies and institutions to **teach AI** 🎤\n\nHe runs hands-on workshops and talks for mixed audiences — engineers, ops teams, managers, and complete beginners:\n\n📌 **Practical Prompting for Everyday Work**\nHands-on workshop · Rex Knowledge Center, Quezon City\n\n📌 **Ahead of the Race: Using AI to Build, Work, and Stand Out**\nHands-on workshop · Novaliches, Quezon City\n\n📌 **AI Masterclass**\nOnline workshop · participants from international companies, including Fortune 500\n\nEvery attendee receives a **cryptographically signed certificate** they can verify instantly — that's why this site has a Certificate Verifier.\n\n[Open Speaking & Workshops] to see photos and request a session for your team.`,
+                suggestions: [
+                    "Can he run one for my team?",
+                    "Why is there a certificate verifier?",
+                    "What does he teach exactly?",
+                    "Show me his AI work"
+                ]
+            };
         }
 
         // Workshop certificate verification (a participant checking a cert Ryan issued them). Placed EARLY so
@@ -1682,7 +1725,8 @@ class PortfolioChatbot {
             })(),
             'project': 'Ryan has delivered 50+ projects including AI/ML systems, web applications, and automation tools. [Open Projects] to explore!',
             'portfolio': 'This is Ryan\'s portfolio! You can explore his skills, experience, projects, and certifications. [Open Projects] to see his work!',
-            'certificate': 'Ryan holds CTO certification and Hacker-X Ethical Hacking Course. [Open Certifications] to view certificates!'
+            'certificate': 'Ryan holds a Certified CTO credential, two Anthropic Claude certificates, and the Hacker-X Ethical Hacking Course. [Open Certifications] to view them!',
+            'workshops': 'Ryan is invited by companies and institutions to teach AI — hands-on workshops like "Practical Prompting for Everyday Work" and "AI Masterclass". [Open Speaking & Workshops] to see them!'
         };
         return responses[topic] || 'I can help you learn about Ryan\'s portfolio. What would you like to know?';
     }

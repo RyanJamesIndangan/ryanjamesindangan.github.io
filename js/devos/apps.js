@@ -9,9 +9,22 @@ const apps = {
         content: `
             <div style="max-width: 720px;">
                 <h2 style="font-size: 2rem; margin-bottom: 0.4rem; color:#1a1a1a; font-weight:700;">🪪 Verify a Certificate</h2>
-                <p style="color:#555; line-height:1.6; margin-bottom:1.4rem;">
+                <p style="color:#555; line-height:1.6; margin-bottom:1.2rem;">
                     Certificates from my workshops are <b>cryptographically signed</b> (Ed25519). Confirm one is genuine in seconds &mdash; the check runs entirely in your browser, and nothing is stored.
                 </p>
+
+                <div style="padding:1.05rem 1.2rem; background:#fff8e1; border:1px solid #ffe082; border-radius:8px; margin-bottom:1.4rem;">
+                    <b style="color:#1a1a1a;">Why is this on a portfolio? 🎤</b>
+                    <p style="color:#5d4b1f; margin:.45rem 0 .8rem; font-size:.92rem; line-height:1.65;">
+                        Because I'm invited by companies and institutions to <b>teach AI</b>, and everyone who completes one of
+                        my workshops gets a certificate. This page is how they &mdash; or their employer &mdash; prove it's real.
+                        If you landed here from a QR code on a certificate, you're in the right place: paste your link below.
+                    </p>
+                    <button onclick="if(window.openApp){window.openApp('workshops');}else if(window.MobileShell){window.MobileShell.open('workshops');}"
+                            style="padding:.55rem 1.1rem; background:#1a1a1a; color:#fff; border:none; border-radius:7px; cursor:pointer; font-weight:700; font-size:.85rem;">
+                        See the workshops I run &rarr;
+                    </button>
+                </div>
                 <div style="display:grid; gap:1rem; margin-bottom:1.3rem;">
                     <div style="padding:1.05rem 1.2rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
                         <b style="color:#1a1a1a;">&#9312; Scan the QR</b>
@@ -38,6 +51,80 @@ const apps = {
             </div>
         `
     },
+    workshops: {
+        title: 'Speaking & Workshops',
+        icon: '🎤',
+        content: `
+            <div style="max-width: 860px;">
+                <h2 style="font-size: 2rem; margin-bottom: 0.4rem; color:#1a1a1a; font-weight:700;">🎤 Speaking &amp; Workshops</h2>
+                <p style="color:#555; line-height:1.7; margin-bottom:1.5rem; font-size:1.02rem;">
+                    Alongside building software, I get invited by companies and institutions to <b>teach AI</b> &mdash;
+                    hands-on workshops and talks on using AI practically in everyday work. Sessions are run for mixed
+                    audiences: engineers, operations teams, managers and complete beginners.
+                </p>
+
+                <figure style="margin:0 0 1.8rem;">
+                    <img src="assets/workshops/ai-workshop-group.jpg" alt="Group photo with attendees at the end of a hands-on AI workshop"
+                         loading="lazy" style="width:100%; border-radius:12px; display:block; border:1px solid #e0e0e0;">
+                    <figcaption style="color:#777; font-size:.84rem; margin-top:.6rem; line-height:1.5;">
+                        Wrapping up a hands-on AI workshop with the group &mdash; Quezon City, Philippines.
+                    </figcaption>
+                </figure>
+
+                <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .9rem; font-size:1.2rem;">Sessions I run</h3>
+                <div style="display:grid; gap:1rem; margin-bottom:2rem;">
+                    <div style="padding:1.15rem 1.3rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
+                        <b style="color:#1a1a1a; font-size:1.02rem;">Practical Prompting for Everyday Work</b>
+                        <p style="color:#555; margin:.4rem 0 0; font-size:.92rem; line-height:1.6;">
+                            Hands-on workshop &mdash; getting real, repeatable results out of AI tools for ordinary daily tasks.
+                            <br><span style="color:#888;">Delivered at Rex Knowledge Center, Quezon City.</span>
+                        </p>
+                    </div>
+                    <div style="padding:1.15rem 1.3rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
+                        <b style="color:#1a1a1a; font-size:1.02rem;">Ahead of the Race: Using AI to Build, Work, and Stand Out</b>
+                        <p style="color:#555; margin:.4rem 0 0; font-size:.92rem; line-height:1.6;">
+                            Hands-on workshop &mdash; using AI to build and ship faster, and to stay competitive as the tools move.
+                            <br><span style="color:#888;">Delivered in Novaliches, Quezon City.</span>
+                        </p>
+                    </div>
+                    <div style="padding:1.15rem 1.3rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
+                        <b style="color:#1a1a1a; font-size:1.02rem;">AI Masterclass</b>
+                        <p style="color:#555; margin:.4rem 0 0; font-size:.92rem; line-height:1.6;">
+                            Online workshop &mdash; a deeper run through applying AI across real workflows.
+                            <br><span style="color:#888;">Attended by participants from international companies, including Fortune 500.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div style="padding:1.3rem 1.4rem; background:#fafafa; border:1px solid #e0e0e0; border-radius:10px; margin-bottom:1.8rem;">
+                    <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .6rem; font-size:1.1rem;">🪪 Every attendee gets a verifiable certificate</h3>
+                    <p style="color:#555; line-height:1.7; margin:0 0 1rem; font-size:.93rem;">
+                        That's why this site has a <b>Certificate Verifier</b>. Anyone who completes one of my workshops receives a
+                        certificate carrying a QR code and a Certificate ID. Each one is signed with an <b>Ed25519</b> digital
+                        signature, so an employer can confirm it's genuine in seconds &mdash; the check runs entirely in the
+                        visitor's browser, nothing is uploaded, and no attendee list is ever published.
+                    </p>
+                    <button onclick="if(window.openApp){window.openApp('verify-certificate');}else if(window.MobileShell){window.MobileShell.open('verify-certificate');}"
+                            style="padding:.65rem 1.3rem; background:#2171d6; color:#fff; border:1px solid #1a5fb8; border-radius:8px; cursor:pointer; font-weight:700; font-size:.9rem;">
+                        Open the Certificate Verifier &rarr;
+                    </button>
+                </div>
+
+                <div style="padding:1.4rem; background:linear-gradient(135deg,#12233d,#1c3a5e); border-radius:12px; color:#fff;">
+                    <h3 style="margin:0 0 .5rem; font-size:1.15rem; font-weight:700; color:#ffffff;">Want a session for your team?</h3>
+                    <p style="margin:0 0 1rem; color:#cfe0f2; line-height:1.65; font-size:.93rem;">
+                        I run these on-site and online, and tailor the material to the audience &mdash; from complete
+                        beginners through to engineering teams.
+                    </p>
+                    <button class="request-demo-btn" data-system="Speaking / workshop enquiry"
+                            style="padding:.8rem 1.6rem; background:#4caf50; color:#fff; border:1px solid #45a049; border-radius:8px; cursor:pointer; font-weight:700; font-size:.95rem; box-shadow:0 3px 10px rgba(0,0,0,.25);">
+                        🎤 Invite me to speak
+                    </button>
+                </div>
+            </div>
+        `
+    },
+
     about: {
         title: 'About Me',
         icon: '👨‍💻',
@@ -425,6 +512,8 @@ const apps = {
                         status: 'Personal project',
                         role: 'Creator',
                         icon: '🤖',
+                        video: 'assets/demos/lastresortai.mp4',
+                        videoNote: '65-second walkthrough of Mission Control — the task board, crew, Command Deck, learned lessons and token usage. Recorded in the app\'s built-in demo mode with synthetic crew activity, so no real project data appears.',
                         description: 'My personal team of AI agents — a multi-agent development crew that plans, builds, reviews and deploys systems fast. It is the harness behind how the platforms above get shipped at the pace they do.',
                         highlights: [
                             'Specialist agents chained plan → build → adversarial review → deploy, rather than one model doing everything',
@@ -2087,9 +2176,11 @@ function createHealthTechCard(p) {
             </div>`;
     } else if (p.video) {
         media = `
-            <video controls preload="metadata" playsinline style="width: 100%; aspect-ratio: 16 / 9; background: #0b1220; display: block;">
+            <video controls preload="metadata" playsinline ${p.poster ? `poster="${p.poster}"` : ''} style="width: 100%; aspect-ratio: 16 / 9; background: #0b1220; display: block;">
                 <source src="${p.video}" type="video/mp4">
-            </video>`;
+                Your browser can't play this video — <a href="${p.video}" style="color:#8ab4f8;">download it instead</a>.
+            </video>
+            ${p.videoNote ? `<div style="padding: 0.5rem 0.9rem; background: #0f1b2d; color: #9fb3cc; font-size: 0.78rem; line-height: 1.45; border-bottom: 1px solid #e0e0e0;">${p.videoNote}</div>` : ''}`;
     } else {
         media = `
             <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #12233d, #1c3a5e); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: 1rem;">
