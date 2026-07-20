@@ -96,7 +96,7 @@
   <p class="summary">
     AI Software Engineer and full-stack developer with 8+ years building production systems end to end — from
     AI/ML and LLM-powered automation to secure, scalable web platforms. Specializes in <strong>health
-    technology</strong> — clinical data management, clinical-trial business development, and AI research
+    technology</strong> — registry-scale trial data engineering, clinical-trial business development, and AI research
     intelligence — alongside document intelligence (OCR, computer vision, ML-based extraction) and LLM
     integration, with delivery across clinical research, financial underwriting automation, and AI companion
     applications. A Certified CTO and startup co-founder who has led cross-functional teams of up to 12 engineers
@@ -107,11 +107,11 @@
   <div class="strength-group">
     <span class="label">Health Technology &amp; Clinical Research</span>
     <ul class="tight">
-      <li>Clinical data management systems: study/site/investigator modelling, data capture, validation, and reporting</li>
+      <li>Clinical-trial intelligence platforms: study/site/investigator entity modelling, registry ingestion and normalisation, provenance tracking, entity resolution and deduplication</li>
       <li>Clinical-trial business development: pipeline tracking, opportunity scoring, registry-driven lead discovery</li>
       <li>ClinicalTrials.gov integration — live status synchronisation, phase-change detection, registry reconciliation</li>
-      <li>Regulated-data practices: tamper-evident hash-chained audit trails, role-based access, 2FA, reversible data layers</li>
-      <li>AI research intelligence — cited, confidence-rated background briefs generated over trial and market data</li>
+      <li>Audit &amp; integrity engineering: append-only SHA-256 hash-chained records with scheduled chain verification, role-based access control, TOTP 2FA, reversible data layers</li>
+      <li>AI-compiled background research — cited, confidence-rated briefs over trial and market signals, stored as an additive layer that never mutates source records</li>
     </ul>
   </div>
   <div class="strength-group">
@@ -175,10 +175,11 @@
     </div>
     <div class="job-meta">Remote <span class="tag">Independent Contractor</span></div>
     <ul>
-      <li>Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across three production health-technology systems.</li>
-      <li><strong>CDMS (Clinical Data Management System)</strong> — architected and shipped a custom clinical data platform to AWS, migrating operations off Salesforce to a tailored web application that eliminates licensing overhead and matches the organization's exact workflows. Models the real clinical hierarchy (studies → sites → investigators) with a tamper-evident hash-chained audit trail, role-based access, and two-factor authentication.</li>
-      <li><strong>BD Pipeline</strong> (within the CDMS) — built the clinical-trial business-development engine: spreadsheet ingestion with defensive parsing and non-destructive idempotent upserts, live ClinicalTrials.gov status sync that flags phase changes, SEC-filing and news lead discovery, a shared lead-tracking CRM with owner-aware follow-up reminders, and AI-assisted outreach drafting with cross-source duplicate-contact guards.</li>
-      <li><strong>Core Research Intelligence</strong> (within the CDMS) — designed a reversible AI enrichment layer that produced 570 cited, confidence-rated research briefs across every priority trial and market signal; additive by design so source records are never mutated, and clearable by batch, type, or record.</li>
+      <li>Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across four production systems — two internal clinical-trial intelligence platforms and two public-facing sites with custom CMS engines.</li>
+      <li><strong>Clinical Trial Intelligence &amp; BD Platform (internal name: CDMS)</strong> — architected and shipped a custom trial-intelligence and business-development platform to AWS (Elastic Beanstalk, RDS), moving the organization's study tracker and BD pipeline off Salesforce to a tailored web application that eliminates licensing overhead and matches their exact workflows. Models trials, sites, investigators, and sponsors keyed on the ClinicalTrials.gov NCT ID rather than a generic CRM object, with a tamper-evident SHA-256 hash-chained audit trail whose models reject UPDATE at the ORM layer, role-based access, and TOTP two-factor authentication.</li>
+      <li><strong>BD Pipeline</strong> (within the CDMS) — built the clinical-trial business-development engine: spreadsheet ingestion with defensive parsing and non-destructive idempotent upserts, live ClinicalTrials.gov status sync that flags registry status changes, SEC-filing and news lead discovery, a shared lead-tracking CRM with owner-aware follow-up reminders, and AI-assisted outreach drafting with cross-source duplicate-contact guards.</li>
+      <li><strong>Core Research Intelligence</strong> (standalone platform — own repo, composer package, ~27-table schema and admin panel; later integrated into the CDMS as an isolated add-on with the host schema untouched) — built a resumable, checkpointed ClinicalTrials.gov ETL with entity resolution across studies, sites, investigators, and sponsors, explainable rules-based site classification, a 0-100 opportunity score with runtime-editable weights, and human-reviewed, reversible deduplication over a 150,000-site corpus.</li>
+      <li><strong>AI research enrichment</strong> (within the CDMS) — designed a reversible enrichment layer that generates cited, confidence-rated background briefs on priority trials and market signals, recording explicitly what could not be verified; additive by design so source records are never mutated, and clearable by batch, type, or record.</li>
       <li><strong>TrialPulse</strong> — delivered a marketing and demo platform with a custom CMS engine (full edit history, one-click revert, sandboxed preview) so non-technical staff can safely edit the live site themselves.</li>
       <li><strong>Corporate site rework</strong> — rebuilt the organization's public website from the ground up on a new enterprise design system, staged behind a private preview until vetted.</li>
       <li>Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time.</li>

@@ -91,8 +91,8 @@
   <p class="summary">
     AI Software Engineer, full-stack developer, and Certified CTO with 8+ years of experience spanning AI/ML
     engineering, end-to-end product development, and technical leadership. Builds <strong>health-technology
-    platforms</strong> — clinical data management, clinical-trial business development, and AI research
-    intelligence — and ships document-intelligence and LLM-powered systems — OCR, computer vision, ML-based
+    platforms</strong> — clinical-trial intelligence, registry data engineering, and AI-assisted business
+    development — and ships document-intelligence and LLM-powered systems — OCR, computer vision, ML-based
     extraction, watermark removal, and underwriting automation — alongside secure, scalable web platforms across
     the LAMP and modern JavaScript stacks. Has delivered for clinical research (Core Clinical Trials), financial
     services (Alternative Funding Group), government and United Nations initiatives, and 50+ international clients
@@ -104,10 +104,10 @@
   <div class="strength-group">
     <span class="label">Health Technology &amp; Clinical Research</span>
     <ul class="tight">
-      <li>Clinical data management systems: study/site/investigator modelling, data capture, validation, and reporting</li>
+      <li>Clinical-trial intelligence platforms: study/site/investigator entity modelling, registry ETL at scale (150k+ site records), entity resolution and deduplication, field-level provenance, and executive reporting</li>
       <li>Clinical-trial business development: pipeline tracking, opportunity scoring, registry-driven lead discovery</li>
       <li>ClinicalTrials.gov integration — live status synchronisation, phase-change detection, registry reconciliation</li>
-      <li>Regulated-data practices: tamper-evident hash-chained audit trails, role-based access, 2FA, reversible data layers</li>
+      <li>Audit &amp; integrity engineering: append-only SHA-256 hash-chained records with scheduled chain verification, role-based access, TOTP 2FA, reversible data merges</li>
       <li>AI research intelligence — cited, confidence-rated background briefs generated over trial and market data</li>
     </ul>
   </div>
@@ -167,10 +167,10 @@
     </div>
     <div class="job-meta">Remote <span class="tag">Independent Contractor</span></div>
     <ul>
-      <li>Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across three production health-technology systems, taking each from requirements to live deployment.</li>
-      <li><strong>CDMS (Clinical Data Management System)</strong> — architected and shipped a custom clinical data platform on AWS (Elastic Beanstalk, RDS), migrating clinical operations off Salesforce to a tailored web application that eliminates licensing overhead and matches the organization's exact workflows.
+      <li>Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across four systems — two internal clinical-trial intelligence platforms and two public-facing marketing sites — owning each end to end from requirements and architecture through build, deployment tooling, and release.</li>
+      <li><strong>Clinical Trial Intelligence &amp; BD Platform (internal name: CDMS)</strong> — architected and shipped the organization's internal trial-intelligence and business-development platform on AWS (Elastic Beanstalk, RDS), replacing a Salesforce-based study tracker with a tailored web application that eliminates licensing overhead and matches the team's exact workflows.
         <ul class="tight">
-          <li>Models the real clinical hierarchy — studies → sites → investigators — rather than forcing the domain into a generic CRM object.</li>
+          <li>Models trials, sites, investigators, and sponsors keyed on the ClinicalTrials.gov NCT ID, so registry trials, imported tracker rows, and sponsor contacts meet on one join — making "are we already pursuing this trial?" a single lookup rather than forcing the domain into a generic CRM object.</li>
           <li>Tamper-evident audit trail with a hash-chained daily verification job that flags any altered record.</li>
           <li>Role-based access control, two-factor authentication, and encrypted application settings.</li>
           <li>Automated migrations on deploy, scheduled jobs and queue workers, daily snapshots with point-in-time recovery.</li>
@@ -179,24 +179,32 @@
       <li><strong>BD Pipeline</strong> — the clinical-trial business-development engine within the CDMS, turning scattered spreadsheets, public registry data, and market signals into a single ranked pipeline of trials the organization can bid to run.
         <ul class="tight">
           <li>Study-tracker spreadsheet ingestion with defensive parsing and idempotent, null-skipping upserts that never clobber existing data.</li>
-          <li>Live ClinicalTrials.gov status synchronisation that flags when a tracked study advances to its next phase.</li>
+          <li>Live ClinicalTrials.gov status synchronisation that flags when a tracked study's registry status moves, with an acknowledge-and-re-snapshot step so the same change is never surfaced twice.</li>
           <li>Opportunity discovery from SEC filings and news signals alongside registry trials.</li>
           <li>Polymorphic lead-tracking CRM — contact log, comments, and owner-aware follow-up reminders — shared across every lead surface.</li>
-          <li>AI-assisted outreach drafting with cross-source duplicate-contact guards so the same person is never approached twice.</li>
+          <li>AI-assisted outreach drafting with a cross-source duplicate-contact guard that surfaces every colliding study and prior touch on a shared inbox before anyone hits send.</li>
         </ul>
       </li>
-      <li><strong>Core Research Intelligence</strong> — a reversible AI enrichment layer within the CDMS producing background briefs on trials, sponsor companies, and market signals.
+      <li><strong>Core Research Intelligence</strong> — built a standalone site-intelligence platform with its own repo, composer package, ~27-table schema, and admin panel, mining the public trial registry for the research sites and investigators worth contacting.
         <ul class="tight">
-          <li>570 briefs generated across every priority trial and market signal, each web-researched with real cited sources, a confidence rating, and explicit notes on what could not be verified.</li>
+          <li>Resumable, checkpointed ClinicalTrials.gov ETL that pulled 21,288 studies across 73 condition queries in a single 59-minute live run.</li>
+          <li>Entity resolution across studies, sites, investigators, and sponsors over a 150,000-site corpus, with raw payloads and field-level provenance retained.</li>
+          <li>Explainable rules-based site classification and a 0-100 opportunity score whose weights are retunable at runtime without a deploy.</li>
+          <li>Blocked-pair duplicate detection with human review and reversible merges — never auto-merging on a fuzzy name match alone; covered by 186 tests on a SQLite + MySQL CI matrix.</li>
+        </ul>
+      </li>
+      <li><strong>AI research enrichment</strong> (within the CDMS) — a reversible AI background-research layer compiling cited context briefs on trials, sponsor companies, and market signals.
+        <ul class="tight">
+          <li>Every priority trial and market signal carries a generated background brief — web-researched with real cited sources, a self-assessed confidence rating, and explicit notes on what could not be verified.</li>
           <li>Additive by design — enrichment never mutates the source record it describes.</li>
           <li>Fully reversible: feature-flagged off, or cleared by batch, type, or individual record.</li>
           <li>Surfaced dozens of trials whose registry status had silently gone stale as a side effect.</li>
         </ul>
       </li>
-      <li><strong>TrialPulse</strong> — delivered a marketing and demo platform with a custom CMS engine featuring full edit history, one-click revert, and sandboxed preview, so non-technical staff can safely edit the live site themselves; includes a demo-request pipeline that notifies the team on enquiry.</li>
+      <li><strong>TrialPulse</strong> — delivered a marketing and demo platform with a custom CMS engine featuring full edit history, one-click revert, and sandboxed preview, so non-technical staff can safely edit the live site themselves; includes CMS-editable demo-request forms that deliver enquiries straight to the team's inbox, with nothing stored on the site.</li>
       <li><strong>Corporate site rework</strong> — rebuilt the organization's public website from the ground up on a new enterprise design system, fully responsive and staged behind a private preview so the live domain stayed untouched until vetted.</li>
       <li>Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time.</li>
-      <li>Designing AI-assisted workflows and data pipelines to streamline clinical data capture, validation, and reporting.</li>
+      <li>Designing AI-assisted ingestion and data pipelines — Claude-assisted spreadsheet column mapping that survives hand-reordered exports, backed by a deterministic fixed-column fallback — with every model call routed through a single cost-logged, audited service restricted to read-only data access.</li>
     </ul>
   </div>
 

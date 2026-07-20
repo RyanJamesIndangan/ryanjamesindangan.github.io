@@ -218,15 +218,15 @@ const apps = {
                     'May 2026 - Present',
                     'Remote • Independent Contractor',
                     [
-                        'Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer across three production health-technology systems',
-                        '<strong>CDMS</strong> — architected and shipped a custom Clinical Data Management System to AWS, migrating clinical operations off Salesforce to match the organization\'s exact workflows; models studies → sites → investigators with a tamper-evident hash-chained audit trail, role-based access and 2FA',
-                        '<strong>BD Pipeline</strong> — built the trial business-development engine: spreadsheet ingestion with non-destructive upserts, live ClinicalTrials.gov status sync with phase-change flags, SEC and news lead discovery, a shared lead-tracking CRM, and AI-assisted outreach with duplicate-contact guards',
-                        '<strong>Core Research Intelligence</strong> — designed a reversible AI enrichment layer producing 570 cited, confidence-rated research briefs across every priority trial and market signal, without ever mutating source records',
+                        'Engaged through HireOverseas and deployed to Core Clinical Trials as lead developer, delivering four production systems for a US clinical-research organization — two internal clinical-trial intelligence platforms and two public sites with custom CMS engines',
+                        '<strong>CDMS</strong> — architected and shipped a custom clinical trial intelligence and business-development platform to AWS, moving the organization\'s study tracker and BD pipeline off Salesforce to match how they actually operate; models trials, sites, investigators and sponsors with a tamper-evident hash-chained audit trail, role-based access and 2FA',
+                        '<strong>BD Pipeline</strong> — built the trial business-development engine: spreadsheet ingestion with non-destructive upserts, live ClinicalTrials.gov status sync that flags registry status changes, SEC and news lead discovery, a shared lead-tracking CRM, and AI-assisted outreach with duplicate-contact guards',
+                        '<strong>Core Research Intelligence</strong> — built a standalone site-intelligence platform that mines the public trial registry for the research sites and investigators worth contacting: a resumable, checkpointed ingestion pipeline that pulled 21,288 studies across 73 condition queries in a single 59-minute live run, plus explainable site classification, 0-100 opportunity scoring and human-reviewed deduplication, covered by 186 tests on a SQLite + MySQL CI matrix',
                         '<strong>TrialPulse</strong> — delivered a marketing and demo platform with a custom CMS engine (edit history, one-click revert, sandboxed preview) so non-technical staff can safely edit the live site',
                         '<strong>Corporate site rework</strong> — rebuilt the organization\'s public website from the ground up on a new enterprise design system',
                         'Automating labor-intensive manual processes for the CEO and Executive Director, reducing operational workload and turnaround time'
                     ],
-                    ['Clinical Data Management', 'ClinicalTrials.gov API', 'Laravel', 'Filament', 'AWS', 'MySQL', 'Claude API', 'Salesforce Migration', 'AI Workflow Automation']
+                    ['Clinical Trial Intelligence', 'ClinicalTrials.gov API', 'Laravel', 'Filament', 'AWS', 'MySQL', 'Claude API', 'Salesforce Migration', 'AI Workflow Automation']
                 )}
 
                 ${createExperienceCard(
@@ -415,9 +415,10 @@ const apps = {
                 <div style="padding: 1.5rem; background: linear-gradient(135deg, #12233d, #1c3a5e); border-radius: 12px; margin-bottom: 2rem; color: #fff;">
                     <h3 style="margin: 0 0 0.5rem; font-size: 1.35rem; font-weight: 700; color: #ffffff;">🏥 Health Technology</h3>
                     <p style="margin: 0 0 1rem; color: #cfe0f2; line-height: 1.65; font-size: 0.92rem;">
-                        Production clinical research platforms — clinical data management, trial business development,
+                        Production clinical research platforms — ClinicalTrials.gov data pipelines, trial business development,
                         and AI research intelligence — built end to end and running in production today.
-                        These are client systems holding live trial data, so they aren't publicly browsable;
+                        These are internal, admin-only client systems holding confidential business-development pipeline
+                        and contact data — no patient data or PHI — so they aren't publicly browsable;
                         I walk through them personally on request.
                     </p>
                     <button class="request-demo-btn" data-system="Health Technology platforms"
@@ -428,15 +429,16 @@ const apps = {
 
                 <div id="projectsContainer" style="display: grid; gap: 2rem;">
                     ${createHealthTechCard({
-                        title: '🧬 CDMS — Clinical Data Management System',
+                        title: '🧬 CDMS — Clinical Trial Intelligence Platform',
                         status: 'Live in production',
                         role: 'Lead developer · HireOverseas, deployed to Core Clinical Trials',
                         icon: '🧬',
-                        description: 'A custom clinical data management platform that replaced a Salesforce-based workflow for a US clinical research organization — built to match how they actually operate instead of bending their process to fit off-the-shelf software.',
+                        description: 'A custom trial-intelligence and business-development platform for a US clinical research organization, replacing the Salesforce-based pipeline they had outgrown — built to match how they actually operate instead of bending their process to fit off-the-shelf software. It holds no patient data: every record is public registry intelligence or the client\'s own commercial pipeline.',
                         highlights: [
-                            'Models the real clinical hierarchy: studies → sites → investigators, not a flattened CRM object',
+                            'Models trials, sites, investigators and sponsors — registry trials and the client\'s own pipeline meet on nct_id, the join that answers "are we already pursuing this study?"',
                             'Tamper-evident audit trail with a hash-chained verification job that flags any altered record',
                             'Role-based access, two-factor auth, and encrypted application settings',
+                            'AI research enrichment: 570 cited, confidence-rated background briefs compiled over priority trials and market signals — stored as an additive layer that never mutates the source record, and clearable by batch, type or row',
                             'Deployed on AWS with automated migrations, daily snapshots and point-in-time recovery'
                         ],
                         tech: ['Laravel', 'Filament', 'PHP 8.3', 'MySQL', 'AWS Elastic Beanstalk', 'RDS'],
@@ -451,10 +453,10 @@ const apps = {
                         description: 'The business development engine inside the CDMS — it turns scattered spreadsheets, public registry data and market signals into a single ranked pipeline of clinical trials the organization can bid to run.',
                         highlights: [
                             'Ingests study-tracker spreadsheets with defensive parsing and idempotent upserts that never clobber existing data',
-                            'Live ClinicalTrials.gov status sync that flags when a tracked study advances to its next phase',
+                            'Live ClinicalTrials.gov status sync that flags when a tracked study\'s registry status moves, with an acknowledge-and-re-snapshot step so the same change is never surfaced twice',
                             'Surfaces new opportunities from SEC filings and news signals alongside registry trials',
                             'Lead-tracking CRM — contact log, comments and owner-aware follow-up reminders — shared across every lead surface',
-                            'AI-assisted outreach drafting with duplicate-contact guards so the same person is never approached twice'
+                            'AI-assisted outreach drafting with a duplicate-contact guard that surfaces every colliding study and prior touch on a shared inbox before anyone hits send'
                         ],
                         tech: ['Laravel', 'Filament', 'MySQL', 'ClinicalTrials.gov API', 'Claude API', 'PhpSpreadsheet'],
                         confidential: true
@@ -465,14 +467,14 @@ const apps = {
                         status: 'Shipped',
                         role: 'Designer & developer',
                         icon: '🔬',
-                        description: 'An AI research-enrichment layer that compiles background briefs on trials, sponsor companies and market signals — each one with cited sources, a confidence rating, and an explicit note on what could not be verified.',
+                        description: 'A standalone intelligence platform — its own repo, composer package, ~27-table schema and admin panel — that mines the public ClinicalTrials.gov registry and turns it into a scored, source-tracked view of research sites, principal investigators and sponsors.',
                         highlights: [
-                            '570 briefs generated across every priority trial and market signal in the system, each web-researched with real citations',
-                            'Additive by design — enrichment never mutates the source record it describes',
-                            'Fully reversible: feature-flag it off, or clear by batch, type or single record',
-                            'Surfaced dozens of trials whose registry status had gone stale as a side effect'
+                            'Resumable, checkpointed ingestion of the ClinicalTrials.gov API — a failed run prints the exact command to continue from where it stopped',
+                            'Entity resolution across studies, sites, investigators and organizations, with raw payloads and per-field provenance retained',
+                            'Explainable 0-100 opportunity scoring — every classification carries its reasons, and the weights are retunable at runtime without a deploy',
+                            'Blocked-pair duplicate detection with human review and reversible merges — never auto-merges on a fuzzy name match alone'
                         ],
-                        tech: ['Claude', 'Laravel', 'MySQL', 'Polymorphic schema', 'Batch tooling'],
+                        tech: ['Laravel', 'Filament', 'PHP 8.3', 'MySQL', 'ClinicalTrials.gov API v2', 'Docker'],
                         confidential: true
                     })}
 
@@ -485,10 +487,10 @@ const apps = {
                         highlights: [
                             'Custom CMS with full edit history and one-click revert — nothing can be permanently broken',
                             'Sandboxed preview so changes are reviewed before they reach the public site',
-                            'Demo-request pipeline that emails the team the moment a visitor enquires',
+                            'Demo and enquiry forms delivered straight to the team\'s inbox the moment a visitor submits',
                             'Fully responsive, deployed to AWS'
                         ],
-                        tech: ['Laravel', 'Blade', 'MySQL', 'AWS'],
+                        tech: ['Laravel', 'Filament', 'Blade', 'SQLite', 'GrapesJS', 'Tailwind', 'AWS'],
                         confidential: true
                     })}
 
