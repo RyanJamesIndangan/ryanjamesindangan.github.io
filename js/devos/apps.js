@@ -559,7 +559,7 @@ const apps = {
                         'An interactive cryptocurrency checkout-flow simulator demonstrating an end-to-end payment and transaction experience with wallet integration and live monitoring.',
                         ['React', 'TypeScript', 'Node.js', 'WebSocket'],
                         'https://github.com/ryanjamesindangan/crypto-checkout-simulator',
-                        'https://ryanjamesindangan.github.io/crypto-checkout-simulator',
+                        null,
                         null,
                         'fintech'
                     )}
