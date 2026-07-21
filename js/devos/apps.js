@@ -529,11 +529,17 @@ const apps = {
                     })}
 
                     ${createEnhancedProjectCard(
-                        '🤝 GO Models',
-                        'A suite of LLM-powered AI companion applications, co-founded and built end to end as founding AI Software Engineer — model integration, backend APIs and frontend — driven from prototype to deployment.',
-                        ['LLM Integration', 'Conversational AI', 'Node.js', 'APIs'],
+                        '🤝 GO Models — GoMirra',
+                        'GoMirra — "AI Companions That Understand You" — a suite of LLM-powered AI companion apps I co-founded and built end to end as founding AI Software Engineer at FirstKind AI. Consent-based lifetime memory, voice and text, an "active understanding" reasoning layer, and multi-language support, taken from prototype to a live product.',
+                        ['LLM Integration', 'Conversational AI', 'Lifetime Memory', 'Voice + Text', 'Node.js', 'APIs'],
                         null, null, null,
-                        'ai'
+                        'ai',
+                        {
+                            headerVideo: 'assets/projects/gomirra/gomirra-brand.mp4',
+                            headerPoster: 'assets/projects/gomirra/gomirra-brand-poster.jpg',
+                            siteLink: 'https://gomirra.com',
+                            siteLabel: 'gomirra.com'
+                        }
                     )}
 
                     ${createEnhancedProjectCard(
@@ -2224,13 +2230,22 @@ function createProjectCard(title, description, tech, link, demoApp) {
     `;
 }
 
-function createEnhancedProjectCard(title, description, tech, githubLink, liveDemoLink, screenshot, category) {
+// opts (optional 8th arg): { headerVideo, headerPoster, siteLink, siteLabel }
+//   headerVideo — an autoplay/loop/muted clip shown in the card header instead of
+//                 a screenshot (e.g. a product's own brand animation)
+//   siteLink    — an external "Visit <label>" link to a live public product
+function createEnhancedProjectCard(title, description, tech, githubLink, liveDemoLink, screenshot, category, opts) {
     const techLower = tech.map(t => t.toLowerCase()).join(' ');
     const categoryAttr = category || 'all';
-    
-    return `
-        <div class="project-card" data-category="${categoryAttr}" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
-            ${screenshot ? `
+    opts = opts || {};
+
+    const preview = opts.headerVideo ? `
+                <div class="project-preview" style="width: 100%; height: 200px; background: #000; overflow: hidden;">
+                    <video autoplay loop muted playsinline ${opts.headerPoster ? `poster="${opts.headerPoster}"` : ''} style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        <source src="${opts.headerVideo}" type="video/mp4">
+                    </video>
+                </div>
+            ` : screenshot ? `
                 <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); display: flex; align-items: center; justify-content: center; overflow: hidden;">
                     <img src="${screenshot}" alt="${title}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" />
                 </div>
@@ -2238,7 +2253,11 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
                 <div class="project-preview" style="width: 100%; height: 200px; background: linear-gradient(135deg, #e8f4f8, #f0f8ff); display: flex; align-items: center; justify-content: center; font-size: 4rem; opacity: 0.6;">
                     ${title.split(' ')[0]}
                 </div>
-            `}
+            `;
+
+    return `
+        <div class="project-card" data-category="${categoryAttr}" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; position: relative;">
+            ${preview}
             <div style="padding: 1.5rem;">
                 <h3 style="color: #1a1a1a; font-size: 1.3rem; margin-bottom: 0.75rem; font-weight: 700;">${title}</h3>
                 <p style="color: #666; line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">${description}</p>
@@ -2256,8 +2275,14 @@ function createEnhancedProjectCard(title, description, tech, githubLink, liveDem
                             🌐 View Live
                         </button>
                     ` : ''}
+                    ${opts.siteLink ? `
+                        <a href="${opts.siteLink}" target="_blank" rel="noopener noreferrer"
+                           style="padding: 0.75rem 1.5rem; background: #1a1a1a; border: 1px solid #1a1a1a; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                            🌐 ${opts.siteLabel || 'Visit Site'} <span style="opacity:.7;">↗</span>
+                        </a>
+                    ` : ''}
                     ${githubLink ? `
-                        <a href="${githubLink}" target="_blank" rel="noopener noreferrer" 
+                        <a href="${githubLink}" target="_blank" rel="noopener noreferrer"
                            style="padding: 0.75rem 1.5rem; background: #2171d6; border: 1px solid #1a5fb8; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
                             📂 View Code
                         </a>
