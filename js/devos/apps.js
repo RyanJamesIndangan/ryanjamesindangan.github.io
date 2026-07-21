@@ -434,7 +434,7 @@ const apps = {
                         role: 'Lead developer · HireOverseas, deployed to Core Clinical Trials',
                         icon: '🧬',
                         video: 'assets/demos/cdms.mp4',
-                        videoNote: 'Illustrative interface walkthrough with sample data — the trial-intelligence overview, a ranked trial list with match scores, an AI trial brief, and the hash-chained audit trail.',
+                        videoNote: 'Illustrative walkthrough —the trial-intelligence overview, a ranked trial list with match scores, an AI trial brief, and the hash-chained audit trail.',
                         description: 'A custom trial-intelligence and business-development platform for a US clinical research organization, replacing the Salesforce-based pipeline they had outgrown — built to match how they actually operate instead of bending their process to fit off-the-shelf software. It holds no patient data: every record is public registry intelligence or the client\'s own commercial pipeline.',
                         highlights: [
                             'Models trials, sites, investigators and sponsors — registry trials and the client\'s own pipeline meet on nct_id, the join that answers "are we already pursuing this study?"',
@@ -453,7 +453,7 @@ const apps = {
                         role: 'Architect & developer',
                         icon: '📈',
                         video: 'assets/demos/bd-pipeline.mp4',
-                        videoNote: 'Illustrative interface walkthrough with sample data — the opportunity pipeline board, a lead-tracking record, and AI-assisted outreach with the duplicate-contact guard.',
+                        videoNote: 'Illustrative walkthrough —the opportunity pipeline board, a lead-tracking record, and AI-assisted outreach with the duplicate-contact guard.',
                         description: 'The business development engine inside the CDMS — it turns scattered spreadsheets, public registry data and market signals into a single ranked pipeline of clinical trials the organization can bid to run.',
                         highlights: [
                             'Ingests study-tracker spreadsheets with defensive parsing and idempotent upserts that never clobber existing data',
@@ -472,7 +472,7 @@ const apps = {
                         role: 'Designer & developer',
                         icon: '🔬',
                         video: 'assets/demos/core-research-intelligence.mp4',
-                        videoNote: 'Illustrative interface walkthrough with sample data — investigator search and scoring, a profile with source provenance, and the duplicate-resolution merge screen.',
+                        videoNote: 'Illustrative walkthrough —investigator search and scoring, a profile with source provenance, and the duplicate-resolution merge screen.',
                         description: 'A standalone intelligence platform — its own repo, composer package, ~27-table schema and admin panel — that mines the public ClinicalTrials.gov registry and turns it into a scored, source-tracked view of research sites, principal investigators and sponsors.',
                         highlights: [
                             'Resumable, checkpointed ingestion of the ClinicalTrials.gov API — a failed run prints the exact command to continue from where it stopped',
@@ -490,7 +490,7 @@ const apps = {
                         role: 'Full-stack developer',
                         icon: '💓',
                         video: 'assets/demos/trialpulse.mp4',
-                        videoNote: 'Illustrative interface walkthrough with sample data — the marketing site, then the custom CMS: block editing, live preview, revision history and one-click revert.',
+                        videoNote: 'Illustrative walkthrough —the marketing site, then the custom CMS: block editing, live preview, revision history and one-click revert.',
                         description: 'A marketing and demo platform for a clinical research site, with a custom CMS engine built so a non-technical designer can safely edit the live site herself.',
                         highlights: [
                             'Custom CMS with full edit history and one-click revert — nothing can be permanently broken',
@@ -508,7 +508,7 @@ const apps = {
                         role: 'Full-stack developer',
                         icon: '🏢',
                         video: 'assets/demos/coreclinicaltrials.mp4',
-                        videoNote: 'Illustrative interface walkthrough with sample data — the redesigned marketing site and its responsive layout on a new enterprise design system.',
+                        videoNote: 'Illustrative walkthrough —the redesigned marketing site and its responsive layout on a new enterprise design system.',
                         description: 'A ground-up rebuild of the organization\'s public website, replacing a dated template with an enterprise design system built from the executive team\'s design direction.',
                         highlights: [
                             'Rebuilt from scratch rather than patched — new layout system, typography and component set',
@@ -525,7 +525,7 @@ const apps = {
                         role: 'Creator',
                         icon: '🤖',
                         video: 'assets/demos/lastresortai.mp4',
-                        videoNote: '65-second walkthrough of Mission Control — the task board, crew, Command Deck, learned lessons and token usage. Recorded in the app\'s built-in demo mode with synthetic crew activity, so no real project data appears.',
+                        videoNote: 'Recorded in the app\'s own demo mode — the task board, crew, Command Deck, learned lessons and token usage.',
                         description: 'My personal team of AI agents — a multi-agent development crew that plans, builds, reviews and deploys systems fast. It is the harness behind how the platforms above get shipped at the pace they do.',
                         highlights: [
                             'Specialist agents chained plan → build → adversarial review → deploy, rather than one model doing everything',
@@ -2177,6 +2177,18 @@ function createHealthTechCard(p) {
     const techLower = (p.tech || []).map(t => t.toLowerCase()).join(' ');
     const thumb = p.youtube ? `https://i.ytimg.com/vi/${p.youtube}/hqdefault.jpg` : '';
 
+    // Shown under any walkthrough video: a plain-language disclaimer that the
+    // demo runs on invented data with no PII exposed, and that the underlying
+    // system is genuinely built — plus an optional one-line note on the screens.
+    const videoMeta = `
+        <div style="background: #0e1a2b; border-bottom: 1px solid #e0e0e0; padding: 0.6rem 0.9rem;">
+            <div style="display: flex; align-items: flex-start; gap: 0.5rem; color: #aec4de; font-size: 0.76rem; line-height: 1.5;">
+                <span style="flex-shrink: 0;">🔒</span>
+                <span><strong style="color: #dce8f6;">Dummy data — no PII exposed.</strong> This walkthrough runs on fictional sample data; no real, client, or personal information was shown or captured while recording. The system itself is fully built.</span>
+            </div>
+            ${p.videoNote ? `<div style="color: #8ba1bb; font-size: 0.75rem; line-height: 1.45; margin-top: 0.4rem; padding-left: 1.35rem;">${p.videoNote}</div>` : ''}
+        </div>`;
+
     let media;
     if (p.youtube) {
         media = `
@@ -2185,14 +2197,15 @@ function createHealthTechCard(p) {
                 <div style="position: absolute; inset: 0; background: rgba(6, 12, 24, 0.35);"></div>
                 <div style="position: relative; width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #0b1220; box-shadow: 0 6px 20px rgba(0,0,0,0.35);">▶</div>
                 <span style="position: absolute; bottom: 0.75rem; left: 0.9rem; color: #fff; font-weight: 700; font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.6);">Watch the walkthrough</span>
-            </div>`;
+            </div>
+            ${videoMeta}`;
     } else if (p.video) {
         media = `
             <video controls preload="metadata" playsinline ${p.poster ? `poster="${p.poster}"` : ''} style="width: 100%; aspect-ratio: 16 / 9; background: #0b1220; display: block;">
                 <source src="${p.video}" type="video/mp4">
                 Your browser can't play this video — <a href="${p.video}" style="color:#8ab4f8;">download it instead</a>.
             </video>
-            ${p.videoNote ? `<div style="padding: 0.5rem 0.9rem; background: #0f1b2d; color: #9fb3cc; font-size: 0.78rem; line-height: 1.45; border-bottom: 1px solid #e0e0e0;">${p.videoNote}</div>` : ''}`;
+            ${videoMeta}`;
     } else {
         media = `
             <div style="position: relative; width: 100%; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #12233d, #1c3a5e); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: 1rem;">
