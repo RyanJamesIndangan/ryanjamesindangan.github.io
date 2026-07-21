@@ -835,6 +835,24 @@ const apps = {
                             ${createCertModuleBadge('21. Vulnerability Scanning', 'assets/certificates/Hacker-X/21-vulnerability-scanning-and-reporting.jpg')}
                         </div>
                     </div>
+
+                    <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+                        <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">💻 SoloLearn — Course Certificates</h3>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">SoloLearn • 2018–2023 • 8 certificates</p>
+                        <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
+                            Course-completion certificates across core programming languages and web fundamentals — each independently verifiable on SoloLearn.
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem;">
+                            ${createCertSubCard('🐍 Python Core', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/python-core.pdf', 'https://www.sololearn.com/certificates/CT-UKBKWWY6')}
+                            ${createCertSubCard('☕ Java', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/java.pdf', 'https://www.sololearn.com/certificates/CT-FPCJTE14')}
+                            ${createCertSubCard('🟨 JavaScript', 'SoloLearn • May 2023', 'assets/certificates/sololearn/javascript.pdf', 'https://www.sololearn.com/certificates/CT-U9QN6S0A')}
+                            ${createCertSubCard('🔷 C#', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/csharp.pdf', 'https://www.sololearn.com/certificates/CT-Q5HZWZMO')}
+                            ${createCertSubCard('🐘 PHP', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/php.pdf', 'https://www.sololearn.com/certificates/CT-XXCMTAB0')}
+                            ${createCertSubCard('🗄️ SQL', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/sql.pdf', 'https://www.sololearn.com/certificates/CT-OBCVWLWJ')}
+                            ${createCertSubCard('📄 HTML', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/html.pdf', 'https://www.sololearn.com/certificates/CT-GS0BSZOM')}
+                            ${createCertSubCard('🎨 CSS', 'SoloLearn • Oct 2018', 'assets/certificates/sololearn/css.pdf', 'https://www.sololearn.com/certificates/CT-YKT6MFCU')}
+                        </div>
+                    </div>
                 </div>
             </div>
         `
@@ -1102,7 +1120,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> — Claude Code in Action &amp; Claude 101 &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules)</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> — Claude Code in Action &amp; Claude 101 &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules) &middot; <b style="color:#2171d6;">SoloLearn</b> (8 course certificates)</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
