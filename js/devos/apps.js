@@ -578,6 +578,25 @@ const apps = {
                         'fintech'
                     )}
 
+                    ${createHealthTechCard({
+                        title: '🎯 ARMADO',
+                        status: 'Passion project',
+                        role: 'Creator',
+                        icon: '🎯',
+                        category: 'gaming',
+                        video: 'assets/demos/armado.mp4',
+                        videoDisclaimer: '<strong style="color: #dce8f6;">No player data shown.</strong> A tour of ARMADO\'s own admin back office on the developer\'s account — no player emails, wallets or accounts appear. The game and its tooling are fully built.',
+                        videoNote: 'ARMADO COMMAND — the 3D Map Builder, Weapon Tuning and Game Tuning.',
+                        description: 'An original browser tactical FPS I built from scratch — GoldSrc-style movement, learnable spray patterns and a round-based Defuse mode — with 100% original code, procedural art and procedural audio (no third-party assets). This clip tours its content back office, which is where most of the depth lives.',
+                        highlights: [
+                            'three.js client + a Node/WebSocket game server; 24 original-named weapons, an ARNIS melee and HE/flash/smoke/molotov grenades tuned to a CS-1.6 feel',
+                            'The real story is the Laravel + Filament back office: a full in-browser 3D Map Builder with a ~70-piece prop palette, transform gizmos, day/night lighting, terrain sculpting, and a walk-the-map first-person mode',
+                            'Live weapon tuning (damage, recoil, spread, optics) and game-config tuning that the server re-reads per round — no redeploy',
+                            'Content studios for skins, characters, gear and per-weapon sound design, plus ranked (Glicko-2), economy and shop admin'
+                        ],
+                        tech: ['three.js', 'TypeScript', 'Node.js', 'WebSocket', 'Laravel', 'Filament', 'WebGL']
+                    })}
+
                     ${createEnhancedProjectCard(
                         '🌐 LAAS — Procedural WebGPU World Engine',
                         'A fully procedural open-world engine that renders in the browser via WebGPU, generating every mesh, texture, light and sound from code at boot — with zero bundled image, model or audio assets.',
