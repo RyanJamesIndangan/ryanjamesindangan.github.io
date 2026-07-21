@@ -763,6 +763,14 @@ const apps = {
                 <h2 style="font-size: 2rem; margin-bottom: 2rem; color: #1a1a1a; font-weight: 700;">Professional Credentials</h2>
                 
                 <div style="display: grid; gap: 1.5rem;">
+                    ${createCertCard(
+                        '👨‍💼 Certified Chief Technology Officer',
+                        'IMTF',
+                        'Issued Jul 2023',
+                        'Comprehensive CTO certification covering technology leadership, strategic planning, team management, and enterprise architecture.',
+                        'assets/certificates/cto-certificate.pdf'
+                    )}
+
                     <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                         <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">✳️ Anthropic — Claude Certifications</h3>
                         <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Anthropic • Issued Jul 2026 • 2 certificates</p>
@@ -784,14 +792,6 @@ const apps = {
                             )}
                         </div>
                     </div>
-
-                    ${createCertCard(
-                        '👨‍💼 Certified Chief Technology Officer',
-                        'IMTF',
-                        'Issued Jul 2023',
-                        'Comprehensive CTO certification covering technology leadership, strategic planning, team management, and enterprise architecture.',
-                        'assets/certificates/cto-certificate.pdf'
-                    )}
                     
                     <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                         <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">🔐 Hacker-X Ethical Hacking Course</h3>
@@ -1102,7 +1102,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certification:</strong> <span style="color: #2171d6; font-weight: 600;">Certified CTO</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> — Claude Code in Action &amp; Claude 101 &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules)</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
