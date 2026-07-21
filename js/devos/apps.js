@@ -71,6 +71,23 @@ const apps = {
                     </figcaption>
                 </figure>
 
+                <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .9rem; font-size:1.2rem;">The material I built &mdash; and the game we play</h3>
+                <p style="color:#555; line-height:1.65; margin:0 0 1rem; font-size:.95rem;">
+                    I build these workshops end to end &mdash; the slide deck, the visuals, and a live audience
+                    quiz game (&ldquo;Spot the Lie&rdquo;) that everyone plays on their phones while I speak. Here's a
+                    look at both:
+                </p>
+                <div style="border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; margin-bottom:2rem; background:#fafafa;">
+                    <video controls preload="metadata" playsinline style="width:100%; aspect-ratio:16/9; background:#0b1220; display:block;">
+                        <source src="assets/demos/reap-workshop.mp4" type="video/mp4">
+                        Your browser can't play this video &mdash; <a href="assets/demos/reap-workshop.mp4" style="color:#2171d6;">download it instead</a>.
+                    </video>
+                    <div style="background:#0e1a2b; padding:.6rem .9rem; display:flex; align-items:flex-start; gap:.5rem; color:#aec4de; font-size:.76rem; line-height:1.5;">
+                        <span style="flex-shrink:0;">🔒</span>
+                        <span><strong style="color:#dce8f6;">No participant data shown.</strong> A walkthrough of the deck, then a round of the live quiz &mdash; the questions are fictional teaching examples and the vote tallies are anonymous counts. No attendee names, responses, or personal information appear.</span>
+                    </div>
+                </div>
+
                 <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .9rem; font-size:1.2rem;">Sessions I run</h3>
                 <div style="display:grid; gap:1rem; margin-bottom:2rem;">
                     <div style="padding:1.15rem 1.3rem; background:#f4f8ff; border:1px solid #d4e2f7; border-left:3px solid #2171d6; border-radius:8px;">
