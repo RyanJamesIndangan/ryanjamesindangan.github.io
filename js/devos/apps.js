@@ -413,35 +413,27 @@ const apps = {
     },
 
     projects: {
-        title: 'Featured Projects',
+        title: 'Projects',
         icon: '🚀',
         content: `
             <div style="max-width: 1200px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
-                    <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0;">Interactive Project Showcase</h2>
+                <div style="margin-bottom: 1.5rem;">
+                    <h2 style="font-size: 2rem; color: #1a1a1a; font-weight: 700; margin: 0 0 0.4rem;">Projects</h2>
+                    <p style="color: #666; margin: 0 0 1.25rem; font-size: 0.95rem; line-height: 1.6;">
+                        Selected work across health tech, fintech, gaming, gov tech and more — from production client
+                        platforms to personal builds. Filter by sector. Client systems are described at a capability level.
+                    </p>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button class="project-filter-btn active" data-filter="all" style="padding: 0.5rem 1rem; background: #2171d6; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">All</button>
                         <button class="project-filter-btn" data-filter="healthtech" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🏥 Health Tech</button>
-                        <button class="project-filter-btn" data-filter="react" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">React</button>
-                        <button class="project-filter-btn" data-filter="laravel" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Laravel</button>
-                        <button class="project-filter-btn" data-filter="node" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">Node.js</button>
-                        <button class="project-filter-btn" data-filter="ai" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">AI/ML</button>
+                        <button class="project-filter-btn" data-filter="ai" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🤖 AI / ML</button>
+                        <button class="project-filter-btn" data-filter="fintech" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">💳 Fin Tech</button>
+                        <button class="project-filter-btn" data-filter="gaming" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🎮 Gaming</button>
+                        <button class="project-filter-btn" data-filter="govtech" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🏛️ Gov Tech</button>
+                        <button class="project-filter-btn" data-filter="web" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🌐 Enterprise & Web</button>
+                        <button class="project-filter-btn" data-filter="devtools" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">🛠️ Dev Tools</button>
+                        <button class="project-filter-btn" data-filter="automation" style="padding: 0.5rem 1rem; background: #f0f0f0; color: #1a1a1a; border: 1px solid #e0e0e0; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">⚙️ Automation</button>
                     </div>
-                </div>
-                
-                <div style="padding: 1.5rem; background: linear-gradient(135deg, #12233d, #1c3a5e); border-radius: 12px; margin-bottom: 2rem; color: #fff;">
-                    <h3 style="margin: 0 0 0.5rem; font-size: 1.35rem; font-weight: 700; color: #ffffff;">🏥 Health Technology</h3>
-                    <p style="margin: 0 0 1rem; color: #cfe0f2; line-height: 1.65; font-size: 0.92rem;">
-                        Production clinical research platforms — ClinicalTrials.gov data pipelines, trial business development,
-                        and AI research intelligence — built end to end and running in production today.
-                        These are internal, admin-only client systems holding confidential business-development pipeline
-                        and contact data — no patient data or PHI — so they aren't publicly browsable;
-                        I walk through them personally on request.
-                    </p>
-                    <button class="request-demo-btn" data-system="Health Technology platforms"
-                            style="padding: 0.8rem 1.6rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.95rem; box-shadow: 0 3px 10px rgba(0,0,0,0.25);">
-                        📅 Request a Demo
-                    </button>
                 </div>
 
                 <div id="projectsContainer" style="display: grid; gap: 2rem;">
@@ -536,81 +528,187 @@ const apps = {
                         confidential: true
                     })}
 
+                    ${createEnhancedProjectCard(
+                        '🤝 GO Models',
+                        'A suite of LLM-powered AI companion applications, co-founded and built end to end as founding AI Software Engineer — model integration, backend APIs and frontend — driven from prototype to deployment.',
+                        ['LLM Integration', 'Conversational AI', 'Node.js', 'APIs'],
+                        null, null, null,
+                        'ai'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '💧 Watermark Removal System',
+                        'An ML subsystem that auto-detects watermark types with feature engineering and RandomForest classification, routing each document to the right removal strategy inside a bank-statement extraction pipeline.',
+                        ['scikit-learn', 'Random Forest', 'OpenCV', 'Python'],
+                        null,
+                        'https://huggingface.co/spaces/RyanSimper/ags-watermark-remover',
+                        null,
+                        'ai'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '📄 Document Intelligence & Underwriting Pipeline',
+                        'An end-to-end bank-statement extraction and validation pipeline for automated underwriting: native PDF text with OCR fallback, OpenCV preprocessing, deterministic wire/revenue classification, and local-LLM summaries via Ollama behind a JWT/RSA Node gateway with FastAPI SSE streaming.',
+                        ['Python', 'FastAPI', 'Tesseract', 'OpenCV', 'Ollama', 'Node.js', 'React'],
+                        null, null, null,
+                        'fintech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '💳 Crypto Checkout Simulator',
+                        'An interactive cryptocurrency checkout-flow simulator demonstrating an end-to-end payment and transaction experience with wallet integration and live monitoring.',
+                        ['React', 'TypeScript', 'Node.js', 'WebSocket'],
+                        'https://github.com/ryanjamesindangan/crypto-checkout-simulator',
+                        'https://ryanjamesindangan.github.io/crypto-checkout-simulator',
+                        null,
+                        'fintech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '💸 Payment Gateway Backend',
+                        'A payment-gateway backend organized around merchants, payments and transaction tracking, built on Django and PostgreSQL. Client work, described at a capability level.',
+                        ['Django', 'Python', 'PostgreSQL'],
+                        null, null, null,
+                        'fintech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🌐 LAAS — Procedural WebGPU World Engine',
+                        'A fully procedural open-world engine that renders in the browser via WebGPU, generating every mesh, texture, light and sound from code at boot — with zero bundled image, model or audio assets.',
+                        ['WebGPU', 'TypeScript', 'Vite', 'Procedural Generation'],
+                        null, null, null,
+                        'gaming'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🎰 iGaming Core Gaming API',
+                        'The core backend API for an online gaming platform — the API layer, hooks and integration endpoints powering the wider ecosystem. Client work, described at a capability level.',
+                        ['CodeIgniter', 'PHP', 'MySQL'],
+                        null, null, null,
+                        'gaming'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🐓 Live Sabong Betting Platform',
+                        'A live cockfighting (sabong) betting platform with player, moderator and admin roles, accounting and ban modules, and crypto payment integration. Client work, described at a capability level.',
+                        ['CodeIgniter', 'PHP', 'MySQL', 'Crypto Payments'],
+                        null, null, null,
+                        'gaming'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🛡️ PAGCOR Compliance System',
+                        'A regulatory-compliance system (Back Office Access) for the Philippine gaming regulator PAGCOR, led as Project Lead & Lead Programmer on a Symfony/Doctrine stack. Client work, described at a capability level.',
+                        ['Symfony', 'PHP', 'Doctrine ORM', 'MySQL'],
+                        null, null, null,
+                        'govtech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🌍 UN-Habitat SDG Cities Platform',
+                        'Developed the UN-Habitat SDG Cities platform as part of a United Nations initiative supporting Sustainable Development Goal reporting for cities.',
+                        ['Web Platform', 'PHP', 'MySQL'],
+                        null, null, null,
+                        'govtech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🏫 DepEd Disaster Risk Reduction MIS',
+                        'Built the Disaster Risk Reduction Management Information System (DRRMIS) for the Philippine Department of Education (DepEd).',
+                        ['Web Platform', 'PHP', 'MySQL'],
+                        null, null, null,
+                        'govtech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🏭 PEZA Digital Marketplace',
+                        'Managed the PEZA Digital Marketplace (Builder.ai) as Project Manager, streamlining data management for the Philippine Economic Zone Authority.',
+                        ['Builder.ai', 'Web Platform'],
+                        null, null, null,
+                        'govtech'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🏢 GlobalX Digital Platform',
+                        'An enterprise digital platform delivered on a Laravel stack as a leadership and architecture engagement — platform redesign, database architecture, analytics and reporting at scale.',
+                        ['Laravel', 'React', 'PostgreSQL', 'Redis', 'AWS'],
+                        null, null, null,
+                        'web'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '💼 Kayanin — Freelance Marketplace',
+                        'A Philippines-first freelance/work marketplace connecting employers with pre-qualified freelancers via skills exams (optionally AI-built), on a transparent low-fee model. Built on Laravel 13 with Fortify auth.',
+                        ['Laravel 13', 'Fortify', 'PHP', 'MySQL'],
+                        null, null, null,
+                        'web'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '⛪ Faith Temple Baptist Church Platform',
+                        'A Laravel 13 corporate CMS website plus church-management system where every public page is editable from an admin back office, with modules for members, faith groups, events, assets, tasks, giving and fundraising.',
+                        ['Laravel 13', 'PHP 8.3', 'MySQL 8'],
+                        null, null, null,
+                        'web'
+                    )}
+
+                    ${createEnhancedProjectCard(
+                        '🏘️ Broker Accreditation System',
+                        'A broker accreditation enterprise system built for Ayala Land.',
+                        ['PHP', 'MySQL', 'Web Application'],
+                        null, null, null,
+                        'web'
+                    )}
+
                     ${createHealthTechCard({
                         title: '🤖 LastResortAI',
                         status: 'Personal project',
                         role: 'Creator',
                         icon: '🤖',
+                        category: 'devtools',
                         video: 'assets/demos/lastresortai.mp4',
-                        videoNote: 'Recorded in the app\'s own demo mode — the task board, crew, Command Deck, learned lessons and token usage.',
-                        description: 'My personal team of AI agents — a multi-agent development crew that plans, builds, reviews and deploys systems fast. It is the harness behind how the platforms above get shipped at the pace they do.',
+                        videoDisclaimer: '<strong style="color: #dce8f6;">No real project data.</strong> Recorded in the app\'s own demo mode with synthetic activity; the system is fully built and runs headless on a Claude subscription.',
+                        videoNote: 'The task board, crew, pixel-art Command Deck, learned lessons and token usage.',
+                        description: 'My personal team of AI agents — a multi-agent development crew that plans, builds, reviews and deploys systems fast. It is the harness behind how the platforms in this showcase get shipped at the pace they do.',
                         highlights: [
                             'Specialist agents chained plan → build → adversarial review → deploy, rather than one model doing everything',
                             'Persistent project memory so hard-won context survives across sessions instead of being re-explained',
                             'Multi-pass verification sweeps that hunt bugs before code reaches production',
-                            'Used to take real systems from requirement to deployed in a fraction of the usual time'
+                            'Runs 24/7 on a Claude Max subscription with verification gates, so work is done and proven done'
                         ],
                         tech: ['Claude', 'Claude Code', 'Agent SDK', 'Node.js', 'Multi-agent orchestration']
                     })}
 
                     ${createEnhancedProjectCard(
-                        '💳 Crypto Checkout Simulator',
-                        'Full-stack cryptocurrency payment processing simulation with real-time exchange rates and transaction tracking. Features secure wallet integration, multi-currency support, and live transaction monitoring.',
-                        ['React', 'Node.js', 'Express', 'MongoDB', 'WebSocket'],
-                        'https://github.com/ryanjamesindangan/crypto-checkout-simulator',
-                        'https://ryanjamesindangan.github.io/crypto-checkout-simulator',
-                        null,
-                        'react'
+                        '🧩 Custom PHP Framework',
+                        'A custom PHP framework built to speed up API development and improve system performance across projects.',
+                        ['PHP'],
+                        null, null, null,
+                        'devtools'
                     )}
-                    
+
                     ${createEnhancedProjectCard(
-                        '📦 Supplier Order Management',
-                        'Enterprise-grade order management system with inventory tracking, automated workflows, and comprehensive reporting. Built for scalability with real-time updates and multi-user collaboration.',
-                        ['Laravel', 'Vue.js', 'MySQL', 'Docker', 'AWS'],
-                        'https://github.com/ryanjamesindangan/supplier-order-management-rjfi',
-                        null,
-                        null,
-                        'laravel'
+                        '🪣 Bucket Service — DB Auto-Remapping',
+                        'A database automated-remapping system ("Bucket Service") built to optimize the Department of Education\'s database management.',
+                        ['Database Automation', 'SQL', 'PHP'],
+                        null, null, null,
+                        'devtools'
                     )}
-                    
+
                     ${createEnhancedProjectCard(
-                        '🏢 GlobalX Digital Platform',
-                        'Complete platform redesign with enhanced database architecture, serving 10,000+ users with real-time features. Includes advanced analytics, user management, and automated reporting systems.',
-                        ['Laravel', 'React', 'PostgreSQL', 'Redis', 'AWS'],
-                        null,
-                        null,
-                        null,
-                        'laravel'
+                        '🔗 n8n Automation Hub',
+                        'An n8n-based automation hub orchestrating multi-step workflow integrations across services — custom nodes, error handling and monitoring dashboards.',
+                        ['n8n', 'Node.js', 'Webhooks', 'Docker'],
+                        null, null, null,
+                        'automation'
                     )}
-                    
+
                     ${createEnhancedProjectCard(
-                        '🤖 N8N Automation Hub',
-                        'Custom N8N workflows automating CI/CD processes, testing, and deployment across multiple environments. Includes custom nodes, error handling, and monitoring dashboards.',
-                        ['N8N', 'Docker', 'GitHub Actions', 'AWS Lambda', 'Node.js'],
-                        null,
-                        null,
-                        null,
-                        'node'
-                    )}
-                    
-                    ${createEnhancedProjectCard(
-                        '📄 Document Intelligence Pipeline',
-                        'End-to-end bank statement extraction with native PDF text and OCR fallback. Features ML-based watermark removal, validation framework, and LLM integration for structured summaries.',
-                        ['Python', 'FastAPI', 'OpenCV', 'Tesseract', 'Ollama', 'RandomForest'],
-                        null,
-                        null,
-                        null,
-                        'ai'
-                    )}
-                    
-                    ${createEnhancedProjectCard(
-                        '💧 Watermark Removal System',
-                        'ML-based watermark detection and removal using RandomForest classification. Automatically routes documents to appropriate removal strategies with quality scoring and validation.',
-                        ['Python', 'scikit-learn', 'OpenCV', 'RandomForest', 'PIL'],
-                        null,
-                        'https://huggingface.co/spaces/RyanSimper/ags-watermark-remover',
-                        null,
-                        'ai'
+                        '☁️ OCI Free-Tier Grabber',
+                        'A laptop-independent GitHub Actions automation that repeatedly attempts to claim an Oracle Cloud Always Free VM in a target region and auto-deploys the site the moment capacity opens.',
+                        ['GitHub Actions', 'Bash', 'Oracle Cloud'],
+                        null, null, null,
+                        'automation'
                     )}
                 </div>
             </div>
@@ -2201,7 +2299,7 @@ function createHealthTechCard(p) {
         <div style="background: #0e1a2b; border-bottom: 1px solid #e0e0e0; padding: 0.6rem 0.9rem;">
             <div style="display: flex; align-items: flex-start; gap: 0.5rem; color: #aec4de; font-size: 0.76rem; line-height: 1.5;">
                 <span style="flex-shrink: 0;">🔒</span>
-                <span><strong style="color: #dce8f6;">Dummy data — no PII exposed.</strong> This walkthrough runs on fictional sample data; no real, client, or personal information was shown or captured while recording. The system itself is fully built.</span>
+                <span>${p.videoDisclaimer || '<strong style="color: #dce8f6;">Dummy data — no PII exposed.</strong> This walkthrough runs on fictional sample data; no real, client, or personal information was shown or captured while recording. The system itself is fully built.'}</span>
             </div>
             ${p.videoNote ? `<div style="color: #8ba1bb; font-size: 0.75rem; line-height: 1.45; margin-top: 0.4rem; padding-left: 1.35rem;">${p.videoNote}</div>` : ''}
         </div>`;
@@ -2236,7 +2334,7 @@ function createHealthTechCard(p) {
     }
 
     return `
-        <div class="project-card" data-category="healthtech" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; position: relative;">
+        <div class="project-card" data-category="${p.category || 'healthtech'}" data-tech="${techLower}" style="padding: 0; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; position: relative;">
             ${media}
             <div style="padding: 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.6rem;">

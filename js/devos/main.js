@@ -4055,10 +4055,13 @@ function initializeProjectFilters() {
                         card.style.transform = 'translateY(0)';
                     }, 10);
                 } else {
+                    // Sector-based filtering: match the card's sector exactly. (We no
+                    // longer fall back to data-tech substring matching — sector slugs
+                    // like "ai"/"web"/"gaming" would collide with tech words and pull in
+                    // unrelated cards.)
                     const category = card.dataset.category;
-                    const tech = card.dataset.tech || '';
-                    
-                    if (category === filter || tech.includes(filter)) {
+
+                    if (category === filter) {
                         card.style.display = 'block';
                         setTimeout(() => {
                             card.style.opacity = '1';
