@@ -433,6 +433,8 @@ const apps = {
                         status: 'Live in production',
                         role: 'Lead developer · HireOverseas, deployed to Core Clinical Trials',
                         icon: '🧬',
+                        video: 'assets/demos/cdms.mp4',
+                        videoNote: 'Illustrative interface walkthrough with sample data — the trial-intelligence overview, a ranked trial list with match scores, an AI trial brief, and the hash-chained audit trail.',
                         description: 'A custom trial-intelligence and business-development platform for a US clinical research organization, replacing the Salesforce-based pipeline they had outgrown — built to match how they actually operate instead of bending their process to fit off-the-shelf software. It holds no patient data: every record is public registry intelligence or the client\'s own commercial pipeline.',
                         highlights: [
                             'Models trials, sites, investigators and sponsors — registry trials and the client\'s own pipeline meet on nct_id, the join that answers "are we already pursuing this study?"',
@@ -450,6 +452,8 @@ const apps = {
                         status: 'Live in production',
                         role: 'Architect & developer',
                         icon: '📈',
+                        video: 'assets/demos/bd-pipeline.mp4',
+                        videoNote: 'Illustrative interface walkthrough with sample data — the opportunity pipeline board, a lead-tracking record, and AI-assisted outreach with the duplicate-contact guard.',
                         description: 'The business development engine inside the CDMS — it turns scattered spreadsheets, public registry data and market signals into a single ranked pipeline of clinical trials the organization can bid to run.',
                         highlights: [
                             'Ingests study-tracker spreadsheets with defensive parsing and idempotent upserts that never clobber existing data',
@@ -467,6 +471,8 @@ const apps = {
                         status: 'Shipped',
                         role: 'Designer & developer',
                         icon: '🔬',
+                        video: 'assets/demos/core-research-intelligence.mp4',
+                        videoNote: 'Illustrative interface walkthrough with sample data — investigator search and scoring, a profile with source provenance, and the duplicate-resolution merge screen.',
                         description: 'A standalone intelligence platform — its own repo, composer package, ~27-table schema and admin panel — that mines the public ClinicalTrials.gov registry and turns it into a scored, source-tracked view of research sites, principal investigators and sponsors.',
                         highlights: [
                             'Resumable, checkpointed ingestion of the ClinicalTrials.gov API — a failed run prints the exact command to continue from where it stopped',
@@ -483,6 +489,8 @@ const apps = {
                         status: 'Live',
                         role: 'Full-stack developer',
                         icon: '💓',
+                        video: 'assets/demos/trialpulse.mp4',
+                        videoNote: 'Illustrative interface walkthrough with sample data — the marketing site, then the custom CMS: block editing, live preview, revision history and one-click revert.',
                         description: 'A marketing and demo platform for a clinical research site, with a custom CMS engine built so a non-technical designer can safely edit the live site herself.',
                         highlights: [
                             'Custom CMS with full edit history and one-click revert — nothing can be permanently broken',
@@ -499,6 +507,8 @@ const apps = {
                         status: 'In delivery',
                         role: 'Full-stack developer',
                         icon: '🏢',
+                        video: 'assets/demos/coreclinicaltrials.mp4',
+                        videoNote: 'Illustrative interface walkthrough with sample data — the redesigned marketing site and its responsive layout on a new enterprise design system.',
                         description: 'A ground-up rebuild of the organization\'s public website, replacing a dated template with an enterprise design system built from the executive team\'s design direction.',
                         highlights: [
                             'Rebuilt from scratch rather than patched — new layout system, typography and component set',
