@@ -121,6 +121,21 @@ const apps = {
                         signature, so an employer can confirm it's genuine in seconds &mdash; the check runs entirely in the
                         visitor's browser, nothing is uploaded, and no attendee list is ever published.
                     </p>
+                    <figure style="margin:0 0 1rem;">
+                        <a href="/verify/#eyJuIjoiUnlhbiBKYW1lcyBJbmRhbmdhbiIsImQiOiJKdWx5IDIxLCAyMDI2IiwiZSI6IlByYWN0aWNhbCBQcm9tcHRpbmcgZm9yIEV2ZXJ5ZGF5IFdvcmsgwrcgSGFuZHMtb24gV29ya3Nob3AiLCJ2IjoyfQ.9NdzkmkyR1ho-BD91COGrE4wg9-iPse6nNf2GCzPqQobZD9WbFl5Uju9D-WrUWcVPcgo68b6jEMGLUVJrANrAA" target="_blank" rel="noopener noreferrer" title="Open the full-size certificate to scan the QR or verify">
+                            <img src="assets/workshops/sample-certificate.png" alt="Sample Certificate of Completion for 'Practical Prompting for Everyday Work', presented to Ryan James Indangan, with a scannable verification QR code" loading="lazy" style="width:100%; max-width:560px; border:1px solid #e0e0e0; border-radius:8px; display:block; box-shadow:0 3px 12px rgba(15,40,70,.12);">
+                        </a>
+                        <figcaption style="color:#888; font-size:.8rem; margin-top:.5rem; line-height:1.5;">
+                            A live sample of the certificate each attendee receives. <b>Scan the QR</b> on it (open it full-size first), or tap Verify below &mdash; it confirms genuine right in your browser. This specimen carries my own name.
+                        </figcaption>
+                    </figure>
+                    <div style="display:flex; gap:.6rem; flex-wrap:wrap; align-items:center; margin-bottom:1rem;">
+                        <a href="/verify/#eyJuIjoiUnlhbiBKYW1lcyBJbmRhbmdhbiIsImQiOiJKdWx5IDIxLCAyMDI2IiwiZSI6IlByYWN0aWNhbCBQcm9tcHRpbmcgZm9yIEV2ZXJ5ZGF5IFdvcmsgwrcgSGFuZHMtb24gV29ya3Nob3AiLCJ2IjoyfQ.9NdzkmkyR1ho-BD91COGrE4wg9-iPse6nNf2GCzPqQobZD9WbFl5Uju9D-WrUWcVPcgo68b6jEMGLUVJrANrAA" target="_blank" rel="noopener noreferrer"
+                           style="padding:.65rem 1.3rem; background:#1a1a1a; color:#fff; border:1px solid #1a1a1a; border-radius:8px; text-decoration:none; font-weight:700; font-size:.9rem; display:inline-flex; align-items:center; gap:.4rem;">
+                            🔎 Verify this certificate <span style="opacity:.7;">↗</span>
+                        </a>
+                        <span style="color:#888; font-size:.8rem;">ID RJI-CC182-90345 &middot; signed, never stored</span>
+                    </div>
                     <button onclick="if(window.openApp){window.openApp('verify-certificate');}else if(window.MobileShell){window.MobileShell.open('verify-certificate');}"
                             style="padding:.65rem 1.3rem; background:#2171d6; color:#fff; border:1px solid #1a5fb8; border-radius:8px; cursor:pointer; font-weight:700; font-size:.9rem;">
                         Open the Certificate Verifier &rarr;
