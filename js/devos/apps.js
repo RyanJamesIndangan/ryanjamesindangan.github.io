@@ -773,11 +773,29 @@ const apps = {
 
                     <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                         <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">✳️ Anthropic — Claude Certifications</h3>
-                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Anthropic • Issued Jul 2026 • 2 certificates</p>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Anthropic • Issued Jul 2026 • 5 certificates</p>
                         <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
-                            Official Anthropic Certificates of Completion covering practical work with Claude and Claude Code — from core fundamentals through agentic, AI-assisted software development.
+                            Official Anthropic Certificates of Completion spanning the full Claude stack — core fundamentals, the developer platform, Claude Code, agentic AI-assisted software development, and Claude Cowork.
                         </p>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem;">
+                            ${createCertSubCard(
+                                '✳️ Claude 101',
+                                'Certificate of Completion • Jul 2026',
+                                'assets/certificates/claude-101-anthropic.pdf',
+                                'https://verify.skilljar.com/c/ggyq4opwistp'
+                            )}
+                            ${createCertSubCard(
+                                '✳️ Claude Platform 101',
+                                'Certificate of Completion • Jul 2026',
+                                'assets/certificates/claude-platform-101-anthropic.pdf',
+                                'https://verify.skilljar.com/c/k97akmzock3n'
+                            )}
+                            ${createCertSubCard(
+                                '✳️ Claude Code 101',
+                                'Certificate of Completion • Jul 2026',
+                                'assets/certificates/claude-code-101-anthropic.pdf',
+                                'https://verify.skilljar.com/c/wczndmq7twyu'
+                            )}
                             ${createCertSubCard(
                                 '✳️ Claude Code in Action',
                                 'Certificate of Completion • Jul 2026',
@@ -785,10 +803,10 @@ const apps = {
                                 'https://verify.skilljar.com/c/usugbinq3tyu'
                             )}
                             ${createCertSubCard(
-                                '✳️ Claude 101',
+                                '✳️ Introduction to Claude Cowork',
                                 'Certificate of Completion • Jul 2026',
-                                'assets/certificates/claude-101-anthropic.pdf',
-                                'https://verify.skilljar.com/c/ggyq4opwistp'
+                                'assets/certificates/intro-claude-cowork-anthropic.pdf',
+                                'https://verify.skilljar.com/c/ssithq3t4y7k'
                             )}
                         </div>
                     </div>
@@ -1120,7 +1138,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> — Claude Code in Action &amp; Claude 101 &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules) &middot; <b style="color:#2171d6;">SoloLearn</b> (8 course certificates)</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> (5 certificates) &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules) &middot; <b style="color:#2171d6;">SoloLearn</b> (8 course certificates)</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
