@@ -773,11 +773,17 @@ const apps = {
 
                     <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                         <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">✳️ Anthropic — Claude Certifications</h3>
-                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Anthropic • Issued Jul 2026 • 5 certificates</p>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Anthropic • Issued Jul 2026 • 6 certificates</p>
                         <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
-                            Official Anthropic Certificates of Completion spanning the full Claude stack — core fundamentals, the developer platform, Claude Code, agentic AI-assisted software development, and Claude Cowork.
+                            Official Anthropic Certificates of Completion spanning AI fluency and the full Claude stack — from AI framework &amp; foundations through core Claude fundamentals, the developer platform, Claude Code, agentic AI-assisted software development, and Claude Cowork.
                         </p>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem;">
+                            ${createCertSubCard(
+                                '✳️ AI Fluency: Framework & Foundations',
+                                'Certificate of Completion • Jul 2026',
+                                'assets/certificates/ai-fluency-framework-foundations-anthropic.pdf',
+                                'https://verify.skilljar.com/c/dpgrku9jduvs'
+                            )}
                             ${createCertSubCard(
                                 '✳️ Claude 101',
                                 'Certificate of Completion • Jul 2026',
@@ -1138,7 +1144,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">🏆</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> (5 certificates) &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules) &middot; <b style="color:#2171d6;">SoloLearn</b> (8 course certificates)</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> (6 certificates) &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules) &middot; <b style="color:#2171d6;">SoloLearn</b> (8 course certificates)</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
