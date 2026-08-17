@@ -102,6 +102,9 @@
         .dlrow{display:flex;gap:.6rem}
         .dlrow .btn{flex:1;min-width:0}
         .btn.alt{background:#fff;color:#0a5aa0;border:1px solid rgba(0,120,215,.45)}
+        .spk{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;color:#17273f;font-weight:700;font-size:.95rem;background:#fff;border:1px solid rgba(15,40,70,.18);border-radius:8px;padding:.5rem .75rem}
+        .spk span{font-weight:600;font-size:.78rem;color:#0a5aa0}
+        .spk:hover{border-color:#0078d7}
         .btn.alt:hover{background:#f2f8fe}
         .home{display:inline-block;margin-top:1.25rem;color:var(--primary);text-decoration:none;font-weight:800;font-size:.9rem}
         .home:hover{text-decoration:underline}
@@ -158,6 +161,7 @@
 
 <script src="qrcode.min.js"></script>
 <script src="sig.js"></script>
+<script src="ypgt-cert.js"></script>
 <script>
 // ---- Public verification key (Ed25519, SPKI base64). Safe to publish — it can only VERIFY, never sign. ----
 var PUBKEY_SPKI_B64 = "MCowBQYDK2VwAyEAwZEggYQU+bz+Td/tJR/LWaFaJ1EQRmITNrlrkHVD4r8=";
@@ -167,8 +171,16 @@ var LEGACY_EVENT = "Practical Prompting for Everyday Work · Hands-on Workshop";
 var EVENTS = [
   { t: "Practical Prompting for Everyday Work", d: "Hands-on workshop · Rex Knowledge Center, Quezon City, Philippines" },
   { t: "Ahead of the Race: Using AI to Build, Work, and Stand Out", d: "Hands-on workshop · Blue Ville Subdivision, Novaliches, Quezon City" },
-  { t: "AI Masterclass", d: "Online workshop · participants from international companies, including Fortune 500" }
+  { t: "AI Masterclass", d: "Online workshop · participants from international companies, including Fortune 500" },
+  { t: "Cybersecurity: Digital Safety & Security Essentials", d: "Young Pro Get Together · Faith Temple Baptist Church, Quezon City · with Greek Legaspi" }
 ];
+// YPGT talk (22 Aug 2026): two speakers, its own certificate design (verify/ypgt-cert.js).
+var YPGT_EVENT = "Cybersecurity: Digital Safety & Security Essentials · Young Pro Get Together";
+var GREEK_URL = "https://greeklegaspi.com/";
+// Once Greek deploys his verifier (the pack Ryan sent him), set this to its URL, e.g.
+// "https://greeklegaspi.com/ypgt/" - the Speakers button then carries the visitor's token
+// so they see THEIR certificate on his site too. Empty = plain link to his homepage.
+var GREEK_VERIFY = "";
 
 function bytesFromB64(b64){var bin=atob(b64);var a=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a;}
 function b64uToBytes(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return bytesFromB64(s);}
@@ -205,7 +217,39 @@ async function verifyToken(token){
 function render(html){document.getElementById('content').innerHTML=html;}
 var homeLink='<a class="home" href="/">← Back to Ryan’s desktop</a>';
 
+function isYpgt(r){return !!(r&&r.payload&&String(r.payload.e||'')===YPGT_EVENT);}
+function renderGenuineYpgt(r){
+  render(
+    '<div class="seal">🛡️</div>'+
+    '<div class="center"><span class="badge ok">✓ Genuine Certificate</span></div>'+
+    '<div class="kicker">Certificate of Completion</div>'+
+    '<div class="name">'+esc(r.payload.n)+'</div>'+
+    '<div class="grid">'+
+      '<div class="cell"><div class="k">Date Issued</div><div class="v">'+esc(r.payload.d)+'</div></div>'+
+      '<div class="cell"><div class="k">Certificate ID</div><div class="v mono">'+esc(r.id)+'</div></div>'+
+      '<div class="cell full"><div class="k">Event</div><div class="v">Cybersecurity: Digital Safety &amp; Security Essentials<br><span style="font-weight:500;color:#5b6b7f;font-size:.9em">Young Pro Get Together · Faith Temple Baptist Church, Quezon City · 22 August 2026</span></div></div>'+
+      '<div class="cell full"><div class="k">Speakers</div><div class="v" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.25rem">'+
+        '<a class="spk" href="/">Ryan James F. Indangan <span>portfolio →</span></a>'+
+        '<a class="spk" href="'+(GREEK_VERIFY?GREEK_VERIFY+'#'+extractToken(location.hash):GREEK_URL)+'" target="_blank" rel="noopener">Greek Legaspi <span>'+(GREEK_VERIFY?'see it on his site →':'greeklegaspi.com →')+'</span></a>'+
+      '</div></div>'+
+    '</div>'+
+    '<div class="certwrap" id="certwrap"></div>'+
+    '<div class="dlrow"><button class="btn" id="dlpdf">⬇ Download PDF</button><button class="btn alt" id="dlcert">⬇ Download PNG</button></div>'+
+    '<div class="note">Verified in your browser with a public <b>Ed25519</b> signature — this certificate was issued at the Young Pro Get Together and has not been altered. No data left this page.<br>'+homeLink+'</div>'
+  );
+  var wrap=document.getElementById('certwrap');
+  if(wrap&&typeof buildYpgtCertSvg==='function'){
+    wrap.innerHTML=buildYpgtCertSvg({name:r.payload.n,date:r.payload.d,id:r.id,qrHref:makeQr(),sigB64:(typeof SIG_B64==='string'?SIG_B64:'')});
+    fitSvgText('cnm',700,56,34,'cnl');
+  }
+  var dl=document.getElementById('dlcert');
+  if(dl)dl.addEventListener('click',function(){downloadCert(r.payload.n);});
+  var dp=document.getElementById('dlpdf');
+  if(dp)dp.addEventListener('click',function(){downloadCertPdf(r.payload.n,dp);});
+}
+
 function renderGenuine(r){
+  if(isYpgt(r))return renderGenuineYpgt(r);
   render(
     '<div class="seal">🎓</div>'+
     '<div class="center"><span class="badge ok">✓ Genuine Certificate</span></div>'+
