@@ -352,6 +352,13 @@ class PortfolioChatbot {
             // contains 'certificate', which would otherwise route to Certifications.
             'speaking & workshops': 'workshops',
             'speaking and workshops': 'workshops',
+            // "show me (photos from) the cybersecurity talk" — must resolve here, before the one-word
+            // fallback pattern captures just "me" and partial-matches 'about me'.
+            'cybersecurity talk': 'workshops',
+            'cyber security talk': 'workshops',
+            'cybersecurity seminar': 'workshops',
+            'cyber security seminar': 'workshops',
+            'security talk': 'workshops',
             'workshops': 'workshops',
             'workshop': 'workshops',
             'speaking': 'workshops',
@@ -396,6 +403,8 @@ class PortfolioChatbot {
             'experience': 'Work Experience',
             'projects': 'Projects',
             'certifications': 'Certifications',
+            'workshops': 'Speaking & Workshops',
+            'verify-certificate': 'Verify a Certificate',
             'ai-lab': 'AI Lab',
             'contact': 'Contact',
             'resume': 'Resume',
@@ -582,7 +591,7 @@ class PortfolioChatbot {
         if (this.matches(message, ['why']) &&
             this.matches(message, ['verify', 'verifier', 'certificate thing', 'cert thing', 'verify cert', 'certificate app'])) {
             return {
-                text: `Good question 🙂 It's there because **Ryan teaches AI**.\n\nHe's invited by companies and institutions to run **hands-on AI workshops**, and everyone who completes one gets a certificate. The Verifier is how an attendee — or their employer — proves that certificate is genuine.\n\nEach one is signed with an **Ed25519** digital signature, so it can't be faked or edited. The check runs entirely in your browser: nothing is uploaded, and **no attendee list is ever published**.\n\n[Open Speaking & Workshops] to see the sessions he runs.`,
+                text: `Good question 🙂 It's there because **Ryan runs workshops and gives talks**.\n\nHe's invited by companies and institutions to run **hands-on AI workshops**, and everyone who completes one gets a certificate. His **Cyber Security talk** (Guest Speaker, Aug 2026) issued signed Certificates of Completion too. The Verifier is how an attendee — or their employer — proves that certificate is genuine.\n\nEach one is signed with an **Ed25519** digital signature, so it can't be faked or edited. The check runs entirely in your browser: nothing is uploaded, and **no attendee list is ever published**.\n\n[Open Speaking & Workshops] to see the sessions he runs.`,
                 suggestions: [
                     "What workshops does he run?",
                     "Can he speak at my company?",
@@ -592,15 +601,73 @@ class PortfolioChatbot {
             };
         }
 
-        // Speaking / workshops / teaching — Ryan is invited to teach AI at companies.
-        // Sits above the verify block so "do you run workshops" isn't read as a cert check.
-        if (this.matches(message, ['workshop', 'workshops', 'speaking', 'speaker', 'speak at', 'speak to', 'talk at', 'keynote', 'do you teach', 'can you teach', 'does he teach', 'teaching', 'teaches', 'trainer', 'training', 'seminar', 'masterclass', 'lecture', 'facilitator', 'invite you', 'invite him', 'book you', 'book him', 'hire you to speak', 'corporate training', 'ai training', 'guest speaker', 'mentor'])) {
+        // Triggers shared by the cyber-talk handler (which must step aside for them) and the
+        // attendee-facing verify block further down.
+        const verifyTriggers = ['verify', 'verified', 'verification', 'authentic', 'genuine', 'tamper', 'is my certificate', 'is my cert', 'is this certificate', 'is the certificate real', 'certificate real', 'certificate legit', 'cert legit', 'verify certificate', 'verify my certificate', 'check my certificate', 'check my cert', 'qr code', 'scan the qr', 'totoo ba ang cert', 'paano i-verify', 'i-verify', 'legit ba'];
+
+        // The Cyber Security talk (YPGT, Faith Temple Baptist Church Inc., 22 Aug 2026). Sits above the
+        // speaking block, which would otherwise take 'seminar' / 'speak at' / 'guest speaker', and above
+        // the certifications block ('certificate'). Deliberately narrow: bare 'cybersecurity' / 'security'
+        // / 'hacker' don't land here (they fall through to the later blocks) — only talk-shaped phrasing does.
+        // "verify my ypgt certificate" is a verification question, so verify triggers opt out
+        // (except for the Certificate of Appreciation, which is a physical certificate, not a signed one).
+        const wantsVerify = this.matches(message, verifyTriggers) && !this.matches(message, ['appreciation']);
+        const isTalkShaped = (
+            this.matches(message, ['cybersecurity talk', 'cyber security talk', 'cyber talk', 'security talk', 'cybersecurity seminar', 'cyber security seminar', 'security seminar', 'ypgt', 'young pro get together', 'young pro ministry', 'faith temple', 'ftbci', 'digital safety', 'security essentials', 'certificate of appreciation', 'cert of appreciation', 'guest speaker at church', 'guest speaker at a church', 'proverbs 4:23', 'guard your heart', 'password math']) ||
+            // "did he give a talk on cyber security", "is he a cybersecurity speaker" — word-boundary
+            // talk words so "cyber stalker" doesn't count as a 'talk'.
+            (this.matches(message, ['cyber']) && /\b(?:talks?|seminars?|sessions?|presentations?|speak(?:s|ing|ers?)?|spoke|spoken|keynotes?|lectures?|workshops?)\b/.test(message)) ||
+            (/\bsecurity\b/.test(message) && /\b(?:talks?|seminars?)\b/.test(message)) ||
+            (/\bchurch(?:es)?\b/.test(message) && /\b(?:speak\w*|spoke\w*|talks?|seminars?|guest)\b/.test(message))
+        );
+        // Request-shaped phrasing about such a session ("can he run a cybersecurity workshop for my company",
+        // "does he run ai and cybersecurity workshops") is a booking question: the speaking block answers it,
+        // since it lists every session and how to request one, rather than the past-event recap.
+        const wantsBooking = isTalkShaped &&
+            /\b(?:talks?|seminars?|sessions?|presentations?|speak(?:s|ing|ers?)?|keynotes?|lectures?|workshops?|trainings?|webinars?)\b/.test(message) && (
+                /\b(?:can|could|would|will)\s+(?:he|you|ryan)\s+(?:also\s+)?(?:run|give|do|hold|conduct|deliver|present|teach|speak|facilitate|lead|come)\b/.test(message) ||
+                /\b(?:does|do)\s+(?:he|you|ryan)\s+(?:also\s+)?(?:run|give|do|hold|conduct|deliver|offer|teach|accept)\b/.test(message) ||
+                /\bfor\s+(?:my|our)\s+\w+/.test(message) ||
+                /\b(?:book|invite|hire)\b/.test(message)
+            );
+        const isCyberTalk = !wantsVerify && !wantsBooking && isTalkShaped;
+        if (isCyberTalk) {
             return {
-                text: `Yes — Ryan is invited by companies and institutions to **teach AI** 🎤\n\nHe runs hands-on workshops and talks for mixed audiences — engineers, ops teams, managers, and complete beginners:\n\n📌 **Practical Prompting for Everyday Work**\nHands-on workshop · Rex Knowledge Center, Quezon City\n\n📌 **Ahead of the Race: Using AI to Build, Work, and Stand Out**\nHands-on workshop · Novaliches, Quezon City\n\n📌 **AI Masterclass**\nOnline workshop · participants from international companies, including Fortune 500\n\nEvery attendee receives a **cryptographically signed certificate** they can verify instantly — that's why this site has a Certificate Verifier.\n\n[Open Speaking & Workshops] to see photos and request a session for your team.`,
+                text: `🛡️ **Cyber Security: Digital Safety & Security Essentials**\n\nRyan was the **Guest Speaker** at a **Young Pro Get Together (YPGT)** of the Young Pro Ministry of **Faith Temple Baptist Church Inc.\u00A0(FTBCI)** — FTB Auditorium, Novaliches, Quezon City, on **Saturday, 22 August 2026**. His co-speaker, **Greek Legaspi**, gave his own presentation right after Ryan's.\n\n**What Ryan covered:**\n• **Ones and zeros** — a computer is a very fast, very dumb switch-flipper, with a live name-to-binary demo\n• **Password math** — an 8-character password takes ~**21 million years** to brute-force through a throttled login form, but just **18.4 hours** offline against a weakly-protected leaked database with one gaming GPU. There's no such thing as unhackable — we just make it expensive.\n• **"But my password is long…"** — dictionary attacks, credential stuffing, and why password reuse is the real killer\n• **How people actually get hacked** — phishing, smishing, OTP "send me the code" scams, SIM swaps, social engineering\n• **What to actually do** — 2FA, authenticator apps, passkeys, password managers, four-random-word passphrases\n• Closed on **Proverbs 4:23**: "Above all else, guard your heart"\n\n💻 He built it all himself — the live deck, **four interactive demos** (binary switches, a live password crack-time calculator, brute-force vs dictionary, a live 2FA code) and **phone quizzes**. Attendees scanned a QR and their phones followed the talk live.\n\n🏅 FTBCI presented him with a **Certificate of Appreciation** as Guest Speaker, and the session's Certificates of Completion verify right here on this site.\n\n📸 Official recap album: https://ftb-youngpro.github.io/cybersecurity/\n\n[Open Speaking & Workshops] to see photos from the talk, or to request a session for your group.`,
+                suggestions: [
+                    "Who is Greek Legaspi?",
+                    "How do I verify my certificate?",
+                    "What workshops does he run?"
+                ]
+            };
+        }
+
+        // Co-speaker at the Cyber Security talk. Not on a bare 'legaspi' substring: Legaspi Village is a
+        // Makati business district, so place-shaped mentions ("an office in Legaspi Village") skip this.
+        const mentionsLegaspiPlace = /\b(?:in|at|near|around)\s+legaspi\b|\blegaspi\s+(?:village|city|st|street|ave|avenue|towers?|park|building|bldg|office)\b/.test(message);
+        const mentionsCoSpeaker = this.matches(message, ['greek legaspi', 'legaspi_greks', 'greeklegaspi']) ||
+            (/\blegaspi\b/.test(message) && !mentionsLegaspiPlace);
+        if (!wantsVerify && mentionsCoSpeaker) {
+            return {
+                text: `**Greek Legaspi** was Ryan's co-speaker at the **Cyber Security: Digital Safety & Security Essentials** talk — a Young Pro Get Together at Faith Temple Baptist Church Inc.\u00A0(FTBCI), Quezon City, on 22 August 2026.\n\nRyan delivered the main talk as Guest Speaker, then handed over to Greek, who gave his own presentation. The session's Certificates of Completion carry both speakers' signatures.\n\n🌐 https://greeklegaspi.com/`,
+                suggestions: [
+                    "Tell me about the cybersecurity talk",
+                    "How do I verify my certificate?",
+                    "What workshops does he run?"
+                ]
+            };
+        }
+
+        // Speaking / workshops / teaching — Ryan is invited to teach AI at companies, and gives talks.
+        // Sits above the verify block so "do you run workshops" isn't read as a cert check, but steps aside
+        // for real verification questions ("verify my seminar certificate").
+        if (!wantsVerify && (wantsBooking || this.matches(message, ['workshop', 'workshops', 'speaking', 'speaker', 'speak at', 'speak to', 'talk at', 'keynote', 'do you teach', 'can you teach', 'does he teach', 'teaching', 'teaches', 'trainer', 'training', 'seminar', 'masterclass', 'lecture', 'facilitator', 'invite you', 'invite him', 'book you', 'book him', 'hire you to speak', 'corporate training', 'ai training', 'guest speaker', 'mentor']))) {
+            return {
+                text: `Yes — Ryan is invited by companies and institutions to **teach AI**, and he gives talks too 🎤\n\nHis hands-on AI workshops are run for mixed audiences — engineers, ops teams, managers, and complete beginners — and most recently he spoke as a Guest Speaker on cybersecurity:\n\n📌 **Cyber Security: Digital Safety & Security Essentials** (most recent)\nGuest Speaker · Young Pro Get Together, Faith Temple Baptist Church Inc.\u00A0(FTBCI), Quezon City · 22 Aug 2026 · with co-speaker Greek Legaspi\n\n📌 **Practical Prompting for Everyday Work**\nHands-on workshop · Rex Knowledge Center, Quezon City\n\n📌 **Ahead of the Race: Using AI to Build, Work, and Stand Out**\nHands-on workshop · Novaliches, Quezon City\n\n📌 **AI Masterclass**\nOnline workshop · participants from international companies, including Fortune 500\n\nCertificates from his sessions are **cryptographically signed** and can be verified instantly — that's why this site has a Certificate Verifier.\n\n[Open Speaking & Workshops] to see photos and request a session for your team.`,
                 suggestions: [
                     "Can he run one for my team?",
                     "Why is there a certificate verifier?",
-                    "What does he teach exactly?",
+                    "Tell me about the cybersecurity talk",
                     "Show me his AI work"
                 ]
             };
@@ -608,9 +675,9 @@ class PortfolioChatbot {
 
         // Workshop certificate verification (a participant checking a cert Ryan issued them). Placed EARLY so
         // specific verify-triggers win over generic greeting / "how do I…" blocks below.
-        if (this.matches(message, ['verify', 'verified', 'verification', 'authentic', 'genuine', 'tamper', 'is my certificate', 'is this certificate', 'is the certificate real', 'certificate real', 'verify certificate', 'verify my certificate', 'check my certificate', 'qr code', 'scan the qr', 'totoo ba ang cert', 'paano i-verify', 'i-verify', 'legit ba'])) {
+        if (this.matches(message, verifyTriggers)) {
             return {
-                text: `Certificates from Ryan's workshops — **"Practical Prompting for Everyday Work"**, **"Ahead of the Race: Using AI to Build, Work, and Stand Out"**, and **"AI Masterclass"** — are cryptographically verifiable ✅\n\nYour certificate has a **QR code** and a **verify link** with a Certificate ID (like RJI-XXXXX-XXXXX).\n\n🔎 **To verify:** scan the QR, or open the link — it launches Ryan's **Certificate Verifier**, which instantly confirms it's genuine (showing the name, workshop, date, and ID). Each cert is signed with an **Ed25519** digital signature and checked right in your browser — impossible to fake, and nothing is stored.\n\nYou can also open **ryanjamesindangan.github.io/verify** and paste your link there.`,
+                text: `Certificates from Ryan's workshops — **"Practical Prompting for Everyday Work"**, **"Ahead of the Race: Using AI to Build, Work, and Stand Out"**, and **"AI Masterclass"** — and from his **"Cyber Security: Digital Safety & Security Essentials"** talk (Young Pro Get Together, 22 Aug 2026) are cryptographically verifiable ✅\n\nYour certificate has a **QR code** and a **verify link** with a Certificate ID (like RJI-XXXXX-XXXXX).\n\n🔎 **To verify:** scan the QR, or open the link — it launches Ryan's **Certificate Verifier**, which instantly confirms it's genuine (showing the name, workshop or talk, date, and ID). Each cert is signed with an **Ed25519** digital signature and checked right in your browser — impossible to fake, and nothing is stored.\n\nYou can also open **ryanjamesindangan.github.io/verify** and paste your link there.`,
                 suggestions: [
                     "Where's the QR code?",
                     "Is it tamper-proof?",
@@ -885,7 +952,7 @@ class PortfolioChatbot {
         // Certifications
         if (this.matches(message, ['certificate', 'certificates', 'certification', 'certifications', 'credential', 'credentials', 'cto', 'hacker', 'cert'])) {
             return {
-                text: `Ryan holds:\n\n🎓 **Certified Chief Technology Officer** (IMTF, Jul 2023)\n\n🔐 **Hacker-X Ethical Hacking Course** (21 modules, Sep 2024 - Nov 2025)\n\n[Open Certifications] to view certificates!`,
+                text: `Ryan holds:\n\n🎓 **Certified Chief Technology Officer** (IMTF, Jul 2023)\n\n✳️ **Anthropic Claude Certifications** (6 certificates, Jul 2026) — AI fluency, Claude fundamentals, the developer platform, Claude Code and more\n\n🔐 **Hacker-X Ethical Hacking Course** (21 modules, Sep 2024 - Nov 2025)\n\n🏅 **Recognition:** Certificate of Appreciation from Faith Temple Baptist Church Inc.\u00A0(FTBCI) — Guest Speaker, "Cyber Security: Digital Safety & Security Essentials" (Aug 2026)\n\n[Open Certifications] to view certificates!`,
                 suggestions: [
                     "Tell me about CTO certification",
                     "What is Hacker-X?",
@@ -1449,10 +1516,12 @@ class PortfolioChatbot {
             text = text.replace(/makes/g, "creates");
             text = text.replace(/helps/g, "facilitates");
             
-            // Remove excessive emojis (keep only 1-2 max)
-            const emojiCount = (text.match(/[😊😄😎👍👋💪🎉🤖💻☁️💾📊🔧]/g) || []).length;
+            // Remove excessive emojis (keep only 1-2 max). The `u` flag is required: without it these
+            // classes match UTF-16 surrogate halves, so any answer with 3+ emoji had the high surrogate
+            // of EVERY emoji stripped (🎤 📌 🎓 … rendered as broken "�" glyphs).
+            const emojiCount = (text.match(/[😊😄😎👍👋💪🎉🤖💻☁️💾📊🔧]/gu) || []).length;
             if (emojiCount > 2) {
-                text = text.replace(/[😊😄😎👍💪🎉]/g, '');
+                text = text.replace(/[😊😄😎👍💪🎉]/gu, '');
             }
         }
         
@@ -1474,7 +1543,8 @@ class PortfolioChatbot {
         // Patterns: "my name is X", "I'm X", "I am X", "call me X", "name is X"
         // Use [a-zA-Z] to explicitly match both cases, or use \w for word characters
         const patterns = [
-            /(?:my\s+name\s+is|i'?m|i\s+am|call\s+me|name\s+is)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)/i,
+            // \b so "invite hIM for a talk" / "clAIM" aren't read as "I'm ..."
+            /\b(?:my\s+name\s+is|i'?m|i\s+am|call\s+me|name\s+is)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)/i,
             /(?:hi|hello|hey),?\s+(?:my\s+name\s+is|i'?m|i\s+am|call\s+me)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)/i,
             /(?:hi|hello|hey),?\s+([a-zA-Z]+)(?:\s+here)?$/i
         ];
@@ -1725,8 +1795,8 @@ class PortfolioChatbot {
             })(),
             'project': 'Ryan has delivered 50+ projects including AI/ML systems, web applications, and automation tools. [Open Projects] to explore!',
             'portfolio': 'This is Ryan\'s portfolio! You can explore his skills, experience, projects, and certifications. [Open Projects] to see his work!',
-            'certificate': 'Ryan holds a Certified CTO credential, two Anthropic Claude certificates, and the Hacker-X Ethical Hacking Course. [Open Certifications] to view them!',
-            'workshops': 'Ryan is invited by companies and institutions to teach AI — hands-on workshops like "Practical Prompting for Everyday Work" and "AI Masterclass". [Open Speaking & Workshops] to see them!'
+            'certificate': 'Ryan holds a Certified CTO credential, six Anthropic Claude certificates, and the Hacker-X Ethical Hacking Course. He was also recognized with a Certificate of Appreciation as Guest Speaker at a cybersecurity talk. [Open Certifications] to view them!',
+            'workshops': 'Ryan is invited by companies and institutions to teach AI — hands-on workshops like "Practical Prompting for Everyday Work" and "AI Masterclass" — and most recently spoke as Guest Speaker at the "Cyber Security: Digital Safety & Security Essentials" talk. [Open Speaking & Workshops] to see them!'
         };
         return responses[topic] || 'I can help you learn about Ryan\'s portfolio. What would you like to know?';
     }

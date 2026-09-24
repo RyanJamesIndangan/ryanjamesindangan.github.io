@@ -10,19 +10,19 @@ const apps = {
             <div style="max-width: 720px;">
                 <h2 style="font-size: 2rem; margin-bottom: 0.4rem; color:#1a1a1a; font-weight:700;">🪪 Verify a Certificate</h2>
                 <p style="color:#555; line-height:1.6; margin-bottom:1.2rem;">
-                    Certificates from my workshops are <b>cryptographically signed</b> (Ed25519). Confirm one is genuine in seconds &mdash; the check runs entirely in your browser, and nothing is stored.
+                    Certificates from my workshops and talks are <b>cryptographically signed</b> (Ed25519). Confirm one is genuine in seconds &mdash; the check runs entirely in your browser, and nothing is stored.
                 </p>
 
                 <div style="padding:1.05rem 1.2rem; background:#fff8e1; border:1px solid #ffe082; border-radius:8px; margin-bottom:1.4rem;">
                     <b style="color:#1a1a1a;">Why is this on a portfolio? 🎤</b>
                     <p style="color:#5d4b1f; margin:.45rem 0 .8rem; font-size:.92rem; line-height:1.65;">
-                        Because I'm invited by companies and institutions to <b>teach AI</b>, and everyone who completes one of
-                        my workshops gets a certificate. This page is how they &mdash; or their employer &mdash; prove it's real.
+                        Because I teach: companies and institutions invite me to run <b>AI workshops</b>, and I was recently a
+                        guest speaker on <b>cybersecurity</b>. Attendees get a certificate, and this page is how they &mdash; or their employer &mdash; prove it's real.
                         If you landed here from a QR code on a certificate, you're in the right place: paste your link below.
                     </p>
                     <button onclick="if(window.openApp){window.openApp('workshops');}else if(window.MobileShell){window.MobileShell.open('workshops');}"
                             style="padding:.55rem 1.1rem; background:#1a1a1a; color:#fff; border:none; border-radius:7px; cursor:pointer; font-weight:700; font-size:.85rem;">
-                        See the workshops I run &rarr;
+                        See my talks &amp; workshops &rarr;
                     </button>
                 </div>
                 <div style="display:grid; gap:1rem; margin-bottom:1.3rem;">
@@ -45,8 +45,8 @@ const apps = {
                     style="padding:.65rem 1.4rem; background:#eef1f5; color:#1a1a1a; border:1px solid #ccd3dc; border-radius:8px; cursor:pointer; font-weight:600;">
                     🔎 Open the Verifier
                 </button>
-                <p style="color:#888; font-size:.82rem; margin-top:1.4rem; line-height:1.5;">
-                    Covers my workshops &mdash; &ldquo;Practical Prompting for Everyday Work&rdquo;, &ldquo;Ahead of the Race: Using AI to Build, Work, and Stand Out&rdquo;, and &ldquo;AI Masterclass&rdquo;. Verification is private &mdash; no attendee list is published anywhere.
+                <p style="color:#4a5568; font-size:.82rem; margin-top:1.4rem; line-height:1.5;">
+                    Covers my workshops &mdash; &ldquo;Practical Prompting for Everyday Work&rdquo;, &ldquo;Ahead of the Race: Using AI to Build, Work, and Stand Out&rdquo;, and &ldquo;AI Masterclass&rdquo; &mdash; and my talk &ldquo;Cyber Security: Digital Safety &amp; Security Essentials&rdquo; (Young Pro Get Together). Verification is private &mdash; no attendee list is published anywhere.
                 </p>
             </div>
         `
@@ -59,10 +59,152 @@ const apps = {
                 <h2 style="font-size: 2rem; margin-bottom: 0.4rem; color:#1a1a1a; font-weight:700;">🎤 Speaking &amp; Workshops</h2>
                 <p style="color:#555; line-height:1.7; margin-bottom:1.5rem; font-size:1.02rem;">
                     Alongside building software, I get invited by companies and institutions to <b>teach AI</b> &mdash;
-                    hands-on workshops and talks on using AI practically in everyday work. Sessions are run for mixed
-                    audiences: engineers, operations teams, managers and complete beginners.
+                    hands-on workshops and talks on using AI practically in everyday work, run for mixed audiences:
+                    engineers, operations teams, managers and complete beginners. Most recently I was a guest
+                    speaker on <b>cybersecurity</b>, teaching everyday digital safety to a room of young professionals.
                 </p>
 
+                <section style="padding:1.3rem 1.4rem; background:#f7fafd; border:1px solid #d4e2f7; border-top:3px solid #2171d6; border-radius:12px; margin-bottom:2.2rem;">
+                    <span style="display:inline-block; padding:.22rem .65rem; background:#2171d6; color:#fff; border-radius:999px; font-size:.74rem; font-weight:700; letter-spacing:.02em; margin-bottom:.65rem;">🆕 Latest talk &middot; 22 Aug 2026</span>
+                    <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .45rem; font-size:1.35rem; line-height:1.3;">Cyber Security: Digital Safety &amp; Security Essentials</h3>
+                    <p style="color:#555; margin:0 0 1rem; font-size:.9rem; line-height:1.6;">
+                        Guest speaker &middot; Young Pro Get Together (YPGT) &middot; Faith Temple Baptist Church Inc. (FTBCI), Quezon City &middot;
+                        with co-speaker <a href="https://greeklegaspi.com/" target="_blank" rel="noopener noreferrer" style="color:#2171d6; font-weight:600;">Greek Legaspi&nbsp;↗</a>
+                    </p>
+
+                    <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/01-title-slide.jpg" data-title="At the podium beside the Cyber Security title slide" data-type="image" data-kind="photo" aria-label="View photo: At the podium beside the Cyber Security title slide"
+                            style="display:block; width:100%; padding:0 !important; margin:0 0 1.1rem; border:1px solid #d4e2f7; border-radius:12px; overflow:hidden; background:#0b1220; cursor:zoom-in;">
+                        <img src="assets/workshops/ypgt-cybersecurity/01-title-slide.jpg" width="1600" height="900"
+                             srcset="assets/workshops/ypgt-cybersecurity/thumbs/01-title-slide.jpg 720w, assets/workshops/ypgt-cybersecurity/01-title-slide.jpg 1600w"
+                             sizes="(max-width: 600px) 92vw, 820px"
+                             alt="Ryan James Indangan speaking into a microphone at the podium beside a large screen showing the title slide: Cyber Security, Digital Safety &amp; Security Essentials"
+                             style="width:100%; height:auto; display:block;">
+                    </button>
+
+                    <p style="color:#555; line-height:1.65; margin:0 0 .8rem; font-size:.95rem;">
+                        A plain-language talk on how accounts actually get broken into &mdash; and what really protects them.
+                        The centerpiece was <b>password math</b>: an 8-character password drawn from all 95 keyboard characters would take
+                        about <b>21 million years</b> to guess through a rate-limited login form, but just <b>18.4 hours</b> once a
+                        weakly protected database leaks and a single gaming GPU goes to work. There&rsquo;s no such thing as
+                        unhackable &mdash; the goal is to make an attack expensive.
+                    </p>
+                    <ol style="color:#555; margin:0 0 1.1rem; padding-left:1.3rem; font-size:.92rem; line-height:1.6;">
+                        <li style="color:#555; margin-bottom:.3rem;"><b style="color:#1a1a1a;">Ones and zeros</b> &mdash; a computer is a very fast, very dumb switch-flipper, with a live name-to-binary demo.</li>
+                        <li style="color:#555; margin-bottom:.3rem;"><b style="color:#1a1a1a;">Password math</b> &mdash; why sites demand 8 characters, an uppercase letter, a number and a symbol, and what that really buys you.</li>
+                        <li style="color:#555; margin-bottom:.3rem;"><b style="color:#1a1a1a;">&ldquo;But my password is long&hellip;&rdquo;</b> &mdash; dictionary attacks, credential stuffing, why P@ssw0rd is guessed first, and why reuse is the real killer.</li>
+                        <li style="color:#555; margin-bottom:.3rem;"><b style="color:#1a1a1a;">How people actually get hacked</b> &mdash; phishing, smishing and vishing, &ldquo;send me the code&rdquo; OTP scams, SIM swaps, social engineering, public Wi-Fi, cracked software and oversharing.</li>
+                        <li style="color:#555; margin-bottom:.3rem;"><b style="color:#1a1a1a;">What to actually do</b> &mdash; 2FA, authenticator apps, passkeys, password managers, four-random-word passphrases, and a first-hour &ldquo;I&rsquo;ve been hacked&rdquo; checklist.</li>
+                        <li style="color:#555;"><b style="color:#1a1a1a;">Guard your heart</b> &mdash; closing on Proverbs 4:23, then handing over to Greek Legaspi.</li>
+                    </ol>
+
+                    <div style="padding:1rem 1.15rem; background:#fff; border:1px solid #e0e0e0; border-left:3px solid #2171d6; border-radius:8px; margin:0 0 1.3rem;">
+                        <b style="color:#1a1a1a;">How I ran it</b>
+                        <p style="color:#555; margin:.35rem 0 .8rem; font-size:.92rem; line-height:1.65;">
+                            I built it end to end &mdash; the deck, four live demos (binary switches, a password crack-time calculator,
+                            a brute-force vs dictionary race and a live 2FA code) and four phone quizzes. Attendees scanned a QR code
+                            and their phones joined in and followed the talk live, all running from my own laptop on a
+                            zero-dependency Node server. The session&rsquo;s Certificates of Completion are Ed25519-signed, carry
+                            both speakers&rsquo; signatures, and verify right here on this site.
+                        </p>
+                        <button onclick="if(window.openApp){window.openApp('verify-certificate');}else if(window.MobileShell){window.MobileShell.open('verify-certificate');}"
+                                style="padding:.55rem 1.1rem; background:#1a1a1a; color:#fff; border:none; border-radius:7px; cursor:pointer; font-weight:700; font-size:.85rem;">
+                            🪪 Verify a certificate &rarr;
+                        </button>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:.9rem; margin:0 0 1.4rem;">
+                        <figure style="margin:0; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/02-at-the-podium.jpg" data-title="On stage at the FTB Auditorium" data-type="image" data-kind="photo" aria-label="View photo: On stage at the FTB Auditorium"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#eef1f5; cursor:zoom-in;">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/02-at-the-podium.jpg" width="720" height="405" loading="lazy"
+                                     alt="Ryan smiling at the podium, with the Cyber Security event slide on the screens on both sides of the stage"
+                                     style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;">
+                            </button>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.4rem; line-height:1.45;">On stage at the FTB Auditorium</figcaption>
+                        </figure>
+                        <figure style="margin:0; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/03-password-math.jpg" data-title="Password math: same password, three attackers" data-type="image" data-kind="photo" aria-label="View photo: Password math: same password, three attackers"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#eef1f5; cursor:zoom-in;">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/03-password-math.jpg" width="720" height="405" loading="lazy"
+                                     alt="Attendees seen from behind watching Ryan present a slide titled Same password, three attackers, which compares password crack times"
+                                     style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;">
+                            </button>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.4rem; line-height:1.45;">Password math: same password, three attackers</figcaption>
+                        </figure>
+                        <figure style="margin:0; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/04-live-join.jpg" data-title="Phones joining the talk live" data-type="image" data-kind="photo" aria-label="View photo: Phones joining the talk live"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#eef1f5; cursor:zoom-in;">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/04-live-join.jpg" width="720" height="405" loading="lazy"
+                                     alt="Ryan at the podium while both screens show the You're in phone-join screen and attendees at round tables look on"
+                                     style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;">
+                            </button>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.4rem; line-height:1.45;">Phones joining the talk live</figcaption>
+                        </figure>
+                        <figure style="margin:0; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/05-full-room.jpg" data-title="The room at the FTB Auditorium" data-type="image" data-kind="photo" aria-label="View photo: The room at the FTB Auditorium"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#eef1f5; cursor:zoom-in;">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/05-full-room.jpg" width="720" height="341" loading="lazy"
+                                     alt="Wide shot of the FTB Auditorium: attendees at round tables, many on their phones and laptops, with a speaker on stage between two Cyber Security screens"
+                                     style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;">
+                            </button>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.4rem; line-height:1.45;">The room at the FTB Auditorium</figcaption>
+                        </figure>
+                        <figure style="margin:0; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/06-co-speaker.jpg" data-title="Co-speaker Greek Legaspi on security awareness" data-type="image" data-kind="photo" aria-label="View photo: Co-speaker Greek Legaspi on security awareness"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#eef1f5; cursor:zoom-in;">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/06-co-speaker.jpg" width="720" height="405" loading="lazy"
+                                     alt="Co-speaker Greek Legaspi at the podium presenting his Introduction to security awareness slide"
+                                     style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;">
+                            </button>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.4rem; line-height:1.45;">Co-speaker Greek Legaspi on security awareness</figcaption>
+                        </figure>
+                        <figure style="margin:0; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/workshops/ypgt-cybersecurity/07-hands-on.jpg" data-title="Attendees following along on their phones" data-type="image" data-kind="photo" aria-label="View photo: Attendees following along on their phones"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#eef1f5; cursor:zoom-in;">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/07-hands-on.jpg" width="720" height="405" loading="lazy"
+                                     alt="Attendees at round tables using their phones while a facilitator leans in to help one of them"
+                                     style="width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; display:block;">
+                            </button>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.4rem; line-height:1.45;">Attendees following along on their phones</figcaption>
+                        </figure>
+                    </div>
+
+                    <!-- Video width: full column on phones, capped at 340px, and never taller than ~78% of the
+                         viewport (phone landscape) so its controls stay reachable. Centered when the row wraps.
+                         Uses width:min() rather than max-width, which the mobile shell's content rules override. -->
+                    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1.2rem 1.4rem; align-items:flex-start; margin:0 0 1.1rem;">
+                        <figure style="margin:0; flex:0 1 auto; width:min(100%, 340px, calc(78vh * 464 / 750)); min-width:0;">
+                            <video controls preload="metadata" playsinline width="464" height="750" poster="assets/workshops/ypgt-cybersecurity/story-recap-poster.jpg"
+                                   aria-label="Recap video from my Instagram stories: thanking co-speaker Greek Legaspi and the FTB Young Pro Ministry, with both speakers receiving their certificates"
+                                   style="width:100%; height:auto; aspect-ratio:464/750; background:#0b1220; display:block; border-radius:10px; border:1px solid #e0e0e0;">
+                                <source src="assets/workshops/ypgt-cybersecurity/story-recap.mp4" type="video/mp4">
+                                Your browser can't play this video &mdash; <a href="assets/workshops/ypgt-cybersecurity/story-recap.mp4" style="color:#2171d6;">download it instead</a>.
+                            </video>
+                            <figcaption style="color:#777; font-size:.8rem; margin-top:.5rem; line-height:1.5;">
+                                A recap from my Instagram stories &mdash; thanking co-speaker Greek Legaspi and the FTB Young Pro Ministry, with both of us receiving our certificates.
+                            </figcaption>
+                        </figure>
+                        <div style="flex:1 1 240px; min-width:0;">
+                            <button class="view-cert-btn media-thumb" data-cert="assets/certificates/ypgt-cybersecurity-certificate-of-appreciation.jpg" data-title="Certificate of Appreciation &mdash; Guest Speaker, Cyber Security" data-type="image" aria-label="View certificate: Certificate of Appreciation, Guest Speaker"
+                                    style="display:block; width:100%; padding:0 !important; border:1px solid #e0e0e0; border-radius:8px; overflow:hidden; background:#fff; cursor:zoom-in; box-shadow:0 3px 12px rgba(15,40,70,.12);">
+                                <img src="assets/workshops/ypgt-cybersecurity/thumbs/certificate-of-appreciation.jpg" width="720" height="543" loading="lazy"
+                                     alt="Certificate of Appreciation presented to Ryan James F. Indangan as Guest Speaker for the seminar Cyber Security: Digital Safety and Security Essentials, signed by the Senior Pastor and the Young Professionals Department Head"
+                                     style="width:100%; height:auto; display:block;">
+                            </button>
+                            <b style="display:block; color:#1a1a1a; margin:.8rem 0 .25rem;">🏅 Certificate of Appreciation</b>
+                            <p style="color:#555; margin:0; font-size:.9rem; line-height:1.6;">
+                                Presented by Faith Temple Baptist Church Inc. (FTBCI) for serving as Guest Speaker &mdash; signed by
+                                Rev. Alexander D.G. Francisco, Senior Pastor, and Ptr. Jay Mar M. Bagalacsa, Associate Pastor &amp;
+                                Young Professionals Department Head.
+                            </p>
+                        </div>
+                    </div>
+
+                    <a href="https://ftb-youngpro.github.io/cybersecurity/" target="_blank" rel="noopener noreferrer"
+                       style="color:#2171d6; font-weight:600; font-size:.92rem;">See the church&rsquo;s full photo album ↗</a>
+                </section>
+
+                <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .9rem; font-size:1.35rem;">🤖 Hands-on AI workshops</h3>
                 <figure style="margin:0 0 1.8rem;">
                     <img src="assets/workshops/ai-workshop-group.jpg" alt="Group photo with attendees at the end of a hands-on AI workshop"
                          loading="lazy" style="width:100%; border-radius:12px; display:block; border:1px solid #e0e0e0;">
@@ -116,14 +258,14 @@ const apps = {
                 <div style="padding:1.3rem 1.4rem; background:#fafafa; border:1px solid #e0e0e0; border-radius:10px; margin-bottom:1.8rem;">
                     <h3 style="color:#1a1a1a; font-weight:700; margin:0 0 .6rem; font-size:1.1rem;">🪪 Every attendee gets a verifiable certificate</h3>
                     <p style="color:#555; line-height:1.7; margin:0 0 1rem; font-size:.93rem;">
-                        That's why this site has a <b>Certificate Verifier</b>. Anyone who completes one of my workshops receives a
+                        That's why this site has a <b>Certificate Verifier</b>. Attendees who complete my workshops and talks receive a
                         certificate carrying a QR code and a Certificate ID. Each one is signed with an <b>Ed25519</b> digital
                         signature, so an employer can confirm it's genuine in seconds &mdash; the check runs entirely in the
                         visitor's browser, nothing is uploaded, and no attendee list is ever published.
                     </p>
                     <figure style="margin:0 0 1rem;">
                         <a href="/verify/#eyJuIjoiUnlhbiBKYW1lcyBJbmRhbmdhbiIsImQiOiJKdWx5IDIxLCAyMDI2IiwiZSI6IlByYWN0aWNhbCBQcm9tcHRpbmcgZm9yIEV2ZXJ5ZGF5IFdvcmsgwrcgSGFuZHMtb24gV29ya3Nob3AiLCJ2IjoyfQ.9NdzkmkyR1ho-BD91COGrE4wg9-iPse6nNf2GCzPqQobZD9WbFl5Uju9D-WrUWcVPcgo68b6jEMGLUVJrANrAA" target="_blank" rel="noopener noreferrer" title="Open the full-size certificate to scan the QR or verify">
-                            <img src="assets/workshops/sample-certificate.png" alt="Sample Certificate of Completion for 'Practical Prompting for Everyday Work', presented to Ryan James Indangan, with a scannable verification QR code" loading="lazy" style="width:100%; max-width:560px; border:1px solid #e0e0e0; border-radius:8px; display:block; box-shadow:0 3px 12px rgba(15,40,70,.12);">
+                            <img src="assets/workshops/sample-certificate.png" alt="Sample Certificate of Completion for 'Practical Prompting for Everyday Work', presented to Ryan James Indangan, with a scannable verification QR code" loading="lazy" style="width:min(100%, 560px); height:auto; border:1px solid #e0e0e0; border-radius:8px; display:block; box-shadow:0 3px 12px rgba(15,40,70,.12);">
                         </a>
                         <figcaption style="color:#888; font-size:.8rem; margin-top:.5rem; line-height:1.5;">
                             A live sample of the certificate each attendee receives. <b>Scan the QR</b> on it (open it full-size first), or tap Verify below &mdash; it confirms genuine right in your browser. This specimen carries my own name.
@@ -861,6 +1003,34 @@ const apps = {
                     </div>
 
                     <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
+                        <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">🎤 Speaking &amp; Recognition</h3>
+                        <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">Faith Temple Baptist Church Inc. (FTBCI) • Aug 2026</p>
+                        <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
+                            Certificate of Appreciation for serving as Guest Speaker at the seminar &ldquo;Cyber Security: Digital Safety &amp; Security Essentials&rdquo; on 22 August 2026 &mdash; signed by Rev. Alexander D.G. Francisco (Senior Pastor) and Ptr. Jay Mar M. Bagalacsa (Associate Pastor &amp; Young Professionals Department Head).
+                        </p>
+                        <button class="view-cert-btn" data-cert="assets/certificates/ypgt-cybersecurity-certificate-of-appreciation.jpg" data-title="Certificate of Appreciation &mdash; Guest Speaker, Cyber Security" data-type="image" aria-label="View certificate: Certificate of Appreciation, Guest Speaker"
+                                style="display: block; width: min(100%, 420px); padding: 0 !important; margin-bottom: 1.5rem; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; cursor: zoom-in; box-shadow: 0 3px 12px rgba(15,40,70,.12);">
+                            <img src="assets/workshops/ypgt-cybersecurity/thumbs/certificate-of-appreciation.jpg" width="720" height="543" loading="lazy"
+                                 alt="Certificate of Appreciation presented to Ryan James F. Indangan as Guest Speaker for the seminar Cyber Security: Digital Safety and Security Essentials, signed by the Senior Pastor and the Young Professionals Department Head"
+                                 style="width: 100%; height: auto; display: block;">
+                        </button>
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <button class="view-cert-btn" data-cert="assets/certificates/ypgt-cybersecurity-certificate-of-appreciation.jpg" data-title="Certificate of Appreciation &mdash; Guest Speaker, Cyber Security" data-type="image"
+                                    style="padding: 0.75rem 1.5rem; background: #2171d6; color: #fff; border: 1px solid #1a5fb8; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s;">
+                                👁️ View Certificate
+                            </button>
+                            <a href="assets/certificates/ypgt-cybersecurity-certificate-of-appreciation.jpg" download
+                               style="padding: 0.75rem 1.5rem; background: #4caf50; color: #fff; border: 1px solid #45a049; border-radius: 6px; text-decoration: none; font-weight: 600;">
+                                📥 Download
+                            </a>
+                            <button onclick="if(window.openApp){window.openApp('workshops');}else if(window.MobileShell){window.MobileShell.open('workshops');}"
+                                    style="padding: 0.75rem 1.5rem; background: #1a1a1a; color: #fff; border: 1px solid #1a1a1a; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                🎤 See the talk &rarr;
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 1.5rem; background: #fafafa; border: 1px solid #e0e0e0; border-left: 3px solid #2171d6; border-radius: 8px;">
                         <h3 style="color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 700;">💻 SoloLearn — Course Certificates</h3>
                         <p style="color: #666; margin-bottom: 1rem; font-size: 0.9rem;">SoloLearn • 2018–2023 • 8 certificates</p>
                         <p style="color: #1a1a1a; line-height: 1.6; margin-bottom: 1.5rem;">
@@ -1147,6 +1317,10 @@ const apps = {
                             <div><strong style="color: #1a1a1a; font-weight: 600;">Certifications:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Certified CTO</b> (IMTF) &middot; <b style="color:#2171d6;">Anthropic Claude</b> (6 certificates) &middot; <b style="color:#2171d6;">Hacker-X</b> Ethical Hacking (21 modules) &middot; <b style="color:#2171d6;">SoloLearn</b> (8 course certificates)</span></div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
+                            <span style="font-size: 1.3rem;">🎤</span>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Speaking:</strong> <span style="color: #4a5568;"><b style="color:#2171d6;">Guest Speaker</b> &mdash; Cyber Security seminar, Faith Temple Baptist Church Inc. (FTBCI), Aug 2026 &middot; hands-on <b style="color:#2171d6;">AI workshops</b></span></div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">💼</span>
                             <div><strong style="color: #1a1a1a; font-weight: 600;">Role:</strong> <span style="color: #4a5568;">AI Software Engineer · Full-Stack Developer · Certified CTO</span></div>
                         </div>
@@ -1156,7 +1330,7 @@ const apps = {
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0;">
                             <span style="font-size: 1.3rem;">✉️</span>
-                            <div><strong style="color: #1a1a1a; font-weight: 600;">Email:</strong> <span style="color: #2171d6; font-weight: 500;">ryanjamesfranciscoindangan@yahoo.com</span></div>
+                            <div><strong style="color: #1a1a1a; font-weight: 600;">Email:</strong> <span style="color: #2171d6; font-weight: 500; overflow-wrap: anywhere;">ryanjamesfranciscoindangan@yahoo.com</span></div>
                         </div>
                     </div>
                 </div>
