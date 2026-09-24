@@ -2091,20 +2091,52 @@ function initializeCertificateModal() {
     const overlay = modal.querySelector('.cert-modal-overlay');
     const dialog = modal.querySelector('.cert-modal-container');
     let lastCertFocus = null;
+    // popstate listener while the viewer owns the Back gesture (mobile shell only), else null.
+    let onCertBack = null;
 
-    // Close modal function
-    function closeModal() {
+    function hideModal() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
         // Restore focus to whatever opened the modal (a11y).
         if (lastCertFocus && lastCertFocus.focus) { try { lastCertFocus.focus(); } catch (e) {} lastCertFocus = null; }
     }
 
+    // Close modal function (×, overlay, Escape). If we pushed a history entry, consume it;
+    // the popstate that follows releases Back ownership.
+    function closeModal() {
+        const wasOpen = modal.classList.contains('active');
+        hideModal();
+        if (wasOpen && onCertBack) history.back();
+    }
+
+    // In the mobile shell, Android Back / history.back() must close THIS viewer, not the app
+    // sheet underneath it (which would leave the viewer floating over the home screen). Same
+    // pattern as the demo-request dialog: push an entry and flag __backOwnedByOverlay, which the
+    // shell's popstate and Escape handlers respect. The listener is added at open time so it runs
+    // after the shell's own popstate listener, which must still see the flag set.
+    function ownBackGesture() {
+        if (onCertBack || !document.documentElement.classList.contains('mobile-shell')) return;
+        try { history.pushState({ certModal: true }, ''); } catch (e) { return; }
+        window.__backOwnedByOverlay = true;
+        onCertBack = () => {
+            window.removeEventListener('popstate', onCertBack);
+            onCertBack = null;
+            window.__backOwnedByOverlay = false;
+            if (modal.classList.contains('active')) hideModal();
+        };
+        window.addEventListener('popstate', onCertBack);
+    }
+
     // Open modal function
-    function openModal(certPath, title, type, verifyUrl) {
+    function openModal(certPath, title, type, verifyUrl, kind) {
         lastCertFocus = document.activeElement;
         modalTitle.textContent = title;
         modalBody.innerHTML = '';
+        // The same viewer also shows event photos (data-kind="photo") — label it to match.
+        // Reset on every open, since the modal is reused.
+        const isPhoto = kind === 'photo';
+        downloadBtn.textContent = isPhoto ? '📥 Download Photo' : '📥 Download Certificate';
+        closeBtn.setAttribute('aria-label', isPhoto ? 'Close photo' : 'Close certificate');
         // Verify button shown INSIDE the viewer (so it's reachable while viewing).
         const verifyBtn = verifyUrl ? `
             <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer"
@@ -2165,6 +2197,7 @@ function initializeCertificateModal() {
         
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        ownBackGesture();
         // Move focus into the dialog (a11y).
         requestAnimationFrame(() => { try { closeBtn.focus(); } catch (e) {} });
     }
@@ -2239,10 +2272,11 @@ function initializeCertificateModal() {
             const title = btn.dataset.title;
             const type = btn.dataset.type;
             const verifyUrl = btn.dataset.verify;
+            const kind = btn.dataset.kind;
 
             if (certPath && title && type) {
                 e.preventDefault();
-                openModal(certPath, title, type, verifyUrl);
+                openModal(certPath, title, type, verifyUrl, kind);
             }
         }
     });
@@ -2856,10 +2890,13 @@ function formatChatMessage(text, isUserMessage = false) {
     
     // Convert [Open AppName] to clickable action buttons (with sanitization)
     text = text.replace(/\[Open (.+?)\]/g, (match, appName) => {
-        const sanitizedAppName = sanitizeAppName(appName);
+        // sanitizeAppName strips '&', so "Speaking & Workshops" is looked up as "speaking workshops"
+        // (whitespace collapsed). The button label keeps the ampersand: it goes through escapeHtml
+        // as element text, which is safe.
+        const sanitizedAppName = sanitizeAppName(appName).replace(/\s+/g, ' ');
         const appId = mapAppNameToId(sanitizedAppName);
         if (appId) {
-            const escapedAppName = escapeHtml(sanitizedAppName);
+            const escapedAppName = escapeHtml(appName.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim().substring(0, 50));
             // Use data attributes and event listeners instead of onclick for security
             return `<button class="chat-action-btn" data-app-id="${escapeHtml(appId)}" data-action="open-app">📂 Open ${escapedAppName}</button>`;
         }
@@ -2899,6 +2936,11 @@ function mapAppNameToId(appName) {
         'ai': 'ai-lab',
         'certifications': 'certifications',
         'certificates': 'certifications',
+        'speaking workshops': 'workshops',
+        'speaking and workshops': 'workshops',
+        'workshops': 'workshops',
+        'verify a certificate': 'verify-certificate',
+        'certificate verifier': 'verify-certificate',
         'about me': 'about',
         'about': 'about',
         'contact': 'contact',
